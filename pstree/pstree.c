@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
     }
 
     pid_t pid = getpid();
-    printf("Pid:%D\n",pid);
+    printf("Pid:%d\n",pid);
     if (pstree_version == true) {
         printf("pstree (PSmisc) 23.1\nCopyright (C) 1993-2017 Werner Almesberger and Craig Small\n\nPSmisc 不提供任何保证。\n该程序为自由软件，欢迎你在 GNU 通用公共许可证 (GPL) 下重新发布。\n详情可参阅 COPYING 文件。\n");
         return 0;
