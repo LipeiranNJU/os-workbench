@@ -18,7 +18,6 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0)
             pstree_version = true;
     }
-    int a
     pid_t pid = getpid();
     printf("Pid:%d\n",pid);
     if (pstree_version == true) {
