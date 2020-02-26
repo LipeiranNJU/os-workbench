@@ -7,6 +7,12 @@
 #include <stdlib.h>
 #include <assert.h>
 
+struct data{
+    char name[100];
+    int pid;
+    int ppid;
+};
+
 void showdir(char* path_of_dir) {
 	DIR* dir;
 	struct dirent *ptr;
@@ -59,21 +65,22 @@ int main(int argc, char *argv[]) {
 	} 
     char current_path[100];
     char one_line[100];
+    struct data[nn];
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         // printf("current status path is %s\n", current_path);
         // memset(current_path, '\0', 100);
         FILE* fp = fopen(current_path, "r");
         fgets(one_line, 100, fp);
-        printf("Head line:\n%s", one_line + 6);
+        strcpy(data[i], one_line + 6);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);//pid
-        printf("%s", one_line + 5);
+        data[i].pid = atoi(one_line + 5);
         fgets(one_line, 100, fp);//ppid
-        printf("%s", one_line + 6);
+        data[i].ppid = atoi(one_line + 6);
         // strtok(one_line, "\t");
         // strtok(NULL, "\t");
         // printf("ppid:%s", strtok(NULL, "\t"));
