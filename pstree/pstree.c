@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
         // memset(current_path, '\0', 100);
         FILE* fp = fopen(current_path, "r");
         fgets(one_line, 100, fp);
-        strcpy(data[i], one_line + 6);
+        strcpy(list[i], one_line + 6);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
