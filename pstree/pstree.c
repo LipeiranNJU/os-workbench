@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
     dir = opendir("/proc");
     while((ptr = readdir(dir)) != NULL) {
 	    if (ptr->d_name [0]>='0' && ptr->d_name[0] <= '9') {
-	    	printf("dir name:%s\n", ptr->d_name);
+		// 	printf("dir name:%s\n", ptr->d_name);
 			char process_dir[100];
 			strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
 		//	printf("dir path:%s\n",process_dir);
