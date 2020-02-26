@@ -69,6 +69,7 @@ int main(int argc, char *argv[]) {
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
+        fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);//pid
         printf("pid:%s\t", one_line);
         fgets(one_line, 100, fp);//ppid
