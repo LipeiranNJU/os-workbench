@@ -10,7 +10,7 @@ void showdir(char* path_of_dir) {
 	struct dirent *ptr;
 	dir = opendir(path_of_dir); 
 	while((ptr = read_dir(dir)) != NULL) {
-		print("%s is in the directory %s.\n", ptr->d_name, path_of_dir);
+		printf("%s is in the directory %s.\n", ptr->d_name, path_of_dir);
 	}
 }
 
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     typedef bool pstree_option;
     pstree_option pstree_show_pids, pstree_numeric_sort, pstree_version;
     pstree_show_pids = pstree_numeric_sort = pstree_version = false;
-    for (int i = 0; i < argc; i++) {
+    for (int i  = 0; i < argc; i++) {
         assert(argv[i]);
         printf("argv[%d] = %s\n", i, argv[i]);
         if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--show-pids") == 0 || argc == 1)
@@ -51,8 +51,8 @@ int main(int argc, char *argv[]) {
 
 		//	}
 			break;
-		}
-    }
+	 	}
+    } 
     closedir(dir);
     
 
