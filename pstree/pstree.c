@@ -116,8 +116,8 @@ int main(int argc, char *argv[]) {
     
     if (pstree_show_pids == true) {
         struct data tmp;
-        for (int i = 0; i < nn; i++) {
-            for (int j = 0; j < nn - i; j++) {
+        for (int i = 0; i < nn - 1; i++) {
+            for (int j = 0; j < nn - 1 - i; j++) {
                 if (list[j].pid > list[j + 1].pid) {
                     strcpy(tmp.name, list[i].name);
                     tmp.pid = list[j].pid;
