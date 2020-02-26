@@ -86,39 +86,63 @@ int main(int argc, char *argv[]) {
         // printf("ppid:%s", strtok(NULL, "\t"));
 
     }
-    for (int i = 0; i < nn; i++) {
-        printf("%s",list[i].name);
-    }
+    // for (int i = 0; i < nn; i++) {
+    //     printf("%s",list[i].name);
+    // }
 
-    DIR *dir;
-    char initial_path[] = "/proc";
-    struct dirent *ptr;
-    struct dirent *ptr2;
+    // DIR *dir;
+    // char initial_path[] = "/proc";
+    // struct dirent *ptr;
+    // struct dirent *ptr2;
 
-    dir = opendir("/proc");
-    while((ptr = readdir(dir)) != NULL) {
-	    if (ptr->d_name [0]>='0' && ptr->d_name[0] <= '9') {
-		// 	printf("dir name:%s\n", ptr->d_name);
-			char process_dir[100];
-			strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
-		//	printf("dir path:%s\n",process_dir);
-		//	DIR *dir2;
-		//	dir2 = opendir(process_dir);
-		//	while ((ptr2 = readdir(dir2)) != NULL) {
-		//		printf("process name:%s\n", ptr2->d_name);
+    // dir = opendir("/proc");
+    // while((ptr = readdir(dir)) != NULL) {
+	//     if (ptr->d_name [0]>='0' && ptr->d_name[0] <= '9') {
+	// 	// 	printf("dir name:%s\n", ptr->d_name);
+	// 		char process_dir[100];
+	// 		strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
+	// 	//	printf("dir path:%s\n",process_dir);
+	// 	//	DIR *dir2;
+	// 	//	dir2 = opendir(process_dir);
+	// 	//	while ((ptr2 = readdir(dir2)) != NULL) {
+	// 	//		printf("process name:%s\n", ptr2->d_name);
 
-		//	}
-		//	showdir(process_dir);
-		//	break;
-	 	}
-    } 
-    closedir(dir);
+	// 	//	}
+	// 	//	showdir(process_dir);
+	// 	//	break;
+	//  	}
+    // } 
+    // closedir(dir);
     
     if (pstree_show_pids == true) {
-        printf("show-pids\n");
+        struct data tmp;
+        for (int i = 0; i < nn; i++) {
+            for (int j = 0; j < nn - i; j++) {
+                if (list[i].pid > list[j].pid) {
+                    strcpy(tmp.name, list[i].name);
+                    tmp.pid = list[i].pid;
+                    tmp.ppid = list[i].ppid;
+
+                    strcpy(list[i].name, list[j].name);
+                    list[i].pid = list[j].pid;
+                    list[i].ppid = list[j].ppid;
+
+                    strcpy(list[j].name, tmp.name);
+                    list[j].pid = tmp.pid;
+                    list[j].ppid = tmp.ppid;
+                }
+            }
+        }
+        for (int i = 0; i < nn; i++) {
+            printf("(%d)%s",list[i].pid, list[i].name);
+        }
+        // printf("show-pids\n");
     }
     if (pstree_numeric_sort == true) {
-        printf("numeric-sort\n");
+        for (int i = 0; i < nn; i++) {
+            printf("%s",list[i].name);
+        }
+        // printf("numeric-sort\n");
     }
     assert(!argv[argc]);
     return 0;
