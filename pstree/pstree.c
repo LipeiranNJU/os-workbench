@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
     int nn = n;
 	while(n--) {
 		printf("test scandir:%s\n", namelist[n]->d_name);
-		free(namelist[n]);
+		// free(namelist[n]);
         // assert(n != 0);
 	} 
     char current_path[100];
