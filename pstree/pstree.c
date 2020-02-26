@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
 
     }
     for (int i = 0; i < nn; i++) {
-        list[i].layer = compute_layer(&list[i]; list);
+        list[i].layer = compute_layer(&list[i], list);
     }
 
     // for (int i = 0; i < nn; i++) {
