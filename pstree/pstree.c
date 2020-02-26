@@ -28,7 +28,7 @@ int main(int argc, char *argv[]) {
     while((ptr = readdir(dir)) != NULL) {
 	    if (ptr->d_name[0]>='0' && ptr->d_name[0] <= '9') {
 	    	printf("dir name:%s\n", ptr->d_name);
-		char * process_dir[100];
+		char process_dir[100];
 		strcat(strcat(strcpy(prcess_dir, dir),"/"),ptr->dname);
 		printf("dir path:%s\n",process_dir);
 
