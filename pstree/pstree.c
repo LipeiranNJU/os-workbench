@@ -61,11 +61,18 @@ int main(int argc, char *argv[]) {
     char one_line[100];
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
-        printf("current status path is %s\n", current_path);
+        // printf("current status path is %s\n", current_path);
         // memset(current_path, '\0', 100);
         FILE* fp = fopen(current_path, "r");
         fgets(one_line, 100, fp);
-        printf("Head line:%s\n", one_line);
+        printf("Head line:%s\t", one_line);
+        fgets(one_line, 100, fp);
+        fgets(one_line, 100, fp);
+        fgets(one_line, 100, fp);
+        fgets(one_line, 100, fp);//pid
+        printf("pid:%s\t", one_line);
+        fgets(one_line, 100, fp);//ppid
+        printf("ppid:%s\n", one_line);
 
     }
 
