@@ -26,8 +26,14 @@ int main(int argc, char *argv[]) {
     struct dirent *ptr;
     dir = opendir("/proc");
     while((ptr = readdir(dir)) != NULL) {
-	    if (ptr->d_name[0]>='0' && ptr->d_name[0] <= '9')
+	    if (ptr->d_name[0]>='0' && ptr->d_name[0] <= '9') {
 	    	printf("dir name:%s\n", ptr->d_name);
+		char * process_dir[100];
+		strcat(strcat(strcpy(prcess_dir, dir),"/"),ptr->dname);
+		printf("dir path:%s\n",process_dir);
+
+		break;
+	    }
     }
     closedir(dir);
     
