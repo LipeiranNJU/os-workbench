@@ -38,6 +38,14 @@ int main(int argc, char *argv[]) {
       }
 
 
+	struct dirent **namelist;
+	int n;
+	n = scandir("/proc", &namelist, NULL, alphasort);
+	while(n--) {
+		printf("test scandir:%s\n", namelist[n]->d_name);
+		free(namelist[n]);
+	}
+
     DIR *dir;
     char initial_path[] = "/proc";
     struct dirent *ptr;
