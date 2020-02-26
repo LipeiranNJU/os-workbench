@@ -5,6 +5,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void showdir(char* path_of_dir) {
 	DIR* dir;
@@ -53,7 +54,9 @@ int main(int argc, char *argv[]) {
 	while(n--) {
 		printf("test scandir:%s\n", namelist[n]->d_name);
 		free(namelist[n]);
+        assert(n != 0);
 	} 
+
 
     DIR *dir;
     char initial_path[] = "/proc";
@@ -88,9 +91,4 @@ int main(int argc, char *argv[]) {
     assert(!argv[argc]);
     return 0;
 }
-// It is a test for github
-// Ignore it
 
-// new test
-
-// I think I have known something
