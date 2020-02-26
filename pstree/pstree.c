@@ -74,9 +74,9 @@ int main(int argc, char *argv[]) {
         printf("%s", one_line + 5);
         fgets(one_line, 100, fp);//ppid
         // printf("%s\n", one_line + 6);
-        strtok(one_line, '\t');
-        strtok(NULL, '\t');
-        printf("ppid:%s", strtok(NULL, '\t'));
+        strtok(one_line, "\t");
+        strtok(NULL, "\t");
+        printf("ppid:%s", strtok(NULL, "\t"));
 
     }
 
