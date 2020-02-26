@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
       }
 
 
-	struct dirent ***namelist;
+	struct dirent **namelist;
 	int n;
 	n = scandir("/proc", &namelist, my_filter, alphasort);
 	while(n--) {
