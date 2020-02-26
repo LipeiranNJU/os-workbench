@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
 	n = scandir("/proc", &namelist, my_filter, alphasort);
     int nn = n;
 	while(n--) {
-		printf("test scandir:%s\n", namelist[n]->d_name);
+		// printf("test scandir:%s\n", namelist[n]->d_name);
 		// free(namelist[n]);
         // assert(n != 0);
 	} 
