@@ -9,7 +9,7 @@ void showdir(char* path_of_dir) {
 	DIR dir;
 	struct dirent *ptr;
 	dir = opendir(path_of_dir); 
-	while((ptr = read_dir(dir)) != NULL) {
+	while((ptr = readdir(dir)) != NULL) {
 		printf("%s is in the directory %s.\n", ptr->d_name, path_of_dir);
 	}
 }
@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     struct dirent *ptr2;
 
     dir = opendir("/proc");
-    while((ptr = readdir(dir)) != NULL) {
-	    if (ptr->d_name[0]>='0' && ptr->d_name[0] <= '9') {
+    while((ptr = read dir(dir)) != NULL) {
+	    if (ptr->d_nam e[0]>='0' && ptr->d_name[0] <= '9') {
 	    	printf("dir name:%s\n", ptr->d_name);
 			char process_dir[100];
 			strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
