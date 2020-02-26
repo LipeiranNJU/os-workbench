@@ -135,23 +135,26 @@ int main(int argc, char *argv[]) {
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
-                if (list[j].ppid > list[j + 1].ppid) {
+                if (list[j].layer > list[j + 1].layer) {
                     strcpy(tmp.name, list[i].name);
                     tmp.pid = list[j].pid;
                     tmp.ppid = list[j].ppid;
+                    tmp.layer = list[j].layer;
 
                     strcpy(list[j].name, list[j+1].name);
                     list[j].pid = list[j+1].pid;
                     list[j].ppid = list[j+1].ppid;
+                    list[j].layer = list[j+1].layer;
 
                     strcpy(list[j+1].name, tmp.name);
                     list[j+1].pid = tmp.pid;
                     list[j+1].ppid = tmp.ppid;
+                    list[j+1].layer = tmp.layer;
                 }
             }
         }
         for (int i = 0; i < nn; i++) {
-            printf("(%d)%s",list[i].pid, list[i].name);
+            printf("layer:%d\t(%d)%s",list[i].layer, list[i].pid, list[i].name);
         }
         // printf("show-pids\n");
     }
