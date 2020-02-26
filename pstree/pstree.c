@@ -15,6 +15,12 @@ void showdir(char* path_of_dir) {
 	}
 }
 
+int my_filter(const struct dirent* dir) {
+	if ((dir->d_name)[0] >= '0' && (dir->d_name)[0]<='9')
+		return 1;
+	else
+		return 0;
+}
 
 int main(int argc, char *argv[]) {
     typedef bool pstree_option;
@@ -45,7 +51,7 @@ int main(int argc, char *argv[]) {
 	while(n--) {
 		printf("test scandir:%s\n", namelist[n]->d_name);
 		free(namelist[n]);
-	}
+	} 
 
     DIR *dir;
     char initial_path[] = "/proc";
@@ -58,7 +64,7 @@ int main(int argc, char *argv[]) {
 	    	printf("dir name:%s\n", ptr->d_name);
 			char process_dir[100];
 			strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
-			printf("dir path:%s\n",process_dir);
+		//	printf("dir path:%s\n",process_dir);
 		//	DIR *dir2;
 		//	dir2 = opendir(process_dir);
 		//	while ((ptr2 = readdir(dir2)) != NULL) {
