@@ -38,8 +38,8 @@ int main(int argc, char *argv[]) {
     struct dirent *ptr2;
 
     dir = opendir("/proc");
-    while((ptr = read dir(dir)) != NULL) {
-	    if (ptr->d_name[0]>='0' && ptr->d_name[0] <= '9') {
+    while((ptr = readdir(dir)) != NULL) {
+	    if (ptr->d_name [0]>='0' && ptr->d_name[0] <= '9') {
 	    	printf("dir name:%s\n", ptr->d_name);
 			char process_dir[100];
 			strcat(strcat(strcpy(process_dir, initial_path),"/"),(ptr->d_name));
