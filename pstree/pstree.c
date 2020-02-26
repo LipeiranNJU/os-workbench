@@ -8,12 +8,12 @@
 void showdir(char* path_of_dir) {
 	DIR dir;
 	struct dirent *ptr;
-	dir = opendir(path_of_dir) {
-		while((ptr = read_dir(dir)) != NULL) {
-			print("%s is in the directory %s.\n", ptr->d_name, path_of_dir);
-		}
+	dir = opendir(path_of_dir); 
+	while((ptr = read_dir(dir)) != NULL) {
+		print("%s is in the directory %s.\n", ptr->d_name, path_of_dir);
 	}
 }
+
 
 int main(int argc, char *argv[]) {
     typedef bool pstree_option;
