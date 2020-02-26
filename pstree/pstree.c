@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <stdlib.h>
 
 void showdir(char* path_of_dir) {
 	DIR* dir;
