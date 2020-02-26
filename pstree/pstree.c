@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 
     }
     for (int i = 0; i < nn; i++) {
-        printf("%d\n",list[i].pid);
+        printf("%s\n",list[i].name);
     }
 
     DIR *dir;
