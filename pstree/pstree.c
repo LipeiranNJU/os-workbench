@@ -62,6 +62,7 @@ int main(int argc, char *argv[]) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         printf("current status path is %s\n", current_path);
         memset(current_path, '\0', 100);
+        
     }
 
 
