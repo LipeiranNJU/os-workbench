@@ -29,8 +29,14 @@ int main(int argc, char *argv[]) {
         if (strcmp(argv[i], "-V") == 0 || strcmp(argv[i], "--version") == 0)
             pstree_version = true; 
     }
-    pid_t pid = getpid();
-    printf("Pid:%d\n",pid);
+   // pid_t pid = getpid();
+   // printf("Pid:%d\n",pid);
+
+      if (pstree_version == true) {
+          printf("pstree (PSmisc) 23.1\nCopyright (C) 1993-2017 Werner Almesberger and Craig Small\n\nPSmisc 不提供任何保证。\n该程序为自由软件，欢迎你在 GNU 通用公共许可证 (GPL) 下重新发布。\n详情可参阅 COPYING 文件。\n");
+          return 0;
+      }
+
 
     DIR *dir;
     char initial_path[] = "/proc";
