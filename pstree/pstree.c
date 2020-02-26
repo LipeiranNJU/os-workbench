@@ -58,10 +58,14 @@ int main(int argc, char *argv[]) {
         // assert(n != 0);
 	} 
     char current_path[100];
+    char one_line[100];
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         printf("current status path is %s\n", current_path);
         // memset(current_path, '\0', 100);
+        File* fp = fopen(current_path, "r");
+        fgets(one_line, 100, fp);
+        printf("Head line:%s\n", one_line);
 
     }
 
