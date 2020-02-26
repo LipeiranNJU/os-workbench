@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
 	} 
     char current_path[100];
     char one_line[100];
-    struct data[nn];
+    struct data list[nn];
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         // printf("current status path is %s\n", current_path);
@@ -78,9 +78,9 @@ int main(int argc, char *argv[]) {
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);//pid
-        data[i].pid = atoi(one_line + 5);
+        list[i].pid = atoi(one_line + 5);
         fgets(one_line, 100, fp);//ppid
-        data[i].ppid = atoi(one_line + 6);
+        list[i].ppid = atoi(one_line + 6);
         // strtok(one_line, "\t");
         // strtok(NULL, "\t");
         // printf("ppid:%s", strtok(NULL, "\t"));
