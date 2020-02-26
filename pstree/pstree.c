@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
             }
         }
         for (int i = 0; i < nn; i++) {
-            printf("layer:%d\t(%d)%s",list[i].layer, list[i].pid, list[i].name);
+            printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         }
         // printf("show-pids\n");
     }
