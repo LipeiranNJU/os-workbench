@@ -22,6 +22,8 @@ int my_filter(const struct dirent* dir) {
 		return 0;
 }
 
+
+
 int main(int argc, char *argv[]) {
     typedef bool pstree_option;
     pstree_option pstree_show_pids, pstree_numeric_sort, pstree_version;
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
       }
 
 
-	struct dirent **namelist;
+	struct dirent ***namelist;
 	int n;
 	n = scandir("/proc", &namelist, my_filter, alphasort);
 	while(n--) {
