@@ -56,8 +56,8 @@ int main(int argc, char *argv[]) {
 		//		printf("process name:%s\n", ptr2->d_name);
 
 		//	}
-		showdir(process_dir);
-			break;
+		//	showdir(process_dir);
+		//	break;
 	 	}
     } 
     closedir(dir);
