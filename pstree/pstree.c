@@ -52,13 +52,15 @@ int main(int argc, char *argv[]) {
 	int n;
 	n = scandir("/proc", &namelist, my_filter, alphasort);
 	while(n--) {
-		// printf("test scandir:%s\n", namelist[n]->d_name);
+		printf("test scandir:%s\n", namelist[n]->d_name);
 		free(namelist[n]);
         // assert(n != 0);
-        if (n < 10 || n > 60) {
-            printf("n:%d\n", n);
-        }
 	} 
+    char current_path[100];
+    for (int i = 0; i < n; i++) {
+        strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
+        printf("current status path is %s\n", current_path);
+    }
 
 
     DIR *dir;
