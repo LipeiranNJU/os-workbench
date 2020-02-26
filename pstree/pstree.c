@@ -51,13 +51,14 @@ int main(int argc, char *argv[]) {
 	struct dirent **namelist;
 	int n;
 	n = scandir("/proc", &namelist, my_filter, alphasort);
+    int nn = n
 	while(n--) {
 		// printf("test scandir:%s\n", namelist[n]->d_name);
 		free(namelist[n]);
         // assert(n != 0);
 	} 
     char current_path[100];
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         printf("current status path is %s\n", current_path);
     }
