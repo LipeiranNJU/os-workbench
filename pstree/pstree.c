@@ -11,7 +11,20 @@ struct data{
     char name[100];
     int pid;
     int ppid;
+    int layer;
 };
+
+int compute_layer(struct data* a, struct data* list) {
+    if (a->ppid == 0) 
+        return 0;
+    else
+    {
+        struct data* pdata;
+        for (pdata = list; pdata->pid != a->ppid; pdata++);
+        return compute_layer(pdata, list) + 1;
+    }
+    
+}
 
 void showdir(char* path_of_dir) {
 	DIR* dir;
@@ -86,6 +99,10 @@ int main(int argc, char *argv[]) {
         // printf("ppid:%s", strtok(NULL, "\t"));
 
     }
+    for (int i = 0; i < nn; i++) {
+        list[i].layer = compute_layer(&list[i]; list);
+    }
+
     // for (int i = 0; i < nn; i++) {
     //     printf("%s",list[i].name);
     // }
