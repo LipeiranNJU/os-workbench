@@ -118,18 +118,18 @@ int main(int argc, char *argv[]) {
         struct data tmp;
         for (int i = 0; i < nn; i++) {
             for (int j = 0; j < nn - i; j++) {
-                if (list[i].pid > list[j].pid) {
+                if (list[j].pid > list[j + 1].pid) {
                     strcpy(tmp.name, list[i].name);
-                    tmp.pid = list[i].pid;
-                    tmp.ppid = list[i].ppid;
+                    tmp.pid = list[j].pid;
+                    tmp.ppid = list[j].ppid;
 
-                    strcpy(list[i].name, list[j].name);
-                    list[i].pid = list[j].pid;
-                    list[i].ppid = list[j].ppid;
+                    strcpy(list[j].name, list[j+1].name);
+                    list[j].pid = list[j+1].pid;
+                    list[j].ppid = list[j+1].ppid;
 
-                    strcpy(list[j].name, tmp.name);
-                    list[j].pid = tmp.pid;
-                    list[j].ppid = tmp.ppid;
+                    strcpy(list[j+1].name, tmp.name);
+                    list[j+1].pid = tmp.pid;
+                    list[j+1].ppid = tmp.ppid;
                 }
             }
         }
