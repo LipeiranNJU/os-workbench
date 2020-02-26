@@ -86,7 +86,9 @@ int main(int argc, char *argv[]) {
         // printf("ppid:%s", strtok(NULL, "\t"));
 
     }
-
+    for (int i = 0; i < nn; i++) {
+        printf("%d\n",list[i].pid);
+    }
 
     DIR *dir;
     char initial_path[] = "/proc";
