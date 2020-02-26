@@ -6,7 +6,7 @@
 #include <dirent.h>
 
 void showdir(char* path_of_dir) {
-	DIR dir;
+	DIR* dir;
 	struct dirent *ptr;
 	dir = opendir(path_of_dir); 
 	while((ptr = readdir(dir)) != NULL) {
