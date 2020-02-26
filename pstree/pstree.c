@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     pid_t pid = getpid();
     printf("Pid:%d\n",pid);
 
-    DIR *d;
+    DIR *dir;
     struct dirent *ptr;
     dir = opendir("/proc");
     while((ptr = readdir(dir)) != NULL) {
