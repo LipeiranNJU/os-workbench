@@ -23,6 +23,12 @@ int main(int argc, char *argv[]) {
     printf("Pid:%d\n",pid);
 
     DIR *d;
+    struct dirent *ptr;
+    dir = opendir("/proc");
+    while((ptr = readdir(dir)) != NULL) {
+	    printf("dir name:%s\n", ptr->d_name);
+    }
+    closedir(dir);
     
 
     if (pstree_version == true) {
