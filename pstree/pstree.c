@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 	struct dirent **namelist;
 	int n;
 	n = scandir("/proc", &namelist, my_filter, alphasort);
-    int nn = n
+    int nn = n;
 	while(n--) {
 		// printf("test scandir:%s\n", namelist[n]->d_name);
 		free(namelist[n]);
