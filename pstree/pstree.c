@@ -65,13 +65,13 @@ int main(int argc, char *argv[]) {
         // memset(current_path, '\0', 100);
         FILE* fp = fopen(current_path, "r");
         fgets(one_line, 100, fp);
-        printf("Head line:\n%s\t", one_line);
+        printf("Head line:\n%s", one_line);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);//pid
-        printf("%s\t", one_line);
+        printf("%s", one_line);
         fgets(one_line, 100, fp);//ppid
         printf("%s\n", one_line);
 
