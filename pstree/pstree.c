@@ -139,6 +139,30 @@ int main(int argc, char *argv[]) {
         // printf("show-pids\n");
     }
     if (pstree_numeric_sort == true) {
+
+        struct data tmp;
+        for (int i = 0; i < nn - 1; i++) {
+            for (int j = 0; j < nn - 1 - i; j++) {
+                if (strcmp(list[j].name, list[j + 1].name)) {
+                    strcpy(tmp.name, list[i].name);
+                    tmp.pid = list[j].pid;
+                    tmp.ppid = list[j].ppid;
+
+                    strcpy(list[j].name, list[j+1].name);
+                    list[j].pid = list[j+1].pid;
+                    list[j].ppid = list[j+1].ppid;
+
+                    strcpy(list[j+1].name, tmp.name);
+                    list[j+1].pid = tmp.pid;
+                    list[j+1].ppid = tmp.ppid;
+                }
+            }
+        }
+        for (int i = 0; i < nn; i++) {
+            printf("(%d)%s",list[i].pid, list[i].name);
+        }
+
+
         for (int i = 0; i < nn; i++) {
             printf("%s",list[i].name);
         }
