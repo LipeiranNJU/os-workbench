@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
         if (strcmp(list[i].name, "bash") == 0)
             printf("list[%d].name is %s list[i].pid is %d\n, list[i].ppid is %d\n", i, list[i].name, list[i].pid, list[i].ppid);
     }
-    assert(0);
+    // assert(0);
     for (int i = 0; i < nn; i++) {
         if (list[i].pid == 1319) {
             printf("pid:%d ppid:%d NAME:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
