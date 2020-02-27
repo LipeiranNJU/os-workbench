@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
             assert(0);
         }
         if (strncmp(list[i].name, "bash", 4) == 0)
-            printf("list[%d].name is %s list[i].pid is %d\n, list[i].ppid is %d\n", i, list[i].name, list[i].pid, list[i].ppid);
+            printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n", i, list[i].name, list[i].pid, list[i].ppid);
     }
     // assert(0);
     for (int i = 0; i < nn; i++) {
