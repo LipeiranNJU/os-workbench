@@ -125,8 +125,8 @@ int main(int argc, char *argv[]) {
             printf("\n\n$%sAWESOME!!!!\ni:%dpid:%d ppid:%dpidstring:%s\nppidstring:%s&\n\n", list[i].name, i, list[i].pid, list[i].ppid,list[i].pidstring, list[i].ppidstring);
             // assert(0);
         }
-        // if (strncmp(list[i].name, "bash", 4) == 0)
-        //     printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
+        if (strncmp(list[i].name, "bash", 4) == 0)
+            printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
         if (strncmp(list[i].name, "bash", strlen("bash")) == 0 && list[i].pid ==1319) {
             printf("\n\n@%sAWESOME!!!!i:%dpid:%d ppid:%dpidstring:%s#\n\n", list[i].name, i, list[i].pid, list[i].ppid, list[i].pidstring);
             // assert(0);
