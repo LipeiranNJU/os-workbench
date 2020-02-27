@@ -40,7 +40,7 @@ int compute_layer(struct data* a, struct data* list) {
     if (a->layer > 0)
         return a->layer;
     if (a->ppid == 0) {
-        a->layer = 1;
+        a->layer = 0;
         return a->layer;
     }
         
@@ -112,11 +112,9 @@ int main(int argc, char *argv[]) {
             fgets(one_line, 100, fp);
         } // get pid
         list[i].pid = atoi(one_line + 5);
-        // printf("one line:%s", one_line);
         while (strncmp(one_line, "PPid:", 5) != 0) {
             fgets(one_line, 100, fp);
         } // get ppid
-        // printf("one line:%s", one_line);
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         // if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
@@ -129,7 +127,6 @@ int main(int argc, char *argv[]) {
         //     printf("\n\n@%sAWESOME!!!!i:%dpid:%d ppid:%dpidstring:%s#ppidstring:%s\n\n", list[i].name, i, list[i].pid, list[i].ppid, list[i].pidstring, list[i].ppidstring);
         //     assert(0);
         // }
-
     }
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
