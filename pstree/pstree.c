@@ -12,6 +12,7 @@ struct data{
     int pid;
     int ppid;
     int layer;
+    char pidstring[100];
 };
 
 void swap_data(struct data* pd1, struct data* pd2) {
@@ -105,26 +106,27 @@ int main(int argc, char *argv[]) {
     // assert(0);
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
-        FILE* fp = fopen(current_path, "r");
+        FILE* fp = fopen(current_path, "r");/*  */
         fgets(one_line, 100, fp);
         strcpy(list[i].name, one_line + 6);
-        fgets(one_line, 100, fp);
+        fgets(one_line, 100, fp);/*  */
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);
         fgets(one_line, 100, fp);//pid
+        strcpy(list[i].pidstring, one_line);
         list[i].pid = atoi(one_line + 5);
         fgets(one_line, 100, fp);//ppid
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
-            printf("\n\n$%sAWESOME!!!!\ni:%dpid:%d ppid:%d&\n\n", list[i].name, i, list[i].pid, list[i].ppid);
+            printf("\n\n$%sAWESOME!!!!\ni:%dpid:%d ppid:%dpidstring:%s&\n\n", list[i].name, i, list[i].pid, list[i].ppid,list[i].pidstring);
             // assert(0);
         }
         // if (strncmp(list[i].name, "bash", 4) == 0)
         //     printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
         if (strncmp(list[i].name, "bash", strlen("bash")) == 0 && list[i].pid ==1319) {
-            printf("\n\n@%sAWESOME!!!!i:%dpid:%d ppid:%d#\n\n", list[i].name, i, list[i].pid, list[i].ppid);
+            printf("\n\n@%sAWESOME!!!!i:%dpid:%d ppid:%dpidstring:%s#\n\n", list[i].name, i, list[i].pid, list[i].ppid, list[i].pidstring);
             // assert(0);
         }
 
