@@ -52,8 +52,8 @@ void print(struct Node* node, bool show_pid) {
                 node->item.name[i] = '\0';
             }
         }
-        char left_bracket = "(";
-        char right_bracket = ")";
+        char left_bracket[] = "(";
+        char right_bracket[] = ")";
         strcat(strcat(strcat(node->item.name, left_bracket), itoa(node->item.pid)), right_bracket);
         if (node->child == NULL) {
             for (int i = 0; i < node->layer; i++) {
