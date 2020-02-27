@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
         printf("name:%s layer:%d\n",list[i].name, list[i].layer);
     }
 
-    
+    assert(0);
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
