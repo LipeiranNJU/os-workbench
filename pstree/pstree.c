@@ -53,7 +53,7 @@ void print(struct Node* node, bool show_pid) {
             }
         }
         char left_bracket[] = "(";
-        char right_bracket[] = ")";
+        char right_bracket[] = ")\n";
         strcat(strcat(strcat(node->item.name, left_bracket), node->item.pidstring), right_bracket);
         if (node->child == NULL) {
             for (int i = 0; i < node->layer; i++) {
