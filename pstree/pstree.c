@@ -222,9 +222,40 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+struct Node Nodelist[nn];
+        memset(&Nodelist, 0, nn*sizeof(struct Node));
         for (int i = 0; i < nn; i++) {
-            printf("(%d)%s",list[i].pid, list[i].name);
+            copy_data(&Nodelist[i].item, &list[i]);
+            Nodelist[i].layer = Nodelist[i].item.layer;
+            if (Nodelist[i].item.ppid == 0) {
+                Nodelist[i].parent = NULL;
+                Nodelist[i].brother = NULL;
+            }
         }
+
+        for (int i = 0; i < nn; i++) {
+            if (Nodelist[i].item.ppid == 0)
+                continue; 
+            else {
+                for (int j = 0; j < nn; j++) {
+                    if (Nodelist[j].item.pid == Nodelist[i].item.ppid) {
+                        Nodelist[i].parent = &Nodelist[j];
+                        if (Nodelist[j].child == NULL) {
+                            Nodelist[j].child = &Nodelist[i];
+                        } else {
+                            struct Node* ptrNode;
+                            ptrNode = Nodelist[j].child;
+                            while (ptrNode->brother != NULL) {
+                                ptrNode = ptrNode->brother;
+                            }
+                            ptrNode->brother = &Nodelist[i];
+                        }
+                    }
+                }
+            }
+        }
+
+        print(&Nodelist[0]);
 
     }
     if (pstree_show_pids == true && pstree_numeric_sort == true) {
