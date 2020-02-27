@@ -38,7 +38,7 @@ int compute_layer(struct data* a, struct data* list) {
     if (a->layer > 0)
         return a->layer;
     if (a->ppid == 0) {
-        a->layer = 0;
+        a->layer = 1;
         return a->layer;
     }
         
