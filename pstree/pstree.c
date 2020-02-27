@@ -15,13 +15,16 @@ struct data{
 };
 
 int compute_layer(struct data* a, struct data* list) {
+    if (a->layer >= 0)
+        return a->layer;
     if (a->ppid == 0) 
         return 0;
     else
     {
         struct data* pdata;
         for (pdata = list; pdata->pid != a->ppid; pdata++);
-        return compute_layer(pdata, list) + 1;
+        a->layer = compute_layer(pdata, list) + 1;
+        return a->layer;
     }
     
 }
@@ -87,6 +90,7 @@ int main(int argc, char *argv[]) {
         list[i].pid = atoi(one_line + 5);
         fgets(one_line, 100, fp);//ppid
         list[i].ppid = atoi(one_line + 6);
+        list[i].layer = -1;
 
     }
     for (int i = 0; i < nn; i++) {
