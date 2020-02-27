@@ -25,6 +25,24 @@ struct Node{
     int layer;
 };
 
+void print(struct Node* node) {
+    if (node == NULL) {
+        return ;
+    } 
+    if (node->child == NULL) {
+        for (int i = 0; i < node->layer; i++) {
+            printf("\t");
+        }
+        printf("%s", node->item.name);
+        print(node->brother);
+        return;
+    }
+    for (int i = 0; i < node->layer; i++)
+        printf("\t");
+    printf("%s", node->item.name);
+    print(node->child);
+    print(node->brother);
+}
 void swap_data(struct data* pd1, struct data* pd2) {
     struct data tmp;
     struct data* ptmp = &tmp;
@@ -153,6 +171,41 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
+
+        struct Node Nodelist[nn];
+        memset(&Nodelist, 0, nn*sizeof(struct Node));
+        for (int i = 0; i < nn; i++) {
+            copy_data(&Nodelist[i].item, &list[i]);
+            Nodelist[i].layer = Nodelist[i].item.layer;
+            if (Nodelist[i].item.ppid == NULL) {
+                Nodelist[i].parent = NULL;
+                Nodelist[i].brother = NULL;
+            }
+        }
+
+        for (int i = 0; i < nn; i++) {
+            if (Nodelist[i].item.ppid == 0)
+                continue; 
+            else {
+                for (int j = 0; j < nn; j++) {
+                    if (Nodelist[j].item.pid == Nodelist[i].item.ppid) {
+                        Nodelist[i].parent = &Nodelist[j];
+                        if (Nodelist[j].child == NULL) {
+                            Nodelist[j].child = &Nodelist[i];
+                        } else {
+                            struct Node* ptrNode;
+                            ptrNode = &Nodelist[j].child;
+                            while (ptrNode->brother != NULL) {
+                                ptrNode = ptrNode->brother;
+                            }
+                            ptrNode->brother = &Nodelist[i];
+                        }
+                    }
+                }
+            }
+        }
+
+
         for (int i = 0; i < nn; i++) {
             printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         }
