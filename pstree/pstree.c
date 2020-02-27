@@ -155,9 +155,9 @@ int main(int argc, char *argv[]) {
         }
 
 
-        for (int i = 0; i < nn; i++) {
-            printf("%s",list[i].name);
-        }
+        // for (int i = 0; i < nn; i++) {
+        //     printf("%s",list[i].name);
+        // }
         // printf("numeric-sort\n");
     }
     assert(!argv[argc]);
