@@ -121,6 +121,8 @@ int main(int argc, char *argv[]) {
             printf("AWESOME!!!!\n");
             assert(0);
         }
+        if (strcmp(list[i].name, "bash"))
+            printf("list[i].name is %s list[i].pid is %d\n, list[i].ppid is %s\n", i, list[i].name, list[i].pid, list[i].ppid);
     }
     assert(0);
     for (int i = 0; i < nn; i++) {
