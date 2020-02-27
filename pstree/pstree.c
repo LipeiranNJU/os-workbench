@@ -75,16 +75,19 @@ void swap_data(struct data* pd1, struct data* pd2) {
     struct data tmp;
     struct data* ptmp = &tmp;
     strcpy(ptmp->name, pd1->name);
+    strcpy(ptmp->pidstring, pd1->pidstring);
     ptmp->pid = pd1->pid;
     ptmp->ppid = pd1->ppid;
     ptmp->layer = pd1->layer;
 
     strcpy(pd1->name, pd2->name);
+    strcpy(pd1->pidstring, pd2->pidstring);
     pd1->pid = pd2->pid;
     pd1->ppid = pd2->ppid;
     pd1->layer = pd2->layer;
 
     strcpy(pd2->name, ptmp->name);
+    strcpy(pd2->pidstring, ptmp->pidstring);
     pd2->pid = ptmp->pid;
     pd2->ppid = ptmp->ppid;
     pd2->layer = ptmp->layer;
@@ -92,6 +95,7 @@ void swap_data(struct data* pd1, struct data* pd2) {
 
 void copy_data(struct data* pd1, struct data* pd2) {
     strcpy(pd1->name, pd2->name);
+    strcpy(pd1->pidstring, pd2->pidstring);
     pd1->layer = pd2->layer;
     pd1->pid = pd2->pid;
     pd1->ppid = pd2->ppid;
