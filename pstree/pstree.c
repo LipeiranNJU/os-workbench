@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
     
     for (int i = 0; i < nn; i++) {
         if (list[i].ppid == 0)
-            printf("pid:%d name:%s layer:%d\n", list[i].pid, list[i].name, list[i].layer);
+            printf("pid:%d ppid:%d name:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
     }
     assert(0);
 
