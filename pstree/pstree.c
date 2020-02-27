@@ -54,7 +54,7 @@ void print(struct Node* node, bool show_pid) {
         }
         char left_bracket[] = "(";
         char right_bracket[] = ")";
-        strcat(strcat(strcat(node->item.name, left_bracket), itoa(node->item.pid)), right_bracket);
+        strcat(strcat(strcat(node->item.name, left_bracket), node->item.pidstring), right_bracket);
         if (node->child == NULL) {
             for (int i = 0; i < node->layer; i++) {
                 printf("\t");
@@ -169,6 +169,8 @@ int main(int argc, char *argv[]) {
         while(strncmp(one_line, "Pid:", 4) != 0) {
             fgets(one_line, 100, fp);
         } // get pid
+        strcpy(list[i].pidstring, one_line);
+        list[i].pidstring[strlen(one_line)-1] = '\0';
         list[i].pid = atoi(one_line + 5);
         while (strncmp(one_line, "PPid:", 5) != 0) {
             fgets(one_line, 100, fp);
