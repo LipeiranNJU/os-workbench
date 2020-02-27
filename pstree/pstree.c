@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
         fgets(one_line, 100, fp);//ppid
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
-        if (strncmp(list[i].name, "bash\n", 5) == 0 && list[i].pid ==1319) {
+        if (strncmp(list[i].name, "bash", 4) == 0 && list[i].pid ==1319) {
             printf("%s\nAWESOME!!!!\n", list[i].name);
             assert(0);
         }
