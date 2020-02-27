@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
-    assert(0);
+    assert(pstree_show_pids == true);
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
