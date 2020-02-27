@@ -117,12 +117,13 @@ int main(int argc, char *argv[]) {
         fgets(one_line, 100, fp);//ppid
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
-        if (strcmp(list[i].name, "bash") == 0 && list[i].pid ==1319) {
+        if (strncmp(list[i].name, "bash", 4) == 0 && list[i].pid ==1319) {
             printf("AWESOME!!!!\n");
             assert(0);
         }
         if (strncmp(list[i].name, "bash", 4) == 0)
             printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
+
     }
     // assert(0);
     for (int i = 0; i < nn; i++) {
