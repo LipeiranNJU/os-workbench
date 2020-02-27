@@ -125,6 +125,7 @@ int main(int argc, char *argv[]) {
             printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         }
         // printf("show-pids\n");
+        return 0;
     }
     if (pstree_numeric_sort == true) {
 
