@@ -112,11 +112,11 @@ int main(int argc, char *argv[]) {
             fgets(one_line, 100, fp);
         } // get pid
         list[i].pid = atoi(one_line + 5);
-        printf("one line:%s", one_line);
+        // printf("one line:%s", one_line);
         while (strncmp(one_line, "PPid:", 5) != 0) {
             fgets(one_line, 100, fp);
         } // get ppid
-        printf("one line:%s", one_line);
+        // printf("one line:%s", one_line);
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
