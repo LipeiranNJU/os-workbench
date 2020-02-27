@@ -78,6 +78,8 @@ int main(int argc, char *argv[]) {
     char current_path[100];
     char one_line[100];
     struct data list[nn];
+    printf("NN:%d\n", nn);
+    assert(0);
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
         FILE* fp = fopen(current_path, "r");
@@ -97,7 +99,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
-
+    
     
     if (pstree_show_pids == true) {
         struct data tmp;
