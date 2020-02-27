@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
         } // get pid
         strcpy(list[i].pidstring, one_line + 5);
         // list[i].pidstring[strlen(one_line)-2] = '\0'
-        for (int j = 0; list[i].pidstring[i] != '\0') {
+        for (int j = 0; list[i].pidstring[i] != '\0'; j++) {
             if (list[i].pidstring[i] == '\n') {
                 list[i].pidstring[i] = '\0';
             }
