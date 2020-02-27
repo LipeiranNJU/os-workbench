@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
                 if (list[j].layer > list[j + 1].layer || (list[j].layer == list[j+1].layer && list[j].pid > list[j+1].pid)) {
-                    strcpy(tmp.name, list[i].name);
+                    strcpy(tmp.name, list[j].name);
                     tmp.pid = list[j].pid;
                     tmp.ppid = list[j].ppid;
 
