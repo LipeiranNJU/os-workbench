@@ -123,10 +123,9 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < nn; i++) {
         if (list[i].pid == 1319) {
             printf("NAME:%s", list[i].name);
-            assert(0);
         }
     }
-
+    assert(0);
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
