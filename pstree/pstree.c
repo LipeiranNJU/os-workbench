@@ -25,23 +25,43 @@ struct Node{
     int layer;
 };
 
-void print(struct Node* node) {
-    if (node == NULL) {
-        return ;
-    } 
-    if (node->child == NULL) {
-        for (int i = 0; i < node->layer; i++) {
-            printf("\t");
+void print(struct Node* node, bool show_pid) {
+    if (show_pid == false) {
+        if (node == NULL) {
+            return ;
+        } 
+        if (node->child == NULL) {
+            for (int i = 0; i < node->layer; i++) {
+                printf("\t");
+            }
+            printf("%s", node->item.name);
+            print(node->brother, show_pid);
+            return;
         }
+        for (int i = 0; i < node->layer; i++)
+            printf("\t");
         printf("%s", node->item.name);
-        print(node->brother);
-        return;
+        print(node->child, show_pid);
+        print(node->brother, show_pid);
+    } else {
+        if (node == NULL) {
+            return ;
+        } 
+        if (node->child == NULL) {
+            for (int i = 0; i < node->layer; i++) {
+                printf("\t");
+            }
+            printf("%s", node->item.name);
+            print(node->brother, show_pid);
+            return;
+        }
+        for (int i = 0; i < node->layer; i++)
+            printf("\t");
+        printf("%s", node->item.name);
+        print(node->child, show_pid);
+        print(node->brother, show_pid);
+
     }
-    for (int i = 0; i < node->layer; i++)
-        printf("\t");
-    printf("%s", node->item.name);
-    print(node->child);
-    print(node->brother);
 }
 void swap_data(struct data* pd1, struct data* pd2) {
     struct data tmp;
@@ -209,7 +229,7 @@ int main(int argc, char *argv[]) {
         // for (int i = 0; i < nn; i++) {
         //     printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         // }
-        print(&Nodelist[1]);
+        print(&Nodelist[1], pstree_numeric_sort);
         return 0;
     }
     if (pstree_numeric_sort == true) {
@@ -255,7 +275,7 @@ struct Node Nodelist[nn];
             }
         }
 
-        print(&Nodelist[0]);
+        print(&Nodelist[0], pstree_numeric_sort);
 
     }
     if (pstree_show_pids == true && pstree_numeric_sort == true) {
