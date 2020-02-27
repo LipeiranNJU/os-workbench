@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) {
             printf("AWESOME!!!!\n");
             assert(0);
         }
-        if (strcmp(list[i].name, "bash"))
+        if (strcmp(list[i].name, "bash") == 0)
             printf("list[%d].name is %s list[i].pid is %d\n, list[i].ppid is %d\n", i, list[i].name, list[i].pid, list[i].ppid);
     }
     assert(0);
