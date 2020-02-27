@@ -123,9 +123,9 @@ int main(int argc, char *argv[]) {
         list[i].layer = compute_layer(&list[i], list);
     }
     
-    for (int i = 0; i < nn; i++) {
-        printf("name:%s layer:%d\n",list[i].name, list[i].layer);
-    }
+    // for (int i = 0; i < nn; i++) {
+    //     printf("name:%s layer:%d\n",list[i].name, list[i].layer);
+    // }
 
 
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
@@ -137,9 +137,9 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-        // for (int i = 0; i < nn; i++) {
-        //     printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
-        // }
+        for (int i = 0; i < nn; i++) {
+            printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
+        }
         // printf("show-pids\n");
         // assert(0);
         return 0;
