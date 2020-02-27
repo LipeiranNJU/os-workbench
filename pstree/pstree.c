@@ -239,7 +239,7 @@ int main(int argc, char *argv[]) {
         // for (int i = 0; i < nn; i++) {
         //     printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         // }
-        print(&Nodelist[1], pstree_numeric_sort);
+        print(&Nodelist[1], pstree_show_pids);
         return 0;
     }
     if (pstree_numeric_sort == true) {
@@ -252,7 +252,7 @@ int main(int argc, char *argv[]) {
                 }
             }
         }
-struct Node Nodelist[nn];
+        struct Node Nodelist[nn];
         memset(&Nodelist, 0, nn*sizeof(struct Node));
         for (int i = 0; i < nn; i++) {
             copy_data(&Nodelist[i].item, &list[i]);
@@ -285,7 +285,7 @@ struct Node Nodelist[nn];
             }
         }
 
-        print(&Nodelist[0], pstree_numeric_sort);
+        print(&Nodelist[0], pstree_show_pids);
 
     }
     if (pstree_show_pids == true && pstree_numeric_sort == true) {
