@@ -143,8 +143,8 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
-    assert(pstree_show_pids == true);
-    if (pstree_show_pids == true && pstree_numeric_sort == false) {
+
+    if (pstree_numeric_sort == false) {
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
-    if (pstree_numeric_sort == true && pstree_show_pids == false) {
+    if (pstree_numeric_sort == true) {
 
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
