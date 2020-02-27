@@ -110,15 +110,17 @@ int main(int argc, char *argv[]) {
         FILE* fp = fopen(current_path, "r");/*  */
         fgets(one_line, 100, fp);
         strcpy(list[i].name, one_line + 6);
-        fgets(one_line, 100, fp);/*  */
-        fgets(one_line, 100, fp);
-        fgets(one_line, 100, fp);
-        fgets(one_line, 100, fp);
-        fgets(one_line, 100, fp);//pid
-        strcpy(list[i].pidstring, one_line);
+        while(strncmp(one_line, "Pid:", 4) != 0) {
+            fgets(one_line, 100, fp);
+        } // get pid
         list[i].pid = atoi(one_line + 5);
-        fgets(one_line, 100, fp);//ppid
-        strcpy(list[i].ppidstring,one_line);
+        printf("one line:%s", one_line);
+        while (strncmp(one_line, "PPid:", 5) != 0) {
+            fgets(one_line, 100, fp);
+        } // get ppid
+        printf("one line:%s", one_line);
+        // strcpy(list[i].pidstring, one_line);
+        // strcpy(list[i].ppidstring,one_line);
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
