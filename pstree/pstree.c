@@ -131,13 +131,13 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    assert(0);
+    // assert(0);
     for (int i = 0; i < nn; i++) {
         if (list[i].pid == 1319) {
             printf("pid:%d ppid:%d NAME:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
         }
     }
-    assert(0);
+    // assert(0);
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
@@ -146,7 +146,7 @@ int main(int argc, char *argv[]) {
         if (list[i].ppid == 0)
             printf("pid:%d ppid:%d name:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
     }
-    assert(0);
+    // assert(0);
 
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
