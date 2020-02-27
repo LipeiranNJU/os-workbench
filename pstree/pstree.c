@@ -13,6 +13,7 @@ struct data{
     int ppid;
     int layer;
     char pidstring[100];
+    char ppidstring[100];
 };
 
 void swap_data(struct data* pd1, struct data* pd2) {
@@ -117,6 +118,7 @@ int main(int argc, char *argv[]) {
         strcpy(list[i].pidstring, one_line);
         list[i].pid = atoi(one_line + 5);
         fgets(one_line, 100, fp);//ppid
+        strcpy(list[i].ppidstring,one_line);
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
@@ -131,7 +133,7 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    // assert(0);
+    assert(0);
     for (int i = 0; i < nn; i++) {
         if (list[i].pid == 1319) {
             printf("pid:%d ppid:%d NAME:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
