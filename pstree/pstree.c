@@ -23,6 +23,7 @@ int compute_layer(struct data* a, struct data* list) {
     {
         struct data* pdata;
         for (pdata = list; pdata->pid != a->ppid; pdata++);
+        assert(pdata->pid = a->ppid);
         a->layer = compute_layer(pdata, list) + 1;
         return a->layer;
     }
