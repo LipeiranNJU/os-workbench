@@ -121,11 +121,11 @@ int main(int argc, char *argv[]) {
     }
     
     
-    if (pstree_show_pids == true) {
+    if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
-                if (list[j].layer > list[j + 1].layer) {
+                if (list[j].layer > list[j + 1].layer || (list[j].layer == list[j + 1].layer && strcmp(list[j].name, list[j + 1].name) > 0) ) {
                     swap_data(&list[j], &list[j + 1]);
                 }
             }
@@ -137,7 +137,7 @@ int main(int argc, char *argv[]) {
         // assert(0);
         return 0;
     }
-    if (pstree_numeric_sort == true) {
+    if (pstree_numeric_sort == true && pstree_show_pids == false) {
 
         struct data tmp;
         for (int i = 0; i < nn - 1; i++) {
@@ -151,6 +151,9 @@ int main(int argc, char *argv[]) {
             printf("(%d)%s",list[i].pid, list[i].name);
         }
 
+    }
+    if (pstree_show_pids == true && pstree_numeric_sort == true) {
+        assert(0);
     }
     assert(!argv[argc]);
     return 0;
