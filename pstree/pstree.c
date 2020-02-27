@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn; i++) {
             copy_data(&Nodelist[i].item, &list[i]);
             Nodelist[i].layer = Nodelist[i].item.layer;
-            if (Nodelist[i].item.ppid == NULL) {
+            if (Nodelist[i].item.ppid == 0) {
                 Nodelist[i].parent = NULL;
                 Nodelist[i].brother = NULL;
             }
@@ -194,7 +194,7 @@ int main(int argc, char *argv[]) {
                             Nodelist[j].child = &Nodelist[i];
                         } else {
                             struct Node* ptrNode;
-                            ptrNode = &Nodelist[j].child;
+                            ptrNode = Nodelist[j].child;
                             while (ptrNode->brother != NULL) {
                                 ptrNode = ptrNode->brother;
                             }
