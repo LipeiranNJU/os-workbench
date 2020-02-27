@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) {
             printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
 
     }
-    // assert(0);
+    assert(0);
     for (int i = 0; i < nn; i++) {
         if (list[i].pid == 1319) {
             printf("pid:%d ppid:%d NAME:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
