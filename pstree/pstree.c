@@ -170,7 +170,7 @@ int main(int argc, char *argv[]) {
             fgets(one_line, 100, fp);
         } // get pid
         strcpy(list[i].pidstring, one_line);
-        list[i].pidstring[strlen(one_line)-1] = '\0';
+        // list[i].pidstring[strlen(one_line)-1] = '\0';
         list[i].pid = atoi(one_line + 5);
         while (strncmp(one_line, "PPid:", 5) != 0) {
             fgets(one_line, 100, fp);
@@ -287,9 +287,6 @@ int main(int argc, char *argv[]) {
 
         print(&Nodelist[0], pstree_show_pids);
 
-    }
-    if (pstree_show_pids == true && pstree_numeric_sort == true) {
-        assert(0);
     }
     assert(!argv[argc]);
     return 0;
