@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
         list[i].layer = -1;
         if (strncmp(list[i].name, "bash", 4) == 0 && list[i].pid ==1319) {
             printf("%s\nAWESOME!!!!\n", list[i].name);
-            assert(0);
+            // assert(0);
         }
         if (strncmp(list[i].name, "bash", 4) == 0)
             printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
