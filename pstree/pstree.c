@@ -123,6 +123,10 @@ int main(int argc, char *argv[]) {
         list[i].layer = compute_layer(&list[i], list);
     }
     
+    for (int i = 0; i < nn; i++) {
+        printf("name:%s layer:%d\n",list[i].layer);
+    }
+
     
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
