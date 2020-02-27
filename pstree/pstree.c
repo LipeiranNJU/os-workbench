@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
     }
     
     for (int i = 0; i < nn; i++) {
-        printf("name:%s layer:%d\n",list[i].layer);
+        printf("name:%s layer:%d\n",list[i].name, list[i].layer);
     }
 
     
