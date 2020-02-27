@@ -14,6 +14,26 @@ struct data{
     int layer;
 };
 
+void swap_data(struct data* pd1, struct data* pd2) {
+    struct data tmp;
+    struct data* ptmp = &tmp;
+    strcpy(ptmp->name, pd1->name);
+    ptmp->pid = pd1->pid;
+    ptmp->ppid = pd1->ppid;
+    ptmp->layer = pd1->layer;
+
+    strcpy(pd1->name, pd2->name);
+    pd1->pid = pd2->pid;
+    pd1->ppid = pd2->ppid;
+    pd1->layer = pd2->layer;
+
+    strcpy(pd2->name, ptmp->name);
+    pd2->pid = ptmp->pid;
+    pd2->ppid = ptmp->ppid;
+    pd2->layer = ptmp->layer;
+}
+
+
 int compute_layer(struct data* a, struct data* list) {
     if (a->layer >= 0)
         return a->layer;
@@ -106,20 +126,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
                 if (list[j].layer > list[j + 1].layer) {
-                    strcpy(tmp.name, list[j].name);
-                    tmp.pid = list[j].pid;
-                    tmp.ppid = list[j].ppid;
-                    tmp.layer = list[j].layer;
-
-                    strcpy(list[j].name, list[j+1].name);
-                    list[j].pid = list[j+1].pid;
-                    list[j].ppid = list[j+1].ppid;
-                    list[j].layer = list[j+1].layer;
-
-                    strcpy(list[j+1].name, tmp.name);
-                    list[j+1].pid = tmp.pid;
-                    list[j+1].ppid = tmp.ppid;
-                    list[j+1].layer = tmp.layer;
+                    swap_data(&list[j], &list[j + 1]);
                 }
             }
         }
@@ -136,17 +143,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
                 if (list[j].layer > list[j + 1].layer || (list[j].layer == list[j+1].layer && list[j].pid > list[j+1].pid)) {
-                    strcpy(tmp.name, list[j].name);
-                    tmp.pid = list[j].pid;
-                    tmp.ppid = list[j].ppid;
-
-                    strcpy(list[j].name, list[j+1].name);
-                    list[j].pid = list[j+1].pid;
-                    list[j].ppid = list[j+1].ppid;
-
-                    strcpy(list[j+1].name, tmp.name);
-                    list[j+1].pid = tmp.pid;
-                    list[j+1].ppid = tmp.ppid;
+                    swap_data(&list[j], &list[j + 1])
                 }
             }
         }
@@ -154,11 +151,6 @@ int main(int argc, char *argv[]) {
             printf("(%d)%s",list[i].pid, list[i].name);
         }
 
-
-        // for (int i = 0; i < nn; i++) {
-        //     printf("%s",list[i].name);
-        // }
-        // printf("numeric-sort\n");
     }
     assert(!argv[argc]);
     return 0;
