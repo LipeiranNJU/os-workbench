@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
-            printf("\$sAWESOME!!!!\ni:%dpid:%d ppid:%d\n\n&", list[i].name, i, list[i].pid, list[i].ppid);
+            printf("\$%sAWESOME!!!!\ni:%dpid:%d ppid:%d\n\n&", list[i].name, i, list[i].pid, list[i].ppid);
             // assert(0);
         }
         // if (strncmp(list[i].name, "bash", 4) == 0)
