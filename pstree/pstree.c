@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
     pstree_show_pids = pstree_numeric_sort = pstree_version = false;
     for (int i  = 0; i < argc; i++) {
         assert(argv[i]);
-        if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--show-pids") == 0 || argc == 1)
+        if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--show-pids") == 0)
             pstree_show_pids = true;
         if (strcmp(argv[i], "-n") == 0 || strcmp(argv[i], "numeric-sort") == 0)
             pstree_numeric_sort = true;
