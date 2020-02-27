@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn - 1; i++) {
             for (int j = 0; j < nn - 1 - i; j++) {
                 if (list[j].layer > list[j + 1].layer || (list[j].layer == list[j+1].layer && list[j].pid > list[j+1].pid)) {
-                    swap_data(&list[j], &list[j + 1])
+                    swap_data(&list[j], &list[j + 1]);
                 }
             }
         }
