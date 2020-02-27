@@ -103,11 +103,9 @@ int main(int argc, char *argv[]) {
     char current_path[100];
     char one_line[100];
     struct data list[nn];
-    printf("NN:%d\n", nn);
-    // assert(0);
     for (int i = 0; i < nn; i++) {
         strcat(strcat(strcpy(current_path,"/proc/"), namelist[i]->d_name), "/status");
-        FILE* fp = fopen(current_path, "r");/*  */
+        FILE* fp = fopen(current_path, "r");
         fgets(one_line, 100, fp);
         strcpy(list[i].name, one_line + 6);
         while(strncmp(one_line, "Pid:", 4) != 0) {
@@ -119,14 +117,12 @@ int main(int argc, char *argv[]) {
             fgets(one_line, 100, fp);
         } // get ppid
         printf("one line:%s", one_line);
-        // strcpy(list[i].pidstring, one_line);
-        // strcpy(list[i].ppidstring,one_line);
         list[i].ppid = atoi(one_line + 6);
         list[i].layer = -1;
         if (strncmp(list[i].name, "xfce4-terminal", strlen("xfce4-terminal")) == 0 && list[i].pid ==1319) {
             printf("\n\n$%sAWESOME!!!!\ni:%dpid:%d ppid:%dpidstring:%s\nppidstring:%s&\n\n", list[i].name, i, list[i].pid, list[i].ppid,list[i].pidstring, list[i].ppidstring);
-            // assert(0);
-        }
+            
+        } // assert(0);
         if (strncmp(list[i].name, "bash", 4) == 0)
             printf("list[%d].name is %slist[i].pid is %d\nlist[i].ppid is %d\n\n", i, list[i].name, list[i].pid, list[i].ppid);
         if (strncmp(list[i].name, "bash", strlen("bash")) == 0 && list[i].pid ==1319) {
@@ -135,22 +131,9 @@ int main(int argc, char *argv[]) {
         }
 
     }
-    // assert(0);
-    for (int i = 0; i < nn; i++) {
-        if (list[i].pid == 1319) {
-            printf("pid:%d ppid:%d NAME:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
-        }
-    }
-    // assert(0);
     for (int i = 0; i < nn; i++) {
         list[i].layer = compute_layer(&list[i], list);
     }
-    
-    for (int i = 0; i < nn; i++) {
-        if (list[i].ppid == 0)
-            printf("pid:%d ppid:%d name:%s layer:%d\n", list[i].pid, list[i].ppid, list[i].name, list[i].layer);
-    }
-    // assert(0);
 
     if (pstree_show_pids == true && pstree_numeric_sort == false) {
         struct data tmp;
@@ -164,8 +147,6 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i < nn; i++) {
             printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         }
-        // printf("show-pids\n");
-        // assert(0);
         return 0;
     }
     if (pstree_numeric_sort == true && pstree_show_pids == false) {
