@@ -306,5 +306,3 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-// a test
-// ??? I can't understand
