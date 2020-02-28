@@ -8,7 +8,7 @@ submit: clean-all
 	  curl -sSL '$(URL)/submit.sh' | bash
 
 git:
-	@git add $(shell find . -name "*.c") $(shell find . -name "*.h") -A --ignore-errors
+	@git add $(shell find . -name "*.c") $(shell find . -name "*.h") -A --ignore-errors 
 	@while (test -e .git/index.lock); do sleep 0.1; done
 	@(hostnamectl && uptime) | git commit -F - -q --author='tracer-nju <tracer@nju.edu.cn>' --no-verify --allow-empty
 	@sync

@@ -248,7 +248,12 @@ int main(int argc, char *argv[]) {
         // for (int i = 0; i < nn; i++) {
         //     printf("layer:%d\t(pid%d)(ppid%d)%s",list[i].layer, list[i].pid, list[i].ppid, list[i].name);
         // }
-        print(&Nodelist[1], pstree_show_pids);
+        int start = 0;
+        for (int i = 0; i < nn; i++) {
+            if (Nodelist[i].item.pid == 1)
+                start = i;
+        }
+        print(&Nodelist[start], pstree_show_pids);
         return 0;
     }
     if (pstree_numeric_sort == true) {
@@ -301,3 +306,5 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+// a test
+// ??? I can't understand
