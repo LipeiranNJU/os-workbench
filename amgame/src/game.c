@@ -67,7 +67,7 @@ void update_screen(int bias) {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if ((x & 1) ^ (y & 1) ) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0x110000*(bias%3)+0x001100*(bias%3)+0x000011*(bias%3)); // white
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0x110000*(bias%3)+0x001100*2+0x000011*0xf); 
       } else {
         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff);
       }
