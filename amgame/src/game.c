@@ -32,6 +32,7 @@ int main(const char *args) {
   while (1) {
     read_key();
     print_key();
+    update_screen();
   }
   return 0;
 }
