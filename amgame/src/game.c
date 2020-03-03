@@ -51,6 +51,7 @@ void read_key() {
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   puts("read2\n");
   if (event.keycode == _KEY_ESCAPE && event.keydown) {
+    puts("HALT\n");
     _halt(0);
   }
 }
