@@ -31,8 +31,8 @@ int main(const char *args) {
   puts("Press any key to see its key code...\n");
   while (1) {
     read_key();
-    //print_key();
-    update_screen();
+    print_key();
+    // update_screen();
   }
   return 0;
 }
