@@ -31,7 +31,7 @@ int main(const char *args) {
   puts("Press any key to see its key code...\n");
   while (1) {
     read_key();
-    print_key();
+    //print_key();
     update_screen();
   }
   return 0;
@@ -46,12 +46,9 @@ static void init() {
 }
 
 void read_key() {
-  puts("read\n");
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
-  puts("read2\n");
   if (event.keycode == _KEY_ESCAPE && event.keydown) {
-    puts("HALT\n");
     _halt(0);
   }
 }
