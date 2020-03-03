@@ -5,6 +5,23 @@ int read_key();
 void update_screen(int);
 #define SIDE 16
 static int w, h;
+
+typedef int color;
+
+// static color block2 = 0xffbcd6dd;
+// static color block4 = 0xffadd9d8;
+// static color block8 = 0xff9fdcd4;
+// static color block8 = 0xff91e0d0;
+// static color block16 = 0xff83e3cc;
+// static color block32 = 0xff75e7c8;
+// static color block64 = 0xff67eac4;
+// static color block128 = 0xff58edc0;
+// static color block256 = 0xff4af1bc;
+// static color block512 = 0xff3cf4b8;
+static color block1024 = 0xff2ef8b4;
+// static color block2048 = 0xff20fbb0;
+// static color block4096 = 0xff12ffac;
+
 size_t _io_write(uint32_t dev, uintptr_t reg, void *buf, size_t size);
 static void draw_tile(int x, int y, int w, int h, uint32_t color) {
   uint32_t pixels[w * h]; // careful! stack is limited!
@@ -69,7 +86,7 @@ void update_screen(int bias) {
       if ((x & 1) ^ (y & 1) ) {
         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0x110000*(bias%3)+0x001100*2+0x000011*0xf); 
       } else {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff);
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block1024);
       }
     }
   }
