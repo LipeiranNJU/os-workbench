@@ -13,7 +13,7 @@ typedef int color;
 // static color block8 = 0xff9fdcd4;
 // static color block8 = 0xff91e0d0;
 // static color block16 = 0xff83e3cc;
-static color block32 = 0xff75e7c8;
+static color block32 = 0x0075e7c8;
 // static color block64 = 0xff67eac4;
 // static color block128 = 0xff58edc0;
 // static color block256 = 0xff4af1bc;
