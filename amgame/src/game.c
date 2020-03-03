@@ -1,8 +1,8 @@
 #include <game.h>
 
 void _halt(int code);
-void read_key();
-void update_screen();
+int read_key();
+void update_screen(int);
 #define SIDE 16
 static int w, h;
 size_t _io_write(uint32_t dev, uintptr_t reg, void *buf, size_t size);
@@ -30,8 +30,7 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    read_key();
-    // update_screen();
+    update_screen(read_key());
   }
   return 0;
 }
@@ -44,7 +43,7 @@ static void init() {
   h = info.height;
 }
 
-void read_key() {
+int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -60,11 +59,11 @@ void read_key() {
     puts(key_names[event.keycode]);
     puts("\n");
   }
+  return event.keycode;
 }
 
-void update_screen() {
+void update_screen(int bias) {
   init();
-  static int bias = 0;
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if ((x & 1) ^ (y & 1) ) {
