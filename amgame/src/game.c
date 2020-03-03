@@ -73,6 +73,5 @@ void update_screen(int bias) {
       }
     }
   }
-  bias += 0x010101;
   return;
 }
