@@ -9,7 +9,7 @@ void print_key() {
   };
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   puts("read3\n");
-  if (1 || (event.keycode != _KEY_NONE && event.keydown)) {
+  if ((event.keycode != _KEY_NONE && event.keydown)) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
     puts("\n");
