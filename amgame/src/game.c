@@ -290,7 +290,7 @@ int read_key_of_mine(int game[][4]) {
 }
 
 void update_screen(int update, int** game) {
-  if (update == -2 || 1) {
+  if (update == -2) {
     return;
   }
 
