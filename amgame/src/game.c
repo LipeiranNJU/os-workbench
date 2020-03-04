@@ -257,7 +257,7 @@ int read_key_of_mine(int game[][4]) {
     }
   }
 
-  if (game[0][0] <= 0) {
+  if (game[0][0] < 0) {
     _halt(3);
   }
   #define KEYNAME(key) \
