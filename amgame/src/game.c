@@ -275,12 +275,12 @@ int read_key(int** game) {
     move_up(game, 4);
     return 1;
   }
-  return 0;
+  return -2;
 
 }
 
 void update_screen(int update, int** game) {
-  if (update == 0) {
+  if (update == -2) {
     return;
   }
   init();
