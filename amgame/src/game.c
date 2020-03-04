@@ -3,9 +3,15 @@
 void _halt(int code);
 int read_key();
 void update_screen(int);
-#define SIDE 16
+static int SIDE;
 static int w, h;
-
+int max(int a, int b) {
+  if (a >= b) 
+    return a;
+  else 
+    return b;
+  
+}
 typedef int color;
 static color block[] = {
   0xffbcd6dd, 
@@ -61,6 +67,7 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
+  SIDE=max(w, h)/4;
 }
 
 int read_key() {
