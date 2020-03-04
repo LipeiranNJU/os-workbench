@@ -290,7 +290,7 @@ void update_screen(int bias, int** game) {
       }
       else {
         if ((x & 1) ^ (y & 1) ) {
-          draw_tile(x * 32, y * 32, 32, 32, block[(x+y)%13]); 
+          draw_tile(x * 32, y * 32, 32, 32, block[12]); 
         } else {
           draw_tile(x * 32, y * 32, 32, 32, block[(x+y)%13]);
         }
