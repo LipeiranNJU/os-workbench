@@ -226,9 +226,6 @@ int main(const char *args) {
   puts("\"\n");
 
   splash();
-  if (game[0][0] == 0) {
-    _halt(0);
-  }
 
   puts("Press any key to see its key code...\n");
   while (1) {
@@ -289,6 +286,10 @@ void update_screen(int update, int** game) {
   if (update == -2) {
     return;
   }
+  if (game[0][0] == 0) {
+    _halt(0);
+  }
+  
   init();
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
