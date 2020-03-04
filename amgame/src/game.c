@@ -9,6 +9,173 @@ static int length_of_block;
 int max(int a, int b){
   return a > b ? a : b;
 }
+
+void move_up(int** game, int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        while (k != 0 && game[k - 1][j] < 0) {
+          game[k - 1][j] = game[k][j];
+          game[k][j] = -1;
+          k--;
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        if (game[k - 1][j] >=0 && game[k - 1][j] == game[k][j]) {
+          game[k-1][j] += 1;
+          game[k][j] = -1;
+          
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        while (k != 0 && game[k - 1][j] < 0) {
+          game[k - 1][j] = game[k][j];
+          game[k][j] = -1;
+          k--;
+        }
+      }
+    }
+  }
+}
+
+void move_down(int** game, int size) {
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        while (k != size -1 && game[k + 1][j] < 0 ) {
+          game[k + 1][j] = game[k][j];
+          game[k][j] = -1;
+          k++;
+
+        }
+      }
+    }
+  }
+
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        if (game[k + 1][j] >=0 && game[k + 1][j] == game[k][j]) {
+          game[k + 1][j] += 1;
+          game[k][j] = -1;
+        }
+      }
+    }
+  }
+
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        while (k != size -1 && game[k + 1][j] < 0 ) {
+          game[k + 1][j] = game[k][j];
+          game[k][j] = -1;
+          k++;
+
+        }
+      }
+    }
+  }
+}
+
+void move_left(int** game, int size) {
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        while (k != 0 && game[j][k - 1] < 0) {
+          game[j][k - 1] = game[j][k];
+          game[j][k] = -1;
+          k--;
+        }
+      }
+    }
+  }
+
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        if (game[j][k - 1] >=0 && game[j][k - 1] == game[j][k]) {
+          game[j][k-1] += 1;
+          game[j][k] = -1;
+          
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < size; i++) {
+    for (int j = 0; j < size; j++) {
+      if (i != 0) {
+        int k = i;
+        while (k != 0 && game[j][k - 1] < 0) {
+          game[j][k - 1] = game[j][k];
+          game[j][k] = -1;
+          k--;
+        }
+      }
+    }
+  }
+}
+
+void move_right(int** game, int size) {
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        while (k != size -1 && game[j][k + 1] < 0 ) {
+          game[j][k + 1] = game[j][k];
+          game[j][k] = -1;
+          k++;
+
+        }
+      }
+    }
+  }
+
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        if (game[j][k + 1] >=0 && game[j][k + 1] == game[j][k]) {
+          game[j][k + 1] += 1;
+          game[j][k] = -1;
+        }
+      }
+    }
+  }
+
+  for (int i = size - 1; i >= 0; i--) {
+    for (int j = size -1; j >= 0; j--) {
+      if (i != size - 1) {
+        int k = i;
+        while (k != size -1 && game[j][k + 1] < 0 ) {
+          game[j][k + 1] = game[j][k];
+          game[j][k] = -1;
+          k++;
+        }
+      }
+    }
+  }
+}
+
 typedef int color;
 static color block[] = {
   0xffbcd6dd, 
@@ -88,12 +255,12 @@ int read_key() {
 
 void update_screen(int bias) {
   init();
-  for (int x = 0; x * length_of_block <= w; x ++) {
-    for (int y = 0; y * length_of_block <= h; y++) {
+  for (int x = 0; x * 64 <= w; x ++) {
+    for (int y = 0; y * 64 <= h; y++) {
       if ((x & 1) ^ (y & 1) ) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
+        draw_tile(x * 64, y * 64, 64, 64, block[(x+y)%13]); 
       } else {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]);
+        draw_tile(x * 64, y * 64, 64, 64, block[(x+y)%13]);
       }
     }
   }
