@@ -1,7 +1,7 @@
 #include <game.h>
 
 void _halt(int code);
-int read_key(int**);
+int read_key_of_mine(int game[][4]);
 void update_screen(int, int**);
 #define SIDE 16
 static int w, h;
@@ -10,7 +10,7 @@ int min(int a, int b){
   return a > b ? b : a;
 }
 
-void move_up(int** game, int size) {
+void move_up(int game[][4], int size) {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (i != 0) {
@@ -51,7 +51,7 @@ void move_up(int** game, int size) {
   }
 }
 
-void move_down(int** game, int size) {
+void move_down(int game[][4], int size) {
   for (int i = size - 1; i >= 0; i--) {
     for (int j = size -1; j >= 0; j--) {
       if (i != size - 1) {
@@ -93,7 +93,7 @@ void move_down(int** game, int size) {
   }
 }
 
-void move_left(int** game, int size) {
+void move_left(int game[][4], int size) {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (i != 0) {
@@ -135,7 +135,7 @@ void move_left(int** game, int size) {
   }
 }
 
-void move_right(int** game, int size) {
+void move_right(int game[][4], int size) {
   for (int i = size - 1; i >= 0; i--) {
     for (int j = size -1; j >= 0; j--) {
       if (i != size - 1) {
@@ -231,7 +231,7 @@ int main(const char *args) {
   puts("Press any key to see its key code...\n");
   while (1) {
     puts("TEST\n");
-    int mode = read_key((int **)(game));
+    int mode = read_key_of_mine(game);
     update_screen(mode, (int**) game);
   }
   return 0;
@@ -246,9 +246,8 @@ static void init() {
   lipeiran = min(w, h) / 100;
 }
 
-int read_key(int** game) {
-      if (game[0][0] < -1000000)
-      _halt(9);
+int read_key_of_mine(int game[][4]) {
+
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   if (game[0][0] <= 0) {
     _halt(3);
