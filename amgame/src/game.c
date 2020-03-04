@@ -249,17 +249,9 @@ static void init() {
 int read_key_of_mine(int game[][4]) {
 
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
-  for (int i = 0; i < 4; i++) {
-    for (int j = 0; j < 4; j++){
-      if (game[0][0] == 0)
-        // _halt(15);
-        ;
-    }
-  }
 
-  if (game[0][0] < 0) {
-    _halt(3);
-  }
+
+
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
   static const char *key_names[] = {
