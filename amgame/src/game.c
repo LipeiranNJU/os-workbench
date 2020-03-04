@@ -292,7 +292,7 @@ void update_screen(int update, int** game) {
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
       if (x <= 3 && y <= 3) {
-        if (game[0][0] == 0) {
+        if (game[0][0] == -1) {
           _halt(0);
         }
         draw_tile(x * 32, y * 32, 32, 32, block[game[x][y] + 1]);
