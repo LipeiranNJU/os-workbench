@@ -5,7 +5,10 @@ int read_key();
 void update_screen(int);
 #define SIDE 16
 static int w, h;
-
+static int length_of_block;
+int max(int a, int b){
+  return a > b ? a : b;
+}
 typedef int color;
 static color block[] = {
   0xffbcd6dd, 
@@ -61,6 +64,7 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
+  length_of_block = max(w, h) / 4;
 }
 
 int read_key() {
@@ -84,8 +88,8 @@ int read_key() {
 
 void update_screen(int bias) {
   init();
-  for (int x = 0; x * SIDE <= w; x ++) {
-    for (int y = 0; y * SIDE <= h; y++) {
+  for (int x = 0; x * length_of_block <= w; x ++) {
+    for (int y = 0; y * length_of_block <= h; y++) {
       if ((x & 1) ^ (y & 1) ) {
         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
       } else {
