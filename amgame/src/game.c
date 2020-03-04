@@ -240,7 +240,7 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  lipeiran = min(w, h) / 10;
+  lipeiran = min(w, h) / 100;
 }
 
 int read_key(int** game) {
