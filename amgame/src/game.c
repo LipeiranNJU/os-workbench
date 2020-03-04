@@ -304,11 +304,12 @@ void update_screen(int update, int** game) {
         draw_tile(x * 16, y * 16, 16, 16, block[game[x][y] + 1]);
       }
       else {
-        if ((x & 1) ^ (y & 1) ) {
-          draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]); 
-        } else {
-          draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]);
-        }
+        // if ((x & 1) ^ (y & 1) ) {
+        //   draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]); 
+        // } else {
+        //   draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]);
+        // }
+        ;
       }
     }
   }
