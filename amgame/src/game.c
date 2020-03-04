@@ -1,7 +1,7 @@
 #include <game.h>
 
 void _halt(int code);
-int read_key();
+int read_key(int**);
 void update_screen(int);
 #define SIDE 16
 static int w, h;
@@ -212,6 +212,15 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
 int main(const char *args) {
   _ioe_init();
 
+  int ** game[4][4];
+
+
+  for (int i = 0; i < 4; i ++) {
+    for (int j = 0; j < 4; j ++) {
+        game[i][j] = 0;
+    }
+  }
+
   puts("mainargs = \"");
   puts(args); // make run mainargs=xxx
   puts("\"\n");
@@ -220,7 +229,7 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    update_screen(read_key());
+    update_screen(read_key((int **)game));
   }
   return 0;
 }
@@ -234,7 +243,7 @@ static void init() {
   length_of_block = max(w, h) / 4;
 }
 
-int read_key() {
+int read_key(int** game) {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
@@ -245,11 +254,29 @@ int read_key() {
   if (event.keycode == _KEY_ESCAPE && event.keydown) {
     _halt(0);
   }
-    if ((event.keycode != _KEY_NONE && event.keydown)) {
+  if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
     puts(key_names[event.keycode]);
     puts("\n");
   }
+  if (event.keycode == _KEY_UP && event.keydown) {
+    move_up(game, 4);
+    return 1;
+  }
+  if (event.keycode == _KEY_DOWN && event.keydown) {
+    move_up(game, 4);
+    return 1;
+  }
+  if (event.keycode == _KEY_LEFT && event.keydown) {
+    move_up(game, 4);
+    return 1;
+  }
+  if (event.keycode == _KEY_RIGHT && event.keydown) {
+    move_up(game, 4);
+    return 1;
+  }
+  return 0;
+
   return event.keycode;
 }
 
