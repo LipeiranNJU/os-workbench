@@ -1,17 +1,11 @@
 #include <game.h>
 
 void _halt(int code);
-int read_key_inamgame();
+int read_key();
 void update_screen(int);
-static int SIDE;
+#define SIDE 16
 static int w, h;
-int max(int a, int b) {
-  if (a >= b) 
-    return a;
-  else 
-    return b;
-  
-}
+
 typedef int color;
 static color block[] = {
   0xffbcd6dd, 
@@ -56,7 +50,7 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    update_screen(read_key_inamgame());
+    update_screen(read_key());
   }
   return 0;
 }
@@ -67,10 +61,9 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  SIDE=max(w, h)/4;
 }
 
-int read_key_inamgame() {
+int read_key() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
