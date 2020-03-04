@@ -255,7 +255,7 @@ int read_key(int** game) {
   };
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   if (event.keycode == _KEY_ESCAPE && event.keydown) {
-    _halt(1);
+    _halt(0);
   }
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
@@ -263,6 +263,9 @@ int read_key(int** game) {
     puts("\n");
   }
   if (event.keycode == _KEY_UP && event.keydown) {
+    if (game[0][0] == -1) {
+      _halt(1);
+    }
     move_up(game, 4);
     return 1;
   }
