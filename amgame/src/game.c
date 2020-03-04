@@ -224,13 +224,13 @@ int main(const char *args) {
   }
 
 
-  puts("mainargs = \"");
-  puts(args); // make run mainargs=xxx
-  puts("\"\n");
+  // puts("mainargs = \"");
+  // puts(args); // make run mainargs=xxx
+  // puts("\"\n");
 
   splash();
 
-  puts("Press any key to see its key code...\n");
+  // puts("Press any key to see its key code...\n");
   while (1) {
     int mode = read_key_of_mine(game);
     update_screen(mode, (int**) game);
