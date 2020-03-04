@@ -268,9 +268,6 @@ int read_key_of_mine(int game[][4]) {
     puts("\n");
   }
   if (event.keycode == _KEY_W && event.keydown) {
-    if (game[0][0] <= -65536) {
-      _halt(1);
-    }
     move_up(game, 4);
     return 1;
   }
