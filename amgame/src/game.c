@@ -5,9 +5,9 @@ int read_key(int**);
 void update_screen(int, int**);
 #define SIDE 16
 static int w, h;
-static int length_of_block;
-int max(int a, int b){
-  return a > b ? a : b;
+int lipeiran;
+int min(int a, int b){
+  return a > b ? b : a;
 }
 
 void move_up(int** game, int size) {
@@ -240,7 +240,7 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  length_of_block = max(w, h) / 4;
+  lipeiran = min(w, h) / 4;
 }
 
 int read_key(int** game) {
@@ -285,7 +285,7 @@ void update_screen(int bias, int** game) {
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
       if (x <= 3 && y <= 3) {
-        draw_tile(x * 32, y * 32, 32, 32, block[12]);
+        draw_tile(x * lipeiran, y * lipeiran, lipeiran, lipeiran, block[12]);
       }
       else {
         if ((x & 1) ^ (y & 1) ) {
