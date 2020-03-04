@@ -221,6 +221,10 @@ int main(const char *args) {
     }
   }
 
+  if (game[0][0] < 0) {
+    _halt(8);
+  }
+
   puts("mainargs = \"");
   puts(args); // make run mainargs=xxx
   puts("\"\n");
