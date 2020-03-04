@@ -286,7 +286,7 @@ void update_screen(int update, int** game) {
   if (update == -2) {
     return;
   }
-  if (game[0][0] == 1) {
+  if (game[0][0] >= 0) {
     _halt(0);
   }
   
