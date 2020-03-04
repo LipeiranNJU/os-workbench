@@ -2,7 +2,7 @@
 
 void _halt(int code);
 int read_key_of_mine(int game[][4]);
-void update_screen(int, int**);
+void update_screen(int, int[][4]);
 #define SIDE 16
 static int w, h;
 int lipeiran;
@@ -233,7 +233,7 @@ int main(const char *args) {
   // puts("Press any key to see its key code...\n");
   while (1) {
     int mode = read_key_of_mine(game);
-    update_screen(mode, (int**) game);
+    update_screen(mode, game);
   }
   return 0;
 }
@@ -287,7 +287,7 @@ int read_key_of_mine(int game[][4]) {
 
 }
 
-void update_screen(int update, int** game) {
+void update_screen(int update, int game[][4]) {
   if (update == -2) {
     return;
   }
