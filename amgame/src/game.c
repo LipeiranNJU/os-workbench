@@ -212,12 +212,12 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
 int main(const char *args) {
   _ioe_init();
 
-  int ** game[4][4];
+  int game[4][4];
 
 
   for (int i = 0; i < 4; i ++) {
     for (int j = 0; j < 4; j ++) {
-        game[i][j] = 0;
+        game[i][j] = 12;
     }
   }
 
@@ -285,7 +285,7 @@ void update_screen(int bias, int** game) {
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
       if (0 && x <= 3 && y <=3) {
-        draw_tile(x * 32, y * 32, 32, SIDE, block[(game[x][y]+1)*3]);
+        draw_tile(x * 32, y * 32, 32, SIDE, block[game[x][y]]);
         break;
       }
       else {
