@@ -247,7 +247,7 @@ static void init() {
 }
 
 int read_key(int** game) {
-      if (game[0][0] == 0)
+      if (game[0][0] < -1000000)
       _halt(9);
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   if (game[0][0] <= 0) {
