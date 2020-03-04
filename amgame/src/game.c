@@ -224,9 +224,9 @@ int main(const char *args) {
   }
 
 
-  // puts("mainargs = \"");
-  // puts(args); // make run mainargs=xxx
-  // puts("\"\n");
+  puts("mainargs = \"");
+  puts(args); // make run mainargs=xxx
+  puts("\"\n");
 
   splash();
 
