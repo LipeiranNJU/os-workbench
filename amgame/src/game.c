@@ -301,13 +301,13 @@ void update_screen(int update, int** game) {
         if (game[0][0] == -1) {
           _halt(0);
         }
-        draw_tile(x * 32, y * 32, 32, 32, block[game[x][y] + 1]);
+        draw_tile(x * 16, y * 16, 16, 16, block[game[x][y] + 1]);
       }
       else {
         if ((x & 1) ^ (y & 1) ) {
-          draw_tile(x * 32, y * 32, 32, 32, block[(x+y)%13]); 
+          draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]); 
         } else {
-          draw_tile(x * 32, y * 32, 32, 32, block[(x+y)%13]);
+          draw_tile(x * 16, y * 16, 16, 16, block[(x+y)%13]);
         }
       }
     }
