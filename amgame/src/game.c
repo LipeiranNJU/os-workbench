@@ -255,7 +255,7 @@ int read_key(int** game) {
   };
   _io_read(_DEV_INPUT, _DEVREG_INPUT_KBD, &event, sizeof(event));
   if (event.keycode == _KEY_ESCAPE && event.keydown) {
-    _halt(0);
+    _halt(1);
   }
   if (event.keycode != _KEY_NONE && event.keydown) {
     puts("Key pressed: ");
