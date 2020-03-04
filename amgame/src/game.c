@@ -231,6 +231,8 @@ int main(const char *args) {
   puts("Press any key to see its key code...\n");
   while (1) {
     puts("TEST\n");
+    if (game[0][0] == 0)
+      _halt(9);
     int mode = read_key((int **)(game));
     update_screen(mode, (int**) game);
   }
