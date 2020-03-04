@@ -265,23 +265,23 @@ int read_key_of_mine(int game[][4]) {
     puts(key_names[event.keycode]);
     puts("\n");
   }
-  if (event.keycode == _KEY_UP && event.keydown) {
+  if (event.keycode == _KEY_W && event.keydown) {
     if (game[0][0] <= -65536) {
       _halt(1);
     }
     move_up(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_DOWN && event.keydown) {
-    move_up(game, 4);
+  if (event.keycode == _KEY_S && event.keydown) {
+    move_down(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_LEFT && event.keydown) {
-    move_up(game, 4);
+  if (event.keycode == _KEY_A && event.keydown) {
+    move_left(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_RIGHT && event.keydown) {
-    move_up(game, 4);
+  if (event.keycode == _KEY_D && event.keydown) {
+    move_right(game, 4);
     return 1;
   }
   return -2;
