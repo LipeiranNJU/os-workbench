@@ -285,7 +285,7 @@ void update_screen(int bias, int** game) {
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
       if (0 && x <= 3 && y <=3) {
-        draw_tile(x * 32, y * 32, 32, SIDE, block[game[x][y]+1]);
+        draw_tile(x * 32, y * 32, 32, SIDE, block[(game[x][y]+1)*3]);
         break;
       }
       else {
