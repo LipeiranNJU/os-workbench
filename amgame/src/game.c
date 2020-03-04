@@ -178,22 +178,22 @@ void move_right(int game[][4], int size) {
   }
 }
 
-// typedef int color;
-// static color block[] = {
-//   0xffbcd6dd, 
-//   0xffadd9d8,
-//   0xff9fdcd4,
-//   0xff91e0d0,
-//   0xff83e3cc,
-//   0x0075e7c8,
-//   0xff67eac4,
-//   0xff58edc0,
-//   0xff4af1bc,
-//   0xff3cf4b8,
-//   0xff2ef8b4,
-//   0xff20fbb0,
-//   0xff12ffac
-// };
+typedef int color;
+static color block[] = {
+  0xbcd6dd, 
+  0xadd9d8,
+  0x9fdcd4,
+  0x91e0d0,
+  0x83e3cc,
+  0x75e7c8,
+  0x67eac4,
+  0x58edc0,
+  0x4af1bc,
+  0x3cf4b8,
+  0x2ef8b4,
+  0x20fbb0,
+  0x12ffac
+};
 
 
 size_t _io_write(uint32_t dev, uintptr_t reg, void *buf, size_t size);
@@ -298,7 +298,7 @@ void update_screen(int update, int** game) {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if (x <= 3 && y <= 3) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, 0xffffff);
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[0]);
       }
       else {
         // if ((x & 1) ^ (y & 1) ) {
