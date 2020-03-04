@@ -277,10 +277,12 @@ int read_key(int** game) {
   }
   return 0;
 
-  return event.keycode;
 }
 
-void update_screen(int bias, int** game) {
+void update_screen(int update, int** game) {
+  if (update == 0) {
+    return;
+  }
   init();
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
