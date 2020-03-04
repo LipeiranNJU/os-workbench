@@ -263,7 +263,7 @@ int read_key(int** game) {
     puts("\n");
   }
   if (event.keycode == _KEY_UP && event.keydown) {
-    if (game[0][0] == -1) {
+    if (game[0][0] <= -10) {
       _halt(1);
     }
     move_up(game, 4);
