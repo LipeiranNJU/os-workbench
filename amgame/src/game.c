@@ -230,7 +230,6 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    puts("TEST\n");
     int mode = read_key_of_mine(game);
     update_screen(mode, (int**) game);
   }
