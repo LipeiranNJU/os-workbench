@@ -12,7 +12,8 @@ int min(int a, int b){
 
 static void init();
 
-void move_up(int game[][4], int size) {
+int move_up(int game[][4], int size) {
+  int valid = 0;
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (i != 0) {
@@ -20,6 +21,7 @@ void move_up(int game[][4], int size) {
         while (k != 0 && game[k - 1][j] < 0) {
           game[k - 1][j] = game[k][j];
           game[k][j] = -1;
+          valid = 1;
           k--;
         }
       }
@@ -33,7 +35,7 @@ void move_up(int game[][4], int size) {
         if (game[k - 1][j] >=0 && game[k - 1][j] == game[k][j]) {
           game[k-1][j] += 1;
           game[k][j] = -1;
-          
+          valid = 1;
         }
       }
     }
@@ -51,9 +53,11 @@ void move_up(int game[][4], int size) {
       }
     }
   }
+  return valid;
 }
 
-void move_down(int game[][4], int size) {
+int move_down(int game[][4], int size) {
+  int valid = 0;
   for (int i = size - 1; i >= 0; i--) {
     for (int j = size -1; j >= 0; j--) {
       if (i != size - 1) {
@@ -62,6 +66,7 @@ void move_down(int game[][4], int size) {
           game[k + 1][j] = game[k][j];
           game[k][j] = -1;
           k++;
+          valid = 1;
 
         }
       }
@@ -75,6 +80,7 @@ void move_down(int game[][4], int size) {
         if (game[k + 1][j] >=0 && game[k + 1][j] == game[k][j]) {
           game[k + 1][j] += 1;
           game[k][j] = -1;
+          valid = 1;
         }
       }
     }
@@ -93,9 +99,11 @@ void move_down(int game[][4], int size) {
       }
     }
   }
+  return valid;
 }
 
-void move_left(int game[][4], int size) {
+int move_left(int game[][4], int size) {
+  int valid = 0;
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
       if (i != 0) {
@@ -104,6 +112,7 @@ void move_left(int game[][4], int size) {
           game[j][k - 1] = game[j][k];
           game[j][k] = -1;
           k--;
+          valid = 1;
         }
       }
     }
@@ -117,7 +126,7 @@ void move_left(int game[][4], int size) {
         if (game[j][k - 1] >=0 && game[j][k - 1] == game[j][k]) {
           game[j][k-1] += 1;
           game[j][k] = -1;
-          
+          valid = 1;
         }
       }
     }
@@ -135,9 +144,11 @@ void move_left(int game[][4], int size) {
       }
     }
   }
+  return valid;
 }
 
-void move_right(int game[][4], int size) {
+int move_right(int game[][4], int size) {
+  int valid = 0;
   for (int i = size - 1; i >= 0; i--) {
     for (int j = size -1; j >= 0; j--) {
       if (i != size - 1) {
@@ -146,7 +157,7 @@ void move_right(int game[][4], int size) {
           game[j][k + 1] = game[j][k];
           game[j][k] = -1;
           k++;
-
+          valid = 1;
         }
       }
     }
@@ -159,6 +170,7 @@ void move_right(int game[][4], int size) {
         if (game[j][k + 1] >=0 && game[j][k + 1] == game[j][k]) {
           game[j][k + 1] += 1;
           game[j][k] = -1;
+          valid = 1;
         }
       }
     }
@@ -176,6 +188,7 @@ void move_right(int game[][4], int size) {
       }
     }
   }
+  return valid;
 }
 
 typedef int color;
@@ -268,27 +281,23 @@ int read_key_of_mine(int game[][4]) {
     puts("\n");
   }
   if ((event.keycode == _KEY_A || event.keycode == _KEY_LEFT) && event.keydown) {
-    move_up(game, 4);
-    return 1;
+    return move_up(game, 4);
   }
   if ((event.keycode == _KEY_D || event.keycode == _KEY_RIGHT) && event.keydown) {
-    move_down(game, 4);
-    return 1;
+    return move_down(game, 4);
   }
   if ((event.keycode == _KEY_W || event.keycode == _KEY_UP) && event.keydown) {
-    move_left(game, 4);
-    return 1;
+    return move_left(game, 4);
   }
   if ((event.keycode == _KEY_S || event.keycode == _KEY_DOWN) && event.keydown) {
-    move_right(game, 4);
-    return 1;
+    return move_right(game, 4);
   }
-  return -2;
+  return 0;
 
 }
 
 void update_screen(int update, int game[][4]) {
-  if (update == -2) {
+  if (update == 0) {
     return;
   }
 
