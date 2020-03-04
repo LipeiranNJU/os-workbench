@@ -245,8 +245,8 @@ static void init() {
 
 int read_key(int** game) {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
-  if (game[0][0] >= 0) {
-    _halt(0);
+  if (game[0][0] <= 0) {
+    _halt(3);
   }
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
