@@ -271,15 +271,15 @@ int read_key_of_mine(int game[][4]) {
     move_up(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_D && event.keydown) {
+  if ((event.keycode == _KEY_D || event.keycode == _KEY_RIGHT) && event.keydown) {
     move_down(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_W && event.keydown) {
+  if ((event.keycode == _KEY_W || event.keycode == _KEY_UP) && event.keydown) {
     move_left(game, 4);
     return 1;
   }
-  if (event.keycode == _KEY_S && event.keydown) {
+  if ((event.keycode == _KEY_S || event.keycode == _KEY_DOWN) && event.keydown) {
     move_right(game, 4);
     return 1;
   }
