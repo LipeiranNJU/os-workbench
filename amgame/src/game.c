@@ -284,14 +284,16 @@ void update_screen(int bias, int** game) {
   init();
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-      // if (x <= 3 && y <=3) {
-      //   draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y]]);
-      //   break;
-      // }
-      if ((x & 1) ^ (y & 1) ) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
-      } else {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]);
+      if (x <= 3 && y <=3) {
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y]]);
+        break;
+      }
+      else {
+        if ((x & 1) ^ (y & 1) ) {
+          draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
+        } else {
+          draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]);
+        }
       }
     }
   }
