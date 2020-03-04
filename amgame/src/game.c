@@ -10,6 +10,8 @@ int min(int a, int b){
   return a > b ? b : a;
 }
 
+static void init();
+
 void move_up(int game[][4], int size) {
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
@@ -211,7 +213,7 @@ static void draw_tile(int x, int y, int w, int h, uint32_t color) {
 // Operating system is a C program!
 int main(const char *args) {
   _ioe_init();
-
+  init();
   int game[4][4];
 
 
@@ -294,7 +296,6 @@ void update_screen(int update, int** game) {
   }
 
   
-  init();
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
       if (x <= 3 && y <= 3) {
