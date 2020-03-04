@@ -221,16 +221,15 @@ int main(const char *args) {
     }
   }
 
-  if (game[0][0] < 0) {
-    _halt(8);
-  }
 
   puts("mainargs = \"");
   puts(args); // make run mainargs=xxx
   puts("\"\n");
 
   splash();
-
+  if (game[0][0] < 0) {
+    _halt(9);
+  }
   puts("Press any key to see its key code...\n");
   while (1) {
     update_screen(read_key((int **)game), (int**) game);
