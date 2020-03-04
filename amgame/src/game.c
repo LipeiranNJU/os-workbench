@@ -91,9 +91,9 @@ void update_screen(int bias) {
   for (int x = 0; x * length_of_block <= w; x ++) {
     for (int y = 0; y * length_of_block <= h; y++) {
       if ((x & 1) ^ (y & 1) ) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
+        draw_tile(x * length_of_block, y * length_of_block, length_of_block, length_of_block, block[(x+y)%13]); 
       } else {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]);
+        draw_tile(x * length_of_block, y * length_of_block, length_of_block, length_of_block, block[(x+y)%13]);
       }
     }
   }
