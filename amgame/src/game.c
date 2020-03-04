@@ -292,8 +292,7 @@ void update_screen(int update, int** game) {
     return;
   }
 
-  if (update == 1)
-    return;
+
 
   
   for (int x = 0; x * 16 <= w; x ++) {
