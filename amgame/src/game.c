@@ -219,7 +219,7 @@ int main(const char *args) {
 
   for (int i = 0; i < 4; i ++) {
     for (int j = 0; j < 4; j ++) {
-        game[i][j] = -1;
+        game[i][j] = 0;
     }
   }
 
@@ -298,7 +298,7 @@ void update_screen(int update, int** game) {
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
       if (x <= 3 && y <= 3) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y]+2]);
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y]]);
       }
       else {
         // if ((x & 1) ^ (y & 1) ) {
