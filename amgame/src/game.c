@@ -292,6 +292,9 @@ void update_screen(int update, int** game) {
     return;
   }
 
+  if (update == 1)
+    return;
+
   
   for (int x = 0; x * 32 <= w; x ++) {
     for (int y = 0; y * 32 <= h; y++) {
