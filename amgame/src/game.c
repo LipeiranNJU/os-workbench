@@ -1,7 +1,7 @@
 #include <game.h>
 
 void _halt(int code);
-int read_key();
+int read_key_inamgame();
 void update_screen(int);
 static int SIDE;
 static int w, h;
@@ -56,7 +56,7 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    update_screen(read_key());
+    update_screen(read_key_inamgame());
   }
   return 0;
 }
@@ -70,7 +70,7 @@ static void init() {
   SIDE=max(w, h)/4;
 }
 
-int read_key() {
+int read_key_inamgame() {
   _DEV_INPUT_KBD_t event = { .keycode = _KEY_NONE };
   #define KEYNAME(key) \
     [_KEY_##key] = #key,
