@@ -2,7 +2,7 @@
 
 void _halt(int code);
 int read_key(int**);
-void update_screen(int);
+void update_screen(int, int**);
 #define SIDE 16
 static int w, h;
 static int length_of_block;
@@ -229,7 +229,7 @@ int main(const char *args) {
 
   puts("Press any key to see its key code...\n");
   while (1) {
-    update_screen(read_key((int **)game));
+    update_screen(read_key((int **)game), (int**) game);
   }
   return 0;
 }
@@ -280,10 +280,13 @@ int read_key(int** game) {
   return event.keycode;
 }
 
-void update_screen(int bias) {
+void update_screen(int bias, int** game) {
   init();
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
+      if (x <= 3 && y <=3) {
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y]]);
+      }
       if ((x & 1) ^ (y & 1) ) {
         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[(x+y)%13]); 
       } else {
