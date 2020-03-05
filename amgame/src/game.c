@@ -16,6 +16,17 @@ int my_rand() {
   I = 1664525 * I + 1013904223;
   return I;
 }
+int get_block(int game[][4]) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      if(game[i][j] < 0) {
+        game[i][j] = 0;
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
 static void init();
 
 int move_up(int game[][4], int size) {
@@ -243,12 +254,14 @@ int main(const char *args) {
   }
   int tx,ty;
   my_srand(153247);
-  tx = my_rand()%4;
-  ty = my_rand()%4;
-  game[tx][ty] = 0;
-  tx = my_rand()%4;
-  ty = my_rand()%4;
-  game[tx][ty] = 0;
+  tx = my_rand() % 4;
+  ty = my_rand() % 4;
+  // game[tx][ty] = 0;
+  // tx = my_rand()%4;
+  // ty = my_rand()%4;
+  // game[tx][ty] = 0;
+  get_block(game);
+  get_block(game);
 
   puts("mainargs = \"");
   puts(args); // make run mainargs=xxx
@@ -261,7 +274,6 @@ int main(const char *args) {
     int mode = read_key_of_mine(game);
     update_screen(mode, game);
     my_srand(153247);
-    int tx,ty;
     // tx = my_rand();
     // ty = my_rand();
     // while (game[tx][ty] >= 0) {
