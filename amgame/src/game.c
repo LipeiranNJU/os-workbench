@@ -285,6 +285,7 @@ int main(const char *args) {
     if (mode == 1) {
       get_block(game);
       update_screen(mode, game);
+      puts("One block\n");
     }
   }
   return 0;
