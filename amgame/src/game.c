@@ -267,6 +267,8 @@ int main(const char *args) {
     ty = my_rand() % 4;
     // if (game[tx][ty] >= 0)
     //   goto L;
+    tx = 3;
+    ty = 3;
     game[tx][ty] = 7;
   }
   return 0;
