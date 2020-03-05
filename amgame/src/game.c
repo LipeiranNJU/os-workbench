@@ -263,8 +263,8 @@ int main(const char *args) {
     my_srand(153247);
     int tx,ty;
     // L:
-    tx = my_rand()%4;
-    ty = my_rand()%4;
+    tx = my_rand() % 4;
+    ty = my_rand() % 4;
     // if (game[tx][ty] >= 0)
     //   goto L;
     game[tx][ty] = 0;
