@@ -8,6 +8,7 @@ int lipeiran;
 int min(int a, int b){
   return a > b ? b : a;
 }
+int move_up(int game[][4], int size);
 static int I;
 void my_srand(int seed) {
   I = seed;
@@ -16,6 +17,7 @@ int my_rand() {
   I = 1664525 * I + 1013904223;
   return I;
 }
+
 int get_block(int game[][4]) {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
@@ -280,9 +282,10 @@ int main(const char *args) {
     // }
     // tx = 3;
     // ty = 3;
-
-    get_block(game);
-    update_screen(mode, game);
+    if (mode == 1) {
+      get_block(game);
+      update_screen(mode, game);
+    }
   }
   return 0;
 }
