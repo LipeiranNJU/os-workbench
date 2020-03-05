@@ -313,8 +313,8 @@ void update_screen(int update, int game[][4]) {
   
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-      if (x <= 7 && y <= 7) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x/2][y/2] + 1]);
+      if (x <= 11 && y <= 11) {
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x/3][y/3] + 1]);
         // game[3][3] = 0;
       }
       else {
