@@ -1,5 +1,5 @@
 #include <game.h>
-
+#include <time.h>
 void _halt(int code);
 int read_key_of_mine(int game[][4]);
 void update_screen(int, int[][4]);
