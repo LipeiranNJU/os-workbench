@@ -238,10 +238,17 @@ int main(const char *args) {
 
   for (int i = 0; i < 4; i ++) {
     for (int j = 0; j < 4; j ++) {
-        game[i][j] = 0;
+        game[i][j] = -1;
     }
   }
-
+  int tx,ty;
+  my_srand(153247);
+  tx = my_rand()%4;
+  ty = my_rand()%4;
+  game[tx][ty] = 0;
+  tx = my_rand()%4;
+  ty = my_rand()%4;
+  game[tx][ty] = 0;
 
   puts("mainargs = \"");
   puts(args); // make run mainargs=xxx
@@ -255,11 +262,11 @@ int main(const char *args) {
     update_screen(mode, game);
     my_srand(153247);
     int tx,ty;
-    // L:
+    L:
     tx = my_rand()%4;
     ty = my_rand()%4;
-    // if (game[tx][ty] >= 0)
-    //   goto L;
+    if (game[tx][ty] >= 0)
+      goto L;
     game[tx][ty] = 0;
   }
   return 0;
