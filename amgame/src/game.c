@@ -252,10 +252,10 @@ int main(const char *args) {
         game[i][j] = -1;
     }
   }
-  int tx,ty;
+  // int tx,ty;
   my_srand(153247);
-  tx = my_rand() % 4;
-  ty = my_rand() % 4;
+  // tx = my_rand() % 4;
+  // ty = my_rand() % 4;
   // game[tx][ty] = 0;
   // tx = my_rand()%4;
   // ty = my_rand()%4;
@@ -280,10 +280,10 @@ int main(const char *args) {
     //   tx = (tx + 1) % 4;
     //   ty = (ty + 1) % 4;
     // }
-    tx = 3;
-    ty = 3;
+    // tx = 3;
+    // ty = 3;
 
-    game[tx][ty] = 6;
+    get_block(game);
   }
   return 0;
 }
