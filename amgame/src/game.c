@@ -272,7 +272,6 @@ int main(const char *args) {
   // puts("Press any key to see its key code...\n");
   while (1) {
     int mode = read_key_of_mine(game);
-    update_screen(mode, game);
     my_srand(153247);
     // tx = my_rand();
     // ty = my_rand();
@@ -284,6 +283,7 @@ int main(const char *args) {
     // ty = 3;
 
     get_block(game);
+    update_screen(mode, game);
   }
   return 0;
 }
