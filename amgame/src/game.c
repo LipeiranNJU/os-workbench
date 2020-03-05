@@ -9,7 +9,14 @@ int lipeiran;
 int min(int a, int b){
   return a > b ? b : a;
 }
-
+static int I;
+void my_srand(int seed) {
+  I = seed;
+}
+int my_rand() {
+  I = 1664525 * I + 1013904223;
+  return I;
+}
 static void init();
 
 int move_up(int game[][4], int size) {
@@ -308,7 +315,7 @@ void update_screen(int update, int game[][4]) {
     for (int y = 0; y * SIDE <= h; y++) {
       if (x <= 3 && y <= 3) {
         draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x][y] + 1]);
-        game[3][3] = 0;
+        // game[3][3] = 0;
       }
       else {
         // if ((x & 1) ^ (y & 1) ) {
