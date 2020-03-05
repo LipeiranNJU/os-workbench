@@ -264,10 +264,10 @@ int main(const char *args) {
     int tx,ty;
     tx = my_rand();
     ty = my_rand();
-    while (game[tx][ty] >= 0) {
-      tx = (tx + 1) % 4;
-      ty = (ty + 1) % 4;
-    }
+    // while (game[tx][ty] >= 0) {
+    //   tx = (tx + 1) % 4;
+    //   ty = (ty + 1) % 4;
+    // }
 
     game[tx][ty] = 6;
   }
