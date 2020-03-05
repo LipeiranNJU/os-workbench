@@ -254,6 +254,14 @@ int main(const char *args) {
   while (1) {
     int mode = read_key_of_mine(game);
     update_screen(mode, game);
+    my_srand(time(0));
+    int tx,ty;
+    L:
+    tx = my_rand()%4;
+    ty = my_rand()%4;
+    if (game[tx][ty] >= 0)
+      goto L;
+    game[tx][ty] = 0;
   }
   return 0;
 }
