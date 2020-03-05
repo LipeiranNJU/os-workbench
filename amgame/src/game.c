@@ -262,13 +262,12 @@ int main(const char *args) {
     update_screen(mode, game);
     my_srand(153247);
     int tx,ty;
-    // L:
+    L:
     tx = my_rand() % 4;
     ty = my_rand() % 4;
-    // if (game[tx][ty] >= 0)
-    //   goto L;
-    tx = 3;
-    ty = 3;
+    if (game[tx][ty] >= 0)
+      goto L;
+
     game[tx][ty] = 6;
   }
   return 0;
