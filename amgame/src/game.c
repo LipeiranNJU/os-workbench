@@ -293,7 +293,7 @@ static void init() {
   _io_read(_DEV_VIDEO, _DEVREG_VIDEO_INFO, &info, sizeof(info));
   w = info.width;
   h = info.height;
-  lipeiran = min(w, h) / 100;
+  lipeiran = min(w, h) / SIDE;
 }
 
 int read_key_of_mine(int game[][4]) {
@@ -342,8 +342,8 @@ void update_screen(int update, int game[][4]) {
   
   for (int x = 0; x * SIDE <= w; x ++) {
     for (int y = 0; y * SIDE <= h; y++) {
-      if (x <= 15 && y <= 15) {
-        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x / 4][y / 4] + 1]);
+      if (x < lipeiran && y < lipeiran) {
+        draw_tile(x * SIDE, y * SIDE, SIDE, SIDE, block[game[x / (lipeiran / 4)][y / (lipeiran / 4)] + 1]);
         // game[3][3] = 0;
       }
       else {
