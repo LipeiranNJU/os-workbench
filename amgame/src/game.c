@@ -269,7 +269,7 @@ int main(const char *args) {
     //   goto L;
     tx = 3;
     ty = 3;
-    game[tx][ty] = 7;
+    game[tx][ty] = 10;
   }
   return 0;
 }
