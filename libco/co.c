@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <setjmp.h>
 #include <stdint.h>
+#include <assert.h>
 int times = 0;
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   asm volatile (
@@ -87,6 +88,7 @@ void co_yield() {
   if (val == 0) {
     printf("VVV\n");
     co* tmp = current;
+    assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
