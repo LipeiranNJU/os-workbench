@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <setjmp.h>
 #include <stdint.h>
-
+int times = 0;
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   asm volatile (
 #if __x86_64__
@@ -38,24 +38,36 @@ typedef struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 } co;
 
-co *current;
+co *current = NULL;
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
+  co* tmp;
+  if (current == NULL) {
+    current = pco;
+  } else {
+    tmp = current->waiter;
+    while (tmp->waiter != NULL) {
+      tmp = tmp->waiter;
+    }
+    tmp->waiter = pco;
+  }
   pco->name = malloc(strlen(name)+1); // 分配协程名字空间
   pco->arg = arg; // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
   strcpy(pco->name, name); // 同上，把会丢失的变量标注
   pco->func = func; // 同上，保留函数以便在co_wait里面调用
   pco->status = CO_NEW; // 标注新协程的状态
   printf("%s\n", pco->name); // 一些测试信息，最后得删掉
-  // 问题来了…如何理解栈顶，先放一放
   return pco;
 }
 
 void co_wait(struct co *co) {
   if (co->status == CO_NEW) {
     co->func(co->arg);
+  }
+  if (times > 1000) {
+    return ;
   }
 
 }
@@ -65,10 +77,18 @@ void co_yield() {
   // save data
   int val = setjmp(current->context);
   if (val == 0) {
+    co* tmp = current;
+    while (tmp->waiter != NULL) {
+      tmp = tmp->waiter;
+    }
+    tmp->waiter = current;
     current = current->waiter;
     longjmp(current->context, 1);
     stack_switch_call(current + 1, current->func, (uintptr_t) current->arg);
+    // 因为跳转的是等待的协程， 所以之前等待的协程发出co_yield()的时候必然已经执行过保存了
+    // 接下来那一个协程就能够自然而然地进入下面那个情形返回继续执行了
   } else {
+    times++;
     return;
   }
 }
