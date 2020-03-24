@@ -63,12 +63,12 @@ void co_wait(struct co *co) {
 void co_yield() {
   // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
   // save data
-  current = current->waiter;
-  stack_switch_call(current + 1, current->func, current->arg);
-  // int val = setjmp(current->context);
-  // if (val == 0) {
-
-  // } else {
-
-  // }
+  int val = setjmp(current->context);
+  if (val == 0) {
+    current = current->waiter;
+    longjmp(current, 1);
+    stack_switch_call(current + 1, current->func, current->arg);
+  } else {
+    return;
+  }
 }
