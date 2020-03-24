@@ -46,8 +46,9 @@
     YM2143 data sheet
 
 **************************************************************************************/
-#include <klib.h>
+
 #include <math.h>
+#include <klib.h>
 #include "emu2413.h"
 
 static const unsigned char default_inst[15][8] = {
