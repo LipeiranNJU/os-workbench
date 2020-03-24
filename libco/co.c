@@ -96,6 +96,7 @@ void co_yield() {
     tmp->waiter = current;
     co* next = current->waiter;
     current->waiter = NULL;
+    printf("XXX\n");
     longjmp(next->context, 1);
     stack_switch_call(next + 1, next->func, (uintptr_t) next->arg);
     // 因为跳转的是等待的协程， 所以之前等待的协程发出co_yield()的时候必然已经执行过保存了
