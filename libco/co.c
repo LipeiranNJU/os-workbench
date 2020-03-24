@@ -92,6 +92,7 @@ void co_yield() {
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
+    printf("WWW\n");
     tmp->waiter = current;
     current = current->waiter;
     longjmp(current->context, 1);
