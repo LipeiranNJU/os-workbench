@@ -29,9 +29,8 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
   pco->name = malloc(strlen(name)+1);
   strcpy(pco->name, name);
-  printf("HHH\n");
-  printf("%s\n", name);
-  return NULL;
+  printf("%s\n", pco->name);
+  return pco;
 }
 
 void co_wait(struct co *co) {
