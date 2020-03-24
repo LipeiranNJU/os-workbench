@@ -27,9 +27,11 @@ typedef struct co {
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
+  memset(pco, 0, sizeof(co));
   pco->name = malloc(strlen(name)+1);
   pco->arg = arg;
   strcpy(pco->name, name);
+  pco->status = CO_NEW;
   printf("%s\n", pco->name);
   return pco;
 }
