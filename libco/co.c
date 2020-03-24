@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <setjmp.h>
 
-#ifndef __KLIB_H__
+
 #define STACK_SIZE      512
 typedef unsigned char uint8_t;
 typedef enum co_status {
@@ -27,7 +27,7 @@ typedef struct co {
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
-  // strcpy(pco->name, name);
+  strcpy(pco->name, name);
   printf("HHH\n");
   printf("%s\n", name);
   return NULL;
@@ -39,4 +39,3 @@ void co_wait(struct co *co) {
 
 void co_yield() {
 }
-#endif
