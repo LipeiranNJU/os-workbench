@@ -26,9 +26,9 @@ typedef struct co {
 } co;
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
-  static struct co co0;
-  strcpy(co0.name, name);
-  printf("HHH");
+  // static struct co co0;
+  // strcpy(co0.name, name);
+  // printf("HHH");
   return NULL;
 }
 
