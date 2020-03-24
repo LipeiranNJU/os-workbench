@@ -38,6 +38,8 @@ typedef struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 } co;
 
+co *current;
+
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
@@ -59,8 +61,10 @@ void co_wait(struct co *co) {
 }
 
 void co_yield() {
-  // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，作为参数
-  stack_switch_call(NULL, NULL, 0);
+  // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
+  // save data
+  current = current->waiter;
+  stack_switch_call(current + 1, current->func, current->arg);
   // int val = setjmp(current->context);
   // if (val == 0) {
 
