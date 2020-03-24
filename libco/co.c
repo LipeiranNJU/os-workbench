@@ -27,12 +27,13 @@ typedef struct co {
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
-  memset(pco, 0, sizeof(co));
-  pco->name = malloc(strlen(name)+1);
-  pco->arg = arg;
-  strcpy(pco->name, name);
-  pco->status = CO_NEW;
-  printf("%s\n", pco->name);
+  memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
+  pco->name = malloc(strlen(name)+1); // 分配协程名字空间
+  pco->arg = arg; // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
+  strcpy(pco->name, name); // 同上，把会丢失的变量标注
+  pco->status = CO_NEW; // 标注新协程的状态
+  printf("%s\n", pco->name); // 一些测试信息，最后得删掉
+  // 问题来了…如何理解栈顶，先放一放
   return pco;
 }
 
