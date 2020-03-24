@@ -66,7 +66,7 @@ void co_yield() {
   int val = setjmp(current->context);
   if (val == 0) {
     current = current->waiter;
-    longjmp(current, 1);
+    longjmp(current->context, 1);
     stack_switch_call(current + 1, current->func, (uintptr_t) current->arg);
   } else {
     return;
