@@ -41,6 +41,7 @@ typedef struct co {
 co *current = NULL;
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
+  printf("Beginning of start\n");
   co* pco = malloc(sizeof(co));
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
   co* tmp;
