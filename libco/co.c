@@ -97,7 +97,7 @@ void co_yield() {
     co* next = current->waiter;
     current->waiter = NULL;
     longjmp(next->context, 1);
-    stack_switch_call(current + 1, current->func, (uintptr_t) current->arg);
+    stack_switch_call(next + 1, next->func, (uintptr_t) next->arg);
     // 因为跳转的是等待的协程， 所以之前等待的协程发出co_yield()的时候必然已经执行过保存了
     // 接下来那一个协程就能够自然而然地进入下面那个情形返回继续执行了
   } else {
