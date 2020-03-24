@@ -31,6 +31,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   pco->name = malloc(strlen(name)+1); // 分配协程名字空间
   pco->arg = arg; // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
   strcpy(pco->name, name); // 同上，把会丢失的变量标注
+  pco->func = func; // 同上，保留函数以便在co_wait里面调用
   pco->status = CO_NEW; // 标注新协程的状态
   printf("%s\n", pco->name); // 一些测试信息，最后得删掉
   // 问题来了…如何理解栈顶，先放一放
@@ -38,6 +39,9 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 }
 
 void co_wait(struct co *co) {
+  if (co->status == CO_NEW) {
+    co->func(co->arg);
+  }
 
 }
 
