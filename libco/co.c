@@ -25,9 +25,6 @@ struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 };
 
-struct co {
-};
-
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   static struct co co0;
   strcpy(co0.name, name);
