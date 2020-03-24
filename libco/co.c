@@ -50,7 +50,6 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   if (current == NULL) {
     current = pco;
   } else {
-    tmp = current->waiter;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
