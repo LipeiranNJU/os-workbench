@@ -85,6 +85,7 @@ void co_yield() {
   int val = setjmp(current->context);
   printf("UUU\n");
   if (val == 0) {
+    printf("VVV\n");
     co* tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
