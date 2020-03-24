@@ -79,10 +79,11 @@ void co_wait(struct co *co) {
 }
 
 void co_yield() {
-  printf("TTT");
+  printf("TTT\n");
   // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
   // save data
   int val = setjmp(current->context);
+  printf("UUU\n");
   if (val == 0) {
     co* tmp = current;
     while (tmp->waiter != NULL) {
