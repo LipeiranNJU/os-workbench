@@ -59,6 +59,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   pco->func = func; // 同上，保留函数以便在co_wait里面调用
   pco->status = CO_NEW; // 标注新协程的状态
   printf("%s\n", pco->name); // 一些测试信息，最后得删掉
+  printf("$$$\n");
   return pco;
 }
 
