@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <setjmp.h>
 
-co *current;
+// co *current;
 #define STACK_SIZE      512
 typedef unsigned char uint8_t;
 typedef enum co_status {
