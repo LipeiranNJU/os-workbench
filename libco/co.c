@@ -30,6 +30,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   pco->name = malloc(strlen(name)+1);
   strcpy(pco->name, name);
   printf("%s\n", pco->name);
+  func(arg);
   return pco;
 }
 
