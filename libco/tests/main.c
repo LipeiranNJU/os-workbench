@@ -25,6 +25,7 @@ static void work_loop(void *arg) {
 
 static void work(void *arg) {
     printf("Into work\n");
+    printf("arg%s\n", arg);
     work_loop(arg);
 }
 
