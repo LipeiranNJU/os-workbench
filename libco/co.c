@@ -96,6 +96,9 @@ void co_yield() {
   if (val == 0) {
     printf("VVV\n");
     co* tmp = current;
+    if (tmp->waiter == NULL) {
+      printf("$$$$$$$%s\n", tmp->name);
+    }
     assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
