@@ -53,7 +53,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     printf("Thread 1\n");
     current = pco;
   } else {
-    printf("Thread 2\n")
+    printf("Thread 2\n");
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
