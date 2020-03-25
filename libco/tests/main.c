@@ -34,8 +34,8 @@ static void work(void *arg) {
 static void test_1() {
 
     struct co *thd1 = co_start("thread-1", work, "X");
-    printf("DFSLFDS\n");
     struct co *thd2 = co_start("thread-2", work, "Y");
+    printf("th1 arg:%s\n", thd1->arg);
 
     co_wait(thd1);
     co_wait(thd2);
