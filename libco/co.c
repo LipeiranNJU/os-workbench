@@ -11,7 +11,7 @@ uintptr_t arg1;
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   sp1 = sp;
   arg1 = arg;
-  printf("sp1 in is:%lld\n arg in stack switch:%s\n", (unsigned long long)((uintptr_t)(sp1)) ,(char*) arg1);
+  printf("sp1 in is:%lld\n arg in stack switch:%lx\n", (unsigned long long)((uintptr_t)(sp1)), (unsigned long) arg);
   asm volatile (
 #if __x86_64__
     "movq %0, %%rsp; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)

@@ -28,7 +28,6 @@ static void work(void *arg) {
     printf("Into work\n");
     int arg_addr = 89;
     // printf("arg%llx\n", (unsigned long long) arg_addr);
-    printf("Reminder1%x\n", 154);
     printf("%s\n", "Hello World!");
     printf("Number:%x\n", 16);
     printf("arg%llx\n", (unsigned long long) arg_addr);
