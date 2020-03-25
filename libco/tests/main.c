@@ -36,7 +36,8 @@ static void test_1() {
 
     struct co *thd1 = co_start("thread-1", work, "X");
     struct co *thd2 = co_start("thread-2", work, "Y");
-    printf("th1 arg:%s\n", thd1->arg);
+    for (int i = 0; i < 10; i++)
+    printf("th1 arg:%c\n", (thd1->arg)[i]);
 
     co_wait(thd1);
     co_wait(thd2);
