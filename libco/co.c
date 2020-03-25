@@ -92,7 +92,7 @@ void co_yield() {
   // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
   // save data
   int val = setjmp(current->context);
-  assert(current->waiter != NULL);
+  // assert(current->waiter != NULL);
   printf("after setjmp current addr:%llx\tcurrent->waiter:%llx\n", (unsigned long long) (uintptr_t) (current), (unsigned long long) (uintptr_t) (current->waiter));
   assert(current->waiter != NULL);
   printf("UUU\n");
