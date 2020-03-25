@@ -14,6 +14,7 @@ static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
     "movl %0, %%esp; movl %2, 4(%0); jmp *%1" : : "b"((uintptr_t)sp - 8), "d"(entry), "a"(arg)
 #endif
   );
+  printf("arg in stack switch:%s\n", (char *) arg);
 }
 
 // co *current;
