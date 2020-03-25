@@ -55,6 +55,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     printf("%llx\n", ((unsigned long long)((uintptr_t)pco)));
   } else {
     printf("Thread 2 current:%llx\n",((unsigned long long)((uintptr_t)current)));
+    printf("Thread 2 pco:%llx\n",((unsigned long long)((uintptr_t)pco)));
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
