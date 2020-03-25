@@ -94,7 +94,7 @@ void co_yield() {
   int val = setjmp(current->context);
   // assert(current->waiter != NULL);
   printf("after setjmp current addr:%llx\tcurrent->waiter:%llx\n", (unsigned long long) (uintptr_t) (current), (unsigned long long) (uintptr_t) (current->waiter));
-  printf("current->waiter:%llx\n", (uint64_t)((uintptr_t)(current->waiter)));
+  printf("current->waiter:%llx\n", ((uint64_t)((uintptr_t)(current->waiter))));
   assert(current->waiter != NULL);
   printf("UUU\n");
   printf("Value:%d\n", val);
