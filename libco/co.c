@@ -51,10 +51,10 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   // printf("Dot2\n");
   if (current == NULL) {
     current = pco;
-    printf("%llx\n", ((unsigned long long)((uintptr_t)pco)));
+    // printf("%llx\n", ((unsigned long long)((uintptr_t)pco)));
   } else {
-    printf("Thread 2 current:%llx\n",((unsigned long long)((uintptr_t)current)));
-    printf("Thread 2 pco:%llx\n",((unsigned long long)((uintptr_t)pco)));
+    // printf("Thread 2 current:%llx\n",((unsigned long long)((uintptr_t)current)));
+    // printf("Thread 2 pco:%llx\n",((unsigned long long)((uintptr_t)pco)));
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
@@ -74,11 +74,11 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 }
 
 void co_wait(struct co *co) {
-  printf("HHH\n");
+  // printf("HHH\n");
   uint8_t s[10000];
   if (co->status == CO_NEW) {
     printf("%s\n", co->name);
-    printf("new stack:%llx, stack[512]%llx", (unsigned long long) ((uintptr_t)(co+1)), (unsigned long long) ((uintptr_t)(&co->stack[512])));
+    // printf("new stack:%llx, stack[512]%llx", (unsigned long long) ((uintptr_t)(co+1)), (unsigned long long) ((uintptr_t)(&co->stack[512])));
     printf("CO->arg%s\n",(char *) co->arg);
     stack_switch_call(&co->stack[512], co->func, (uintptr_t)co->arg);
     printf("FUCK");
