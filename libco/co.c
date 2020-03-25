@@ -65,7 +65,8 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     printf("Thread waiter:%llx\n",((unsigned long long)((uintptr_t)current->waiter)));
   }
   pco->name = malloc(strlen(name)+1); // 分配协程名字空间
-  pco->arg = arg; // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
+  pco->arg = malloc(strlen(arg)+1);
+  strcpy(pco->arg, arg); // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
   strcpy(pco->name, name); // 同上，把会丢失的变量标注
   pco->func = func; // 同上，保留函数以便在co_wait里面调用
   pco->status = CO_NEW; // 标注新协程的状态
