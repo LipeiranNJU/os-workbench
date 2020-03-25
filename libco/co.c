@@ -7,6 +7,7 @@
 #include <assert.h>
 int times = 0;
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
+    printf("arg in stack switch:%s\n", (char *) arg);
   asm volatile (
 #if __x86_64__
     "movq %0, %%rsp; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
@@ -14,7 +15,6 @@ static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
     "movl %0, %%esp; movl %2, 4(%0); jmp *%1" : : "b"((uintptr_t)sp - 8), "d"(entry), "a"(arg)
 #endif
   );
-  printf("arg in stack switch:%s\n", (char *) arg);
 }
 
 // co *current;
