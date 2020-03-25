@@ -88,7 +88,6 @@ void co_yield() {
   if (val == 0) {
     printf("VVV\n");
     co* tmp = current;
-    assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
