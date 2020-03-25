@@ -62,6 +62,9 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     }
     tmp->waiter = pco;
   }
+  if (current->waiter != NULL) {
+    printf("Thread waiter:%llx\n",((unsigned long long)((uintptr_t)pco->waiter)));
+  }
   printf("Dot3\n");
   pco->name = malloc(strlen(name)+1); // 分配协程名字空间
   pco->arg = arg; // 记录协程参数，因为待会要先切换到被调用的函数，参数就丢了，所以这里要先保存一下
