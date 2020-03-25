@@ -80,7 +80,7 @@ void co_wait(struct co *co) {
   printf("HHH\n");
   // uint8_t s[10000];
   if (co->status == CO_NEW) {
-    stack_switch_call(co->stack, co->func, (uintptr_t)co->arg);
+    stack_switch_call(&co->stack[128], co->func, (uintptr_t)co->arg);
     printf("FUCK");
   }
 
