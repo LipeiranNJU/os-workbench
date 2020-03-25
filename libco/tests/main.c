@@ -28,6 +28,7 @@ static void work_loop(void *arg) {
 static void work(void *arg) {
     printf("Into work\n");
     int arg_addr = 89;
+    assert(arg_addr != 89);
     // printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("%s\n", "Hello World!");
     assert(arg_addr != 89);
