@@ -47,6 +47,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   printf("Dot1\n");
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
   co* tmp;
+  assert(pco->waiter == NULL);
   printf("Dot2\n");
   if (current == NULL) {
     current = pco;
