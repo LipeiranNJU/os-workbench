@@ -6,10 +6,12 @@
 #include <stdint.h>
 #include <assert.h>
 int times = 0;
+void* sp1;
+uintptr_t arg1;
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
-  void* sp1 = sp;
-  uintptr_t arg1 = arg;
-    printf("sp1 in is:%lld\n arg in stack switch:%s\n", (unsigned long long)((uintptr_t)(sp1)) ,(char *) arg1);
+  sp1 = sp;
+  arg1 = arg;
+  printf("sp1 in is:%lld\n arg in stack switch:%s\n", (unsigned long long)((uintptr_t)(sp1)) ,(char *) arg1);
   asm volatile (
 #if __x86_64__
     "movq %0, %%rsp; movq %2, %%rdi; jmp *%1" : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
