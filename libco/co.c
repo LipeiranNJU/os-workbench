@@ -92,6 +92,7 @@ void co_yield() {
   // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
   // save data
   int val = setjmp(current->context);
+  printf("after setjmp current addr:%llx\tcurrent->waiter:%llx\n", (unsigned long long) (uintptr_t) (current), (unsigned long long) (uintptr_t) (current->waiter));
   printf("UUU\n");
   if (val == 0) {
     printf("VVV\n");
@@ -99,6 +100,8 @@ void co_yield() {
     if (tmp->waiter == NULL) {
       printf("$$$$$$$%s\n", tmp->name);
       printf("current addr:%llx\n", (unsigned long long) (uintptr_t) (tmp));
+      // emmm 现在来分析一下为什么current明明就是thread1还是出了问题…在 thread2创建的时候，显然已经成果将thread1的waiter设置成
+      // 了thread2，thread1是因为错误的setjmp出的问题吗
     }
     assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
