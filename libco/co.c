@@ -78,7 +78,6 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 }
 
 void co_wait(struct co *co) {
-  assert(0);
   fprintf(stderr,"HHH\n");
   uint8_t s[10000];
   if (co->status == CO_NEW) {
