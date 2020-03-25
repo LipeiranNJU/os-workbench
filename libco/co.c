@@ -79,9 +79,9 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 void co_wait(struct co *co) {
   printf("HHH\n");
   if (co->status == CO_NEW) {
-    stack_switch_call(co+1, co->func, (uintptr_t)co->arg);
+    stack_switch_call(co, co->func, (uintptr_t)co->arg);
   }
-  printf("FUCK\n");
+
   if (times > 1000) {
     return ;
   }
