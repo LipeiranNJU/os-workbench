@@ -30,7 +30,7 @@ static void work(void *arg) {
     // printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder1\n");
     printf("%s\n", "Hello World!");
-    printf("Number:%s\n", "A");
+    printf("Number:\n");
     printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder2\n");
     work_loop(arg);
