@@ -29,6 +29,7 @@ static void work(void *arg) {
     uintptr_t arg_addr = 89;
     // printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder1\n");
+    printf("%s\n", "Hello World!");
     printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder2\n");
     work_loop(arg);
