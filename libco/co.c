@@ -88,6 +88,7 @@ void co_yield() {
   if (val == 0) {
     printf("VVV\n");
     co* tmp = current;
+    assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
@@ -96,9 +97,9 @@ void co_yield() {
     co* next = current->waiter;
     current->waiter = NULL;
     printf("XXX\n");
-    stack_switch_call(next + 1, next->func, (uintptr_t) next->arg);
+    // stack_switch_call(next + 1, next->func, (uintptr_t) next->arg);
     printf("RRR\n");
-    longjmp(next->context, 1);
+    // longjmp(next->context, 1);
     // 一个之前没考虑的问题，longjmp后怎么保证还能执行下面的调整栈顶
     // 因为跳转的是等待的协程， 所以之前等待的协程发出co_yield()的时候必然已经执行过保存了
     // 接下来那一个协程就能够自然而然地进入下面那个情形返回继续执行了
