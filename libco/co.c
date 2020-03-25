@@ -52,9 +52,9 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   if (current == NULL) {
     printf("Thread 1\n");
     current = pco;
-    printf("%x\n", pco);
+    printf("%lx\n", (uintptr_t)pco);
   } else {
-    printf("Thread 2 current:%x\n",current);
+    printf("Thread 2 current:%lx\n",(uintptr_t)current);
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
