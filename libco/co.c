@@ -44,11 +44,11 @@ co *current = NULL;
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   printf("Beginning of start\n");
   co* pco = malloc(sizeof(co));
-  printf("Dot1\n");
+  // printf("Dot1\n");
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
   co* tmp;
   assert(pco->waiter == NULL);
-  printf("Dot2\n");
+  // printf("Dot2\n");
   if (current == NULL) {
     printf("Thread 1\n");
     current = pco;
