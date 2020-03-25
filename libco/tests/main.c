@@ -4,7 +4,7 @@
 #include <string.h>
 #include "co-test.h"
 #include "co.c"
-
+extern uintptr_t arg1;
 int g_count = 0;
 
 static void add_count() {
@@ -26,7 +26,7 @@ static void work_loop(void *arg) {
 
 static void work(void *arg) {
     printf("Into work\n");
-    uintptr_t arg_addr = (uintptr_t)arg;
+    uintptr_t arg_addr = (uintptr_t)arg1;
     printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder1\n");
     printf("arg%llx\n", (unsigned long long) arg_addr);
