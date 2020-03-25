@@ -73,11 +73,11 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 
 void co_wait(struct co *co) {
   printf("HHH\n");
-  // uint8_t s[10000];
+  uint8_t s[10000];
   if (co->status == CO_NEW) {
     printf("%s\n", co->name);
     printf("new stack:%llx", (unsigned long long) ((uintptr_t)(co+1)));
-    stack_switch_call(co + 1, co->func, (uintptr_t)co->arg);
+    stack_switch_call(s, co->func, (uintptr_t)co->arg);
     printf("FUCK");
   }
 
