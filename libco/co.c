@@ -79,7 +79,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 void co_wait(struct co *co) {
   printf("HHH\n");
   // uint8_t s[10000];
-  printf("Size of co:%d\n", sizeof(*co));
+  printf("Size of co:%lu\n", sizeof(*co));
   if (co->status == CO_NEW) {
     stack_switch_call(&co->stack[64], co->func, (uintptr_t)co->arg);
     printf("FUCK");
