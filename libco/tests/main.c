@@ -26,8 +26,9 @@ static void work_loop(void *arg) {
 }
 
 static void work(void *arg) {
+    assert(0);
     printf("FUCK OS");
-    printf("FUCK FUCK\n");
+    printf("FUCK FUCK");
     assert(0);
     printf("Hello World!\n");
     int arg_addr = 89;
