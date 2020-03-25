@@ -117,7 +117,7 @@ void co_yield() {
     co* next = current->waiter;
     current->waiter = NULL;
     printf("XXX\n");
-    stack_switch_call(next + 1, next->func, (uintptr_t) next->arg);
+    stack_switch_call(next, next->func, (uintptr_t) next->arg);
     printf("RRR\n");
     longjmp(next->context, 1);
     // 一个之前没考虑的问题，longjmp后怎么保证还能执行下面的调整栈顶
