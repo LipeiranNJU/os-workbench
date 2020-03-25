@@ -50,8 +50,10 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   assert(pco->waiter == NULL);
   printf("Dot2\n");
   if (current == NULL) {
+    printf("Thread 1\n");
     current = pco;
   } else {
+    printf("Thread 2\n")
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
