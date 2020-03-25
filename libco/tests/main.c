@@ -4,6 +4,7 @@
 #include <string.h>
 #include "co-test.h"
 #include "co.c"
+#include <assert.h>
 extern uintptr_t arg1;
 int g_count = 0;
 
@@ -29,7 +30,7 @@ static void work(void *arg) {
     int arg_addr = 89;
     // printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("%s\n", "Hello World!");
-    printf("Number:%x\n", 16);
+    assert(arg_addr == 89);
     printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder2\n");
     work_loop(arg);
