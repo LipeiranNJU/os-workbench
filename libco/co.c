@@ -63,7 +63,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     tmp->waiter = pco;
   }
   if (current->waiter != NULL) {
-    printf("Thread waiter:%llx\n",((unsigned long long)((uintptr_t)pco->waiter)));
+    printf("Thread waiter:%llx\n",((unsigned long long)((uintptr_t)current->waiter)));
   }
   printf("Dot3\n");
   pco->name = malloc(strlen(name)+1); // 分配协程名字空间
