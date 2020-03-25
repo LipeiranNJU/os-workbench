@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include "co-test.h"
+#include "co.c"
 
 int g_count = 0;
 
