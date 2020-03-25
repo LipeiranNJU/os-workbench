@@ -98,7 +98,7 @@ void co_yield() {
     co* tmp = current;
     if (tmp->waiter == NULL) {
       printf("$$$$$$$%s\n", tmp->name);
-      printf("current addr:%llx\n", (unsigned long long) (uintptr_t) (tmp))
+      printf("current addr:%llx\n", (unsigned long long) (uintptr_t) (tmp));
     }
     assert(tmp->waiter != NULL);
     while (tmp->waiter != NULL) {
