@@ -27,7 +27,8 @@ static void work_loop(void *arg) {
 static void work(void *arg) {
     printf("Into work\n");
     printf("Reminder1\n");
-    printf("arg%s\n", arg);
+    uintptr_t arg_addr = (uintptr_t)arg;
+    printf("arg%llx\n", (unsigned long long) arg_addr);
     printf("Reminder2\n");
     work_loop(arg);
 }
