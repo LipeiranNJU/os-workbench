@@ -3,7 +3,9 @@
 #include <assert.h>
 #include <string.h>
 #include "co-test.h"
-
+#include "co.c"
+#include <assert.h>
+extern uintptr_t arg1;
 int g_count = 0;
 
 static void add_count() {
@@ -24,14 +26,25 @@ static void work_loop(void *arg) {
 }
 
 static void work(void *arg) {
+    printf("Into work\n");
+    // assert(0);
+    printf("FUCK OS");
+    printf("FUCK FUCK");
+    assert(0);
+    printf("Hello World!\n");
+    int arg_addr = 89;
+    assert(89 != 89);
+    // printf("arg%llx\n", (unsigned long long) arg_addr);
+    printf("%s\n", "Hello World!");
+    assert(arg_addr != 89);
+    printf("arg%llx\n", (unsigned long long) arg_addr);
+    printf("Reminder2\n");
     work_loop(arg);
 }
 
 static void test_1() {
-
     struct co *thd1 = co_start("thread-1", work, "X");
     struct co *thd2 = co_start("thread-2", work, "Y");
-
     co_wait(thd1);
     co_wait(thd2);
 
