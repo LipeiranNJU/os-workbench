@@ -19,6 +19,7 @@ static int get_count() {
 static void work_loop(void *arg) {
     const char *s = (const char*)arg;
     for (int i = 0; i < 100; ++i) {
+        printf("hello");
         printf("%s%d  ", s, get_count());
         add_count();
         co_yield();
