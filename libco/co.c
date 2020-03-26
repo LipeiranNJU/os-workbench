@@ -83,7 +83,7 @@ void co_wait(struct co *co) {
   if (co->status == CO_NEW) {
     fprintf(stderr,"%s\n", co->name);
     fprintf(stderr,"CO->arg%lx\n",(unsigned long)((uintptr_t) co->arg));
-    stack_switch_call(&co+1, co->func, (uintptr_t)co->arg);
+    stack_switch_call(co+1, co->func, (uintptr_t)co->arg);
     printf("FUCK");
   }
 
