@@ -26,7 +26,7 @@ static void work_loop(void *arg) {
 }
 
 static void work(void *arg) {
-    printf("Into work\n\n\n\n");
+    printf("Into work\n\ndfdsf\n\n");
     // assert(0);
     printf("FUCK OS");
     printf("FUCK FUCK");
