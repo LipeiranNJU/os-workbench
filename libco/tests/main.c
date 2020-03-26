@@ -31,7 +31,7 @@ static void work(void *arg) {
     // assert(0);
     printf("FUCK OS");
     printf("FUCK FUCK");
-    assert(0);
+    // assert(0);
     printf("Hello World!\n");
     int arg_addr = 89;
     assert(89 != 89);
