@@ -82,9 +82,7 @@ void co_wait(struct co *co) {
   uint8_t s[10000];
   if (co->status == CO_NEW) {
     fprintf(stderr,"%s\n", co->name);
-    // printf("new stack:%llx, stack[512]%llx", (unsigned long long) ((uintptr_t)(co+1)), (unsigned long long) ((uintptr_t)(&co->stack[512])));
     fprintf(stderr,"CO->arg%lx\n",(unsigned long)((uintptr_t) co->arg));
-    // co->func(co->arg);
     stack_switch_call(&co+1, co->func, (uintptr_t)co->arg);
     printf("FUCK");
   }
@@ -126,6 +124,7 @@ void co_yield() {
     co* next = current->waiter;
     current->waiter = NULL;
     printf("XXX\n");
+    printf("next_name:%s\n", next->name);
     stack_switch_call(next, next->func, (uintptr_t) next->arg);
     printf("RRR\n");
     longjmp(next->context, 1);
