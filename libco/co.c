@@ -124,7 +124,7 @@ void co_yield() {
     co* next = current->waiter;
     current->waiter = NULL;
     printf("XXX\n");
-    printf("next_name:%s\n", next->name);
+    
     stack_switch_call(next, next->func, (uintptr_t) next->arg);
     printf("RRR\n");
     longjmp(next->context, 1);
