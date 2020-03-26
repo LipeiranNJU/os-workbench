@@ -21,7 +21,7 @@ static void work_loop(void *arg) {
     for (int i = 0; i < 100; ++i) {
         printf("hello\n");
         int i = get_count();
-        assert(0);
+        // assert(0);
         printf("%s%d  ", s, i);
         add_count();
         co_yield();

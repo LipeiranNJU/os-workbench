@@ -22,7 +22,7 @@ static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
 }
 
 // co *current;
-#define STACK_SIZE      1000
+#define STACK_SIZE      1 << 16
 typedef unsigned char uint8_t;
 typedef enum co_status {
   CO_NEW = 1, // 新创建，还未执行过
