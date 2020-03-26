@@ -85,7 +85,7 @@ void co_wait(struct co *co) {
     // printf("new stack:%llx, stack[512]%llx", (unsigned long long) ((uintptr_t)(co+1)), (unsigned long long) ((uintptr_t)(&co->stack[512])));
     fprintf(stderr,"CO->arg%lx\n",(unsigned long)((uintptr_t) co->arg));
     co->func(co->arg);
-    stack_switch_call(&co->stack[504], co->func, (uintptr_t)co->arg);
+    // stack_switch_call(&co->stack[504], co->func, (uintptr_t)co->arg);
     printf("FUCK");
   }
 
