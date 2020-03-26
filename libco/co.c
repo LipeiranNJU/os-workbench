@@ -48,17 +48,12 @@ co *current = NULL;
 
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   co* pco = malloc(sizeof(co));
-  // printf("Dot1\n");
   memset(pco, 0, sizeof(co)); // 初始化未使用变量，防止意想不到的事情
   co* tmp;
   assert(pco->waiter == NULL);
-  // printf("Dot2\n");
   if (current == NULL) {
     current = pco;
-    // printf("%llx\n", ((unsigned long long)((uintptr_t)pco)));
   } else {
-    // printf("Thread 2 current:%llx\n",((unsigned long long)((uintptr_t)current)));
-    // printf("Thread 2 pco:%llx\n",((unsigned long long)((uintptr_t)pco)));
     tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
@@ -79,7 +74,6 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 
 void co_wait(struct co *co) {
   fprintf(stderr,"HHH\n");
-  uint8_t s[10000];
   if (co->status == CO_NEW) {
     fprintf(stderr,"%s\n", co->name);
     printf("Co addr:%lx\n", (unsigned long) ((uintptr_t) (co)));
