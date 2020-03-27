@@ -3,10 +3,11 @@
 all: libco-test-64 libco-test-32
 
 test: libco all
-	@echo "==== TEST 64 bit ===="
-	@LD_LIBRARY_PATH=.. ./libco-test-64
 	@echo "==== TEST 32 bit ===="
 	@LD_LIBRARY_PATH=.. ./libco-test-32
+	@echo "==== TEST 64 bit ===="
+	@LD_LIBRARY_PATH=.. ./libco-test-64
+
 
 libco-test-64: main.c
 

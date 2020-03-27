@@ -22,6 +22,19 @@ static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   );
 }
 
+static inline void stack_switch(void *sp) {
+  sp1 = sp;
+
+//   printf("sp1 in is:%llx\n arg in stack switch:%llx\n", (unsigned long long)((uintptr_t)(sp1)), (unsigned long long) arg);
+  asm volatile (
+#if __x86_64__
+    "movq %0, %%rsp" : : "b"((uintptr_t)sp)
+#else
+    "movl %0, %%esp" : : "b"((uintptr_t)sp - 8)
+#endif
+  );
+}
+
 // co *current;
 #define STACK_SIZE      1 << 16
 typedef unsigned char uint8_t;
@@ -73,58 +86,49 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 }
 
 void co_wait(struct co *co) {
+    if (times > 100) {
+        return ;
+  }
   if (co->status == CO_NEW) {
     stack_switch_call(&co->stack[STACK_SIZE], co->func, (uintptr_t)co->arg);
-
+    co->status=CO_DEAD;
+    return;
+  } else {
+    //   printf("HILLO WORLD\n");
+    // stack_switch_call(&co->stack[STACK_SIZE], co->func, (uintptr_t)co->arg);
+    // longjmp(current->context, 1);
+    // printf("HI\n");
+    longjmp(current->context, 1);
   }
 
-  if (times > 1000) {
-    return ;
-  }
 
 }
 
 void co_yield() {
-//   printf("TTT");
-  // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
-  // save data
-  int val = setjmp(current->context);
-//   printf("World\n");
-//   assert(current->waiter != NULL);
-//   printf("after setjmp current addr:%llx\tcurrent->waiter:%llx\n", (unsigned long long) (uintptr_t) (current), (unsigned long long) (uintptr_t) (current->waiter));
-//   printf("current->waiter:%llx\n", ((unsigned long long)((uintptr_t)(current->waiter))));
-//   assert(current->waiter != NULL);v
-//   printf("UUU\n");
-//   printf("Value:%d\n", val);
-//   assert(current->waiter != NULL);
-  if (val == 0) {
-    // printf("VVV\n");
-    co* tmp = current;
-    if (tmp->waiter == NULL) {
-    //   printf("$$$$$$$%s\n", tmp->name);
-    //   printf("current addr:%llx\n", (unsigned long long) (uintptr_t) (tmp));
-      // emmm 现在来分析一下为什么current明明就是thread1还是出了问题…在 thread2创建的时候，显然已经成果将thread1的waiter设置成
-      // 了thread2，thread1是因为错误的setjmp出的问题吗
+    if (current->status == CO_NEW) {
+        current->status = CO_WAITING;
     }
-    // assert(tmp->waiter != NULL);
+  // 显然使用stack_switch_call 来切换栈的，估计是把co最高地址/最高地址+1当做sp，func作为entry，arg作为参数
+  int val = setjmp(current->context);
+
+//   printf("Value:%d\n", val);
+  if (val == 0) {
+          times++;
+    co* tmp = current;
     while (tmp->waiter != NULL) {
       tmp = tmp->waiter;
     }
-    // printf("WWW\n");
     tmp->waiter = current;
     co* next = current->waiter;
     current->waiter = NULL;
     current = next;
-    // printf("XXX\n");
-    
-    stack_switch_call(&current->stack[STACK_SIZE], next->func, (uintptr_t) next->arg);
-    // printf("RRR\n");
-    longjmp(next->context, 1);
+    co_wait(current);
     // 一个之前没考虑的问题，longjmp后怎么保证还能执行下面的调整栈顶
     // 因为跳转的是等待的协程， 所以之前等待的协程发出co_yield()的时候必然已经执行过保存了
     // 接下来那一个协程就能够自然而然地进入下面那个情形返回继续执行了
   } else {
     times++;
+    // stack_switch(&current->stack[STACK_SIZE]);
     return;
   }
 }
