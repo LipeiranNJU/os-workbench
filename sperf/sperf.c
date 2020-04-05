@@ -30,6 +30,13 @@ int myReadLine(int fd, char* line) {
   return -1;
 }
 int main(int argc, char *argv[]) {
+  struct syscallNameAndTime syscallList[1000];
+  for (int i = 0; i < 1000; i++) {
+    syscallList[i].name = NULL;
+    syscallList[i].time = 0;
+  }
+
+
   // prepare for trace system call
   char** cmdArgs = malloc(sizeof(char*)*(argc + 2));
   cmdArgs[0] = "strace";
@@ -64,11 +71,6 @@ int main(int argc, char *argv[]) {
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
-    struct syscallNameAndTime syscallList[1000];
-    for (int i = 0; i < 1000; i++) {
-      syscallList[i].name = NULL;
-      syscallList[i].time = 0;
-    }
     int listLen = 0;
     double totalTime = 0;
     close(pipefds[1]);
