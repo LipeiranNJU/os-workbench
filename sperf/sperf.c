@@ -62,7 +62,15 @@ int main(int argc, char *argv[]) {
     char buf[512];
     while(myReadLine(pipefds[0], buf) > 0) {
       int len = strlen(buf);
-      printf("%c\n", buf[len-1]);
+      int left = -1;
+      int right = len-1;
+      for (int i = len-1; i >= 0; i--) {
+        if (buf[i] == '<') {
+          left = i;
+        }
+      }
+      if (buf[right]=='>')
+        printf("left: %c\tright: %c\n",buf[left] , buf[right]);
       memset(buf, '\0', sizeof(buf));
     }
     // 父进程，读取strace输出并统计
