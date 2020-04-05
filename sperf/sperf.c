@@ -64,6 +64,13 @@ int main(int argc, char *argv[]) {
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
+    struct syscallNameAndTime syscallList[1000];
+    for (int i = 0; i < 1000; i++) {
+      syscallList[i].name = NULL;
+      syscallList[i].time = 0;
+    }
+    int listLen = 0;
+    double totalTime = 0;
     close(pipefds[1]);
     char buf[512];
     int pre = clock();
@@ -99,9 +106,26 @@ int main(int argc, char *argv[]) {
         if (leftparameter > 0){
           memcpy(time, &buf[left+1], (right-left-1));
           memcpy(syscall, &buf[0], leftparameter);
+          double dtime = strtod(time, NULL);
           // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
           // printf("syscall: %s\ttime: %s\n", syscall, time);
           // printf("syscall:%s\ttime:%lf\n",syscall, strtod(time, NULL));
+          for (int i = 0; i < 1000; i++) {
+            if (syscallList[i].name != NULL) {
+              if (strcmp(syscallList[i].name, syscall) == 0) {
+                syscallList[i].time += dtime;
+                totalTime += dtime;
+                break;
+              }
+
+            }
+            if (syscallList[i].name == NULL) {
+              len += 1;
+              syscallList[i].time += dtime;
+              totalTime += dtime;
+              break;
+            }
+          }
         }
       }
       // printf("%s\n", buf);
