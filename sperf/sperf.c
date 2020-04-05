@@ -114,6 +114,7 @@ int main(int argc, char *argv[]) {
             if (syscallList[i].name != NULL) {
               if (strcmp(syscallList[i].name, syscall) == 0) {
                 syscallList[i].time += dtime;
+                assert(0);
                 totalTime += dtime;
                 break;
               }
