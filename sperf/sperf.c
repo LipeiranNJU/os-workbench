@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     close(pipefds[0]);
     dup2(pipefds[1], fileno(stderr));
     int fd = open("/dev/null",O_RDWR);
-    // dup2(fd, fileno(stdout));
+    dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     char*token = strtok(PATH, ":");
     // printf("%s\n", token);
