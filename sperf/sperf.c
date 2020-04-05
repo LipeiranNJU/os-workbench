@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[]) {
   char* cmd = argv[1];
+  printf("argc=%d\n", argc);
   char** cmdArgs = &argv[2];
   printf("%s\n", cmd);
   for (int i = 0; i < argc-2; i++) {
