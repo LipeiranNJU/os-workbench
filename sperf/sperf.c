@@ -113,12 +113,12 @@ int main(int argc, char *argv[]) {
           for (int i = 0; i < 1000; i++) {
             if (syscallList[i].name != NULL) {
               if (strcmp(syscallList[i].name, syscall) == 0) {
+                printf("%s\t%s\t", syscallList[i].name, syscall);
                 syscallList[i].time += dtime;
                 // assert(0);
                 totalTime += dtime;
                 break;
               }
-
             }
             if (syscallList[i].name == NULL) {
               listLen += 1;
