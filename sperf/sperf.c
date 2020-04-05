@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
     while(myReadLine(pipefds[0], buf) > 0) {
       int now = clock();
       if (now - pre >= CLOCKS_PER_SEC) {
-        printf("1 sec\n");
+        printf("1 sec :%d\n", now-pre);
         pre = now;
       }
       int len = strlen(buf);
