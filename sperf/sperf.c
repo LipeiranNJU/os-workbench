@@ -25,8 +25,17 @@ int main(int argc, char *argv[]) {
 		perror("pipe");
     assert(0);
 	}
-  execve("/usr/bin/strace", cmdArgs, exec_envp);
-  int pipe(int fildes[2]);
+  int pipe(pipefds);
+  int pid = -1;
+  pid = fork();
+  if (pid == 0) {
+    dup2(pipefds[1], fileno(stderr));
+    // 子进程，执行strace命令
+    execve("/usr/bin/strace", cmdArgs, exec_envp);
+    // 不应该执行此处代码，否则execve失败，出错处理
+  } else {
+    // 父进程，读取strace输出并统计
+  }
   perror(argv[0]);
   exit(EXIT_FAILURE);
 }
