@@ -14,7 +14,6 @@ int main(int argc, char *argv[]) {
   memset(path, '\0', strlen("PATH=") + strlen(pathvar)+1);
   strcat(path, "PATH=");
   strcat(path, pathvar);
-  // char *exec_argv[] = { "strace", "ls", "-a", NULL, };
   char *exec_envp[] = { path, NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
   execve("/usr/bin/strace", cmdArgs, exec_envp);
