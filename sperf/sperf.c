@@ -11,7 +11,10 @@ int main(int argc, char *argv[]) {
   }
   char *pathvar = getenv("PATH"); 
   printf("pathvar is : %s\n",pathvar);
-  return 0;
+  char* path = malloc(sizeof(char)*(strlen("PATH=") + strlen(pathvar)+1));
+  memset(path, '\0', strlen("PATH=") + strlen(pathvar)+1);
+  strcat(path, "PATH=");
+  strcat(path, pathvar);
   // char *exec_argv[] = { "strace", "ls", "-a", NULL, };
   char *exec_envp[] = { pathvar, NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
