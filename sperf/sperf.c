@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       len += 1;
     }
     printf("len:%d\n",len);
-    cmdArgs = malloc(len+1);
+    cmdArgs = malloc(len);
     memset(cmdArgs, '\0', len);
     printf("BBB\n");
     for (int i = 0; i < argc-3; i++) {
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
       strcat(cmdArgs, " ");
       printf("cmdArg=%s\n", cmdArgs);
     }
-    strcat(cmdArgs, cmdArgsRaw[argc-2]);
+    // strcat(cmdArgs, cmdArgsRaw[argc-2]);
   } else {
     cmdArgs = "";
   }
