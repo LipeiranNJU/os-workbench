@@ -75,6 +75,7 @@ int main(int argc, char *argv[]) {
     char*token = strtok(PATH, ":");
     // printf("%s\n", token);
     char stracePath[100];
+    memset(stracePath, '\0', 100);
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
     printf("%s\n", stracePath);
