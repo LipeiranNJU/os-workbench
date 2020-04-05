@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
           printf("%s(%.2lf%%)\n", syscallList[i].name, syscallList[i].time/totalTime*100);
         }
         for (int i = 0; i < 100; i++) {
-          printf("\0");
+          printf("%c",'\0');
         }
         pre = now;
       }
