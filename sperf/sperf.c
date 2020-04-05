@@ -15,15 +15,12 @@ int main(int argc, char *argv[]) {
   }
   if (argc > 2) {
     int len = 0;
-    printf("AAA\n");
     for (int i = 0; i < argc-2; i++) {
       len += strlen(cmdArgsRaw[i]);
       len += 1;
     }
-    printf("len:%d\n",len);
     cmdArgs = malloc(len);
     memset(cmdArgs, '\0', len);
-    printf("BBB\n");
     for (int i = 0; i < argc-3; i++) {
       strcat(cmdArgs, cmdArgsRaw[i]);
       strcat(cmdArgs, " ");
