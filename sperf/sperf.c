@@ -77,6 +77,9 @@ int main(int argc, char *argv[]) {
         }
       }
       if (buf[right]=='>'){
+        if (leftparameter < 0) {
+          printf("\n%s\n", buf);
+        }
         assert(leftparameter >= 0);
         // printf("%d\n", leftparameter);
         char time[100];
