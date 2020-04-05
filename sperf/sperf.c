@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     cmdArgs = "";
   }
   printf("cmdArg=%s\n", cmdArgs);
-  char *exec_argv[] = { "strace", "ls", NULL, };
+  char *exec_argv[] = { "strace", "ls",'-a', NULL, };
   char *exec_envp[] = { "PATH=/bin", NULL, };
   // execve("strace",          exec_argv, exec_envp);
   // execve("/bin/strace",     exec_argv, exec_envp);
