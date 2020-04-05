@@ -10,7 +10,6 @@ int main(int argc, char *argv[]) {
     cmdArgs[i+1] = argv[i];
   }
   char *pathvar = getenv("PATH"); 
-  printf("pathvar is : %s\n",pathvar);
   char* path = malloc(sizeof(char)*(strlen("PATH=") + strlen(pathvar)+1));
   memset(path, '\0', strlen("PATH=") + strlen(pathvar)+1);
   strcat(path, "PATH=");
@@ -18,7 +17,6 @@ int main(int argc, char *argv[]) {
   // char *exec_argv[] = { "strace", "ls", "-a", NULL, };
   char *exec_envp[] = { path, NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
-  printf("PATH:%s\n",path);
   execve("/usr/bin/strace", cmdArgs, exec_envp);
   perror(argv[0]);
   exit(EXIT_FAILURE);
