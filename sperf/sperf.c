@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
       printf("%s\n", cmdArgsRaw[i]);
     }
   }
-  if (cmdArgsRaw != NULL) {
+  if (argc > 2) {
     int len = 0;
     printf("AAA\n");
     for (int i = 0; i < argc-2; i++) {
