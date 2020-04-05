@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
+#include <string.h>
 int main(int argc, char *argv[]) {
   char* cmd = argv[1];
   char ** cmdArgsRaw = NULL;
+  char* cmdArgs = NULL;
   if (argc >= 2) {
     cmdArgsRaw = &argv[2];
     printf("%s\n", cmd);
@@ -12,6 +13,23 @@ int main(int argc, char *argv[]) {
       printf("%s\n", cmdArgsRaw[i]);
     }
   }
+  if (cmdArgsRaw != NULL) {
+    int len = 0;
+    for (int i = 0; i < argc-2; i++) {
+      len += strlen(cmdArgsRaw[i]);
+      len += 1;
+    }
+    cmdArgs = malloc(len);
+    memset(cmdArgs, '\0', len);
+    for (int i = 0; i < argc-3; i++) {
+      strcat(cmdArgs, cmdArgsRaw[i]);
+      strcat(cmdArgs, " ");
+    }
+    strcat(cmdArgs, cmdArgsRaw[argc-2]);
+  } else {
+    cmdArgs = "";
+  }
+  printf("cmdArg=%s\n", cmdArgs);
   return 0;
   char *exec_argv[] = { "strace", "ls", NULL, };
   char *exec_envp[] = { "PATH=/bin", NULL, };
