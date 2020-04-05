@@ -10,8 +10,8 @@ int main(int argc, char *argv[]) {
     cmdArgs[i+1] = argv[i];
   }
   char *pathvar = getenv("PATH"); 
-  // char *exec_argv[] = { "strace", "ls", "-a", NULL, };
-  char *exec_envp[] = { pathvar, NULL, };
+  char *exec_argv[] = { "strace", "ls", "-a", NULL, };
+  char *exec_envp[] = {pathvar, NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
   execve("/usr/bin/strace", cmdArgs, exec_envp);
   perror(argv[0]);
