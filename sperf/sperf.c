@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <assert.h>
 int main(int argc, char *argv[]) {
   // prepare for trace system call
   char** cmdArgs = malloc(sizeof(char*)*(argc + 2));
@@ -22,6 +23,7 @@ int main(int argc, char *argv[]) {
   int pipefds[2];
 	if(pipe(pipefds) < 0){
 		perror("pipe");
+    assert(0);
 	}
   execve("/usr/bin/strace", cmdArgs, exec_envp);
   int pipe(int fildes[2]);
