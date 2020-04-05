@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <time.h>
 int myReadLine(int fd, char* line) {
   char ch;
   int offset = 0;
@@ -60,7 +61,13 @@ int main(int argc, char *argv[]) {
   } else {
     close(pipefds[1]);
     char buf[512];
+    int pre = clock();
     while(myReadLine(pipefds[0], buf) > 0) {
+      int now = clock();
+      if (now - pre >= CLOCKS_PER_SEC) {
+        printf("1 sec\n");
+        pre = now;
+      }
       int len = strlen(buf);
       int left = -1;
       int right = len-1;
