@@ -42,6 +42,7 @@ int main(int argc, char *argv[]) {
     
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
+    fclose(pipefds[1]);
     char buf[4];
     while(read(pipefds[0], buf, sizeof(buf)-1) > 0) {
       write(fileno(stdout), buf, strlen(buf));
