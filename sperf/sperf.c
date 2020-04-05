@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
         printf("1 sec :%d\n", now-pre);
         qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
         for (int i = 0; i < 5 && i < listLen; i++) {
-          printf("%s(%.2lf%%)", syscallList[i].name, syscallList[i].time/totalTime*100);
+          printf("%s(%.2lf%%)\n", syscallList[i].name, syscallList[i].time/totalTime*100);
         }
         pre = now;
       }
