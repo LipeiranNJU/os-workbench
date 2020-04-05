@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   char* cmdArgs = NULL;
   if (argc >= 2) {
     cmdArgsRaw = &argv[2];
-    printf("%s\n", cmd);
+    printf("cmd=%s\n", cmd);
   }
   if (argc > 2) {
     int len = 0;
