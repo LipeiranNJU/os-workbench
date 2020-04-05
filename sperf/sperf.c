@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
       len += strlen(cmdArgsRaw[i]);
       len += 1;
     }
+    printf("len:%d\n",len);
     cmdArgs = malloc(len);
     memset(cmdArgs, '\0', len);
     printf("BBB\n");
