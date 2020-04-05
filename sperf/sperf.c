@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 int main(int argc, char *argv[]) {
+  // prepare for trace system call
   char** cmdArgs = malloc(sizeof(char*)*(argc + 2));
   cmdArgs[0] = "strace";
   cmdArgs[1] = "-T";
@@ -16,7 +17,14 @@ int main(int argc, char *argv[]) {
   strcat(path, pathvar);
   char *exec_envp[] = { path, NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
+  // execute program
+
+  int pipefds[2];
+	if(pipe(pipefds) < 0){
+		perror("pipe");
+	}
   execve("/usr/bin/strace", cmdArgs, exec_envp);
+  int pipe(int fildes[2]);
   perror(argv[0]);
   exit(EXIT_FAILURE);
 }
