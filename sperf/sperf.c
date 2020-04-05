@@ -9,7 +9,7 @@
 #include <time.h>
 struct syscallNameAndTime{
   char* name;
-  int time;
+  double time;
 };
 
 int myReadLine(int fd, char* line) {
