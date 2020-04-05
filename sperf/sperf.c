@@ -68,6 +68,7 @@ int main(int argc, char *argv[]) {
       for (int i = len-1; i >= 0; i--) {
         if (buf[i] == '<') {
           left = i;
+          break;
         }
       }
       for (int i = 0; i < len; i++) {
@@ -76,10 +77,6 @@ int main(int argc, char *argv[]) {
           break;
         }
       }
-      // if (leftparameter < 0) {
-      //   printf("\n%s\n", buf);
-      //   // assert(0);
-      // }
       if (buf[right]=='>'){
         // assert(leftparameter >= 0);
         // printf("%d\n", leftparameter);
