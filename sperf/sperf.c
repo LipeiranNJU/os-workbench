@@ -30,6 +30,8 @@ int main(int argc, char *argv[]) {
   pid = fork();
   if (pid == 0) {
     dup2(pipefds[1], fileno(stderr));
+    int fd = fopen("/dev/null");
+    dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     execve("/usr/bin/strace", cmdArgs, exec_envp);
     printf("AA\n");
