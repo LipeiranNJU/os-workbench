@@ -27,7 +27,7 @@ typedef enum co_status {
 typedef struct co {
   char *name;
   void (*func)(void *); // co_start 指定的入口地址和参数
-  char *arg;
+  void *arg;
 
   co_status status;  // 协程的状态
   struct co *    waiter;  // 是否有其他协程在等待当前协程
@@ -72,58 +72,61 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 // #endif
 //   );
 
-void co_wrapper(co* co) {
+static inline void* co_wrapper(co* co) {
+  char* name = co->name;
+  co->status = CO_RUNNING;
   co->func(co->arg);
-  co->status=CO_DEAD;
-  co_yield();
+  while(1) {
+    co->status=CO_DEAD;
+    co_yield();
+  }
+  return 0;
 }
 
 static inline void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   asm volatile (
 #if __x86_64__
     "movq %0, %%rsp; movq %2, %%rdi; jmp *%1"
-      : : "b"((uintptr_t)sp),     "d"(entry), "a"(arg)
+      : : "b"((uintptr_t)sp - 16),     "d"(entry), "a"(arg)
 #else
     "movl %0, %%esp; movl %2, 4(%0); jmp *%1"
-      : : "b"((uintptr_t)sp - 8), "d"(entry), "a"(arg)
+      : : "b"((uintptr_t)sp - 4), "d"(entry), "a"(arg)
 #endif
   );
 }
 
 void co_wait(struct co *co) {
-    if (co->status == CO_NEW) {
-        co->status = CO_RUNNING;
-        co_wrapper(co);
-    } 
-    if (co->status == CO_DEAD) {
-        struct co* tmp = co;
-        co = co->waiter;
-        current = current->waiter;
-        tmp->waiter = NULL;
-        return;
-    }
-    if (co->status == CO_RUNNING) {
-        longjmp(co->context, 1);
-    }
+  if (co->status == CO_NEW) {
+    stack_switch_call(&co->stack[STACK_SIZE], co_wrapper(co),(uintptr_t) co->arg);
+  } else if (co->status == CO_RUNNING || co->status == CO_WAITING) {
+    co_yield();
+  } else if (co->status == CO_DEAD) {
+    return;
+  }
 }
 
 void co_yield() {
-    int val = setjmp(current->context);
-    if (val == 0) {
-        co* tmp = current;
-        while (tmp->waiter != NULL) {
-        tmp = tmp->waiter;
-        }
-        tmp->waiter = current;
-        co* next = current->waiter;
-        current->waiter = NULL;
-        current = next;
-        if (current->status == CO_NEW) {
-            current->status = CO_RUNNING;
-            co_wrapper(current);
-            return;
+  while(current->status == CO_DEAD && current->waiter != NULL) {
+    current = current->waiter;
+  }
+  if (current->status == CO_DEAD && current->waiter == NULL) {
+    assert(0);
+  }
+  int val = setjmp(current->context);
+  if (val == 0) {
+    co* tail = current;
+    while (tail->waiter != NULL) {
+      tail = tail->waiter;
+    }
+    assert(current->status != CO_DEAD);
+    tail->waiter = current;
+    co* next = current->waiter;
+    current->waiter = NULL;
+    current = next;
+    if (current->status == CO_NEW) {
+      stack_switch_call(&current->stack[STACK_SIZE], co_wrapper(current), (uintptr_t) current->arg);
     } else {
-        longjmp(current->context, 1);
+      longjmp(current->context, 1);
     }
   } else {
     return;
