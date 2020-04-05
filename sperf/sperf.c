@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     int fd = open("/dev/null",O_RDWR);
     dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
-    execve("/usr/bin/strace", cmdArgs, exec_envp);
+    execve("/bin/strace", cmdArgs, exec_envp);
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
