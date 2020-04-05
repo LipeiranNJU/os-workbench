@@ -75,7 +75,7 @@ int main(int argc, char *argv[]) {
           leftparameter = i;
         }
       }
-      if (buf[right]=='>'){
+      if (buf[right]=='>' && leftparameter < 10){
         assert(leftparameter >= 0);
         printf("%d\n", leftparameter);
         char time[100];
