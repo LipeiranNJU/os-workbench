@@ -46,6 +46,7 @@ int main(int argc, char *argv[]) {
     while(read(pipefds[0], buf, sizeof(buf)-1) > 0) {
       write(STDOUT_FILENO, buf, strlen(buf));
       memset(buf, '\0', sizeof(buf));
+      printf("DDD\n");
     }
     printf("$$$\n");
 
