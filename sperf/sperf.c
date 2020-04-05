@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
     }
     cmdArgs = malloc(len);
     memset(cmdArgs, '\0', len);
+    printf("BBB\n");
     for (int i = 0; i < argc-3; i++) {
       strcat(cmdArgs, cmdArgsRaw[i]);
       strcat(cmdArgs, " ");
