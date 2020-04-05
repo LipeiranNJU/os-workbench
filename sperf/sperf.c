@@ -69,9 +69,9 @@ int main(int argc, char *argv[]) {
     dup2(pipefds[1], fileno(stderr));
     int fd = open("/dev/null",O_RDWR);
     // dup2(fd, fileno(stdout));
-        printf("AA\n");
     // 子进程，执行strace命令
     int a = execve("/bin/strace", cmdArgs, exec_envp);
+        printf("AA\n");
     assert(a != -1);
     printf("a=%d\n", a);
     assert(0);
