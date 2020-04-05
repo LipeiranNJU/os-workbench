@@ -100,8 +100,8 @@ int main(int argc, char *argv[]) {
           memcpy(time, &buf[left+1], (right-left-1));
           memcpy(syscall, &buf[0], leftparameter);
           // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
-          // printf("syscall: %s\ttime: %s\n", syscall, time);
-          printf("time:%lf\n",strtod(time, NULL));
+          printf("syscall: %s\ttime: %s\n", syscall, time);
+          // printf("time:%lf\n",strtod(time, NULL));
         }
       }
       // printf("%s\n", buf);
