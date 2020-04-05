@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <string.h>
 int main(int argc, char *argv[]) {
-  char *exec_argv[] = { "strace", "ls", "-a", "-l", NULL, };
+  char *exec_argv[] = { "strace", "ls", "-a", NULL, };
   char *exec_envp[] = { "PATH=/bin", NULL, };
   execve("/usr/bin/strace", exec_argv, exec_envp);
   perror(argv[0]);
