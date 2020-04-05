@@ -76,10 +76,10 @@ int main(int argc, char *argv[]) {
           break;
         }
       }
-      if (leftparameter < 0) {
-        printf("\n%s\n", buf);
-        // assert(0);
-      }
+      // if (leftparameter < 0) {
+      //   printf("\n%s\n", buf);
+      //   // assert(0);
+      // }
       if (buf[right]=='>'){
         // assert(leftparameter >= 0);
         // printf("%d\n", leftparameter);
