@@ -12,7 +12,7 @@ struct syscallNameAndTime{
   double time;
 };
 int cmp(const void* s1, const void* s2) {
-  return (*(struct syscallNameAndTime *)s1).time>(*(struct syscallNameAndTime *)s2).time ?1:-1;
+  return (*(struct syscallNameAndTime *)s1).time>(*(struct syscallNameAndTime *)s2).time ? -1 : 1;
   
 }
 int myReadLine(int fd, char* line) {
@@ -144,6 +144,10 @@ int main(int argc, char *argv[]) {
       memset(buf, '\0', sizeof(buf));
     }
     // assert(0);
+    for (int i = 0; i < listLen; i++){
+      printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+    }
+    printf("\n\n");
     qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
     for (int i = 0; i < listLen; i++){
       printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
