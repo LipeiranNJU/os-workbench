@@ -4,11 +4,13 @@
 
 int main(int argc, char *argv[]) {
   char* cmd = argv[1];
-  printf("argc=%d\n", argc);
-  char** cmdArgs = &argv[2];
-  printf("%s\n", cmd);
-  for (int i = 0; i < argc-2; i++) {
-    printf("%s\n", cmdArgs[i]);
+  char ** cmdArgsRaw = NULL;
+  if (argc >= 2) {
+    cmdArgsRaw = &argv[2];
+    printf("%s\n", cmd);
+    for (int i = 0; i < argc-2; i++) {
+      printf("%s\n", cmdArgsRaw[i]);
+    }
   }
   return 0;
   char *exec_argv[] = { "strace", "ls", NULL, };
