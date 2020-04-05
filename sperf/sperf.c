@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     close(pipefds[0]);
     dup2(pipefds[1], fileno(stderr));
     int fd = open("/dev/null",O_RDWR);
-    dup2(fd, fileno(stdout));
+    // dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     char*token = strtok(PATH, ":");
     // printf("%s\n", token);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
     printf("%s\n", stracePath);
-    assert(0);
+    // assert(0);
     while((execve(stracePath, cmdArgs, exec_envp)) == -1){
       memset(stracePath, '\0', 100);
       strcat(stracePath, strtok(NULL, ":"));
