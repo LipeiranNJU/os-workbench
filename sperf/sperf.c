@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
   char** cmdArgs = &argv[2];
   printf("%s\n", cmd);
   for (int i = 0; i < argc-2; i++) {
-    printf("%s\n", cmdArgs[2+i]);
+    printf("%s\n", cmdArgs[i]);
   }
   return 0;
   char *exec_argv[] = { "strace", "ls", NULL, };
