@@ -39,7 +39,6 @@ int main(int argc, char *argv[]) {
     execve("/usr/bin/strace", cmdArgs, exec_envp);
     printf("AA\n");
     assert(0);
-    return 0;
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
     char buf[4];
