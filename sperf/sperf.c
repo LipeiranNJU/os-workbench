@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
       memset(buf, '\0', sizeof(buf));
     }
     // assert(0);
-    for (int i = 0; i < 1000 && syscallList[i].name != NULL; i++){
+    for (int i = 0; i < listLen; i++){
       printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
     printf("len:%d\n", listLen);
