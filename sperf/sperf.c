@@ -3,6 +3,9 @@
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 int main(int argc, char *argv[]) {
   // prepare for trace system call
   char** cmdArgs = malloc(sizeof(char*)*(argc + 2));
