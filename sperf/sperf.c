@@ -48,6 +48,8 @@ int main(int argc, char *argv[]) {
     cmdArgs[i+1] = argv[i];
   }
   char *pathvar = getenv("PATH"); 
+  char PATH[512] = {0};
+  strcpy(PATH, getenv("PATH"));
   char* path = malloc(sizeof(char)*(strlen("PATH=") + strlen(pathvar)+1));
   memset(path, '\0', strlen("PATH=") + strlen(pathvar)+1);
   strcat(path, "PATH=");
@@ -70,10 +72,14 @@ int main(int argc, char *argv[]) {
     int fd = open("/dev/null",O_RDWR);
     // dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
-    int a = execve("/bin/strace", cmdArgs, exec_envp);
-        printf("AA\n");
-    // assert(a != -1);
-    printf("a=%d\n", a);
+    char*token = strtok(PATH, ":");
+    printf("%s\n", token);
+    while((execve("/bin/strace", cmdArgs, exec_envp)) == -1){
+      assert(0);
+    }
+    //     printf("AA\n");
+    // // assert(a != -1);
+    // printf("a=%d\n", a);
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
