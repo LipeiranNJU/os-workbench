@@ -46,6 +46,9 @@ int main(int argc, char *argv[]) {
       write(fileno(stdout), buf, strlen(buf));
       memset(buf, '\0', sizeof(buf));
       printf("DDD\n");
+      if (strcmp(buf, "= ?") == 0) {
+        break;
+      }
     }
     printf("$$$\n");
 
