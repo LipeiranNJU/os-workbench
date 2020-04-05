@@ -15,6 +15,7 @@ int main(int argc, char *argv[]) {
   }
   if (cmdArgsRaw != NULL) {
     int len = 0;
+    print("AAA");
     for (int i = 0; i < argc-2; i++) {
       len += strlen(cmdArgsRaw[i]);
       len += 1;
