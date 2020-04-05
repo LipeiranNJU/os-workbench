@@ -40,8 +40,14 @@ int main(int argc, char *argv[]) {
     printf("AA\n");
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
+    char buf[4];
+    while(read(pipefds[0], buf, sizeof(buf)-1) > 0) {
+      write(STDOUT_FILENO, buf, strlen(buf));
+      bzero(buf, sizeof(buf));
+    }
+
     // 父进程，读取strace输出并统计
-    printf("BBB\n");
+    // printf("BBB\n");
     return 0;
   }
   perror(argv[0]);
