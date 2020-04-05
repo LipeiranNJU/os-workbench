@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <time.h>
 struct syscallNameAndTime{
-  char* name;
+  char name[50];
   double time;
 };
 
@@ -32,7 +32,7 @@ int myReadLine(int fd, char* line) {
 int main(int argc, char *argv[]) {
   struct syscallNameAndTime syscallList[1000];
   for (int i = 0; i < 1000; i++) {
-    syscallList[i].name = NULL;
+    strcpy(syscallList[i].name, "NONE");
     syscallList[i].time = 0;
   }
 
@@ -112,8 +112,8 @@ int main(int argc, char *argv[]) {
           // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
           // printf("syscall: %s\ttime: %s\n", syscall, time);
           // printf("syscall:%s\ttime:%lf\n",syscall, strtod(time, NULL));
-          for (int i = 0; i < 1000; i++) {
-            if (syscallList[i].name != NULL) {
+          for (int i = 0; i < len; i++) {
+            if (strcmp(syscallList[i].name, "NONE") != 0) {
               if (strcmp(syscallList[i].name, syscall) == 0) {
                 printf("1,i:%d\n", i);
                 // printf("%s\t%s\n", syscallList[i].name, syscall);
@@ -123,11 +123,11 @@ int main(int argc, char *argv[]) {
                 break;
               }
             }
-            if (syscallList[i].name == NULL) {
+            if (strcmp(syscallList[i].name, "NONE") == 0) {
               printf("2,i:%d\n", i);
               listLen += 1;
               // assert(0);
-              syscallList[i].name = syscall;
+              strcpy(syscallList[i].name, syscall);
               syscallList[i].time = dtime;
               totalTime += dtime;
               assert(syscallList[i].name != NULL);
