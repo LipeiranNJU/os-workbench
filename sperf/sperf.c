@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
     char stracePath[100];
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
-    printf("%s\n", token);
+    printf("%s\n", stracePath);
     while((execve("/bin/strace", cmdArgs, exec_envp)) == -1){
       assert(0);
     }
