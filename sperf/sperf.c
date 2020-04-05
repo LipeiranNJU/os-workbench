@@ -38,9 +38,7 @@ int main(int argc, char *argv[]) {
     dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     execve("/usr/bin/strace", cmdArgs, exec_envp);
-    printf("AA\n");
     assert(0);
-    
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
     close(pipefds[1]);
@@ -49,8 +47,6 @@ int main(int argc, char *argv[]) {
       write(fileno(stdout), buf, strlen(buf));
       memset(buf, '\0', sizeof(buf));
     }
-    printf("$$$\n");
-
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
     // assert(0);
