@@ -82,10 +82,12 @@ int main(int argc, char *argv[]) {
     while(myReadLine(pipefds[0], buf) > 0) {
       int now = clock();
       if (now - pre >= CLOCKS_PER_SEC) {
-        printf("1 sec :%d\n", now-pre);
         qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
         for (int i = 0; i < 5 && i < listLen; i++) {
           printf("%s(%.2lf%%)\n", syscallList[i].name, syscallList[i].time/totalTime*100);
+        }
+        for (int i = 0; i < 100; i++) {
+          printf("\0");
         }
         pre = now;
       }
