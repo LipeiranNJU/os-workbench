@@ -81,7 +81,7 @@ int main(int argc, char *argv[]) {
         // assert(0);
       }
       if (buf[right]=='>'){
-        assert(leftparameter >= 0);
+        // assert(leftparameter >= 0);
         // printf("%d\n", leftparameter);
         char time[100];
         char syscall[50];
