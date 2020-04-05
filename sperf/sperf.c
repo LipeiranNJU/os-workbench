@@ -65,6 +65,7 @@ int main(int argc, char *argv[]) {
   int pid = -1;
   pid = fork();
   if (pid == 0) {
+    printf("AA\n");
     close(pipefds[0]);
     dup2(pipefds[1], fileno(stderr));
     int fd = open("/dev/null",O_RDWR);
