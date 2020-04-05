@@ -5,7 +5,7 @@
 int main(int argc, char *argv[]) {
   char *exec_argv[] = { "strace", "ls", "-a", "-l", NULL, };
   char *exec_envp[] = { "PATH=/bin", NULL, };
-  execve("/usr/bin/strace", &argv[2], exec_envp);
+  execve("/usr/bin/strace", &argv[1], exec_envp);
   perror(argv[0]);
   exit(EXIT_FAILURE);
 }
