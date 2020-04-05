@@ -11,12 +11,8 @@ struct syscallNameAndTime{
   char name[50];
   double time;
 };
-int cmp(struct syscallNameAndTime* s1, struct syscallNameAndTime* s2) {
-  if (s1->time-s2->time > 0) {
-    return 1;
-  } else {
-    return 0;
-  }
+int cmp(const void* s1, const void* s2) {
+  return (*(struct syscallNameAndTime *)s1).time>(*(struct syscallNameAndTime *)s2).time ?1:-1;
   
 }
 int myReadLine(int fd, char* line) {
