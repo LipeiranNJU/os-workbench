@@ -87,6 +87,7 @@ int main(int argc, char *argv[]) {
         // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
         printf("syscall: %s\ttime: %s\n", syscall, time);
       }
+      printf("%s\n", buf);
       memset(buf, '\0', sizeof(buf));
     }
     // 父进程，读取strace输出并统计
