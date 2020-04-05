@@ -11,7 +11,14 @@ struct syscallNameAndTime{
   char name[50];
   double time;
 };
-
+int cmp(struct syscallNameAndTime* s1, struct syscallNameAndTime* s2) {
+  if (s1->time-s2->time > 0) {
+    return 1;
+  } else {
+    return 0;
+  }
+  
+}
 int myReadLine(int fd, char* line) {
   char ch;
   int offset = 0;
@@ -142,7 +149,7 @@ int main(int argc, char *argv[]) {
     }
     // assert(0);
     for (int i = 0; i < listLen; i++){
-      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+      printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
     // printf("len:%d\n", listLen);
     // 父进程，读取strace输出并统计
