@@ -20,12 +20,12 @@ int main(int argc, char *argv[]) {
   char *test[] = { "strace", "-T", "ls", NULL, };
   // execute program
 
-  pipefds[2];
+  int pipefds[2];
 	if(pipe(pipefds) < 0){
 		perror("pipe");
     assert(0);
 	}
-  int pipe(pipefds);
+  pipe(pipefds);
   int pid = -1;
   pid = fork();
   if (pid == 0) {
