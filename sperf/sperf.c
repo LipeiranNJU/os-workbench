@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
               // printf("2,i:%d\n", i);
               listLen += 1;
               // assert(0);
-              printf("%s\n", buf);
+              // printf("%s\n", buf);
               strcpy(syscallList[i].name, syscall);
               syscallList[i].time = dtime;
               totalTime += dtime;
@@ -142,9 +142,9 @@ int main(int argc, char *argv[]) {
     }
     // assert(0);
     for (int i = 0; i < listLen; i++){
-      printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
-    printf("len:%d\n", listLen);
+    // printf("len:%d\n", listLen);
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
     // assert(0);
