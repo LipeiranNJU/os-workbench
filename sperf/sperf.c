@@ -77,12 +77,12 @@ int main(int argc, char *argv[]) {
     char stracePath[100];
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
-    printf("%s\n", stracePath);
+    // printf("%s\n", stracePath);
     while((execve(stracePath, cmdArgs, exec_envp)) == -1){
       memset(stracePath, '\0', 100);
       strcat(stracePath, strtok(NULL, ":"));
       strcat(stracePath, "/strace");
-      printf("%s\n", stracePath);
+      // printf("%s\n", stracePath);
     }
     //     printf("AA\n");
     // // assert(a != -1);
