@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
       }
       if (buf[right]=='>'){
         assert(leftparameter >= 0);
-        printf("%d\n", leftparameter);
+        // printf("%d\n", leftparameter);
         char time[100];
         char syscall[50];
         memset(syscall, '\0', 50);
