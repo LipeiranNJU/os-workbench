@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
   char *test[] = { "strace", "-T", "ls", NULL, };
   // execute program
 
-  int pipefds[2];
+  pipefds[2];
 	if(pipe(pipefds) < 0){
 		perror("pipe");
     assert(0);
