@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
     dup2(pipefds[1], fileno(stderr));
     // 子进程，执行strace命令
     execve("/usr/bin/strace", cmdArgs, exec_envp);
+    printf("AA\n");
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
     // 父进程，读取strace输出并统计
