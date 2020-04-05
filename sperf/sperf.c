@@ -78,6 +78,7 @@ int main(int argc, char *argv[]) {
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
     printf("%s\n", stracePath);
+    assert(0);
     while((execve(stracePath, cmdArgs, exec_envp)) == -1){
       memset(stracePath, '\0', 100);
       strcat(stracePath, strtok(NULL, ":"));
