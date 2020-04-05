@@ -44,12 +44,12 @@ int main(int argc, char *argv[]) {
     char buf[4];
     while(read(pipefds[0], buf, sizeof(buf)-1) > 0) {
       write(fileno(stdout), buf, strlen(buf));
-      memset(buf, '\0', sizeof(buf));
       printf("DDD\n");
       if (strcmp(buf, "ted") == 0) {
         printf("QWERTD\n");
         break;
       }
+      memset(buf, '\0', sizeof(buf));
     }
     printf("$$$\n");
 
