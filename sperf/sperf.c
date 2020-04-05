@@ -126,6 +126,7 @@ int main(int argc, char *argv[]) {
               syscallList[i].name = syscall;
               syscallList[i].time = dtime;
               totalTime += dtime;
+              assert(syscallList[i].name != NULL);
               break;
             }
           }
