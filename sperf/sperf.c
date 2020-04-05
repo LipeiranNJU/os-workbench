@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < argc-3; i++) {
       strcat(cmdArgs, cmdArgsRaw[i]);
       strcat(cmdArgs, " ");
+      printf("cmdArg=%s\n", cmdArgs);
     }
     strcat(cmdArgs, cmdArgsRaw[argc-2]);
   } else {
