@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
 
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
-    assert(0);
+    // assert(0);
     return 0;
   }
   return 0;
