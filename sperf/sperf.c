@@ -121,8 +121,8 @@ int main(int argc, char *argv[]) {
 
             }
             if (syscallList[i].name == NULL) {
-              len += 1;
-              assert(0);
+              listLen += 1;
+              // assert(0);
               syscallList[i].name = syscall;
               syscallList[i].time = dtime;
               totalTime += dtime;
