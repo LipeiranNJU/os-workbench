@@ -135,6 +135,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 1000 && syscallList[i].name != NULL; i++){
       printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
+    printf("len:%d\n", listLen);
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
     // assert(0);
