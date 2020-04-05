@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
     int fd = open("/dev/null",O_RDWR);
     dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
-    int a = execve("/bin/strace", cmdArgs, exec_envp);
+    int a = execve("/usr/bin/strace", cmdArgs, exec_envp);
     assert(a != -1);
     printf("a=%d\n", a);
     assert(0);
