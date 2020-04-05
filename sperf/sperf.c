@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
       // printf("%s\n", buf);
       memset(buf, '\0', sizeof(buf));
     }
+    assert(0);
     for (int i = 0; i < 1000 && syscallList[i].name != NULL; i++){
       printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
