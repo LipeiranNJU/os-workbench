@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
             if (syscallList[i].name == NULL) {
               len += 1;
               syscallList[i].name = syscall;
-              syscallList[i].time += dtime;
+              syscallList[i].time = dtime;
               totalTime += dtime;
               break;
             }
