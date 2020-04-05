@@ -74,6 +74,10 @@ int main(int argc, char *argv[]) {
     // 子进程，执行strace命令
     char*token = strtok(PATH, ":");
     printf("%s\n", token);
+    char stracePath[100];
+    strcat(stracePath, token);
+    strcat(stracePath, "/strace");
+    printf("%s\n", token);
     while((execve("/bin/strace", cmdArgs, exec_envp)) == -1){
       assert(0);
     }
