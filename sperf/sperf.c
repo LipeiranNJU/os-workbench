@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
       len += 1;
     }
     printf("len:%d\n",len);
-    cmdArgs = malloc(len);
+    cmdArgs = malloc(len+1);
     memset(cmdArgs, '\0', len);
     printf("BBB\n");
     for (int i = 0; i < argc-3; i++) {
