@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
     // dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     char*token = strtok(PATH, ":");
-    printf("%s\n", token);
+    // printf("%s\n", token);
     char stracePath[100];
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
