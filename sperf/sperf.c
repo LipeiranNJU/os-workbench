@@ -83,6 +83,10 @@ int main(int argc, char *argv[]) {
       int now = clock();
       if (now - pre >= CLOCKS_PER_SEC) {
         printf("1 sec :%d\n", now-pre);
+        qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
+        for (int i = 0; i < 5 && i < listLen; i++) {
+          printf("%s(%d%%)", syscallList[i].name, syscallList[i].time/totalTime*100);
+        }
         pre = now;
       }
       int len = strlen(buf);
@@ -145,12 +149,12 @@ int main(int argc, char *argv[]) {
     }
     // assert(0);
     for (int i = 0; i < listLen; i++){
-      printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
     printf("\n\n");
     qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
     for (int i = 0; i < listLen; i++){
-      printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
     }
     // printf("len:%d\n", listLen);
     // 父进程，读取strace输出并统计
