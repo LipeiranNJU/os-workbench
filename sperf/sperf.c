@@ -71,6 +71,7 @@ int main(int argc, char *argv[]) {
     dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     int a = execve("/bin/strace", cmdArgs, exec_envp);
+    assert(a != -1);
     printf("a=%d\n", a);
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
