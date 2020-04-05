@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
       printf("cmdArg=%s\n", cmdArgs);
     }
     // strcat(cmdArgs, cmdArgsRaw[argc-2]);
-    printf("$$$%s\n", cmdArgsRaw[argc-2])
+    printf("$$$%s\n", cmdArgsRaw[argc-2]);
   } else {
     cmdArgs = "";
   }
