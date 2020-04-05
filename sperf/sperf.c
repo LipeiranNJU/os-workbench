@@ -47,6 +47,7 @@ int main(int argc, char *argv[]) {
       memset(buf, '\0', sizeof(buf));
       printf("DDD\n");
       if (strcmp(buf, "= ?") == 0) {
+        printf("QWERTD\n");
         break;
       }
     }
