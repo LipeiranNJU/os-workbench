@@ -78,22 +78,21 @@ int main(int argc, char *argv[]) {
       }
       if (leftparameter < 0) {
         printf("\n%s\n", buf);
-        assert(0);
+        // assert(0);
       }
       if (buf[right]=='>'){
-        if (leftparameter < 0) {
-          printf("\n%s\n", buf);
-        }
         assert(leftparameter >= 0);
         // printf("%d\n", leftparameter);
         char time[100];
         char syscall[50];
         memset(syscall, '\0', 50);
         memset(time, '\0', 100);
-        memcpy(time, &buf[left+1], (right-left-1));
-        memcpy(syscall, &buf[0], leftparameter);
-        // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
-        printf("syscall: %s\ttime: %s\n", syscall, time);
+        if (leftparameter > 0){
+          memcpy(time, &buf[left+1], (right-left-1));
+          memcpy(syscall, &buf[0], leftparameter);
+          // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
+          printf("syscall: %s\ttime: %s\n", syscall, time);
+        }
       }
       // printf("%s\n", buf);
       memset(buf, '\0', sizeof(buf));
