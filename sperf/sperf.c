@@ -73,9 +73,10 @@ int main(int argc, char *argv[]) {
       for (int i = 0; i < len; i++) {
         if (buf[i] == '(') {
           leftparameter = i;
+          break;
         }
       }
-      if (buf[right]=='>' && leftparameter < 15){
+      if (buf[right]=='>'){
         assert(leftparameter >= 0);
         printf("%d\n", leftparameter);
         char time[100];
@@ -87,7 +88,7 @@ int main(int argc, char *argv[]) {
         // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
         printf("syscall: %s\ttime: %s\n", syscall, time);
       }
-      printf("%s\n", buf);
+      // printf("%s\n", buf);
       memset(buf, '\0', sizeof(buf));
     }
     // 父进程，读取strace输出并统计
