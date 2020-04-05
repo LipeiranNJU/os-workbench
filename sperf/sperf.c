@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
       if (now - pre >= CLOCKS_PER_SEC) {
         qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
         for (int i = 0; i < 5 && i < listLen; i++) {
-          printf("%s (%d%%)\n", syscallList[i].name, (int) ((syscallList[i].time/totalTime))*100);
+          printf("%s (%d%%)\n", syscallList[i].name, (int) ((syscallList[i].time/totalTime)*100));
         }
         for (int i = 0; i < 100; i++) {
           printf("%c",'\0');
