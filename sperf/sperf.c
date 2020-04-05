@@ -9,9 +9,6 @@ int main(int argc, char *argv[]) {
   if (argc >= 2) {
     cmdArgsRaw = &argv[2];
     printf("%s\n", cmd);
-    for (int i = 0; i < argc-2; i++) {
-      printf("%s\n", cmdArgsRaw[i]);
-    }
   }
   if (argc > 2) {
     int len = 0;
