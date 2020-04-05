@@ -9,7 +9,9 @@ int main(int argc, char *argv[]) {
   for (int i = 1; i <= argc; i++){
     cmdArgs[i+1] = argv[i];
   }
-
+  char *pathvar = getenv("PATH"); 
+  printf("pathvar is : %s\n",pathvar);
+  return 0;
   // char *exec_argv[] = { "strace", "ls", "-a", NULL, };
   char *exec_envp[] = { "PATH=/bin:/usr/bin", NULL, };
   char *test[] = { "strace", "-T", "ls", NULL, };
