@@ -61,7 +61,8 @@ int main(int argc, char *argv[]) {
     close(pipefds[1]);
     char buf[512];
     while(myReadLine(pipefds[0], buf) > 0) {
-      printf("%s\n", buf);
+      int len = strlen(buf);
+      printf("%c\n", buf[len-1]);
       memset(buf, '\0', sizeof(buf));
     }
     // 父进程，读取strace输出并统计
