@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
         char* time[100];
         memcpy(time, &buf[left+1], (right-left-1));
         // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
-        printf("time:%s\n");
+        printf("time:%s\n", time);
       }
       memset(buf, '\0', sizeof(buf));
     }
