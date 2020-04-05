@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
     // printf("BBB\n");
     return 0;
   }
+  return 0;
   perror(argv[0]);
-  // exit(EXIT_FAILURE);
+  exit(EXIT_FAILURE);
 }
