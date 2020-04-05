@@ -64,7 +64,6 @@ int main(int argc, char *argv[]) {
       printf("%s\n\n\n", buf);
       memset(buf, '\0', sizeof(buf));
     }
-    printf("%s\n\n\n", buf);
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
     // assert(0);
