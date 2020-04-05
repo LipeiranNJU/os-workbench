@@ -67,9 +67,9 @@ int main(int argc, char *argv[]) {
   if (pid == 0) {
     close(pipefds[0]);
     dup2(pipefds[1], fileno(stderr));
-        printf("AA\n");
     int fd = open("/dev/null",O_RDWR);
-    dup2(fd, fileno(stdout));
+    // dup2(fd, fileno(stdout));
+        printf("AA\n");
     // 子进程，执行strace命令
     int a = execve("/bin/strace", cmdArgs, exec_envp);
     assert(a != -1);
