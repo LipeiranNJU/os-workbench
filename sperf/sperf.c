@@ -69,8 +69,12 @@ int main(int argc, char *argv[]) {
           left = i;
         }
       }
-      if (buf[right]=='>')
-        printf("left: %c\tright: %c\n",buf[left] , buf[right]);
+      if (buf[right]=='>'){
+        char* time[100];
+        memcpy(time, &buf[left+1], (right-left-1));
+        // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
+        printf("time:%s\n");
+      }
       memset(buf, '\0', sizeof(buf));
     }
     // 父进程，读取strace输出并统计
