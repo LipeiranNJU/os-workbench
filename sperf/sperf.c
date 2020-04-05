@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     while(read(pipefds[0], buf, sizeof(buf)-1) > 0) {
       write(fileno(stdout), buf, strlen(buf));
       printf("DDD\n");
-      if (strcmp(buf, "ted") == 0) {
+      if (strcmp(buf, "xit") == 0) {
         printf("QWERTD\n");
         break;
       }
