@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
           for (int i = 0; i < len; i++) {
             if (strcmp(syscallList[i].name, "NONE") != 0) {
               if (strcmp(syscallList[i].name, syscall) == 0) {
-                printf("1,i:%d\n", i);
+                // printf("1,i:%d\n", i);
                 // printf("%s\t%s\n", syscallList[i].name, syscall);
                 syscallList[i].time += dtime;
                 // assert(0);
@@ -124,7 +124,7 @@ int main(int argc, char *argv[]) {
               }
             }
             if (strcmp(syscallList[i].name, "NONE") == 0) {
-              printf("2,i:%d\n", i);
+              // printf("2,i:%d\n", i);
               listLen += 1;
               // assert(0);
               strcpy(syscallList[i].name, syscall);
