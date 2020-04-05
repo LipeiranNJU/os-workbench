@@ -127,6 +127,7 @@ int main(int argc, char *argv[]) {
               // printf("2,i:%d\n", i);
               listLen += 1;
               // assert(0);
+              printf("%s\n", buf);
               strcpy(syscallList[i].name, syscall);
               syscallList[i].time = dtime;
               totalTime += dtime;
