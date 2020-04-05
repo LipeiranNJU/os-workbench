@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
         char syscall[50];
         memset(syscall, '\0', 50);
         memset(time, '\0', 100);
-        if (leftparameter > 0){
+        if (leftparameter > 0&&('a'<=buf[0] && 'z'>=buf[0])){
           memcpy(time, &buf[left+1], (right-left-1));
           memcpy(syscall, &buf[0], leftparameter);
           double dtime = strtod(time, NULL);
