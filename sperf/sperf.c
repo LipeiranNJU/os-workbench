@@ -7,6 +7,11 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
+struct syscallNameAndTime{
+  char* name;
+  int time;
+};
+
 int myReadLine(int fd, char* line) {
   char ch;
   int offset = 0;
@@ -96,6 +101,7 @@ int main(int argc, char *argv[]) {
           memcpy(syscall, &buf[0], leftparameter);
           // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
           // printf("syscall: %s\ttime: %s\n", syscall, time);
+          printf("time:%lf",strtod(time, NULL));
         }
       }
       // printf("%s\n", buf);
