@@ -84,22 +84,17 @@ int main(int argc, char *argv[]) {
     dup2(fd, fileno(stdout));
     // 子进程，执行strace命令
     char*token = strtok(PATH, ":");
-    // printf("%s\n", token);
     char stracePath[100];
     memset(stracePath, '\0', 100);
     strcat(stracePath, token);
     strcat(stracePath, "/strace");
     printf("%s\n", stracePath);
-    // assert(0);
     while((execve(stracePath, cmdArgs, env)) == -1){
       memset(stracePath, '\0', 100);
       strcat(stracePath, strtok(NULL, ":"));
       strcat(stracePath, "/strace");
       printf("%s\n", stracePath);
     }
-    //     printf("AA\n");
-    // // assert(a != -1);
-    // printf("a=%d\n", a);
     assert(0);
     // 不应该执行此处代码，否则execve失败，出错处理
   } else {
@@ -139,8 +134,6 @@ int main(int argc, char *argv[]) {
         }
       }
       if (buf[right]=='>'){
-        // assert(leftparameter >= 0);
-        // printf("%d\n", leftparameter);
         char time[100];
         char syscall[50];
         memset(syscall, '\0', 50);
@@ -149,25 +142,16 @@ int main(int argc, char *argv[]) {
           memcpy(time, &buf[left+1], (right-left-1));
           memcpy(syscall, &buf[0], leftparameter);
           double dtime = strtod(time, NULL);
-          // printf("left: %c\tright: %c\n",buf[left] , buf[right]);
-          // printf("syscall: %s\ttime: %s\n", syscall, time);
-          // printf("syscall:%s\ttime:%lf\n",syscall, strtod(time, NULL));
           for (int i = 0; i < len; i++) {
             if (strcmp(syscallList[i].name, "NONE") != 0) {
               if (strcmp(syscallList[i].name, syscall) == 0) {
-                // printf("1,i:%d\n", i);
-                // printf("%s\t%s\n", syscallList[i].name, syscall);
                 syscallList[i].time += dtime;
-                // assert(0);
                 totalTime += dtime;
                 break;
               }
             }
             if (strcmp(syscallList[i].name, "NONE") == 0) {
-              // printf("2,i:%d\n", i);
               listLen += 1;
-              // assert(0);
-              // printf("%s\n", buf);
               strcpy(syscallList[i].name, syscall);
               syscallList[i].time = dtime;
               totalTime += dtime;
@@ -177,14 +161,8 @@ int main(int argc, char *argv[]) {
           }
         }
       }
-      // printf("%s\n", buf);
       memset(buf, '\0', sizeof(buf));
     }
-    // assert(0);
-    for (int i = 0; i < listLen; i++){
-      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
-    }
-    // printf("\n\n");
     qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
     for (int i = 0; i<5 && i < listLen; i++) {
       printf("%s (%d%%)\n", syscallList[i].name, (int) ((syscallList[i].time/totalTime)*100));
@@ -194,10 +172,6 @@ int main(int argc, char *argv[]) {
       printf("%c",'\0');
     }
     fflush(stdout);
-    // printf("len:%d\n", listLen);
-    // 父进程，读取strace输出并统计
-    // printf("BBB\n");
-    // assert(0);
     return 0;
   }
   return 0;
