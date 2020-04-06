@@ -34,6 +34,7 @@ int main(int argc, char *argv[]) {
         // printf("try to define a function\n");
         printf("%s", line);
         remove("/tmp/abc.c");
+        remove("/tmp/abc.so");
         FILE *fp = fopen("/tmp/abc.c","a");
         fprintf(fp, "%s", line);
         fprintf(fp, "\n");
