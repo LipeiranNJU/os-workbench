@@ -195,6 +195,7 @@ int main(int argc, char *argv[]) {
       printf("CCC\n");
       h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
       mp = dlsym(h, "__expr");
+      printf("status:%d\n",status);
       printf("DDD\n");
       printf("%d\n", mp());
       dlclose(h);
