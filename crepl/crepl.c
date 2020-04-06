@@ -55,6 +55,8 @@ int main(int argc, char *argv[]) {
       }
     }
     // printf("try to use an expression\n");
+    remove("./wrapper.c");
+    remove("./wrapper.so");
     FILE *fp = fopen("wrapper.c","a");
     fprintf(fp, "int __expr() { return (");
     fprintf(fp, "%s", line);
