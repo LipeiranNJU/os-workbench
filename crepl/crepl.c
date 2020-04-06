@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
           dup2(pipefds[1], fileno(stdout));
           FILE *f1, *f2;
           int c;
-          f1 = fopen("/tmp/abc.c", "w");
+          f1 = fopen("/tmp/abc.c", "r");
           f2 = fopen("/tmp/abc1.c", "w");
           while((c = fgetc(f1)) != EOF)
             fputc(c, f2);
