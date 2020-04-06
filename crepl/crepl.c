@@ -192,7 +192,7 @@ int main(int argc, char *argv[]) {
             }
           }
         }
-      sleep(1);
+      printf("CCC\n");
       h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
       mp = dlsym(h, "__expr");
       printf("%d\n", mp());
