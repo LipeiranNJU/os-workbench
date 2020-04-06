@@ -186,6 +186,7 @@ int main(int argc, char *argv[]) {
         mp = dlsym(h, "__expr");
         assert(mp != NULL);
         printf("%d\n", mp());
+        dlclose(h);
       }
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
