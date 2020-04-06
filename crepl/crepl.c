@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
 	      }
         int pid = fork();
         if (pid == 0){
+          close(pipefds[0]);
+          dup2(pipefds[1], fileno(stderr));
           char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
           char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
           if (version == 32) {
