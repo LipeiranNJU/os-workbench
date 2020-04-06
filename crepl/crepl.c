@@ -8,6 +8,13 @@ void defFunction(){
 }
 int main(int argc, char *argv[]) {
   int version = 0;
+  if (strncmp("32", &argv[0][6], 2) == 0) {
+    version = 32;
+  } else if (strncmp("64", &argv[0][6], 2) == 0){
+    version = 64;
+  } else {
+    assert(0);
+  }
   static char line[4096];
   char template[] = "tmp-XXXXXX";
   while (1) {
