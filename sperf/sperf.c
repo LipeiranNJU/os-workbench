@@ -175,9 +175,14 @@ int main(int argc, char *argv[]) {
     }
     // printf("\n\n");
     qsort(syscallList, listLen, sizeof(struct syscallNameAndTime), cmp);
-    for (int i = 0; i < listLen; i++){
-      // printf("Name:%s\tTime%lf\n", syscallList[i].name, syscallList[i].time);
+    for (int i = 0; i<5 && i < listLen; i++) {
+      printf("%s (%d%%)\n", syscallList[i].name, (int) ((syscallList[i].time/totalTime)*100));
     }
+    printf("==================\n");
+    for (int i = 0; i < 80; i++) {
+      printf("%c",'\0');
+    }
+    fflush(stdout);
     // printf("len:%d\n", listLen);
     // 父进程，读取strace输出并统计
     // printf("BBB\n");
