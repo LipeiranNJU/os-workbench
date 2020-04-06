@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     FILE *fp = fopen("wrapper.c","a");
     fprintf(fp, "int __expr() { return (");
     fprintf(fp, "%s", line);
-    fprintf("fp", ");}");
+    fprintf(fp, ");}");
     fclose(fp);
     int pid = fork();
     if (pid == 0) {
