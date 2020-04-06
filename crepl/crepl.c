@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
           FILE *f1, *f2;
           int c;
           f1 = fopen("/tmp/abc.c", "w");
-          f1 = fopen("/tmp/abc1.c", "w");
+          f2 = fopen("/tmp/abc1.c", "w");
           while((c = fgetc(f1)) != EOF)
             fputc(c, f2);
           fclose(f1);
