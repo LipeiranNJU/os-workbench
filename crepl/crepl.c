@@ -59,8 +59,8 @@ int main(int argc, char *argv[]) {
     fclose(fp);
     int pid = fork();
     if (pid == 0) {
-      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","wrapper.c", "abc.so", "-o", "wrapper.so", NULL};
-      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","wrapper.c", "abc.so", "-o", "wrapper.so", NULL};
+      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","wrapper.c", "/tmp/abc.so", "-o", "wrapper.so", NULL};
+      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","wrapper.c", "/tmp/abc.so", "-o", "wrapper.so", NULL};
       if (version == 32) {
         execvp("gcc", argv32);
       } else if (version == 64) {
