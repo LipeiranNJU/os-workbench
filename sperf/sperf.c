@@ -63,10 +63,10 @@ int main(int argc, char *argv[]) {
   char** env = environ;
   while(*env != NULL){
     // assert(strncmp(*env, "PATH=", 5)!=0);
-    if (strncmp(*env, "PATH=", 5) == 0) {
-      assert(0);
-      *env=path;
-    }
+    // if (strncmp(*env, "PATH=", 5) == 0) {
+    //   assert(0);
+    //   *env=path;
+    // }
     printf("%s\n", *env++);
   }
   int pipefds[2];
