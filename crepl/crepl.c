@@ -16,7 +16,8 @@ int main(int argc, char *argv[]) {
       if (strncmp(line, "int ", 3) == 0) {
         printf("try to define a function\n");
         printf("%s", line);
-        mkstemp("tmpXXXXXX");
+        char template[] = "tmp-XXXXXX";
+        mkstemp(template);
         continue;
       }
     }
