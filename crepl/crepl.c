@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
         printf("try to define a function\n");
-        printf("%s\n", line);
+        printf("%s", line);
         continue;
       }
     }
