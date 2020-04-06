@@ -16,10 +16,9 @@ int main(int argc, char *argv[]) {
         printf("try to define a function\n");
         continue;
       }
-    } else {
-      printf("try to use an expression\n");
-      continue;
     }
-    printf("Got %zu chars.\n", strlen(line)); // WTF?
+    printf("try to use an expression\n");
+    continue;
+    // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
 }
