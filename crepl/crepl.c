@@ -81,6 +81,7 @@ int main(int argc, char *argv[]) {
           while (read(pipefds[0], &ch, 1)) {
             if (ch != '\0') {
               printf("Compile Error!\n");
+              break;
             }
           }
         }
