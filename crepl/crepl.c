@@ -6,6 +6,7 @@ void defFunction(){
 }
 int main(int argc, char *argv[]) {
   static char line[4096];
+  char template[] = "tmp-XXXXXX";
   while (1) {
     printf("crepl> ");
     fflush(stdout);
@@ -19,8 +20,8 @@ int main(int argc, char *argv[]) {
       if (strncmp(line, "int ", 3) == 0) {
         printf("try to define a function\n");
         printf("%s", line);
-        char template[] = "tmp-XXXXXX";
-        mkstemp(template);
+        int fd = mkstemp(template);
+        close(fd);
         continue;
       }
     }
@@ -28,4 +29,6 @@ int main(int argc, char *argv[]) {
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
+  ulink(template);
+  return 0;
 }
