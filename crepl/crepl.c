@@ -23,6 +23,8 @@ int main(int argc, char *argv[]) {
         printf("try to define a function\n");
         printf("%s", line);
         FILE *fp = fopen("abc.c","w+");
+        char* eargv[] = {"ls", "-l", "-a", NULL};
+        execvp("ls", eargv);
         fprintf(fp, "%s", line);
         fclose(fp);
         continue;
