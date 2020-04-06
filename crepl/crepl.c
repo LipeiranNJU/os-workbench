@@ -65,8 +65,16 @@ int main(int argc, char *argv[]) {
           close(pipefds[0]);
           dup2(pipefds[1], fileno(stderr));
           dup2(pipefds[1], fileno(stdout));
-          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+          FILE *f1, *f2;
+          int c;
+          f1 = fopen("/tmp/abc.c", "w");
+          f1 = fopen("/tmp/abc1.c", "w");
+          while((c = fgetc(f1)) != EOF)
+            fputc(c, f2);
+          fclose(f1);
+          fclose(f2);
+          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc1.c", "-o", "/tmp/abc1.so", NULL};
+          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc1.c", "-o", "/tmp/abc1.so", NULL};
           if (version == 32) {
             execvp("gcc", argv32);
           } else if (version == 64) {
@@ -81,9 +89,20 @@ int main(int argc, char *argv[]) {
           while (read(pipefds[0], &ch, 1)) {
             if (ch != '\0') {
               printf("Compile Error!\n");
-              break;
+              goto L;
             }
           }
+          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+          if (version == 32) {
+            execvp("gcc", argv32);
+          } else if (version == 64) {
+            execvp("gcc", argv64);
+          } else {
+            assert(0);
+          }
+
+          L:
         }
          
         continue;
