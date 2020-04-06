@@ -133,7 +133,6 @@ int main(int argc, char *argv[]) {
       dup2(pipefds[1], fileno(stderr));
       dup2(pipefds[1], fileno(stdout));
       FILE *f2;
-      int c;
       f2 = fopen("/tmp/wrapper1.c", "w");
       fclose(f2);
       FILE *fp = fopen("/tmp/wrapper1.c","w");
@@ -164,8 +163,26 @@ int main(int argc, char *argv[]) {
         printf("Expression Compile error!\n");
         continue;
       }
-      continue;
-
+      FILE * f1;
+      f1 = fopen("/tmp/wrapper.c", "w");
+      fprintf(f1, "int __expr() { return (");
+      fprintf(f1, "%s", line);
+      fprintf(f1, ");}");
+      fclose(f1);
+      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      int pppid = fork();
+      if (pppid == 0) {
+        if (version == 32) {
+          execvp("gcc", argv32);
+        } else if (version == 64) {
+          execvp("gcc", argv64);
+        } else {
+          assert(0);
+        }
+      } else {
+        
+      }
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
