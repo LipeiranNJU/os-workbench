@@ -3,8 +3,8 @@
 // int (*mp)();
 // int main() {
 //     void* h;
-//     h = dlopen("./abc.so", RTLD_NOW|RTLD_GLOBAL);
-//     mp = dlsym(h, "a");
+//     h = dlopen("./wrapper.so", RTLD_NOW|RTLD_GLOBAL);
+//     mp = dlsym(h, "__expr");
 //     printf("%d\n",mp());
 //     return 0;
 // }
