@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
         }
       }
       if (status == 1) {
-        printf("Expression Compile error!\n");
+        printf("Compile Error!\n");
         continue;
       }
       FILE * f1;
@@ -197,7 +197,7 @@ int main(int argc, char *argv[]) {
           printf("Compile Error!\n");
         } else {
           assert(mp != NULL);
-          printf("%d\n", mp());
+          printf(" = %d\n", mp());
           dlclose(h);
         }
       }
