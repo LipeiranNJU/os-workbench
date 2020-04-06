@@ -7,6 +7,7 @@ void defFunction(){
 
 }
 int main(int argc, char *argv[]) {
+  int version = 0;
   static char line[4096];
   char template[] = "tmp-XXXXXX";
   while (1) {
@@ -27,9 +28,15 @@ int main(int argc, char *argv[]) {
         fclose(fp);
         int pid = fork();
         if (pid == 0){
-          char* eargv[] = {"gcc", "-fPIC", "-shared", "-m32","abc.c", "-o", "abc.so",NULL};
-          // char* eargv[] = {"gcc", "-fPIC", "-shared", "-m64","abc.c", "-o", "abc.so",NULL};
-          execvp("gcc", eargv);
+          char* argv32[] = {"gcc", "-fPIC", "-shared", "-m32","abc.c", "-o", "abc.so", NULL};
+          char* argv64[] = {"gcc", "-fPIC", "-shared", "-m64","abc.c", "-o", "abc.so", NULL};
+          if (version == 32) {
+            execvp("gcc", argv32);
+          } else if (version == 64) {
+            execvp("gcc", argv64);
+          } else {
+            assert(0);
+          }
         }
         continue;
       }
