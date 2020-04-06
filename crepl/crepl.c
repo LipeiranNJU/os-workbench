@@ -140,10 +140,9 @@ int main(int argc, char *argv[]) {
       f2 = fopen("/tmp/wrapper1.c", "w");
       while((c = fgetc(f1)) != EOF){
         fputc(c, f2);
-        fclose(f1);
       }
+      fclose(f1);
       fclose(f2);
-      printf("BBB\n");
       FILE *fp = fopen("/tmp/wrapper1.c","a");
       fprintf(fp, "int __expr() { return (");
       fprintf(fp, "%s", line);
