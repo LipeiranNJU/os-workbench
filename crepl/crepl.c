@@ -161,7 +161,7 @@ int main(int argc, char *argv[]) {
         }
       }
       if (status == 1) {
-        printf("Compile error!\n");
+        printf("Expression Compile error!\n");
         continue;
       }
       continue;
