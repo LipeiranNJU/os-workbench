@@ -77,9 +77,11 @@ int main(int argc, char *argv[]) {
         } else {
           // printf("Hello\n");
           close(pipefds[1]);
-          char ch;
+          char ch = '\0';
           while (read(pipefds[0], &ch, 1)) {
-            printf("%d\n", ch);
+            if (ch != '\0') {
+              printf("Compile Error!\n");
+            }
           }
         }
          
