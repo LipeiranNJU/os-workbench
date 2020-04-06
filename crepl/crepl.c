@@ -14,7 +14,18 @@ int main(int argc, char *argv[]) {
   remove("/tmp/wrapper.so");
   remove("/tmp/abc.c");
   remove("/tmp/abc.so");
+  FILE *fp = fopen("/tmp/abc.c","a");
+  fclose(fp);
   int version = 0;
+  char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+  char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+  if (version == 32) {
+    execvp("gcc", argv32);
+  } else if (version == 64) {
+    execvp("gcc", argv64);
+  } else {
+    assert(0);
+  }
   int l = strlen(argv[0]);
   if (strncmp("32", &argv[0][l - 2], 2) == 0) {
     version = 32;
@@ -23,8 +34,6 @@ int main(int argc, char *argv[]) {
   } else {
     assert(0);
   }
-  remove("/tmp/abc.c");
-  remove("/tmp/abc.so");
   static char line[4096];
   while (1) {
     printf("crepl> ");
