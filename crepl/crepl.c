@@ -22,12 +22,9 @@ int main(int argc, char *argv[]) {
       if (strncmp(line, "int ", 3) == 0) {
         printf("try to define a function\n");
         printf("%s", line);
-        // int fd = mkstemp(template);
         FILE *fp = fopen("abc.c","w+");
         fprintf(fp, "%s", line);
         fclose(fp);
-        // printf("fd:%d\n", fd);
-        // close(fd);
         continue;
       }
     }
@@ -35,6 +32,5 @@ int main(int argc, char *argv[]) {
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
-  // unlink(template);
   return 0;
 }
