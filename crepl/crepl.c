@@ -94,15 +94,18 @@ int main(int argc, char *argv[]) {
               break;
             }
           }
-          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-          if (status == 0){
-            if (version == 32) {
-              execvp("gcc", argv32);
-            } else if (version == 64) {
-              execvp("gcc", argv64);
-            } else {
-              assert(0);
+          int pppid = fork();
+          if (pppid == 0) {
+            char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+            char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+            if (status == 0){
+              if (version == 32) {
+                execvp("gcc", argv32);
+              } else if (version == 64) {
+                execvp("gcc", argv64);
+              } else {
+                assert(0);
+              }
             }
           }
         }
