@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
         printf("%s", line);
         // int fd = mkstemp(template);
         FILE *fp = fopen("abc.c","w+");
-        fprintf(fp, line);
+        fprintf(fp, "%s", line);
         fclose(fp);
         // printf("fd:%d\n", fd);
         // close(fd);
