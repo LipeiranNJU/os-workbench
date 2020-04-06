@@ -36,6 +36,7 @@ int myReadLine(int fd, char* line) {
 int main(int argc, char *argv[]) {
   char** env = environ;
   while(*env != NULL){
+    assert(strncpy(*env, "PATH=", 5)!=0);
     printf("%s\n", *env++);
   }
 
