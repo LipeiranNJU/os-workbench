@@ -34,11 +34,6 @@ int myReadLine(int fd, char* line) {
   return -1;
 }
 int main(int argc, char *argv[]) {
-  char** env = environ;
-  while(*env != NULL){
-    assert(strncpy(*env, "PATH=", 5)!=0);
-    printf("%s\n", *env++);
-  }
 
   struct syscallNameAndTime syscallList[1000];
   for (int i = 0; i < 1000; i++) {
@@ -65,6 +60,11 @@ int main(int argc, char *argv[]) {
   char *test[] = { "strace", "-T", "ls", NULL, };
   // execute program
 
+  char** env = environ;
+  while(*env != NULL){
+    assert(strncmp(*env, "PATH=", 5)!=0);
+    printf("%s\n", *env++);
+  }
   int pipefds[2];
 	if(pipe(pipefds) < 0){
 		perror("pipe");
