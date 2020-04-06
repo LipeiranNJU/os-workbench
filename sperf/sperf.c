@@ -104,6 +104,7 @@ int main(int argc, char *argv[]) {
         for (int i = 0; i<5 && i < listLen; i++) {
           printf("%s (%d%%)\n", syscallList[i].name, (int) ((syscallList[i].time/totalTime)*100));
         }
+        printf("==================\n");
         for (int i = 0; i < 80; i++) {
           printf("%c",'\0');
         }
