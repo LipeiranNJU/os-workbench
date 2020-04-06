@@ -110,11 +110,12 @@ int main(int argc, char *argv[]) {
                   assert(0);
                 }
               }
+            } else {
+              printf("add a function\n");
             }
           }
 
         }
-        printf("add a function\n");
         continue;
       }
     }
