@@ -185,14 +185,8 @@ int main(int argc, char *argv[]) {
         sleep(1);
         h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
         mp = dlsym(h, "__expr");
-        if (mp == NULL) {
-          printf("COMPILE error\n");
-          dlclose(h);
-          continue;
-        } else{ 
-          printf("%d\n", mp());
-        }
-        printf("DDD\n");
+        assert(mp != NULL);
+        printf("%d\n", mp());
         dlclose(h);
       }
     }
