@@ -61,15 +61,15 @@ int main(int argc, char *argv[]) {
     // printf("try to use an expression\n");
     remove("/tmp/wrapper.c");
     remove("/tmp/wrapper.so");
-    FILE *fp = fopen("wrapper.c","a");
+    FILE *fp = fopen("/tmp/wrapper.c","a");
     fprintf(fp, "int __expr() { return (");
     fprintf(fp, "%s", line);
     fprintf(fp, ");}");
     fclose(fp);
     int pid = fork();
     if (pid == 0) {
-      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
-      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
       if (version == 32) {
         execvp("gcc", argv32);
       } else if (version == 64) {
