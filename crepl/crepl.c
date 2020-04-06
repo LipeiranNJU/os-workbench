@@ -187,6 +187,7 @@ int main(int argc, char *argv[]) {
         mp = dlsym(h, "__expr");
         if (mp == NULL) {
           printf("COMPILE error\n");
+          continue;
         } else{ 
           printf("%d\n", mp());
         }
