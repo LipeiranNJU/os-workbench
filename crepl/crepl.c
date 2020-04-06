@@ -163,6 +163,7 @@ int main(int argc, char *argv[]) {
       int status = 0;
       close(pipefds[1]);
       char ch = '\0';
+      printf("AAA\n");
       while (read(pipefds[0], &ch, 1)) {
         if (ch != '\0') {
           printf("Compile Error!\n");
