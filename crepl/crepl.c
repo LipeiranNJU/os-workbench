@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
         printf("try to define a function\n");
         printf("%s", line);
         int fd = mkstemp(template);
+        printf("fd:%d\n", fd);
         close(fd);
         continue;
       }
