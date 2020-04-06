@@ -14,6 +14,7 @@ int main(int argc, char *argv[]) {
     if (strlen(line) > 3) {
       if (strncmp(line, "int ", 4) == 0) {
         printf("define a function");
+        continue;
       }
     }
     printf("Got %zu chars.\n", strlen(line)); // WTF?
