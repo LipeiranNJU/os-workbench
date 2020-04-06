@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
     }
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
-        printf("try to define a function\n");
+        // printf("try to define a function\n");
         printf("%s", line);
         FILE *fp = fopen("abc.c","w+");
         fprintf(fp, "%s", line);
@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
         continue;
       }
     }
-    printf("try to use an expression\n");
+    // printf("try to use an expression\n");
     FILE *fp = fopen("wrapper.c","a");
     fprintf(fp, "int __expr() { return (");
     fprintf(fp, "%s", line);
