@@ -61,14 +61,14 @@ int main(int argc, char *argv[]) {
   // execute program
 
   char** env = environ;
-  while(*env != NULL){
-    // assert(strncmp(*env, "PATH=", 5)!=0);
-    // if (strncmp(*env, "PATH=", 5) == 0) {
-    //   assert(0);
-    //   *env=path;
-    // }
-    printf("%s\n", *env++);
-  }
+  // while(*env != NULL){
+  //   // assert(strncmp(*env, "PATH=", 5)!=0);
+  //   // if (strncmp(*env, "PATH=", 5) == 0) {
+  //   //   assert(0);
+  //   //   *env=path;
+  //   // }
+  //   printf("%s\n", *env++);
+  // }
   int pipefds[2];
 	if(pipe(pipefds) < 0){
 		perror("pipe");
