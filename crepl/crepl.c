@@ -197,7 +197,7 @@ int main(int argc, char *argv[]) {
           printf("Compile Error!\n");
         } else {
           assert(mp != NULL);
-          printf(" = %d\n", mp());
+          printf("= %d\n", mp());
           dlclose(h);
         }
       }
