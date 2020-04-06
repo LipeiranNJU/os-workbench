@@ -7,6 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <time.h>
+extern char** environ;
 struct syscallNameAndTime{
   char name[50];
   double time;
@@ -33,6 +34,11 @@ int myReadLine(int fd, char* line) {
   return -1;
 }
 int main(int argc, char *argv[]) {
+  char** env = environ;
+  while(*env != NULL){
+    printf("%s\n", *env++);
+  }
+
   struct syscallNameAndTime syscallList[1000];
   for (int i = 0; i < 1000; i++) {
     strcpy(syscallList[i].name, "NONE");
