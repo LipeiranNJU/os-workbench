@@ -73,7 +73,7 @@ int main(int argc, char *argv[]) {
       sleep(1);
       h = dlopen("./wrapper.so", RTLD_NOW|RTLD_GLOBAL);
       mp = dlsym(h, "__expr");
-      printf("Result=%d\n", mp());
+      printf("%d\n", mp());
       dlclose(h);
       remove("./wrapper.c");
       remove("./wrapper.so");
