@@ -70,7 +70,7 @@ int main(int argc, char *argv[]) {
       }
     }
     if (pid != 0) {
-      sleep(100);
+      sleep(1);
       h = dlopen("./wrapper.so", RTLD_NOW|RTLD_GLOBAL);
       mp = dlsym(h, "__expr");
       printf("Result=%d\n", mp());
