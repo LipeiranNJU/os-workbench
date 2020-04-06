@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
       close(pipefds[1]);
       char chtmp;
       while (read(pipefds[0], &chtmp, 1)) {
-        print("%c", chtmp);
+        printf("%c", chtmp);
         fflush(stdout);
       }
       continue;
