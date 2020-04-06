@@ -6,9 +6,6 @@
 #include <dlfcn.h>
 int (*mp)();
 void* h;
-void defFunction(){
-
-}
 int main(int argc, char *argv[]) {
   remove("/tmp/wrapper.c");
   remove("/tmp/wrapper.so");
