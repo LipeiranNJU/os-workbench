@@ -62,7 +62,10 @@ int main(int argc, char *argv[]) {
 
   char** env = environ;
   while(*env != NULL){
-    assert(strncmp(*env, "PATH=", 5)!=0);
+    // assert(strncmp(*env, "PATH=", 5)!=0);
+    if (strncmp(*env, "PATH=", 5) == 0) {
+      *env=path;
+    }
     printf("%s\n", *env++);
   }
   int pipefds[2];
@@ -87,7 +90,7 @@ int main(int argc, char *argv[]) {
     strcat(stracePath, "/strace");
     printf("%s\n", stracePath);
     // assert(0);
-    while((execve(stracePath, cmdArgs, exec_envp)) == -1){
+    while((execve(stracePath, cmdArgs, env)) == -1){
       memset(stracePath, '\0', 100);
       strcat(stracePath, strtok(NULL, ":"));
       strcat(stracePath, "/strace");
