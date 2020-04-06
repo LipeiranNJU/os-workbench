@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <assert.h>
+#include <dlfcn.h>
+int (*mp)();
+void* h;
 void defFunction(){
 
 }
@@ -65,6 +68,12 @@ int main(int argc, char *argv[]) {
       } else {
         assert(0);
       }
+    }
+    if (pid != 0) {
+      sleep(100);
+      h = dlopen("./wrapper.so", RTLD_NOW|RTLD_GLOBAL);
+      mp = dlsym(h, "__expr");
+      printf("Result=%d\n", mp());
     }
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
