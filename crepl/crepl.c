@@ -181,6 +181,7 @@ int main(int argc, char *argv[]) {
           assert(0);
         }
       } else {
+        sleep(1);
         h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
         mp = dlsym(h, "__expr");
         assert(mp != NULL);
