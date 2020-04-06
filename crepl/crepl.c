@@ -8,9 +8,10 @@ void defFunction(){
 }
 int main(int argc, char *argv[]) {
   int version = 0;
-  if (strncmp("32", &argv[0][6], 2) == 0) {
+  int l = strlen(argv[0]);
+  if (strncmp("32", &argv[0][l - 2], 2) == 0) {
     version = 32;
-  } else if (strncmp("64", &argv[0][6], 2) == 0){
+  } else if (strncmp("64", &argv[0][l - 2], 2) == 0){
     version = 64;
   } else {
     assert(0);
