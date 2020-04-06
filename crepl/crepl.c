@@ -74,7 +74,10 @@ int main(int argc, char *argv[]) {
           } else {
             assert(0);
           }
+        } else {
+          printf("Hello\n");
         }
+         
         continue;
       }
     }
