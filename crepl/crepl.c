@@ -152,10 +152,16 @@ int main(int argc, char *argv[]) {
       }
     } else {
       close(pipefds[1]);
-      char chtmp;
+      char chtmp = '\0';
+      int status = 0;
       while (read(pipefds[0], &chtmp, 1)) {
-        printf("%c", chtmp);
-        fflush(stdout);
+        if (chtmp != '\0'){
+          status = 1;
+          break;
+        }
+      }
+      if (status == 1) {
+        printf("Compile error!\n");
       }
       continue;
 
