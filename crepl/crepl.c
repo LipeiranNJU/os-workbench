@@ -11,8 +11,8 @@ int main(int argc, char *argv[]) {
     if (!fgets(line, sizeof(line), stdin)) {
       break;
     }
-    if (strlen(line) > 3) {
-      if (strncmp(line, "int ", 4) == 0) {
+    if (strlen(line) > 2) {
+      if (strncmp(line, "int ", 3) == 0) {
         printf("try to define a function\n");
         continue;
       }
