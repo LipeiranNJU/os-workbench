@@ -131,6 +131,7 @@ int main(int argc, char *argv[]) {
 
     int pid = fork();
     if (pid == 0) {
+      printf("BBB\n");
       close(pipefds[0]);
       dup2(pipefds[1], fileno(stderr));
       dup2(pipefds[1], fileno(stdout));
@@ -200,8 +201,8 @@ int main(int argc, char *argv[]) {
       remove("/tmp/wrapper.c");
       remove("/tmp/wrapper.so");
       }
-    }
     continue;
+    }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
   return 0;
