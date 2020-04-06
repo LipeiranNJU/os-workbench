@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
         h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
         mp = dlsym(h, "__expr");
         assert(mp != NULL);
-        mp();
+        printf("%d\n", mp());
       }
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
