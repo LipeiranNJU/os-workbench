@@ -172,8 +172,14 @@ int main(int argc, char *argv[]) {
       fclose(f1);
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
       char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      int fd[2];
+      if(pipe(pipefds) < 0){
+		    perror("pipe");
+        assert(0);
+	    }
       int pppid = fork();
       if (pppid == 0) {
+        close(pipefds[0]);
         if (version == 32) {
           execvp("gcc", argv32);
         } else if (version == 64) {
@@ -182,7 +188,9 @@ int main(int argc, char *argv[]) {
           assert(0);
         }
       } else {
-        sleep(1);
+        close(pipefds[1]);
+        char chtmp = '\0';
+        while (read(pipefds[0], &chtmp, 1)) ;
         h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
         mp = dlsym(h, "__expr");
         if (mp == NULL) {
