@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
         // printf("try to define a function\n");
-        printf("%s", line);
+        // printf("%s", line);
         FILE *fp = fopen("/tmp/abc.c","a");
         fprintf(fp, "%s", line);
         fprintf(fp, "\n");
