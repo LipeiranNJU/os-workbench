@@ -1,3 +1,3 @@
-int __expr() { return (a()+b()+c()
-);}int __expr() { return (a()
+int __expr() { return (a()
+);}int __expr() { return (a()+1
 );}
