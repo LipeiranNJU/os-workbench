@@ -131,7 +131,6 @@ int main(int argc, char *argv[]) {
 
     int pid = fork();
     if (pid == 0) {
-      printf("BBB\n");
       close(pipefds[0]);
       dup2(pipefds[1], fileno(stderr));
       dup2(pipefds[1], fileno(stdout));
@@ -144,7 +143,7 @@ int main(int argc, char *argv[]) {
       }
       fclose(f1);
       fclose(f2);
-      FILE *fp = fopen("/tmp/wrapper1.c","a");
+      FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
@@ -168,18 +167,18 @@ int main(int argc, char *argv[]) {
       while (read(pipefds[0], &ch, 1)) {
         if (ch != '\0') {
           printf("Compile Error!\n");
-            status = 1;
-            break;
+          status = 1;
+          break;
         }
       }
 
-      if (status == 0){
+      if (status == 0) {
         int pppid = fork();
         if (pppid == 0) {
           char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
           char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
           if (status == 0){
-            FILE *fp = fopen("/tmp/wrapper.c","a");
+            FILE *fp = fopen("/tmp/wrapper.c","w");
             fprintf(fp, "int __expr() { return (");
             fprintf(fp, "%s", line);
             fprintf(fp, ");}");
