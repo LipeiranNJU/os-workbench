@@ -123,15 +123,32 @@ int main(int argc, char *argv[]) {
     // printf("try to use an expression\n");
     remove("/tmp/wrapper.c");
     remove("/tmp/wrapper.so");
-    FILE *fp = fopen("/tmp/wrapper.c","a");
-    fprintf(fp, "int __expr() { return (");
-    fprintf(fp, "%s", line);
-    fprintf(fp, ");}");
-    fclose(fp);
+    int pipefds[2];
+    if(pipe(pipefds) < 0){
+		  perror("pipe");
+      assert(0);
+	  }
+
     int pid = fork();
     if (pid == 0) {
-      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
-      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "/tmp/abc.so", "-o", "/tmp/wrapper.so", NULL};
+      close(pipefds[0]);
+      dup2(pipefds[1], fileno(stderr));
+      dup2(pipefds[1], fileno(stdout));
+      FILE *f1, *f2;
+      int c;
+      f1 = fopen("/tmp/wrapper.c", "r");
+      f2 = fopen("/tmp/wrapper1.c", "w");
+      while((c = fgetc(f1)) != EOF)
+        fputc(c, f2);
+        fclose(f1);
+      fclose(f2);
+      FILE *fp = fopen("/tmp/wrapper1.c","a");
+      fprintf(fp, "int __expr() { return (");
+      fprintf(fp, "%s", line);
+      fprintf(fp, ");}");
+      fclose(fp);
+      char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
+      char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       if (version == 32) {
         execvp("gcc", argv32);
       } else if (version == 64) {
@@ -142,12 +159,45 @@ int main(int argc, char *argv[]) {
     }
     if (pid != 0) {
       sleep(1);
+      int status = 0;
+      close(pipefds[1]);
+      char ch = '\0';
+      while (read(pipefds[0], &ch, 1)) {
+        if (ch != '\0') {
+          printf("Compile Error!\n");
+            status = 1;
+            break;
+        }
+      }
+
+      if (status == 0){
+        int pppid = fork();
+        if (pppid == 0) {
+          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
+          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
+          if (status == 0){
+            FILE *fp = fopen("/tmp/wrapper.c","a");
+            fprintf(fp, "int __expr() { return (");
+            fprintf(fp, "%s", line);
+            fprintf(fp, ");}");
+            fclose(fp);
+            if (version == 32) {
+              execvp("gcc", argv32);
+            } else if (version == 64) {
+              execvp("gcc", argv64);
+            } else {
+              assert(0);
+            }
+          }
+        }
+      sleep(1);
       h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
       mp = dlsym(h, "__expr");
       printf("%d\n", mp());
       dlclose(h);
       remove("/tmp/wrapper.c");
       remove("/tmp/wrapper.so");
+      }
     }
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
