@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
           }
 
         }
-         
+        printf("add a function\n");
         continue;
       }
     }
