@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
         fclose(fp);
         int pid = fork();
         if (pid == 0){
-          char* eargv[] = {"gcc", "-fPIC", "-shared", "abc.c", "-o", "abc.so",NULL};
+          char* eargv[] = {"gcc", "-fPIC", "-shared", "-m32","abc.c", "-o", "abc.so",NULL};
           execvp("gcc", eargv);
         }
         continue;
