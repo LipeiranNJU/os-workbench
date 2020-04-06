@@ -185,9 +185,13 @@ int main(int argc, char *argv[]) {
         sleep(1);
         h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
         mp = dlsym(h, "__expr");
-        assert(mp != NULL);
-        printf("%d\n", mp());
-        dlclose(h);
+        if (mp == NULL) {
+          printf("Compile Error!\n");
+        } else {
+          assert(mp != NULL);
+          printf("%d\n", mp());
+          dlclose(h);
+        }
       }
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
