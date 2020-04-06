@@ -32,6 +32,6 @@ int main(int argc, char *argv[]) {
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
-  unlink(template);
+  // unlink(template);
   return 0;
 }
