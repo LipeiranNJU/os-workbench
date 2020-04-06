@@ -1,1 +1,1 @@
-int a(){return 56;}
+int b
