@@ -143,6 +143,7 @@ int main(int argc, char *argv[]) {
         fclose(f1);
       }
       fclose(f2);
+      printf("BBB\n");
       FILE *fp = fopen("/tmp/wrapper1.c","a");
       fprintf(fp, "int __expr() { return (");
       fprintf(fp, "%s", line);
