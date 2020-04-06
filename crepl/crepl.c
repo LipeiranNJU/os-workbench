@@ -51,10 +51,6 @@ int main(int argc, char *argv[]) {
       if (strncmp(line, "int ", 3) == 0) {
         // printf("try to define a function\n");
         // printf("%s", line);
-        FILE *fp = fopen("/tmp/abc.c","a");
-        fprintf(fp, "%s", line);
-        fprintf(fp, "\n");
-        fclose(fp);
         int pipefds[2];
         if(pipe(pipefds) < 0){
 		      perror("pipe");
@@ -73,6 +69,10 @@ int main(int argc, char *argv[]) {
             fputc(c, f2);
           fclose(f1);
           fclose(f2);
+          FILE *fp = fopen("/tmp/abc1.c","a");
+          fprintf(fp, "%s", line);
+          fprintf(fp, "\n");
+          fclose(fp);
           char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc1.c", "-o", "/tmp/abc1.so", NULL};
           char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc1.c", "-o", "/tmp/abc1.so", NULL};
           if (version == 32) {
@@ -99,6 +99,10 @@ int main(int argc, char *argv[]) {
             char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
             char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
             if (status == 0){
+              FILE *fp = fopen("/tmp/abc.c","a");
+              fprintf(fp, "%s", line);
+              fprintf(fp, "\n");
+              fclose(fp);
               if (version == 32) {
                 execvp("gcc", argv32);
               } else if (version == 64) {
@@ -108,7 +112,7 @@ int main(int argc, char *argv[]) {
               }
             }
           }
-          
+
         }
          
         continue;
