@@ -6,6 +6,7 @@
 #include <dlfcn.h>
 int (*mp)();
 void* h;
+
 int main(int argc, char *argv[]) {
   remove("/tmp/wrapper.c");
   remove("/tmp/wrapper.so");
@@ -131,14 +132,9 @@ int main(int argc, char *argv[]) {
       close(pipefds[0]);
       dup2(pipefds[1], fileno(stderr));
       dup2(pipefds[1], fileno(stdout));
-      FILE *f1, *f2;
+      FILE *f2;
       int c;
-      f1 = fopen("/tmp/wrapper.c", "r");
       f2 = fopen("/tmp/wrapper1.c", "w");
-      while((c = fgetc(f1)) != EOF){
-        fputc(c, f2);
-      }
-      fclose(f1);
       fclose(f2);
       FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
@@ -154,52 +150,13 @@ int main(int argc, char *argv[]) {
       } else {
         assert(0);
       }
-    }
-    if (pid != 0) {
-      sleep(1);
-      int status = 0;
+    } else {
       close(pipefds[1]);
-      char ch = '\0';
-      printf("AAA\n");
-      while (read(pipefds[0], &ch, 1)) {
-        if (ch != '\0') {
-          printf("Compile Error!\n");
-          status = 1;
-          break;
-        }
+      char chtmp;
+      while (read(pipefds[0], &chtmp, 1)) {
       }
+      continue;
 
-      if (status == 0) {
-        int pppid = fork();
-        if (pppid == 0) {
-          char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
-          char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper.c", "-o", "/tmp/wrapper.so", NULL};
-          if (status == 0){
-            FILE *fp = fopen("/tmp/wrapper.c","w");
-            fprintf(fp, "int __expr() { return (");
-            fprintf(fp, "%s", line);
-            fprintf(fp, ");}");
-            fclose(fp);
-            if (version == 32) {
-              execvp("gcc", argv32);
-            } else if (version == 64) {
-              execvp("gcc", argv64);
-            } else {
-              assert(0);
-            }
-          }
-        }
-      printf("CCC\n");
-      h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
-      mp = dlsym(h, "__expr");
-      printf("status:%d\n",status);
-      printf("DDD\n");
-      printf("%d\n", mp());
-      dlclose(h);
-      remove("/tmp/wrapper.c");
-      remove("/tmp/wrapper.so");
-      }
-    continue;
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
