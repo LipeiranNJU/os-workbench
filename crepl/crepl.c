@@ -17,7 +17,6 @@ int main(int argc, char *argv[]) {
     assert(0);
   }
   static char line[4096];
-  char template[] = "tmp-XXXXXX";
   while (1) {
     printf("crepl> ");
     fflush(stdout);
@@ -50,6 +49,23 @@ int main(int argc, char *argv[]) {
       }
     }
     printf("try to use an expression\n");
+    FILE *fp = fopen("wrapper.c","a");
+    fprintf(fp, "int __expr() { return (");
+    fprintf(fp, "%s", line);
+    fprintf("fp", ");}");
+    fclose(fp);
+    int pid = fork();
+    if (pid == 0) {
+      char* argv32[] = {"gcc", "-fPIC", "-shared", "-m32","wrapper.c", "-o", "wrapper.so", NULL};
+      char* argv64[] = {"gcc", "-fPIC", "-shared", "-m64","wrapper.c", "-o", "wrapper.so", NULL};
+      if (version == 32) {
+        execvp("gcc", argv32);
+      } else if (version == 64) {
+        execvp("gcc", argv64);
+      } else {
+        assert(0);
+      }
+    }
     continue;
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
