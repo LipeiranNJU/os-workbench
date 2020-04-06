@@ -190,6 +190,7 @@ int main(int argc, char *argv[]) {
         } else{ 
           printf("%d\n", mp());
         }
+        printf("DDD\n");
         dlclose(h);
       }
     }
