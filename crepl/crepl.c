@@ -55,6 +55,11 @@ int main(int argc, char *argv[]) {
         fprintf(fp, "%s", line);
         fprintf(fp, "\n");
         fclose(fp);
+        int pipefds[2];
+        if(pipe(pipefds) < 0){
+		      perror("pipe");
+          assert(0);
+	      }
         int pid = fork();
         if (pid == 0){
           char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
