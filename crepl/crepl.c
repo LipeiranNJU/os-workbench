@@ -83,26 +83,28 @@ int main(int argc, char *argv[]) {
             assert(0);
           }
         } else {
+          int status = 0;
           // printf("Hello\n");
           close(pipefds[1]);
           char ch = '\0';
           while (read(pipefds[0], &ch, 1)) {
             if (ch != '\0') {
               printf("Compile Error!\n");
-              goto L;
+              status = 1;
+              break;
             }
           }
           char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
           char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-          if (version == 32) {
-            execvp("gcc", argv32);
-          } else if (version == 64) {
-            execvp("gcc", argv64);
-          } else {
-            assert(0);
+          if (status == 0){
+            if (version == 32) {
+              execvp("gcc", argv32);
+            } else if (version == 64) {
+              execvp("gcc", argv64);
+            } else {
+              assert(0);
+            }
           }
-
-          L:
         }
          
         continue;
