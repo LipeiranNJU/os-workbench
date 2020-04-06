@@ -75,7 +75,12 @@ int main(int argc, char *argv[]) {
             assert(0);
           }
         } else {
-          printf("Hello\n");
+          // printf("Hello\n");
+          close(pipefds[1]);
+          char ch;
+          while (read(pipefds[0], &ch, 1)) {
+            printf("%d\n", ch);
+          }
         }
          
         continue;
