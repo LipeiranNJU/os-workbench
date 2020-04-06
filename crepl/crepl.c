@@ -181,7 +181,9 @@ int main(int argc, char *argv[]) {
           assert(0);
         }
       } else {
-        
+        h = dlopen("/tmp/wrapper.so", RTLD_NOW|RTLD_GLOBAL);
+        mp = dlsym(h, "__expr");
+        mp();
       }
     }
     // printf("Got %zu chars.\n", strlen(line)); // WTF?
