@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
       break;
     }
     if (strncmp(line, "q", 1) == 0) {
-      break;
+      // break;
     }
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
