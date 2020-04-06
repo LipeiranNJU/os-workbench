@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
         FILE *fp = fopen("abc.c","w+");
         fprintf(fp, "%s", line);
         fclose(fp);
-        char* eargv[] = {"gcc", "-fPIC", "-shared", "abc.c",NULL};
+        char* eargv[] = {"gcc", "-fPIC", "-shared", "abc.c", "-o", "abc.so",NULL};
         execvp("gcc", eargv);
         continue;
       }
