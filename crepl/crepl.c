@@ -33,8 +33,9 @@ int main(int argc, char *argv[]) {
       if (strncmp(line, "int ", 3) == 0) {
         // printf("try to define a function\n");
         printf("%s", line);
-        FILE *fp = fopen("/tmp/abc.c","w+");
+        FILE *fp = fopen("/tmp/abc.c","a");
         fprintf(fp, "%s", line);
+        fprintf(fp, "\n");
         fclose(fp);
         int pid = fork();
         if (pid == 0){
