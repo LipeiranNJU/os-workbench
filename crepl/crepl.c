@@ -25,10 +25,10 @@ int main(int argc, char *argv[]) {
   }
   char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
   char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-  printf("compile\n");
+  // printf("compile\n");
   int ppid = fork();
   if (ppid == 0) {
-    printf("DFSD\n");
+    // printf("DFSD\n");
     if (version == 32) {
       execvp("gcc", argv32);
     } else if (version == 64) {
@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
   sleep(1);
   static char line[4096];
   while (1) {
-    sleep(1);
+    // sleep(1);
     printf("crepl> ");
     fflush(stdout);
     if (!fgets(line, sizeof(line), stdin)) {
