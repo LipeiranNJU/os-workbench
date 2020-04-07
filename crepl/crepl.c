@@ -49,7 +49,6 @@ int main(int argc, char *argv[]) {
   }
   static char line[4096];
   while (1) {
-    // sleep(1);
     printf("crepl> ");
     fflush(stdout);
     if (!fgets(line, sizeof(line), stdin)) {
@@ -130,8 +129,7 @@ int main(int argc, char *argv[]) {
             } else {
               close(ffds[1]);
               char chh = '\0';
-              while (read(pipefds[0], &ch, 1)) {};
-              sleep(1);
+              while (read(ffds[0], &ch, 1)) {};
               printf("add a function\n");
             }
           }
@@ -168,7 +166,6 @@ int main(int argc, char *argv[]) {
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
       fclose(fp);
-      // sleep(100);
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       if (version == 32) {
