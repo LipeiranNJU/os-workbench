@@ -104,8 +104,14 @@ int main(int argc, char *argv[]) {
             }
           }
           if (status == 0){
+            int ffds[2];
+            if(pipe(ffds) < 0){
+		        perror("pipe");
+            assert(0);
+	          }
             int pppid = fork();
             if (pppid == 0) {
+              close(ffds[0]);
               char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
               char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
               if (status == 0){
@@ -122,7 +128,14 @@ int main(int argc, char *argv[]) {
                 }
               }
             } else {
-              sleep(1);
+              close(ffds[1]);
+              char chh = '\0';
+              while (read(pipefds[0], &ch, 1)) {
+                if (chh != '\0') {
+                printf("Compile Error!\n");
+                break;
+              }
+          }
               printf("add a function\n");
               // printf("function:%s\n", line);
             }
