@@ -128,14 +128,9 @@ int main(int argc, char *argv[]) {
                 }
               }
             } else {
-              // close(ffds[1]);
-              // char chh = '\0';
-              // while (read(pipefds[0], &ch, 1)) {
-              //   if (chh != '\0') {
-              //     printf("Compile Error!\n");
-              //     break;
-              //   }
-              // }
+              close(ffds[1]);
+              char chh = '\0';
+              while (read(pipefds[0], &ch, 1)) {};
               sleep(1);
               printf("add a function\n");
             }
