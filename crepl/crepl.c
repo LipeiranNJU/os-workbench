@@ -139,10 +139,11 @@ int main(int argc, char *argv[]) {
       FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
       printf("line1:%s", line);
+      
       if (line[strlen(line)-1] == '\n') {
         line[strlen(line)-1] = ' ';
       }
-      printf("line2:%s", line);
+      printf("line2:%s\n", line);
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
       fclose(fp);
