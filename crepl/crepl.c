@@ -138,8 +138,10 @@ int main(int argc, char *argv[]) {
       fclose(f2);
       FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
+      if (line[strlen(line)-1] == '\n') {
+        line[strlen(line)-1] = ' ';
+      }
       fprintf(fp, "%s", line);
-      printf("line:%s\n", line);
       fprintf(fp, ");}");
       fclose(fp);
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
