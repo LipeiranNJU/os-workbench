@@ -147,6 +147,7 @@ int main(int argc, char *argv[]) {
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
       fclose(fp);
+      system("pause");
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       if (version == 32) {
