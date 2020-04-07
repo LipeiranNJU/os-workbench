@@ -55,6 +55,9 @@ int main(int argc, char *argv[]) {
     if (!fgets(line, sizeof(line), stdin)) {
       break;
     }
+    if (line[strlen(line)-1] == '\n') {
+      line[strlen(line)-1] = '\0';
+    }
     // printf("LINE:%s\n", line);
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
