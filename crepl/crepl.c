@@ -26,8 +26,14 @@ int main(int argc, char *argv[]) {
   char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
   char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
   // printf("compile\n");
+  int fds[2];
+  if(pipe(fds) < 0){
+		perror("pipe");
+    assert(0);
+	}
   int ppid = fork();
   if (ppid == 0) {
+    close(fds[0]);
     // printf("DFSD\n");
     if (version == 32) {
       execvp("gcc", argv32);
@@ -36,8 +42,11 @@ int main(int argc, char *argv[]) {
     } else {
       assert(0);
     }
+  } else {
+    close(fds[1]);
+    char ch = '\0';
+    while (read(fds[0], &ch, 1)) ;
   }
-  sleep(1);
   static char line[4096];
   while (1) {
     // sleep(1);
