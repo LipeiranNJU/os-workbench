@@ -163,8 +163,9 @@ int main(int argc, char *argv[]) {
       int status = 0;
       while (read(pipefds[0], &chtmp, 1)) {
         if (chtmp != '\0'){
+          printf("%c", chtmp);
           status = 1;
-          break;
+          // break;
         }
       }
       if (status == 1) {
