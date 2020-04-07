@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
       assert(0);
     }
   }
+  sleep(1);
   static char line[4096];
   while (1) {
     sleep(1);
