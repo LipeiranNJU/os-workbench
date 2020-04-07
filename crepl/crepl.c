@@ -132,13 +132,14 @@ int main(int argc, char *argv[]) {
     if (pid == 0) {
       close(pipefds[0]);
       dup2(pipefds[1], fileno(stderr));
-      dup2(pipefds[1], fileno(stdout));
+      // dup2(pipefds[1], fileno(stdout));
       FILE *f2;
       f2 = fopen("/tmp/wrapper1.c", "w");
       fclose(f2);
       FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
       fprintf(fp, "%s", line);
+      printf("line:%s\n", line);
       fprintf(fp, ");}");
       fclose(fp);
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
