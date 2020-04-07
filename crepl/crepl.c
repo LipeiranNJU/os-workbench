@@ -122,6 +122,7 @@ int main(int argc, char *argv[]) {
               }
             } else {
               printf("add a function\n");
+              printf("function:%s\n", line);
             }
           }
 
