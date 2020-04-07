@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
   }
   char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
   char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
+  printf("compile\n");
   int ppid = fork();
   if (ppid == 0) {
     if (version == 32) {
