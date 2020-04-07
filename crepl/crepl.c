@@ -25,7 +25,6 @@ int main(int argc, char *argv[]) {
   }
   char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
   char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/abc.c", "-o", "/tmp/abc.so", NULL};
-  // printf("compile\n");
   int fds[2];
   if(pipe(fds) < 0){
 		perror("pipe");
@@ -34,7 +33,6 @@ int main(int argc, char *argv[]) {
   int ppid = fork();
   if (ppid == 0) {
     close(fds[0]);
-    // printf("DFSD\n");
     if (version == 32) {
       execvp("gcc", argv32);
     } else if (version == 64) {
@@ -54,11 +52,8 @@ int main(int argc, char *argv[]) {
     if (!fgets(line, sizeof(line), stdin)) {
       break;
     }
-    // printf("LINE:%s\n", line);
     if (strlen(line) > 2) {
       if (strncmp(line, "int ", 3) == 0) {
-        // printf("try to define a function\n");
-        // printf("%s", line);
         int pipefds[2];
         if(pipe(pipefds) < 0){
 		      perror("pipe");
@@ -92,7 +87,6 @@ int main(int argc, char *argv[]) {
           }
         } else {
           int status = 0;
-          // printf("Hello\n");
           close(pipefds[1]);
           char ch = '\0';
           while (read(pipefds[0], &ch, 1)) {
@@ -138,7 +132,6 @@ int main(int argc, char *argv[]) {
         continue;
       }
     }
-    // printf("try to use an expression\n");
     remove("/tmp/wrapper.c");
     remove("/tmp/wrapper.so");
     int pipefds[2];
@@ -157,12 +150,6 @@ int main(int argc, char *argv[]) {
       fclose(f2);
       FILE *fp = fopen("/tmp/wrapper1.c","w");
       fprintf(fp, "int __expr() { return (");
-      // printf("line1:%s", line);
-      
-      // if (line[strlen(line)-1] == '\n') {
-      //   line[strlen(line)-1] = ' ';
-      // }
-      // printf("line2:%s\n", line);
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
       fclose(fp);
@@ -181,7 +168,6 @@ int main(int argc, char *argv[]) {
       int status = 0;
       while (read(pipefds[0], &chtmp, 1)) {
         if (chtmp != '\0'){
-          // printf("%c", chtmp);
           status = 1;
           break;
         }
@@ -228,8 +214,6 @@ int main(int argc, char *argv[]) {
         }
       }
     }
-    // printf("Got %zu chars.\n", strlen(line)); // WTF?
   }
-  // printf("\n");
   return 0;
 }
