@@ -142,7 +142,7 @@ int main(int argc, char *argv[]) {
     if (pid == 0) {
       close(pipefds[0]);
       dup2(pipefds[1], fileno(stderr));
-      // dup2(pipefds[1], fileno(stdout));
+      dup2(pipefds[1], fileno(stdout));
       FILE *f2;
       f2 = fopen("/tmp/wrapper1.c", "w");
       fclose(f2);
