@@ -140,13 +140,14 @@ int main(int argc, char *argv[]) {
       fprintf(fp, "int __expr() { return (");
       printf("line1:%s", line);
       
-      if (line[strlen(line)-1] == '\n') {
-        line[strlen(line)-1] = ' ';
-      }
+      // if (line[strlen(line)-1] == '\n') {
+      //   line[strlen(line)-1] = ' ';
+      // }
       printf("line2:%s\n", line);
       fprintf(fp, "%s", line);
       fprintf(fp, ");}");
       fclose(fp);
+      sleep(100);
       char* argv32[] = {"gcc", "-w", "-fPIC", "-shared", "-m32","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       char* argv64[] = {"gcc", "-w", "-fPIC", "-shared", "-m64","/tmp/wrapper1.c", "/tmp/abc.so", "-o", "/tmp/wrapper1.so", NULL};
       if (version == 32) {
