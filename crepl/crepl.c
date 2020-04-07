@@ -28,6 +28,7 @@ int main(int argc, char *argv[]) {
   printf("compile\n");
   int ppid = fork();
   if (ppid == 0) {
+    printf("DFSD\n");
     if (version == 32) {
       execvp("gcc", argv32);
     } else if (version == 64) {
