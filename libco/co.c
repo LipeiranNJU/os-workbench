@@ -150,10 +150,13 @@ void __attribute__((constructor)) start() {
       }
     }
     current = &coPool[i];
-    while (current->status == CO_WAITING && current->waiter != NULL && current->waiter->status == CO_RUNNING ) {
+    while (current->status == CO_WAITING) {
       assert(current->status != CO_DEAD);
       // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
-      current = current->waiter;
+      if (current->waiter != NULL && current->waiter->status != CO_DEAD)
+        current = current->waiter;
+      else
+        assert(0);
     }
     if (current->status == CO_DEAD) {
       print("%s is scheduled and it is dead\n", current->name);
