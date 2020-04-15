@@ -35,11 +35,12 @@ struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 };
 
-struct co coPool[192];
+struct co* coPool;
 struct co* current = NULL;
 int coroutinesCanBeUsed;
 
 void co_init(void) {
+  coPool = malloc(192*sizeof(struct co));
   coroutinesCanBeUsed = 0;
   for (int i = 0; i < 192; i++) {
       coPool[i].arg = NULL;
