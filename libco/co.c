@@ -145,7 +145,10 @@ void __attribute__((constructor)) start() {
       }
     }
     current = &coPool[now];
-    while (current->waiter != NULL && (current->waiter->status != CO_DEAD)) {
+    if (current->waiter->status == CO_DEAD) {
+      longjmp(current->context, 1);
+    }
+    while (current->waiter != NULL && ((current->waiter)->status != CO_DEAD)) {
       current = current->waiter;
       assert(current->status != CO_DEAD);
     }
