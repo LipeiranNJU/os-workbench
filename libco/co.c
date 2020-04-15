@@ -61,7 +61,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
       coPool[i].arg = arg;
       coPool[i].func = func;
       coPool[i].name = malloc(strlen(name)+1);
-      // printf("Init name:%s\n", name);
+      printf("Init name:%s in the pool %d\n", name, i);
       strcpy(coPool[i].name, name);
       coPool[i].status = CO_NEW;
       break;
@@ -144,7 +144,7 @@ void __attribute__((constructor)) start() {
         }
       }
     }
-    current = &coPool[now];
+    current = &coPool[i];
     while (current->waiter != NULL && current->waiter->status == CO_RUNNING ) {
       assert(current->status != CO_DEAD);
       // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
@@ -152,6 +152,7 @@ void __attribute__((constructor)) start() {
     }
     if (current->status == CO_DEAD) {
       print("%s is scheduled and it is dead\n", current->name);
+      printf("selected is %d\t, now is %d \t", selected, now);
       assert(current->status != CO_DEAD);
     }
     if (current->status == CO_NEW) {
