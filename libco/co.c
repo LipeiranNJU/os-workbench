@@ -35,13 +35,13 @@ struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 };
 
-struct co coPool[256];
+struct co coPool[192];
 struct co* current = NULL;
 int coroutinesCanBeUsed;
 
 void co_init(void) {
   coroutinesCanBeUsed = 0;
-  for (int i = 0; i < 256; i++) {
+  for (int i = 0; i < 192; i++) {
       coPool[i].arg = NULL;
       coPool[i].buffer = 0;
       coPool[i].func = NULL;
@@ -56,7 +56,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   assert(coroutinesCanBeUsed < 130);
   coroutinesCanBeUsed += 1;
   int i;
-  for (i = 0; i < 256; i++) {
+  for (i = 0; i < 192; i++) {
     if (coPool[i].status == CO_NOTHING) {
       coPool[i].arg = arg;
       coPool[i].func = func;
@@ -150,7 +150,7 @@ void __attribute__((constructor)) start() {
     int selected = rand() % coroutinesCanBeUsed;
     int now = -1;
     int i;
-    for (i = 0; i < 256; i++) {
+    for (i = 0; i < 192; i++) {
       if (coPool[i].status == CO_RUNNING || coPool[i].status == CO_WAITING || coPool[i].status == CO_NEW) {
         now += 1;
         if (now == selected) {
