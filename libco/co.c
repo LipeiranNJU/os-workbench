@@ -85,7 +85,6 @@ static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
 }
 
 static void* co_wrapper(struct co* co) {
-  char* name = co->name;
   co->status = CO_RUNNING;
   co->func(co->arg);
   co->status = CO_DEAD;
