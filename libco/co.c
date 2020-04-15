@@ -137,7 +137,7 @@ void __attribute__((constructor)) start() {
   print("%d co can be used\n", coroutinesCanBeUsed);
   // start to schedule cos
   int status = setjmp(base);
-  printf("have saved base");
+  printf("have saved base\n");
   if (status == 0) {
     current = &coPool[0];
     current->status = CO_RUNNING;
