@@ -140,7 +140,6 @@ void __attribute__((constructor)) start() {
         }
       }
     }
-    assert(current->status != CO_DEAD);
     current = &coPool[now];
     while (current->waiter != NULL) {
       current = current->waiter;
@@ -149,6 +148,7 @@ void __attribute__((constructor)) start() {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
     } else {
+      assert(current->status != CO_DEAD);
       longjmp(current->context, 1);
     }
   }
