@@ -35,7 +35,25 @@ struct co {
   uint8_t        stack[STACK_SIZE]; // 协程的堆栈
 };
 
+struct co coPool[256];
+struct co* current = NULL;
+int coroutinesCanBeUsed = 0;
+
+void co_init(void) {
+  for (int i = 0; i < 256; i++) {
+      coPool[i].arg = NULL;
+      coPool[i].buffer = 0;
+      coPool[i].func = NULL;
+      coPool[i].name = NULL;
+      memset(coPool[i].stack, 0, STACK_SIZE);
+      coPool[i].status = CO_NOTHING;
+      coPool[i].waiter = NULL;
+  }
+  print("coPool has been inited.\n");
+  return NULL;
+}
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
+  for (int i = 0; i < 256; i++)
   return NULL;
 }
 
@@ -48,6 +66,7 @@ void co_yield() {
 void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
+  co_init();
   // coPool[0].name = malloc(sizeof("main"+1));
   // strcpy(coPool[0].name, "main");
   // current = &coPool[0];
