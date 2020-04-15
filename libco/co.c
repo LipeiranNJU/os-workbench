@@ -104,6 +104,7 @@ void co_wait(struct co *co) {
 }
 
 void co_yield() {
+  print("in yield!\n");
   int val = setjmp(current->context);
   if (val == 0) {
     longjmp(base, 1);
