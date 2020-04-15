@@ -119,8 +119,10 @@ void co_yield() {
   //   print("in yield!");
   fflush(stdout);
   int val = setjmp(current->context);
-  if (strcmp("main", current->name) == 0)
-    print("in yield!");
+  if (strcmp("main", current->name) == 0) {
+    print("in yield! val is %d", val);
+    fflush(stdout);
+  }
   if (val == 0) {
     longjmp(base, 1);
   } else {
