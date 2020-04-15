@@ -121,11 +121,9 @@ static void test_2() {
 
 int main() {
     setbuf(stdout, NULL);
-    for (int i = 0; i < 100; i++) {
-        g_count = 0;
-        printf("\n\nTest #1. Expect: (X|Y){0, 1, 2, ..., 199}\n");
-        test_1();
-    }
+    g_count = 0;
+    printf("\n\nTest #1. Expect: (X|Y){0, 1, 2, ..., 199}\n");
+    test_1();
     for (int i = 0; i < 100; i++) {
         g_count = 200;
         printf("\n\nTest #2. Expect: (libco-){200, 201, 202, ..., 399}\n");
