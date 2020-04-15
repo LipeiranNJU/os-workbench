@@ -99,6 +99,7 @@ static void* co_wrapper(struct co* co) {
 
 void co_wait(struct co *co) {
   print("in wait\n");
+  assert(current != NULL);
   current->waiter = co;
   print("in wait+1\n");
   co_yield();
