@@ -67,9 +67,32 @@ void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
   co_init();
-  coPool[0].name = malloc(sizeof("main"+1));
+  coPool[0].name = malloc(strlen("main") + 1);
   coroutinesCanBeUsed += 1;
   strcpy(coPool[0].name, "main");
   print("%d co can be used\n", coroutinesCanBeUsed);
-  current = &coPool[0];
+  // start to schedule cos
+  int status = setjmp(base);
+  if (status == 0) {
+
+  } else {
+    int selected = rand() % coroutinesCanBeUsed;
+    int now = -1;
+    for (int i = 0; i < 256; i++) {
+      if (coPool[i].status == CO_RUNNING || coPool[i].status == CO_WAITING || coPool[i].status == CO_NEW) {
+        now += 1;
+        if (now == selected) {
+          break;
+        }
+      }
+    }
+    current = &coPool[now];
+    if (current->status != CO_RUNNING) {
+      longjmp(current->context, 1);
+    } else {
+      current = current->waiter;
+      longjmp(current->context, 1);
+    }
+  }
+  
 }
