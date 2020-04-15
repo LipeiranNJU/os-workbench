@@ -37,9 +37,10 @@ struct co {
 
 struct co coPool[256];
 struct co* current = NULL;
-int coroutinesCanBeUsed = 0;
+int coroutinesCanBeUsed;
 
 void co_init(void) {
+  coroutinesCanBeUsed = 0;
   for (int i = 0; i < 256; i++) {
       coPool[i].arg = NULL;
       coPool[i].buffer = 0;
@@ -66,7 +67,8 @@ void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
   co_init();
-  // coPool[0].name = malloc(sizeof("main"+1));
-  // strcpy(coPool[0].name, "main");
-  // current = &coPool[0];
+  coPool[0].name = malloc(sizeof("main"+1));
+  coroutinesCanBeUsed += 1;
+  strcpy(coPool[0].name, "main");
+  current = &coPool[0];
 }
