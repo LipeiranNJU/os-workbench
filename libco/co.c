@@ -115,7 +115,8 @@ void co_wait(struct co *co) {
 }
 
 void co_yield() {
-  print("in yield!");
+  if (strcmp("main", current->name) == 0)
+    print("in yield!");
   fflush(stdout);
   int val = setjmp(current->context);
   if (val == 0) {
