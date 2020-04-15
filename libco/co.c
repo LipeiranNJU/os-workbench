@@ -146,7 +146,7 @@ void __attribute__((constructor)) start() {
       assert(current->status != CO_DEAD);
     }
     if (current->status == CO_DEAD) {
-      print("%s is scheduled and it is dead\n");
+      print("%s is scheduled and it is dead\n", current->name);
       assert(current->status != CO_DEAD);
     }
     if (current->status == CO_NEW) {
