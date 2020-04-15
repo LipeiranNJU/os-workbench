@@ -119,7 +119,7 @@ void co_yield() {
     fflush(stdout);
   }
   if (val == 0) {
-    printf("jmp to base\n");
+    // printf("jmp to base\n");
     longjmp(base, 1);
   } else {
     // assert(current->status != CO_WAITING);
@@ -138,12 +138,12 @@ void __attribute__((constructor)) start() {
   print("%d co can be used\n", coroutinesCanBeUsed);
   // start to schedule cos
   int status = setjmp(base);
-  printf("have saved base\n");
+  // printf("have saved base\n");
   if (status == 0) {
     current = &coPool[0];
     current->status = CO_RUNNING;
   } else {
-    printf("has jmped in base\n");
+    // printf("has jmped in base\n");
     int selected = rand() % coroutinesCanBeUsed;
     int now = -1;
     int i;
