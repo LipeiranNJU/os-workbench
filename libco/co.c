@@ -15,6 +15,26 @@
 #define print(...) 
 #endif
 jmp_buf base;
+enum co_status {
+  CO_NOTHING, // as its name, it is nothing
+  CO_NEW, // 新创建，还未执行过
+  CO_RUNNING, // 已经执行过
+  CO_WAITING, // 在 co_wait 上等待
+  CO_DEAD,    // 已经结束，但还未释放资源
+};
+
+struct co {
+  char *name;
+  void (*func)(void *); // co_start 指定的入口地址和参数
+  void *arg;
+
+  enum co_status status;  // 协程的状态
+  struct co *    waiter;  // 当前协程是否在等待其他携程，如果在等待，等待的是谁
+  jmp_buf        context; // 寄存器现场 (setjmp.h)
+  long double buffer;
+  uint8_t        stack[STACK_SIZE]; // 协程的堆栈
+};
+
 struct co {
 };
 
