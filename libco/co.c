@@ -52,7 +52,7 @@ void co_init(void) {
   print("coPool has been inited.\n");
 }
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
-  for (int i = 0; i < 256; i++)
+  for (int i = 0; i < 256; i++);
   return NULL;
 }
 
