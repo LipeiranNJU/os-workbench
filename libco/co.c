@@ -140,6 +140,7 @@ void __attribute__((constructor)) start() {
         }
       }
     }
+    assert(current->status != CO_DEAD);
     current = &coPool[now];
     while (current->waiter != NULL) {
       current = current->waiter;
