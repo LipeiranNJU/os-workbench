@@ -136,7 +136,8 @@ void __attribute__((constructor)) start() {
   } else {
     int selected = rand() % coroutinesCanBeUsed;
     int now = -1;
-    for (int i = 0; i < 256; i++) {
+    int i;
+    for (i = 0; i < 256; i++) {
       if (coPool[i].status == CO_RUNNING || coPool[i].status == CO_WAITING || coPool[i].status == CO_NEW) {
         now += 1;
         if (now == selected) {
