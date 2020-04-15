@@ -165,7 +165,7 @@ void __attribute__((constructor)) start() {
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
     } else {
       if (current->status == CO_WAITING) {
-        print("%s is waitting %s", current->name, current->waiter->name);
+        print("%s is waitting %s\n", current->name, current->waiter->name);
       }
       assert(current->status != CO_WAITING);
       assert(current->status != CO_DEAD);
