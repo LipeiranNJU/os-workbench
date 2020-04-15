@@ -70,5 +70,6 @@ void __attribute__((constructor)) start() {
   coPool[0].name = malloc(sizeof("main"+1));
   coroutinesCanBeUsed += 1;
   strcpy(coPool[0].name, "main");
+  printf("%d co can be used\n", coroutinesCanBeUsed);
   current = &coPool[0];
 }
