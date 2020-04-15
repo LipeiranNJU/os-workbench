@@ -24,7 +24,7 @@ enum co_status {
 };
 
 struct co {
-  char *name;
+  char name[32];
   void (*func)(void *); // co_start 指定的入口地址和参数
   void *arg;
 
@@ -45,7 +45,6 @@ void co_init(void) {
       coPool[i].arg = NULL;
       coPool[i].buffer = 0;
       coPool[i].func = NULL;
-      coPool[i].name = NULL;
       memset(coPool[i].stack, 0, STACK_SIZE);
       coPool[i].status = CO_NOTHING;
       coPool[i].waiter = NULL;
@@ -60,7 +59,6 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
     if (coPool[i].status == CO_NOTHING) {
       coPool[i].arg = arg;
       coPool[i].func = func;
-      coPool[i].name = malloc(strlen(name)+1);
       print("Init name:%s in the pool %d\n", name, i);
       strcpy(coPool[i].name, name);
       coPool[i].status = CO_NEW;
@@ -108,7 +106,6 @@ void co_wait(struct co *co) {
   current->waiter = NULL;
   current->status = CO_RUNNING;
   co->func = NULL;
-  free(co->name);
   co->status = CO_NOTHING;
 
 }
@@ -134,7 +131,6 @@ void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
   co_init();
-  coPool[0].name = malloc(strlen("main") + 1);
   coroutinesCanBeUsed += 1;
   strcpy(coPool[0].name, "main");
   print("%d co can be used\n", coroutinesCanBeUsed);
