@@ -1,6 +1,6 @@
 #include "co.h"
 #include <stdlib.h>
-#define __DEBUG__
+// #define __DEBUG__
 #include <stdio.h>
 #include <setjmp.h>
 #include <stdbool.h>
@@ -153,7 +153,7 @@ void __attribute__((constructor)) start() {
     }
     if (current->status == CO_DEAD) {
       print("%s is scheduled and it is dead\n", current->name);
-      printf("selected is %d\t, now is %d \t", selected, now);
+      print("selected is %d\t, now is %d \t", selected, now);
       assert(current->status != CO_DEAD);
     }
     if (current->status == CO_NEW) {
