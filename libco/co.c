@@ -176,7 +176,7 @@ void __attribute__((constructor)) start() {
       }
       if (current->status == CO_WAITING) {
         print("Hey\n");
-        print("%s is waitting %s\n", current->name, current->waiter->name);
+        // print("%s is waitting %s\n", current->name, current->waiter->name);
       }
       // assert(current->status != CO_WAITING);
       assert(current->status != CO_DEAD);
