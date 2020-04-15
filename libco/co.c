@@ -90,7 +90,7 @@ void __attribute__((constructor)) start() {
     while (current->waiter != NULL) {
       current = current->waiter;
     }
-    if (current->status = CO_NEW) {
+    if (current->status == CO_NEW) {
       
     } else {
       longjmp(current->context, 1);
