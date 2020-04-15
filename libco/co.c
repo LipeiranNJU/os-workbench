@@ -141,6 +141,7 @@ void __attribute__((constructor)) start() {
     current = &coPool[0];
     current->status = CO_RUNNING;
   } else {
+    printf("has jmped in base\n");
     int selected = rand() % coroutinesCanBeUsed;
     int now = -1;
     int i;
