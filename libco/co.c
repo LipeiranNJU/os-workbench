@@ -156,7 +156,7 @@ void __attribute__((constructor)) start() {
       if (current->waiter != NULL && current->waiter->status != CO_DEAD)
         current = current->waiter;
       else
-        assert(0);
+        break;
     }
     if (current->status == CO_DEAD) {
       print("%s is scheduled and it is dead\n", current->name);
