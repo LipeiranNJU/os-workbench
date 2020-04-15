@@ -1,6 +1,6 @@
 #include "co.h"
 #include <stdlib.h>
-#define __DEBUG__
+// #define __DEBUG__
 #include <stdio.h>
 #include <setjmp.h>
 #include <stdbool.h>
