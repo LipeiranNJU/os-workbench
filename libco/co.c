@@ -53,14 +53,62 @@ void co_init(void) {
   print("coPool has been inited.\n");
 }
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
-  for (int i = 0; i < 256; i++);
-  return NULL;
+  assert(coroutinesCanBeUsed < 130);
+  coroutinesCanBeUsed += 1;
+  int i;
+  for (i = 0; i < 256; i++) {
+    if (coPool[i].status == CO_NOTHING) {
+      coPool[i].arg = arg;
+      coPool[i].func = func;
+      coPool[i].name = malloc(strlen(name)+1);
+      // printf("Init name:%s\n", name);
+      strcpy(coPool[i].name, name);
+      coPool[i].status = CO_NEW;
+      break;
+    }
+  }
+  return &coPool[i];
+}
+
+
+static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
+  print("In stack switch call\n");
+  print("sp is %lx\n", (long)sp);
+  asm volatile (
+#if __x86_64__
+    "movq %0, %%rsp; movq %2, %%rdi; jmp *%1"
+      : : "b"((uintptr_t)sp - 8),     "d"(entry), "a"(arg)
+#else
+    "movl %0, %%esp; movl %2, 4(%0); jmp *%1"
+      : : "b"((uintptr_t)sp - 24), "d"(entry), "a"(arg)
+#endif
+  );
+}
+
+static void* co_wrapper(struct co* co) {
+  char* name = co->name;
+  co->status = CO_RUNNING;
+  co->func(co->arg);
+  co->status = CO_DEAD;
+  coroutinesCanBeUsed -= 1;
+  co_yield();
+  print("Can't reach here!\n");
+  assert(0);
+  return 0;
 }
 
 void co_wait(struct co *co) {
+  current->waiter = co;
+  co_yield();
 }
 
 void co_yield() {
+  int val = setjmp(current->context);
+  if (val == 0) {
+    longjmp(base, 1);
+  } else {
+    ;
+  }
 }
 
 void __attribute__((constructor)) start() {
@@ -91,7 +139,8 @@ void __attribute__((constructor)) start() {
       current = current->waiter;
     }
     if (current->status == CO_NEW) {
-      
+      current->status = CO_RUNNING;
+      stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
     } else {
       longjmp(current->context, 1);
     }
