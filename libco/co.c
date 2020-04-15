@@ -87,10 +87,12 @@ void __attribute__((constructor)) start() {
       }
     }
     current = &coPool[now];
-    if (current->status != CO_RUNNING) {
-      longjmp(current->context, 1);
-    } else {
+    while (current->waiter != NULL) {
       current = current->waiter;
+    }
+    if (current->status = CO_NEW) {
+      
+    } else {
       longjmp(current->context, 1);
     }
   }
