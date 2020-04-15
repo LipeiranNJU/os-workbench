@@ -180,6 +180,8 @@ void __attribute__((constructor)) start() {
       }
       // assert(current->status != CO_WAITING);
       assert(current->status != CO_DEAD);
+      print("s");
+      fflush(stdout);
       longjmp(current->context, 1);
     }
   }
