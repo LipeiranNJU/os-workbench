@@ -90,7 +90,6 @@ static void* co_wrapper(struct co* co) {
   co->func(co->arg);
   co->status = CO_DEAD;
   coroutinesCanBeUsed -= 1;
-  co_yield();
   // print("Can't reach here!\n");
   print("%shas Dead\n", co->name);
   print("%d co can be used Now\n", coroutinesCanBeUsed);
