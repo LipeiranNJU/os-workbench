@@ -181,6 +181,9 @@ void __attribute__((constructor)) start() {
       }
       if (current->status == CO_WAITING) {
         print("Hey\n");
+        if (strcmp("main", current->name) == 0) {
+          print("name is %s\n", current->name);
+        }
         // print("%s is waitting %s\n", current->name, current->waiter->name);
       }
       // assert(current->status != CO_WAITING);
