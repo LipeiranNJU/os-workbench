@@ -108,6 +108,10 @@ void co_wait(struct co *co) {
   print("%shas finished!\n", co->name);
   current->waiter = NULL;
   current->status = CO_RUNNING;
+  co->status = NULL;
+  free(co->name);
+  co->status = CO_NOTHING;
+  
 }
 
 void co_yield() {
