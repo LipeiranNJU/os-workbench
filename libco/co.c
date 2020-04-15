@@ -126,7 +126,8 @@ void __attribute__((constructor)) start() {
   // start to schedule cos
   int status = setjmp(base);
   if (status == 0) {
-
+    current = &coPool[0];
+    current->status = CO_RUNNING;
   } else {
     int selected = rand() % coroutinesCanBeUsed;
     int now = -1;
