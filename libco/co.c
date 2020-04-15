@@ -162,7 +162,6 @@ void __attribute__((constructor)) start() {
     }
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
-      assert(current->status == CO_NEW);
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
     } else {
       assert(current->status != CO_DEAD);
