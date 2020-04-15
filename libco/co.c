@@ -118,6 +118,7 @@ void co_yield() {
     fflush(stdout);
   }
   if (val == 0) {
+    printf("jmp to base\n");
     longjmp(base, 1);
   } else {
     // assert(current->status != CO_WAITING);
