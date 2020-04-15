@@ -126,6 +126,8 @@ void co_yield() {
   if (val == 0) {
     longjmp(base, 1);
   } else {
+    print("return!");
+    fflush(stdout);
     return ;
   }
 }
