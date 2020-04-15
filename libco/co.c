@@ -150,7 +150,7 @@ void __attribute__((constructor)) start() {
       }
     }
     current = &coPool[i];
-    while (current->waiter != NULL && current->waiter->status == CO_RUNNING ) {
+    while (current->status == CO_WAITING && current->waiter != NULL && current->waiter->status == CO_RUNNING ) {
       assert(current->status != CO_DEAD);
       // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
       current = current->waiter;
@@ -164,6 +164,7 @@ void __attribute__((constructor)) start() {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
     } else {
+      assert(current->status != CO_WAITING);
       assert(current->status != CO_DEAD);
       longjmp(current->context, 1);
     }
