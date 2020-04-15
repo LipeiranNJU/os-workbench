@@ -50,7 +50,6 @@ void co_init(void) {
       coPool[i].waiter = NULL;
   }
   print("coPool has been inited.\n");
-  return NULL;
 }
 struct co *co_start(const char *name, void (*func)(void *), void *arg) {
   for (int i = 0; i < 256; i++)
