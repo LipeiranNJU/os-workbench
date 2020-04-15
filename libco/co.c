@@ -105,7 +105,7 @@ void co_wait(struct co *co) {
   current->waiter = co;
   current->status = CO_WAITING;
   co_yield();
-  print("%shas finished!\n", co->name);
+  // print("%shas finished!\n", co->name);
   current->waiter = NULL;
   current->status = CO_RUNNING;
   co->func = NULL;
