@@ -72,8 +72,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
 
 
 static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
-  print("In stack switch call\n");
-  print("sp is %lx\n", (long)sp);
+
   asm volatile (
 #if __x86_64__
     "movq %0, %%rsp; movq %2, %%rdi; jmp *%1"
