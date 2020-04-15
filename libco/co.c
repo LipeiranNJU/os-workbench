@@ -171,7 +171,7 @@ void __attribute__((constructor)) start() {
         print("Hey\n");
         print("%s is waitting %s\n", current->name, current->waiter->name);
       }
-      assert(current->status != CO_WAITING);
+      // assert(current->status != CO_WAITING);
       assert(current->status != CO_DEAD);
       longjmp(current->context, 1);
     }
