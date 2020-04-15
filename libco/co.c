@@ -105,6 +105,8 @@ void co_wait(struct co *co) {
   current->waiter = co;
   print("in wait+1\n");
   co_yield();
+  print("has waited!\n");
+  current->waiter = NULL;
 }
 
 void co_yield() {
