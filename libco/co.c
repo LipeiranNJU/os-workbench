@@ -61,7 +61,7 @@ struct co *co_start(const char *name, void (*func)(void *), void *arg) {
       coPool[i].arg = arg;
       coPool[i].func = func;
       coPool[i].name = malloc(strlen(name)+1);
-      printf("Init name:%s in the pool %d\n", name, i);
+      print("Init name:%s in the pool %d\n", name, i);
       strcpy(coPool[i].name, name);
       coPool[i].status = CO_NEW;
       break;
