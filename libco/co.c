@@ -144,6 +144,7 @@ void __attribute__((constructor)) start() {
     while (current->waiter != NULL && current->waiter->status != CO_DEAD) {
       current = current->waiter;
     }
+    assert(current->status != CO_DEAD);
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
