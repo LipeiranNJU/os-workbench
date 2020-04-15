@@ -66,6 +66,7 @@ static void producer(void *arg) {
         if (!q_is_full(queue)) {
             co_yield();
             do_produce(queue);
+            co_yield();
             i += 1;
         }
         co_yield();
@@ -77,6 +78,7 @@ static void do_consume(Queue *queue) {
 
     Item *item = q_pop(queue);
     if (item) {
+        co_yield();
         printf("%s  ", (char *)item->data);
         free(item->data);
         free(item);
