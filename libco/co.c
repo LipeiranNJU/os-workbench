@@ -145,7 +145,10 @@ void __attribute__((constructor)) start() {
       current = current->waiter;
       assert(current->status != CO_DEAD);
     }
-    assert(current->status != CO_DEAD);
+    if (current->status == CO_DEAD) {
+      print("%s is scheduled and it is dead\n");
+      assert(current->status != CO_DEAD);
+    }
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
