@@ -100,12 +100,11 @@ static void* co_wrapper(struct co* co) {
 }
 
 void co_wait(struct co *co) {
-  print("in wait\n");
+  print("in co_wait wait %s\n", co->name);
   assert(current != NULL);
   current->waiter = co;
-  print("in wait+1\n");
   co_yield();
-  print("has waited!\n");
+  print("%shas finished!\n", co->name);
   current->waiter = NULL;
 }
 
