@@ -120,6 +120,8 @@ struct co* getNext() {
 
 static void* co_wrapper(struct co* co) {
   co->status = CO_RUNNING;
+  printf("in co wait\n");
+
   co->func(co->arg);
   co->status = CO_DEAD;
   coroutinesCanBeUsed -= 1;
