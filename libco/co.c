@@ -14,6 +14,7 @@
 #else
 #define print(...) 
 #endif
+jmp_buf base;
 int lpr_status;
 int lpr_selected;
 int lpr_now;
@@ -88,6 +89,7 @@ static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
 
 
 struct co* getNext() {
+  // printf("has jmped in base\n");
   lpr_selected = rand() % coroutinesCanBeUsed;
   lpr_now = -1;
   for (lpr_i = 0; lpr_i < 192; lpr_i++) {
@@ -153,6 +155,7 @@ void co_yield() {
   }
   if (val == 0) {
     current = getNext();
+    // printf("jmp to base\n");
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
