@@ -195,7 +195,3 @@ void __attribute__((constructor)) start() {
   current = &coPool[0];
   current->status = CO_RUNNING;
 }
-
-
-
-
