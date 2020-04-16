@@ -128,7 +128,7 @@ void co_yield() {
     return ;
   }
 }
-
+int *test;
 void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
@@ -137,7 +137,9 @@ void __attribute__((constructor)) start() {
   strcpy(coPool[0].name, "main");
   print("%d co can be used\n", coroutinesCanBeUsed);
   // start to schedule cos
-  int status = setjmp(base);
+  int status;
+  test = &status;
+  status = setjmp(base);
   // printf("have saved base\n");
   if (status == 0) {
     current = &coPool[0];
