@@ -89,7 +89,6 @@ static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
 
 
 struct co* getNext() {
-  // printf("has jmped in base\n");
   lpr_selected = rand() % coroutinesCanBeUsed;
   lpr_now = -1;
   for (lpr_i = 0; lpr_i < 192; lpr_i++) {
@@ -103,7 +102,7 @@ struct co* getNext() {
   struct co* returned = &coPool[lpr_i];
   while (returned->status == CO_WAITING) {
       assert(returned->status != CO_DEAD);
-      // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
+      print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
       if (returned->waiter != NULL && returned->waiter->status != CO_DEAD)
         returned = returned->waiter;
       else
@@ -125,7 +124,7 @@ static void* co_wrapper(struct co* co) {
   co->func(co->arg);
   co->status = CO_DEAD;
   coroutinesCanBeUsed -= 1;
-  // print("Can't reach here!\n");
+  print("Can't reach here!\n");
   print("\n%shas Dead\t", co->name);
   print("%d co can be used Now\n", coroutinesCanBeUsed);
   co_yield();
@@ -140,7 +139,7 @@ void co_wait(struct co *co) {
   current->waiter = co;
   current->status = CO_WAITING;
   co_yield();
-  // print("%shas finished!\n", co->name);
+  print("%shas finished!\n", co->name);
   current->waiter->status = CO_NOTHING;
   current->waiter = NULL;
   current->status = CO_RUNNING;
@@ -158,7 +157,7 @@ void co_yield() {
   }
   if (val == 0) {
     current = getNext();
-    // printf("jmp to base\n");
+    printf("jmp to base\n");
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);

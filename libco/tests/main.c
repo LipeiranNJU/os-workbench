@@ -6,9 +6,6 @@
 #include <string.h>
 #include <setjmp.h>
 #include <stdint.h>
-int times = 0;
-void* sp1;
-uintptr_t arg1;
 
 
 
@@ -337,7 +334,6 @@ static inline Item* q_pop(Queue *queue) {
     return item;
 }
 
-extern uintptr_t arg1;
 int g_count = 0;
 
 static void add_count() {
