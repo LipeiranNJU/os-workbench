@@ -128,8 +128,10 @@ void co_yield() {
     return ;
   }
 }
-int testval = 1000;
-int *test = & testval;
+int lpr_status;
+int lpr_selected;
+int lpr_now;
+int lpr_i;
 void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
@@ -138,27 +140,26 @@ void __attribute__((constructor)) start() {
   strcpy(coPool[0].name, "main");
   print("%d co can be used\n", coroutinesCanBeUsed);
   // start to schedule cos
-  int status;
-  test = &status;
-  status = setjmp(base);
+  // int status;
+
+  lpr_status = setjmp(base);
   // printf("have saved base\n");
-  if (status == 0) {
+  if (lpr_status == 0) {
     current = &coPool[0];
     current->status = CO_RUNNING;
   } else {
     // printf("has jmped in base\n");
-    int selected = rand() % coroutinesCanBeUsed;
-    int now = -1;
-    int i;
-    for (i = 0; i < 192; i++) {
-      if (coPool[i].status == CO_RUNNING || coPool[i].status == CO_WAITING || coPool[i].status == CO_NEW) {
-        now += 1;
-        if (now == selected) {
+    lpr_selected = rand() % coroutinesCanBeUsed;
+    lpr_now = -1;
+    for (lpr_i = 0; lpr_i < 192; lpr_i++) {
+      if (coPool[lpr_i].status == CO_RUNNING || coPool[lpr_i].status == CO_WAITING || coPool[lpr_i].status == CO_NEW) {
+        lpr_now += 1;
+        if (lpr_now == lpr_selected) {
           break;
         }
       }
     }
-    current = &coPool[i];
+    current = &coPool[lpr_i];
     while (current->status == CO_WAITING) {
       assert(current->status != CO_DEAD);
       // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
