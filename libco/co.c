@@ -128,7 +128,8 @@ void co_yield() {
     return ;
   }
 }
-int *test;
+int testval = 1000;
+int *test = & testval;
 void __attribute__((constructor)) start() {
   srand(time(0));
   print("befor main\n");
