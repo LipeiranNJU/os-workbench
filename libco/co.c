@@ -15,6 +15,10 @@
 #define print(...) 
 #endif
 jmp_buf base;
+int lpr_status;
+int lpr_selected;
+int lpr_now;
+int lpr_i;
 enum co_status {
   CO_NOTHING, // as its name, it is nothing
   CO_NEW, // 新创建，还未执行过
@@ -83,6 +87,37 @@ static void stack_switch_call(void *sp, void *entry, uintptr_t arg) {
   );
 }
 
+
+struct co* getNext() {
+  // printf("has jmped in base\n");
+  lpr_selected = rand() % coroutinesCanBeUsed;
+  lpr_now = -1;
+  for (lpr_i = 0; lpr_i < 192; lpr_i++) {
+    if (coPool[lpr_i].status == CO_RUNNING || coPool[lpr_i].status == CO_WAITING || coPool[lpr_i].status == CO_NEW) {
+      lpr_now += 1;
+      if (lpr_now == lpr_selected) {
+        break;
+      }
+    }
+  }
+  struct co* returned = &coPool[lpr_i];
+  while (returned->status == CO_WAITING) {
+      assert(returned->status != CO_DEAD);
+      // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
+      if (returned->waiter != NULL && returned->waiter->status != CO_DEAD)
+        returned = returned->waiter;
+      else
+        break;
+    }
+    if (returned->status == CO_DEAD) {
+      print("%s is scheduled and it is dead\n", returned->name);
+      print("selected is %d\t, now is %d \t", lpr_selected, lpr_now);
+      assert(returned->status != CO_DEAD);
+    }
+  return returned;
+
+}
+
 static void* co_wrapper(struct co* co) {
   co->status = CO_RUNNING;
   co->func(co->arg);
@@ -119,60 +154,8 @@ void co_yield() {
     fflush(stdout);
   }
   if (val == 0) {
+    current = getNext();
     // printf("jmp to base\n");
-    longjmp(base, 1);
-  } else {
-    // assert(current->status != CO_WAITING);
-    print("return!");
-    fflush(stdout);
-    return ;
-  }
-}
-int lpr_status;
-int lpr_selected;
-int lpr_now;
-int lpr_i;
-void __attribute__((constructor)) start() {
-  srand(time(0));
-  print("befor main\n");
-  co_init();
-  coroutinesCanBeUsed += 1;
-  strcpy(coPool[0].name, "main");
-  print("%d co can be used\n", coroutinesCanBeUsed);
-  // start to schedule cos
-  // int status;
-
-  lpr_status = setjmp(base);
-  // printf("have saved base\n");
-  if (lpr_status == 0) {
-    current = &coPool[0];
-    current->status = CO_RUNNING;
-  } else {
-    // printf("has jmped in base\n");
-    lpr_selected = rand() % coroutinesCanBeUsed;
-    lpr_now = -1;
-    for (lpr_i = 0; lpr_i < 192; lpr_i++) {
-      if (coPool[lpr_i].status == CO_RUNNING || coPool[lpr_i].status == CO_WAITING || coPool[lpr_i].status == CO_NEW) {
-        lpr_now += 1;
-        if (lpr_now == lpr_selected) {
-          break;
-        }
-      }
-    }
-    current = &coPool[lpr_i];
-    while (current->status == CO_WAITING) {
-      assert(current->status != CO_DEAD);
-      // print("we selcet waiter:%s, because now %s is wait it\n", current->waiter->name, current->name);
-      if (current->waiter != NULL && current->waiter->status != CO_DEAD)
-        current = current->waiter;
-      else
-        break;
-    }
-    if (current->status == CO_DEAD) {
-      print("%s is scheduled and it is dead\n", current->name);
-      print("selected is %d\t, now is %d \t", selected, now);
-      assert(current->status != CO_DEAD);
-    }
     if (current->status == CO_NEW) {
       current->status = CO_RUNNING;
       stack_switch_call(&current->stack[STACK_SIZE], co_wrapper, (uintptr_t) current);
@@ -193,8 +176,24 @@ void __attribute__((constructor)) start() {
       fflush(stdout);
       longjmp(current->context, 1);
     }
+    longjmp(current->context, 1);
+  } else {
+    // assert(current->status != CO_WAITING);
+    print("return!");
+    fflush(stdout);
+    return ;
   }
-  
+}
+
+void __attribute__((constructor)) start() {
+  srand(time(0));
+  print("befor main\n");
+  co_init();
+  coroutinesCanBeUsed += 1;
+  strcpy(coPool[0].name, "main");
+  print("%d co can be used\n", coroutinesCanBeUsed);
+  current = &coPool[0];
+  current->status = CO_RUNNING;
 }
 
 
