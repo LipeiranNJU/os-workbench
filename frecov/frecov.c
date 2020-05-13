@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     assert(sizeof(struct fat_header) == 512);
     printf("Filename is %s\n",argv[1]);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    int fd = open("/mnt", O_RDWR, 0);
+    int fd = open("/mnt/", O_RDWR, 0);
     struct fat_header* pfatheader = mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(pfatheader->Signature_word == 0xAA55);
     assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5) == 0);
