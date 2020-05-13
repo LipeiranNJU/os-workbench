@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
     int fd = open("../../Downloads/M5-frecov.img", O_RDWR, 0);
     struct fat_header* pfatheader = mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(pfatheader->Signature_word == 0xAA55);
-    assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5 == 0));
+    assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5) == 0);
     assert(fd > 0);
     close(fd);
     return 0;    
