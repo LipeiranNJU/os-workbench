@@ -5,7 +5,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include<unistd.h>
+#include <sys/mman.h>
+#include <unistd.h>
 struct fat_header {
   uint8_t  BS_jmpBoot[3];
   uint8_t  BS_OEMName[8];
@@ -44,6 +45,7 @@ int main(int argc, char *argv[]) {
     printf("Filename is %s\n",argv[1]);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     int fd = open("../../Downloads/M5-frecov.img", O_RDWR, 0);
+    struct fat_header* pfatheader = mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
     close(fd);
     return 0;    
