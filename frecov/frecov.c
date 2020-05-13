@@ -31,12 +31,12 @@ struct fat_header {
   uint8_t BS_FilSysType[8];
   uint8_t  padding[420];
   uint16_t signature;
-} __attribute__((packed));
+};
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
     printf("Filename is %s\n",argv[1]);
-    printf("SizoOf FATheader is %d\n",(int ) sizeof(struct fat_header));
+    printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     return 0;    
 }
