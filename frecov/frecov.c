@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
     assert(sizeof(struct fat_header) == 512);
     printf("Filename is %s\n",argv[1]);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    int fd = open("../../../Downloads/M5-frecov.img", O_RDWR, 0);
+    int fd = open("../../Downloads/M5-frecov.img", O_RDWR, 0);
     assert(fd > 0);
     close(fd);
     return 0;    
