@@ -74,6 +74,7 @@ void verifyFAT32Head(struct fat_header* ptr) {
     assert(ptr->Signature_word == 0xAA55);
     assert(ptr->BPB_RootEntCnt == 0);
     assert(ptr->BPB_TotSec16 == 0);
+    assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
 }
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
@@ -84,5 +85,6 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_RootClus is %d\n", pfatheader->BPB_RootClus);
     printf("BPB_FATSz32 is %d\n", pfatheader->BPB_FATSz32);
     printf("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
-    printf("pfatheader->BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
+    printf("BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
+    printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
