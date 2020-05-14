@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 10000; i++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
-        
+        assert((intptr_t) pFATdir+1 - (intptr_t)pFATdir == 32);
         printf("i is %d ",i);
         fflush(stdout);
         pFATdir++;
