@@ -40,7 +40,7 @@ struct fat_header {
   uint16_t Signature_word;
 } __attribute__((packed));
 
-void verifyFAT32Head(struct fat_header);
+void verifyFAT32Head(struct fat_header*);
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -73,6 +73,5 @@ int main(int argc, char *argv[]) {
 }
 
 void verifyFAT32Head(struct fat_header* ptr) {
-
     assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
 }
