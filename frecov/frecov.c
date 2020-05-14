@@ -41,7 +41,18 @@ struct fat_header {
 }__attribute__((packed));
 
 struct FATdirectory {
-
+    uint8_t DIR_Name[11];
+    uint8_t DIR_Attr;
+    uint8_t DIR_NTRes;
+    uint8_t DIR_CrtTimeTenth;
+    uint16_t DIR_CrtTime;
+    uint16_t DIR_CrtDate;
+    uint16_t DIR_LstAccDate;
+    uint16_t DIR_FstClusHI;
+    uint16_t DIR_WrtTime;
+    uint16_t DIR_WrtDate;
+    uint16_t DIR_FstClusLO;
+    uint32_t DIR_FileSize;
 }__attribute__((packed));
 
 
@@ -50,6 +61,7 @@ void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
+    assert(sizeof(struct FATdirectory) == 256);
     char* fileName = argv[1];
     printf("Filename is %s\n", fileName);
     int fd = open(fileName, O_RDWR, 0);
