@@ -97,6 +97,7 @@ int main(int argc, char *argv[]) {
         //     canBeUsed += 1;
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == 32);
+        assert(pFATdir != NULL);
         printf("i is %d ",i);
         fflush(stdout);
         pFATdir++;
