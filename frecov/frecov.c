@@ -96,6 +96,7 @@ int main(int argc, char *argv[]) {
             canBeUsed += 1;
         
         printf("i is %d ",i);
+        fflush(stdout);
         pFATdir++;
     }
     printf("%d can be short name directory.\n",canBeUsed);
