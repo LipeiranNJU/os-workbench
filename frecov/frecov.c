@@ -95,7 +95,6 @@ int main(int argc, char *argv[]) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
 
-        break;
         pFATdir++;
     }
     printf("%d can be short name directory.\n",canBeUsed);
