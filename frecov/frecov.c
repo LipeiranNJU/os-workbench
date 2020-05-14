@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
         fflush(stdout);
         pFATdir++;
     }
-    printf("%d can be short name directory.\n",canBeUsed);
+    // printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
     return 0;    
 }
