@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (int i = 0; i < 10000; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
-        if (isFATdirectory(pFATdir)) {
+        if (isFATdirectory(pFATdir) == true) {
             canBeUsed += 1;
         }
 
@@ -129,11 +129,11 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 }
 
 bool isFATdirectory(const struct FATdirectory* pFATdir) {
-    if ((pFATdir->DIR_Attr & 0xB0) != 0){ // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
+    if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
+        return false;
+    } else if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
         return false;
     }
-    // else if (pFATdir->DIR_NTRes != 0) // 由手册23页可知，保留必须为0
-    //     return false;
     // else if (pFATdir->DIR_CrtTimeTenth > 199) // 由手册23页可知，0 <= DIR_CrtTimeTenth <= 199
     //     return false;
     // else if ((pFATdir->DIR_CrtTime & 0x1) != 0) // 由手册23页可知，粒度为2
