@@ -62,6 +62,8 @@ int main(int argc, char *argv[]) {
     printf("BPB_RootClus is %d\n", BPB_RootClus);
     int BPB_FATSz32 = pfatheader->BPB_FATSz32;
     printf("BPB_FATSz32 is %d\n", BPB_FATSz32);
+    int BPB_HiddSec =pfatheader->BPB_HiddSec;
+    printf("BPB_HiddSec is %d\n", BPB_HiddSec);
     close(fd);
     return 0;    
 }
