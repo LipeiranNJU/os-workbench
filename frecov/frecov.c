@@ -52,7 +52,7 @@ int main(int argc, char *argv[]) {
     assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5) == 0);
     assert(fd > 0);
 
-    printf("jmpBoot[0] is %d\n", pfatheader->BS_jmpBoot[0]);
+    printf("jmpBoot[0] is %x\n", pfatheader->BS_jmpBoot[0]);
 
 
 
