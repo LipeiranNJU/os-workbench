@@ -129,12 +129,14 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 }
 
 bool isFATdirectory(const struct FATdirectory* pFATdir) {
-    // if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
-    //     return false;
-    // }  
-    // if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
-    //     return false;
-    // }
+    int attr = pFATdir->DIR_Attr;
+    assert(0);
+    if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
+        return false;
+    }  
+    if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
+        return false;
+    }
     if (pFATdir->DIR_CrtTimeTenth > 199) // 由手册23页可知，0 <= DIR_CrtTimeTenth <= 199
         return false;
     if ((pFATdir->DIR_CrtTime & 0x1) != 0) // 由手册23页可知，粒度为2
