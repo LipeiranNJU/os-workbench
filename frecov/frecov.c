@@ -8,6 +8,8 @@
 #include <sys/mman.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdbool.h>
+
 struct fat_header {
     uint8_t  BS_jmpBoot[3];
     uint8_t  BS_OEMName[8];
@@ -55,7 +57,7 @@ struct FATdirectory {
     uint32_t DIR_FileSize;
 }__attribute__((packed));
 
-
+bool isFATdirectory(struct FATdirectory*);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
@@ -105,4 +107,16 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
     printf("BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
+}
+
+bool isFATdirectory(struct FATdirectory* pFATdir) {
+    if ((pFATdir->DIR_Attr & 0xB0) != 0) 
+        return false;
+    else if (pFATdir->DIR_NTRes != 0)
+        return false;
+    else if (pFATdir->DIR_CrtTimeTenth > 199)
+        return false;
+    else if ((pFATdir->DIR_CrtTime & 0x1) != 0)
+        return false;
+    
 }
