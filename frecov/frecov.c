@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
         printf("offset is%lld\n",(long long) ((intptr_t) pFATdir+1) - ((intptr_t)pFATdir));
-        assert((intptr_t) pFATdir+1 - (intptr_t)pFATdir == 32);
+        assert((intptr_t) (pFATdir+1) - (intptr_t)pFATdir == 32);
         printf("i is %d ",i);
         fflush(stdout);
         pFATdir++;
