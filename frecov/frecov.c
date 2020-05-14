@@ -96,8 +96,6 @@ int main(int argc, char *argv[]) {
             canBeUsed += 1;
         
         printf("i is %d ",i);
-        if (i == 3)
-            assert(0);
         fflush(stdout);
         pFATdir++;
     }
