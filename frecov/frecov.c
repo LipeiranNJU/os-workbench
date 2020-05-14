@@ -95,6 +95,7 @@ int main(int argc, char *argv[]) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
         
+        assert(0);
         printf("i is %d ",i);
         fflush(stdout);
         pFATdir++;
