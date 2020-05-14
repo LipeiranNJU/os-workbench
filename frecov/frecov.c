@@ -130,6 +130,7 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 
 bool isFATdirectory(const struct FATdirectory* pFATdir) {
     int attr = pFATdir->DIR_Attr;
+    printf("attr =%d\n",attr);
     assert(0);
     if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
         return false;
