@@ -140,6 +140,6 @@ bool isFATdirectory(const struct FATdirectory* pFATdir) {
     //     return false;
     // else
     //     return true;
-    return false;
+    return true;
     assert(0);
 }
