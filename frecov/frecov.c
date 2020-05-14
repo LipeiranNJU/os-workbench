@@ -64,6 +64,7 @@ int main(int argc, char *argv[]) {
     printf("BPB_FATSz32 is %d\n", BPB_FATSz32);
     int BPB_HiddSec =pfatheader->BPB_HiddSec;
     printf("BPB_HiddSec is %d\n", BPB_HiddSec);
+    assert(pfatheader->BPB_RootEntCnt == 0);
     assert(pfatheader->BPB_TotSec16 == 0);
     close(fd);
     return 0;    
