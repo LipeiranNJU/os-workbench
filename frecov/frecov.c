@@ -56,10 +56,15 @@ int main(int argc, char *argv[]) {
 
     int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
-    int offset = pfatheader->BPB_RsvdSecCnt;
     int BPB_RootClus = pfatheader->BPB_RootClus;
     int BPB_FATSz32 = pfatheader->BPB_FATSz32;
     int BPB_HiddSec =pfatheader->BPB_HiddSec;
+    int BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
+
+    int offset = (BPB_RsvdSecCnt);
+
+
+
     close(fd);
     return 0;    
 }
@@ -79,4 +84,5 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_RootClus is %d\n", pfatheader->BPB_RootClus);
     printf("BPB_FATSz32 is %d\n", pfatheader->BPB_FATSz32);
     printf("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
+    printf("pfatheader->BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
 }
