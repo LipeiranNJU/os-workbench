@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     return 0;    
 }
 
-void verifyFAT32Head(struct fat_header ptr) {
+void verifyFAT32Head(struct fat_header* ptr) {
 
     assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
 }
