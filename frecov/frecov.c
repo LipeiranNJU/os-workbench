@@ -131,7 +131,7 @@ bool isFATdirectory(const struct FATdirectory* pFATdir) {
     if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
         return false;
     }
-    return false;
+    return true;
     // int attr = pFATdir->DIR_Attr;
     // printf("attr =%d\n",attr);
     // if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
