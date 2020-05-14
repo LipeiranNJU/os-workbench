@@ -98,6 +98,7 @@ int main(int argc, char *argv[]) {
             rate = 100*i/pfatheader->BPB_TotSec32/2 != rate;
             printf("Has complished %d%% of file\n", rate);
         }
+        break;
     }
     printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
