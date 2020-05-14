@@ -9,36 +9,41 @@
 #include <string.h>
 #include <unistd.h>
 struct fat_header {
-  uint8_t  BS_jmpBoot[3];
-  uint8_t  BS_OEMName[8];
-  uint16_t BPB_BytsPerSec;
-  uint8_t BPB_SecPerClus;
-  uint16_t BPB_RsvdSecCnt;
-  uint8_t BPB_NumFATs;
-  uint16_t BPB_RootEntCnt;
-  uint16_t BPB_TotSec16;
-  uint8_t BPB_Media;
-  uint16_t BPB_FATSz16;
-  uint16_t BPB_SecPerTrk;
-  uint16_t BPB_NumHeads;
-  uint32_t BPB_HiddSec;
-  uint32_t BPB_TotSec32;
-  uint32_t BPB_FATSz32;
-  uint16_t BPB_ExtFlags;
-  uint16_t BPB_FSVer;
-  uint32_t BPB_RootClus;
-  uint16_t BPB_FSInfo;
-  uint16_t BPB_BkBootSec;
-  uint8_t BPB_Reserved[12];
-  uint8_t BS_DrvNum;
-  uint8_t BS_Reserved;
-  uint8_t BS_BootSig;
-  uint32_t BS_VolID; 
-  uint8_t BS_VolLab[11];
-  uint8_t BS_FilSysType[8];
-  uint8_t  padding[420];
-  uint16_t Signature_word;
-} __attribute__ ((packed));
+    uint8_t  BS_jmpBoot[3];
+    uint8_t  BS_OEMName[8];
+    uint16_t BPB_BytsPerSec;
+    uint8_t BPB_SecPerClus;
+    uint16_t BPB_RsvdSecCnt;
+    uint8_t BPB_NumFATs;
+    uint16_t BPB_RootEntCnt;
+    uint16_t BPB_TotSec16;
+    uint8_t BPB_Media;
+    uint16_t BPB_FATSz16;
+    uint16_t BPB_SecPerTrk;
+    uint16_t BPB_NumHeads;
+    uint32_t BPB_HiddSec;
+    uint32_t BPB_TotSec32;
+    uint32_t BPB_FATSz32;
+    uint16_t BPB_ExtFlags;
+    uint16_t BPB_FSVer;
+    uint32_t BPB_RootClus;
+    uint16_t BPB_FSInfo;
+    uint16_t BPB_BkBootSec;
+    uint8_t BPB_Reserved[12];
+    uint8_t BS_DrvNum;
+    uint8_t BS_Reserved;
+    uint8_t BS_BootSig;
+    uint32_t BS_VolID; 
+    uint8_t BS_VolLab[11];
+    uint8_t BS_FilSysType[8];
+    uint8_t  padding[420];
+    uint16_t Signature_word;
+}__attribute__((packed));
+
+struct FATdirectory {
+
+}__attribute__((packed));
+
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
