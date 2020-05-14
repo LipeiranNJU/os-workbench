@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     printf("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", BPB_BytsPerSec, BPB_SecPerClus); 
     int offset = pfatheader->BPB_RsvdSecCnt;
     int BPB_RootClus = pfatheader->BPB_RootClus;
-    print("BPB_RootClus is %d\n", BPB_RootClus);
+    printf("BPB_RootClus is %d\n", BPB_RootClus);
 
 
     close(fd);
