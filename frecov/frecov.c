@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     int rate = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (int i = 0; i < pfatheader->BPB_TotSec32; i++) {
+    for (int i = 0; i < 10000; i++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
 
