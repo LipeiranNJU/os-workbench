@@ -61,7 +61,7 @@ struct FATdirectory {
     uint32_t DIR_FileSize;
 }__attribute__((packed));
 
-bool isFATdirectory(struct FATdirectory*);
+bool isFATdirectory(const struct FATdirectory*);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
@@ -88,8 +88,12 @@ int main(int argc, char *argv[]) {
     int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     printf("Offset of initial clus is %d\n", offset);
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
-    
-
+    int canBeUsed = 0;
+    for (int i = 0; i < 100; i++) {
+        if (isFATdirectory(pFATdir))
+            canBeUsed += 1;
+    }
+    printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
     return 0;    
 }
@@ -114,7 +118,7 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
 
-bool isFATdirectory(struct FATdirectory* pFATdir) {
+bool isFATdirectory(const struct FATdirectory* pFATdir) {
     if ((pFATdir->DIR_Attr & 0xB0) != 0) // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
         return false;
     else if (pFATdir->DIR_NTRes != 0) // 由手册23页可知，保留必须为0
