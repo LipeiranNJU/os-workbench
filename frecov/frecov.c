@@ -38,7 +38,7 @@ struct fat_header {
   uint8_t BS_FilSysType[8];
   uint8_t  padding[420];
   uint16_t Signature_word;
-} __attribute__((packed));
+} __attribute__ ((packed));
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
