@@ -61,7 +61,8 @@ void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
-    assert(sizeof(struct FATdirectory) == 256);
+
+    assert(sizeof(struct FATdirectory) == 32);
     char* fileName = argv[1];
     printf("Filename is %s\n", fileName);
     int fd = open(fileName, O_RDWR, 0);
