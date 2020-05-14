@@ -41,7 +41,7 @@ struct fat_header {
 } __attribute__((packed));
 
 void verifyFAT32Head(struct fat_header*);
-
+void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
@@ -50,10 +50,9 @@ int main(int argc, char *argv[]) {
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     int fd = open(fileName, O_RDWR, 0);
     struct fat_header* pfatheader = mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
-    assert(pfatheader->Signature_word == 0xAA55);
-    assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5) == 0);
     assert(fd > 0);
 
+    verifyFAT32Head(pfatheader);
     printf("jmpBoot[0] is %X\n", pfatheader->BS_jmpBoot[0]);
     printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
     int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
@@ -66,12 +65,13 @@ int main(int argc, char *argv[]) {
     printf("BPB_FATSz32 is %d\n", BPB_FATSz32);
     int BPB_HiddSec =pfatheader->BPB_HiddSec;
     printf("BPB_HiddSec is %d\n", BPB_HiddSec);
-    assert(pfatheader->BPB_RootEntCnt == 0);
-    assert(pfatheader->BPB_TotSec16 == 0);
     close(fd);
     return 0;    
 }
 
 void verifyFAT32Head(struct fat_header* ptr) {
     assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
+    assert(ptr->Signature_word == 0xAA55);
+    assert(ptr->BPB_RootEntCnt == 0);
+    assert(ptr->BPB_TotSec16 == 0);
 }
