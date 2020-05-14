@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     int rate = 0;
-    printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
+    // printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (int i = 0; i < 10000; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATdirectory(pFATdir) == true) {
