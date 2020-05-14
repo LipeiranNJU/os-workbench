@@ -51,6 +51,13 @@ int main(int argc, char *argv[]) {
     assert(pfatheader->Signature_word == 0xAA55);
     assert(memcmp(pfatheader->BS_FilSysType, "FAT32", 5) == 0);
     assert(fd > 0);
+
+    printf("jmpBoot[0] is %d\n", pfatheader->BS_jmpBoot[0]);
+
+
+
+
+
     close(fd);
     return 0;    
 }
