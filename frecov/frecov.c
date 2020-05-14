@@ -57,7 +57,9 @@ int main(int argc, char *argv[]) {
     int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
     printf("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", BPB_BytsPerSec, BPB_SecPerClus); 
-
+    int offset = pfatheader->BPB_RsvdSecCnt;
+    int BPB_RootClus = pfatheader->BPB_RootClus;
+    print("BPB_RootClus is %d\n", BPB_RootClus);
 
 
     close(fd);
