@@ -90,14 +90,10 @@ int main(int argc, char *argv[]) {
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     int rate = 0;
-    for (int i = 0; i < pfatheader->BPB_TotSec32*2; pFATdir++) {
+    for (int i = 0; i < 10000; pFATdir++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
 
-        if (100*i/pfatheader->BPB_TotSec32!=rate) {
-            rate = 100*i/pfatheader->BPB_TotSec32/2 != rate;
-            printf("Has complished %d%% of file\n", rate);
-        }
         break;
     }
     printf("%d can be short name directory.\n",canBeUsed);
