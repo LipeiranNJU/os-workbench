@@ -91,11 +91,12 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     int rate = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (int i = 0; i < 1000000; pFATdir++) {
+    for (int i = 0; i < pfatheader->BPB_TotSec32*2; i++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
 
         break;
+        pFATdir++;
     }
     printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
