@@ -97,7 +97,7 @@ int main(int argc, char *argv[]) {
             canBeUsed += 1;
         }
 
-        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == 32);
+        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATdirectory));
         assert(pFATdir != NULL);
         fflush(stdout);
         pFATdir++;
