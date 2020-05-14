@@ -9,6 +9,10 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+#define B 1
+#define KB (1024 * B)
+#define MB (1024 * KB)
+#define GB (1024 * KB)
 
 struct fat_header {
     uint8_t  BS_jmpBoot[3];
@@ -83,7 +87,8 @@ int main(int argc, char *argv[]) {
     int BPB_NumFATs = pfatheader->BPB_NumFATs;
     int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     printf("Offset of initial clus is %d\n", offset);
-
+    struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
+    
 
     close(fd);
     return 0;    
@@ -110,13 +115,16 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 }
 
 bool isFATdirectory(struct FATdirectory* pFATdir) {
-    if ((pFATdir->DIR_Attr & 0xB0) != 0) 
+    if ((pFATdir->DIR_Attr & 0xB0) != 0) // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
         return false;
-    else if (pFATdir->DIR_NTRes != 0)
+    else if (pFATdir->DIR_NTRes != 0) // 由手册23页可知，保留必须为0
         return false;
-    else if (pFATdir->DIR_CrtTimeTenth > 199)
+    else if (pFATdir->DIR_CrtTimeTenth > 199) // 由手册23页可知，0 <= DIR_CrtTimeTenth <= 199
         return false;
-    else if ((pFATdir->DIR_CrtTime & 0x1) != 0)
+    else if ((pFATdir->DIR_CrtTime & 0x1) != 0) // 由手册23页可知，粒度为2
         return false;
-    
+    else if (pFATdir->DIR_FileSize > 4 * MB)
+        return false;
+    else
+        return true;
 }
