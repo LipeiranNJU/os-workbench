@@ -60,9 +60,9 @@ int main(int argc, char *argv[]) {
     int BPB_FATSz32 = pfatheader->BPB_FATSz32;
     int BPB_HiddSec =pfatheader->BPB_HiddSec;
     int BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
-
-    int offset = (BPB_RsvdSecCnt);
-
+    int BPB_NumFATs = pfatheader->BPB_NumFATs;
+    int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
+    printf("Offset of initial clus is %d\n", offset);
 
 
     close(fd);
