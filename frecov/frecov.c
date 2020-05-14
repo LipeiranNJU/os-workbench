@@ -128,6 +128,9 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 }
 
 bool isFATdirectory(const struct FATdirectory* pFATdir) {
+    if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
+        return false;
+    }
     return false;
     // int attr = pFATdir->DIR_Attr;
     // printf("attr =%d\n",attr);
