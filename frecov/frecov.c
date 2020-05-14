@@ -54,7 +54,9 @@ int main(int argc, char *argv[]) {
 
     printf("jmpBoot[0] is %X\n", pfatheader->BS_jmpBoot[0]);
     printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
-
+    int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
+    int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
+    printf("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", BPB_BytsPerSec, BPB_SecPerClus); 
 
 
 
