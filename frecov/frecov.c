@@ -89,9 +89,15 @@ int main(int argc, char *argv[]) {
     printf("Offset of initial clus is %d\n", offset);
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
-    for (int i = 0; i < pfatheader->BPB_TotSec32; pFATdir++) {
+    int rate = 0;
+    for (int i = 0; i < pfatheader->BPB_TotSec32*2; pFATdir++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
+
+        if (100*i/pfatheader->BPB_TotSec32!=rate) {
+            rate = 100*i/pfatheader->BPB_TotSec32/2 != rate;
+            printf("Has complished %d%% of file\n", rate);
+        }
     }
     printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
