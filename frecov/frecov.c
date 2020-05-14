@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     printf("Offset of initial clus is %d\n", offset);
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < pfatheader->BPB_TotSec32; pFATdir++) {
         if (isFATdirectory(pFATdir))
             canBeUsed += 1;
     }
