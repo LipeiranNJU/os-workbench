@@ -60,8 +60,8 @@ int main(int argc, char *argv[]) {
     int offset = pfatheader->BPB_RsvdSecCnt;
     int BPB_RootClus = pfatheader->BPB_RootClus;
     printf("BPB_RootClus is %d\n", BPB_RootClus);
-
-
+    int BPB_FATSz32 = pfatheader->BPB_FATSz32;
+    printf("BPB_FATSz32 is %d\n", BPB_FATSz32);
     close(fd);
     return 0;    
 }
