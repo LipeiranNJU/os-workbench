@@ -139,7 +139,7 @@ bool isFATdirectory(const struct FATdirectory* pFATdir) {
     // else if (pFATdir->DIR_FileSize > 4 * MB)
     //     return false;
     else
-        return true;
+        return false;
     // return true;
     assert(0);
 }
