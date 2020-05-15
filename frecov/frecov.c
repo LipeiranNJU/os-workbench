@@ -167,7 +167,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
     //     return false;
     // else if (pFATdir->DIR_CrtDate > pFATdir->DIR_LstAccDate || pFATdir->DIR_CrtDate > pFATdir->DIR_WrtDate || pFATdir->DIR_LstAccDate > pFATdir->DIR_WrtDate)
     //     return false;
-    else {
+    // else {
         // int year = ((pFATdir->DIR_CrtDate & 0xfd00) >> 9);
         // int month = ((pFATdir->DIR_CrtDate & 0xf0) >> 4); 
         // int day = (pFATdir->DIR_CrtDate & 0xf);
@@ -186,7 +186,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
             return true;
 
         return false;
-    }
+    // }
     
 }
 
