@@ -83,6 +83,7 @@ int main(int argc, char *argv[]) {
     printf("Filename is %s\n", fileName);
     FILE* pfile = fopen(fileName,"w+");
     long fileSize = ftell(pfile);
+    printf("%d\n",fileSize);
     fseek(pfile, 0, SEEK_SET);
     fclose(pfile);
 
