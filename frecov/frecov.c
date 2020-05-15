@@ -84,6 +84,7 @@ int main(int argc, char *argv[]) {
     assert(fd > 0);
 
     verifyFAT32Head(pfatheader);
+    assert(0);
     showFAT32HeadInfo(pfatheader);
 
     int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
