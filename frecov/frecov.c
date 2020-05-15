@@ -9,6 +9,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdbool.h>
+
 #define B 1
 #define KB (1024 * B)
 #define MB (1024 * KB)
@@ -65,14 +66,20 @@ bool isFATdirectory(const struct FATdirectory*);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
+
+
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
 
     assert(sizeof(struct FATdirectory) == 32);
     char* fileName = argv[1];
     printf("Filename is %s\n", fileName);
+    FILE* pfile = fopen(fileName,"w+");
+    long fileSize = ftell(pfile);
+    fclose(pfile);
+
     int fd = open(fileName, O_RDWR, 0);
-    struct fat_header* pfatheader = mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
+    struct fat_header* pfatheader = mmap(NULL, fileSize , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
 
     verifyFAT32Head(pfatheader);
