@@ -89,10 +89,9 @@ int main(int argc, char *argv[]) {
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
     printf("fd is %d\n", fd);
-    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ, MAP_SHARED , fd , 0);
+    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ, MAP_SHARED , fd, 0);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
-    // verifyFAT32Head(pfatheader);
+    verifyFAT32Head(pfatheader);
     assert(pfatheader != NULL);
     // assert(pfatheader->Signature_word == 0xAA55);
     // assert(pfatheader->BPB_RootEntCnt == 0);
@@ -130,19 +129,19 @@ int main(int argc, char *argv[]) {
     return 0;    
 }
 
-// void verifyFAT32Head(struct fat_header* ptr) {
-//     printf("hello\n");
-//     // assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
-//     // assert(0);
-//     // assert(ptr->Signature_word == 0xAA55);
-//     // assert(0);
-//     // assert(ptr->BPB_RootEntCnt == 0);
-//     // assert(0);
-//     // assert(ptr->BPB_TotSec16 == 0);
-//     // assert(0);
-//     // assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
-//     // assert(0);
-// }
+void verifyFAT32Head(struct fat_header* ptr) {
+    printf("hello\n");
+    // assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
+    // assert(0);
+    // assert(ptr->Signature_word == 0xAA55);
+    // assert(0);
+    // assert(ptr->BPB_RootEntCnt == 0);
+    // assert(0);
+    // assert(ptr->BPB_TotSec16 == 0);
+    // assert(0);
+    // assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
+    // assert(0);
+}
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
