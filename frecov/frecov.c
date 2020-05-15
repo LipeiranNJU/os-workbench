@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     // assert(pfatheader->BPB_TotSec16 == 0);
     // assert(pfatheader->BPB_NumFATs == 2 || pfatheader->BPB_NumFATs == 1);
     // assert(0);
-    // showFAT32HeadInfo(pfatheader);
+    showFAT32HeadInfo(pfatheader);
 
     // int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     // int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
@@ -144,15 +144,15 @@ int main(int argc, char *argv[]) {
 //     // assert(0);
 // }
 
-// void showFAT32HeadInfo(struct fat_header* pfatheader) {
-//     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-//     printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
-//     printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
-//     printf("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", pfatheader->BPB_BytsPerSec, pfatheader->BPB_SecPerClus); 
-//     printf("BPB_RootClus is %d\n", pfatheader->BPB_RootClus);
-//     printf("BPB_FATSz32 is %d\n", pfatheader->BPB_FATSz32);
-//     printf("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
-//     printf("BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
-//     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
-// }
+void showFAT32HeadInfo(struct fat_header* pfatheader) {
+    printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
+    printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
+    printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
+    printf("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", pfatheader->BPB_BytsPerSec, pfatheader->BPB_SecPerClus); 
+    printf("BPB_RootClus is %d\n", pfatheader->BPB_RootClus);
+    printf("BPB_FATSz32 is %d\n", pfatheader->BPB_FATSz32);
+    printf("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
+    printf("BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
+    printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
+}
 
