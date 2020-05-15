@@ -91,8 +91,9 @@ int main(int argc, char *argv[]) {
 
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
-    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
+    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
+    printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     verifyFAT32Head(pfatheader);
     // assert(0);
     showFAT32HeadInfo(pfatheader);
