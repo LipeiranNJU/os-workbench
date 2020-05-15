@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
     assert(fd > 0);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     verifyFAT32Head(pfatheader);
-    assert(pfatheader->Signature_word == 0xAA55);
+    // assert(pfatheader->Signature_word == 0xAA55);
     // assert(pfatheader->BPB_RootEntCnt == 0);
     // assert(pfatheader->BPB_TotSec16 == 0);
     // assert(pfatheader->BPB_NumFATs == 2 || pfatheader->BPB_NumFATs == 1);
