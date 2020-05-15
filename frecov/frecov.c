@@ -55,7 +55,7 @@ struct fat_header {
     uint16_t Signature_word;
 }__attribute__((packed));
 
-struct FATdirectory {
+struct FATShortDirectory {
     uint8_t DIR_Name[11];
     uint8_t DIR_Attr;
     uint8_t DIR_NTRes;
@@ -83,13 +83,13 @@ struct FATLongDirectory {
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
-bool isFATShortDirectory(struct FATdirectory*);
-bool isFATLongDirectory(struct FATdirectory*);
+bool isFATShortDirectory(struct FATShortDirectory*);
+bool isFATLongDirectory(struct FATShortDirectory*);
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
-    assert(sizeof(struct FATdirectory) == 32);
+    assert(sizeof(struct FATShortDirectory) == 32);
     assert(sizeof(struct FATLongDirectory) == 32);
     char* fileName = argv[1];
     printf("Filename is %s\n", fileName);
@@ -118,7 +118,7 @@ int main(int argc, char *argv[]) {
     int BPB_NumFATs = pfatheader->BPB_NumFATs;
     int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     printf("Offset of initial clus is %d\n", offset);
-    struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
+    struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;) {
@@ -128,7 +128,7 @@ int main(int argc, char *argv[]) {
             canBeUsed += 1;
         }
 
-        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATdirectory));
+        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
         assert(pFATdir != NULL);
         fflush(stdout);
         pFATdir++;
@@ -167,7 +167,7 @@ bool isLegalInShort(char c) {
     
 }
 
-bool isFATShortDirectory(struct FATdirectory* pFATdir) {
+bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     // if (pFATdir->DIR_CrtTime % 2 == 1)
     //     return false;
     // else if (pFATdir->DIR_CrtTimeTenth > 199 || pFATdir->DIR_CrtTimeTenth < 0)
@@ -201,7 +201,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
     
 }
 
-bool isFATLongDirectory(struct FATdirectory* pFATdir) {
+bool isFATLongDirectory(struct FATShortDirectory* pFATdir) {
 
     return false;
 }
