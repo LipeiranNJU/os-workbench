@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
     struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, fileSize , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
     // verifyFAT32Head(pfatheader);
-    assert(0);
+    // assert(0);
     showFAT32HeadInfo(pfatheader);
 
     int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
