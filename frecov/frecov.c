@@ -217,8 +217,8 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld){
     c[8] = (char) pFATld->LDIR_Name2[3];
     c[9] = (char) pFATld->LDIR_Name2[4];
     c[10] = (char) pFATld->LDIR_Name2[5];
-    c[11] = (char) pFATld->LDIR_Name3[1];
-    c[12] = (char) pFATld->LDIR_Name3[2];
+    c[11] = (char) pFATld->LDIR_Name3[0];
+    c[12] = (char) pFATld->LDIR_Name3[1];
     if (pFATld->LDIR_Ord > 0x40)
         printf("LongName:%s\n",c);
     else
