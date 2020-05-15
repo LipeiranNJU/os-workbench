@@ -163,6 +163,8 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
         return false;
     else if (pFATdir->DIR_FileSize > 2 * MB)
         return false;
+    else if (pFATdir->DIR_CrtDate > pFATdir->DIR_LstAccDate || pFATdir->DIR_CrtDate > pFATdir->DIR_WrtDate || pFATdir->DIR_LstAccDate > pFATdir->DIR_WrtDate)
+        return false;
     else
         return true;
     
