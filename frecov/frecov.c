@@ -157,8 +157,8 @@ bool isLegalInShort(char c) {
 }
 
 bool isFATShortDirectory(struct FATdirectory* pFATdir) {
-    if (pFATdir->DIR_CrtTime % 2 == 1)
-        return false;
+    // if (pFATdir->DIR_CrtTime % 2 == 1)
+    //     return false;
     // else if (pFATdir->DIR_CrtTimeTenth > 199 || pFATdir->DIR_CrtTimeTenth < 0)
     //     return false;
     // else if (pFATdir->DIR_NTRes != 0)
