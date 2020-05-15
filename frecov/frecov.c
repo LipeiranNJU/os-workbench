@@ -168,7 +168,7 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
         return false;
     else {
         int year = ((pFATdir->DIR_CrtDate & 0xff00)>>8);
-        if (year < 5 || year > 40)
+        if (year > 40)
             return false;
 
         return true;
