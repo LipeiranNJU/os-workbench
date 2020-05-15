@@ -70,7 +70,7 @@ struct FATdirectory {
     uint32_t DIR_FileSize;
 }__attribute__((packed));
 
-bool isFATdirectory(const struct FATdirectory*);
+
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 int main(int argc, char *argv[]) {
@@ -92,7 +92,6 @@ int main(int argc, char *argv[]) {
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
     struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
-    assert(fd > 0);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     verifyFAT32Head(pfatheader);
     assert(pfatheader != NULL);
@@ -159,27 +158,3 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
 
-bool isFATdirectory(const struct FATdirectory* pFATdir) {
-    if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
-        return false;
-    }
-    return true;
-    // int attr = pFATdir->DIR_Attr;
-    // printf("attr =%d\n",attr);
-    // if ((pFATdir->DIR_Attr & 0xB0) != 0) { // 由手册23页可知，当文件已经被创建时attribute byte高两位被保留且置0.
-    //     return false;
-    // }  
-    // if (pFATdir->DIR_NTRes != 0){ // 由手册23页可知，保留必须为0
-    //     return false;
-    // }
-    // if (pFATdir->DIR_CrtTimeTenth > 199) // 由手册23页可知，0 <= DIR_CrtTimeTenth <= 199
-    //     return false;
-    // if ((pFATdir->DIR_CrtTime & 0x1) != 0) // 由手册23页可知，粒度为2
-    //     return false;
-    // if (pFATdir->DIR_FileSize > 4 * MB)
-    //     return false;
-    
-    // return true;
-    // // return true;
-    // assert(0);
-}
