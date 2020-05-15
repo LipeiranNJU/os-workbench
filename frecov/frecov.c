@@ -227,7 +227,7 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
         c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
         c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
         c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
-        pFATld->LDIR_Ord = pFATld->LDIR_Ord -1;
+        pFATld = pFATld -1;
     }
     
     i += 1;
