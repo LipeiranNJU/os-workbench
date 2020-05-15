@@ -159,7 +159,7 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
         return false;
     else if (pFATdir->DIR_NTRes != 0)
         return false;
-    else if ((pFATdir->DIR_Attr & 0xB0) != 0)
+    else if ((pFATdir->DIR_Attr & 0xB0) != 0 || pFATdir->DIR_Attr == 0)
         return false;
     else
         return true;
