@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     int rate = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (int i = 0; i < 100000; i++) {
+    for (int i = 0; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATdirectory(pFATdir) == true) {
             canBeUsed += 1;
