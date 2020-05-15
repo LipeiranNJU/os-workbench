@@ -178,7 +178,7 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
             return false;
         
         for (int i = 0; i < 11; i++) {
-            if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i==0) && pFATdir->DIR_Name[i] ==0x05)
+            if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i==0 && pFATdir->DIR_Name[i] ==0x05))
                 return false;
         }
         return true;
