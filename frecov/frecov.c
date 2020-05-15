@@ -74,6 +74,7 @@ struct FATdirectory {
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATdirectory*);
+bool isFATLongDirectory(struct FATdirectory*);
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -164,8 +165,8 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
         return false;
     else if (pFATdir->DIR_FileSize > 2 * MB)
         return false;
-    else if (pFATdir->DIR_CrtDate > pFATdir->DIR_LstAccDate || pFATdir->DIR_CrtDate > pFATdir->DIR_WrtDate || pFATdir->DIR_LstAccDate > pFATdir->DIR_WrtDate)
-        return false;
+    // else if (pFATdir->DIR_CrtDate > pFATdir->DIR_LstAccDate || pFATdir->DIR_CrtDate > pFATdir->DIR_WrtDate || pFATdir->DIR_LstAccDate > pFATdir->DIR_WrtDate)
+    //     return false;
     else {
         int year = ((pFATdir->DIR_CrtDate & 0xfd00) >> 9);
         int month = ((pFATdir->DIR_CrtDate & 0xf0) >> 4); 
@@ -184,4 +185,9 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
         return true;
     }
     
+}
+
+bool isFATLongDirectory(struct FATdirectory* pFATdir) {
+
+    return false;
 }
