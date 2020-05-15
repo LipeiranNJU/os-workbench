@@ -93,39 +93,34 @@ int main(int argc, char *argv[]) {
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     verifyFAT32Head(pfatheader);
     assert(pfatheader != NULL);
-    // assert(pfatheader->Signature_word == 0xAA55);
-    // assert(pfatheader->BPB_RootEntCnt == 0);
-    // assert(pfatheader->BPB_TotSec16 == 0);
-    // assert(pfatheader->BPB_NumFATs == 2 || pfatheader->BPB_NumFATs == 1);
-    // assert(0);
     showFAT32HeadInfo(pfatheader);
 
-    // int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
-    // int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
-    // int BPB_RootClus = pfatheader->BPB_RootClus;
-    // int BPB_FATSz32 = pfatheader->BPB_FATSz32;
-    // int BPB_HiddSec =pfatheader->BPB_HiddSec;
-    // int BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
-    // int BPB_NumFATs = pfatheader->BPB_NumFATs;
-    // int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
-    // printf("Offset of initial clus is %d\n", offset);
-    // struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
-    // int canBeUsed = 0;
-    // int rate = 0;
-    // printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    // for (int i = 0; i < 100000; i++) {
-    //     assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
-    //     // if (isFATdirectory(pFATdir) == true) {
-    //     //     canBeUsed += 1;
-    //     // }
+    int BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
+    int BPB_SecPerClus = pfatheader->BPB_SecPerClus;
+    int BPB_RootClus = pfatheader->BPB_RootClus;
+    int BPB_FATSz32 = pfatheader->BPB_FATSz32;
+    int BPB_HiddSec =pfatheader->BPB_HiddSec;
+    int BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
+    int BPB_NumFATs = pfatheader->BPB_NumFATs;
+    int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
+    printf("Offset of initial clus is %d\n", offset);
+    struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
+    int canBeUsed = 0;
+    int rate = 0;
+    printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
+    for (int i = 0; i < 100000; i++) {
+        assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
+        // if (isFATdirectory(pFATdir) == true) {
+        //     canBeUsed += 1;
+        // }
 
-    //     assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATdirectory));
-    //     assert(pFATdir != NULL);
-    //     fflush(stdout);
-    //     pFATdir++;
-    // }
-    // printf("%d can be short name directory.\n",canBeUsed);
-    // close(fd);
+        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATdirectory));
+        assert(pFATdir != NULL);
+        fflush(stdout);
+        pFATdir++;
+    }
+    printf("%d can be short name directory.\n",canBeUsed);
+    close(fd);
     return 0;    
 }
 
