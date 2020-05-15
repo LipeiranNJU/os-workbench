@@ -208,7 +208,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     
 }
 
-void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld){
+void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     char c[14];
     c[14] = 0;
     c[0] = (char) pFATld->LDIR_Name1[0];
