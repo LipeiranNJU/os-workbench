@@ -212,6 +212,24 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     char c[140];
     int i = -1;
     memset(c, '\0', 140);
+    while (pFATld->LDIR_Ord < 0x40) {
+        i += 1;
+        c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
+        c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
+        c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
+        c[i * 13 + 3] = (char) pFATld->LDIR_Name1[3];
+        c[i * 13 + 4] = (char) pFATld->LDIR_Name1[4];
+        c[i * 13 + 5] = (char) pFATld->LDIR_Name2[0];
+        c[i * 13 + 6] = (char) pFATld->LDIR_Name2[1];
+        c[i * 13 + 7] = (char) pFATld->LDIR_Name2[2];
+        c[i * 13 + 8] = (char) pFATld->LDIR_Name2[3];
+        c[i * 13 + 9] = (char) pFATld->LDIR_Name2[4];
+        c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
+        c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
+        c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
+        pFATld->LDIR_Ord = pFATld->LDIR_Ord -1;
+    }
+    
     i += 1;
     c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
     c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
