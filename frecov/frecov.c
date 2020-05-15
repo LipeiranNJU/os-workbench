@@ -181,7 +181,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
         // for (int i = 0; i < 11; i++) {
         //     if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i == 0 && pFATdir->DIR_Name[i] ==0x05) || (!isLegalInShort(pFATdir->DIR_Name[i])))
         //         return false;
-        }
+        // }
         if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0)
             return true;
 
