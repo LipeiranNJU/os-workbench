@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 #include <stdbool.h>
-
+#include <ctype.h>
 #define B 1
 #define KB (1024 * B)
 #define MB (1024 * KB)
@@ -182,7 +182,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
         //     if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i == 0 && pFATdir->DIR_Name[i] ==0x05) || (!isLegalInShort(pFATdir->DIR_Name[i])))
         //         return false;
         // }
-        if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0)
+        if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0 || isalnum(pFATdir->DIR_Name[0]))
             return true;
 
         return false;
