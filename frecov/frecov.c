@@ -73,6 +73,8 @@ struct FATdirectory {
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
+bool isFATdirectory(struct FATdirectory*);
+
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
@@ -150,3 +152,10 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
 
+bool isFATdirectory(struct FATdirectory* pFATdir) {
+    if (pFATdir->DIR_CrtTime%2 == 1)
+        return false;
+    else
+        return true;
+    
+}
