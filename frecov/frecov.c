@@ -84,7 +84,7 @@ struct FATLongDirectory {
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
-bool isFATLongDirectory(struct FATShortDirectory*);
+void readInfoFromFATLongDirectory(struct FATLongDirectory* );
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -126,6 +126,8 @@ int main(int argc, char *argv[]) {
         if (isFATShortDirectory(pFATdir) == true) {
             printf("name:%s\n",pFATdir->DIR_Name);
             canBeUsed += 1;
+            struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
+            readInfoFromFATLongDirectory(pFATld);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
@@ -201,7 +203,20 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     
 }
 
-bool isFATLongDirectory(struct FATShortDirectory* pFATdir) {
-
-    return false;
+void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld){
+    char c[13];
+    c[0] = (char) pFATld->LDIR_Name1[0];
+    c[1] = (char) pFATld->LDIR_Name1[1];
+    c[2] = (char) pFATld->LDIR_Name1[2];
+    c[3] = (char) pFATld->LDIR_Name1[3];
+    c[4] = (char) pFATld->LDIR_Name1[4];
+    c[5] = (char) pFATld->LDIR_Name2[0];
+    c[6] = (char) pFATld->LDIR_Name2[1];
+    c[7] = (char) pFATld->LDIR_Name2[2];
+    c[8] = (char) pFATld->LDIR_Name2[3];
+    c[9] = (char) pFATld->LDIR_Name2[4];
+    c[10] = (char) pFATld->LDIR_Name2[5];
+    c[11] = (char) pFATld->LDIR_Name3[1];
+    c[12] = (char) pFATld->LDIR_Name3[2];
+    printf("LongName:%s\n",c);
 }
