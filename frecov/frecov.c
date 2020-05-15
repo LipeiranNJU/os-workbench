@@ -109,9 +109,8 @@ int main(int argc, char *argv[]) {
     printf("Offset of initial clus is %d\n", offset);
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
-    int rate = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (int i = 0; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size; i++) {
+    for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
             printf("name:%s\n",pFATdir->DIR_Name);
@@ -130,16 +129,11 @@ int main(int argc, char *argv[]) {
 
 void verifyFAT32Head(struct fat_header* ptr) {
     printf("hello\n");
-    // assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
-    // assert(0);
-    // assert(ptr->Signature_word == 0xAA55);
-    // assert(0);
-    // assert(ptr->BPB_RootEntCnt == 0);
-    // assert(0);
-    // assert(ptr->BPB_TotSec16 == 0);
-    // assert(0);
-    // assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
-    // assert(0);
+    assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
+    assert(ptr->Signature_word == 0xAA55);
+    assert(ptr->BPB_RootEntCnt == 0);
+    assert(ptr->BPB_TotSec16 == 0);
+    assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
 }
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
