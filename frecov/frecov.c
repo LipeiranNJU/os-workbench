@@ -75,7 +75,7 @@ struct FATLongDirectory {
     uint16_t LDIR_Name1[5];
     uint8_t LDIR_Attr;
     uint8_t LDIR_Type;
-    uint16_t LDIR_Chksum;
+    uint8_t LDIR_Chksum;
     uint16_t LDIR_Name2[6];
     uint16_t LDIR_FstClusLO;
     uint16_t LDIR_Name3[2];
