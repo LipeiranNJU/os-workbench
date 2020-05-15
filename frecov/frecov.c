@@ -169,11 +169,14 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
     else {
         int year = ((pFATdir->DIR_CrtDate & 0xfd00) >> 9);
         int month = ((pFATdir->DIR_CrtDate & 0xf0) >> 4); 
-        int date = (pFATdir->DIR_CrtDate & 0xf);
+        int day = (pFATdir->DIR_CrtDate & 0xf);
         if (year < 5 || year > 40)
             return false;
         if (month < 1 || month > 12)
             return false;
+        if (day == 0)
+            return false;
+            
         return true;
     }
     
