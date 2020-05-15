@@ -208,7 +208,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     
 }
 
-void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
+void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld){
     char c[14];
     c[14] = 0;
     c[0] = (char) pFATld->LDIR_Name1[0];
@@ -225,8 +225,8 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     c[11] = (char) pFATld->LDIR_Name3[0];
     c[12] = (char) pFATld->LDIR_Name3[1];
     if (pFATld->LDIR_Ord > 0x40)
-        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83    %s\n",c);
-    else
-        // printf("Longname: \n");
+        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",c);
+    // else
+    //     printf("Longname:? \n");
     
 }
