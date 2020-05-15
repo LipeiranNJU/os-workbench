@@ -225,6 +225,7 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
         c[i + 10] = (char) pFATld->LDIR_Name2[5];
         c[i + 11] = (char) pFATld->LDIR_Name3[0];
         c[i + 12] = (char) pFATld->LDIR_Name3[1];
+        i += 1;
     }
 
     printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",c);
