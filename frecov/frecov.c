@@ -84,10 +84,10 @@ int main(int argc, char *argv[]) {
     printf("Filename is %s\n", fileName);
 
 
-    struct stat statbuf;
-    stat(fileName,&statbuf);
-    int size = statbuf.st_size;
-    printf("img file size is %d\n", size);
+    // struct stat statbuf;
+    // stat(fileName,&statbuf);
+    // int size = statbuf.st_size;
+    // printf("img file size is %d\n", size);
 
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
@@ -146,7 +146,6 @@ void verifyFAT32Head(struct fat_header* ptr) {
 }
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
-
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
     printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
