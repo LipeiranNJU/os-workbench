@@ -157,12 +157,12 @@ bool isLegalInShort(char c) {
 }
 
 bool isFATShortDirectory(struct FATdirectory* pFATdir) {
-    if (pFATdir->DIR_CrtTime %2 == 1)
+    if ((pFATdir->DIR_Attr & 0xB0) != 0)
+        return false;
+    if (pFATdir->DIR_CrtTime % 2 == 1)
         return false;
     if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0)
         return true;
-    if (pFATdir->DIR_CrtTime %2 == 1)
-        return false;
     else if (pFATdir->DIR_CrtTimeTenth > 199 || pFATdir->DIR_CrtTimeTenth < 0)
         return false;
     else if (pFATdir->DIR_NTRes != 0)
