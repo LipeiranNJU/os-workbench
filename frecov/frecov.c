@@ -210,10 +210,8 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
 
 void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     char c[140];
-    int i = -1;
+    int i = 0;
     memset(c, '\0', 140);
-    
-    i += 1;
     c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
     c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
     c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
@@ -230,8 +228,8 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     if (pFATld->LDIR_Ord > 0x40)
         printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",c);
     else {
-        i += 1;
         pFATld = pFATld - 1;
+        int i = 1;
         c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
         c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
         c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
