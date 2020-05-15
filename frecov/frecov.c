@@ -161,6 +161,8 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
         return false;
     else if ((pFATdir->DIR_Attr & 0xB0) != 0)
         return false;
+    else if (pFATdir->DIR_FileSize > 4*MB)
+        return false;
     else
         return true;
     
