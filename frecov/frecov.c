@@ -112,9 +112,9 @@ int main(int argc, char *argv[]) {
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (int i = 0; i < 100000; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
-        // if (isFATdirectory(pFATdir) == true) {
-        //     canBeUsed += 1;
-        // }
+        if (isFATdirectory(pFATdir) == true) {
+            canBeUsed += 1;
+        }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATdirectory));
         assert(pFATdir != NULL);
