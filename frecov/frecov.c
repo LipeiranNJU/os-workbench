@@ -154,6 +154,14 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
 
+bool isLegalInShort(char c) {
+    if (c == 0x22 || c==0x2A || c==0x2B||c==0x2C ||c== 0x2E||c==0x2F ||c== 0x3A||c== 0x3B||c==0x3C ||c== 0x3D||c==0x3E ||c ==0x3F||c==0x5B||c==0x5C||c==0x5D||c==0x7C)
+        return false;
+    else
+        return true;
+    
+}
+
 bool isFATShortDirectory(struct FATdirectory* pFATdir) {
     if (pFATdir->DIR_CrtTime%2 == 1)
         return false;
@@ -179,7 +187,7 @@ bool isFATShortDirectory(struct FATdirectory* pFATdir) {
             return false;
         
         for (int i = 0; i < 11; i++) {
-            if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i == 0 && pFATdir->DIR_Name[i] ==0x05))
+            if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i == 0 && pFATdir->DIR_Name[i] ==0x05) || (!isLegalInShort(pFATdir->DIR_Name[i])))
                 return false;
         }
         return true;
