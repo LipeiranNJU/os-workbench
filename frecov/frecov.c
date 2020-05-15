@@ -155,6 +155,8 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
 bool isFATdirectory(struct FATdirectory* pFATdir) {
     if (pFATdir->DIR_CrtTime%2 == 1)
         return false;
+    else if (pFATdir->DIR_CrtTimeTenth > 199)
+        return false;
     else
         return true;
     
