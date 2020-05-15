@@ -70,6 +70,16 @@ struct FATdirectory {
     uint32_t DIR_FileSize;
 }__attribute__((packed));
 
+struct FATLongDirectory {
+    uint8_t LDIR_Ord;
+    uint16_t LDIR_Name1[5];
+    uint8_t LDIR_Attr;
+    uint8_t LDIR_Type;
+    uint16_t LDIR_Chksum;
+    uint16_t LDIR_Name2[6];
+    uint16_t LDIR_FstClusLO;
+    uint16_t LDIR_Name3[2];
+}__attribute__((packed));
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
@@ -80,6 +90,7 @@ int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
     assert(sizeof(struct FATdirectory) == 32);
+    assert(sizeof(struct FATLongDirectory) == 32);
     char* fileName = argv[1];
     printf("Filename is %s\n", fileName);
 
