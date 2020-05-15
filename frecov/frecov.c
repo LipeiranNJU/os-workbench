@@ -87,11 +87,11 @@ int main(int argc, char *argv[]) {
     struct stat statbuf;
     stat(fileName,&statbuf);
     int size = statbuf.st_size;
-    printf("img file size is%d\n", size);
+    printf("img file size is %d\n", size);
 
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
-    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
+    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512 , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
     verifyFAT32Head(pfatheader);
     // assert(0);
