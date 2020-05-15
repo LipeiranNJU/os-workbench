@@ -116,11 +116,17 @@ int main(int argc, char *argv[]) {
 }
 
 void verifyFAT32Head(struct fat_header* ptr) {
-    // assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
+    assert(0);
+    assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
+    assert(0);
     assert(ptr->Signature_word == 0xAA55);
+    assert(0);
     assert(ptr->BPB_RootEntCnt == 0);
+    assert(0);
     assert(ptr->BPB_TotSec16 == 0);
+    assert(0);
     assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
+    assert(0);
 }
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
