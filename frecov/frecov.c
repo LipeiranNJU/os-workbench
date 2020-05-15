@@ -73,7 +73,7 @@ struct FATdirectory {
 
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
-bool isFATdirectory(struct FATdirectory*);
+bool isFATShortDirectory(struct FATdirectory*);
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (int i = 0; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
-        if (isFATdirectory(pFATdir) == true) {
+        if (isFATShortDirectory(pFATdir) == true) {
             printf("name:%s\n",pFATdir->DIR_Name);
             canBeUsed += 1;
         }
@@ -153,7 +153,7 @@ void showFAT32HeadInfo(struct fat_header* pfatheader) {
     printf("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
 }
 
-bool isFATdirectory(struct FATdirectory* pFATdir) {
+bool isFATShortDirectory(struct FATdirectory* pFATdir) {
     if (pFATdir->DIR_CrtTime%2 == 1)
         return false;
     else if (pFATdir->DIR_CrtTimeTenth > 199 || pFATdir->DIR_CrtTimeTenth < 0)
