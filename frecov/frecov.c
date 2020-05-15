@@ -110,7 +110,8 @@ int main(int argc, char *argv[]) {
     struct FATdirectory* pFATdir = (struct FATdirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     printf("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;) {
+    int i;
+    for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
             printf("name:%s\n",pFATdir->DIR_Name);
@@ -122,6 +123,7 @@ int main(int argc, char *argv[]) {
         fflush(stdout);
         pFATdir++;
     }
+    printf("i is %d\n", i);
     printf("%d can be short name directory.\n",canBeUsed);
     close(fd);
     return 0;    
