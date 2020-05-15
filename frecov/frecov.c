@@ -90,6 +90,7 @@ int main(int argc, char *argv[]) {
     printf("img file size is%d\n", size);
 
     int fd = open(fileName, O_RDONLY, 0);
+    assert(fd > 0);
     struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size , PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
     assert(fd > 0);
     verifyFAT32Head(pfatheader);
