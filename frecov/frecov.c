@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
     int fd = open(fileName, O_RDONLY, 0);
     assert(fd > 0);
     printf("fd is %d\n", fd);
-    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ|PROT_WRITE|PROT_EXEC, MAP_SHARED , fd , 0);
+    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, 512, PROT_READ, MAP_SHARED , fd , 0);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
     // verifyFAT32Head(pfatheader);
