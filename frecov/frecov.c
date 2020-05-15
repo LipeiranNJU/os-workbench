@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
     long fileSize = ftell(pfile);
 
     printf("%ld\n",fileSize);
-    fseek(pfile, 0, SEEK_SET);
+
     fclose(pfile);
 
     int fd = open(fileName, O_RDWR, 0);
