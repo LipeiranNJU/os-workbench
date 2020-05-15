@@ -42,7 +42,14 @@ struct fat_header {
     uint8_t BS_BootSig;
     uint32_t BS_VolID; 
     uint8_t BS_VolLab[11];
-    uint8_t BS_FilSysType[8];
+    uint8_t BS_FilSysType0;
+    uint8_t BS_FilSysType1;
+    uint8_t BS_FilSysType2;
+    uint8_t BS_FilSysType3;
+    uint8_t BS_FilSysType4;
+    uint8_t BS_FilSysType5;
+    uint8_t BS_FilSysType6;
+    uint8_t BS_FilSysType7;
     uint8_t  padding[420];
     uint16_t Signature_word;
 }__attribute__((packed));
@@ -117,7 +124,7 @@ int main(int argc, char *argv[]) {
 
 void verifyFAT32Head(struct fat_header* ptr) {
     printf("hello\n");
-    assert((memcmp(ptr->BS_FilSysType, "FAT32", 5) == 0));
+    assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
     assert(0);
     assert(ptr->Signature_word == 0xAA55);
     assert(0);
