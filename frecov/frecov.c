@@ -113,6 +113,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size; i++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATdirectory(pFATdir) == true) {
+            printf("name:%s\n",pFATdir->DIR_Name);
             canBeUsed += 1;
         }
 
@@ -169,7 +170,7 @@ bool isFATdirectory(struct FATdirectory* pFATdir) {
         int year = ((pFATdir->DIR_CrtDate & 0xff00)>>8);
         if (year < 10 || year > 40)
             return false;
-            
+
         return true;
     }
     
