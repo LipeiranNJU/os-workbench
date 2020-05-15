@@ -137,6 +137,7 @@ void verifyFAT32Head(struct fat_header* ptr) {
 }
 
 void showFAT32HeadInfo(struct fat_header* pfatheader) {
+    assert(0);
     printf("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
     printf("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
     printf("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
