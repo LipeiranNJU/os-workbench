@@ -124,8 +124,8 @@ int main(int argc, char *argv[]) {
 
 void verifyFAT32Head(struct fat_header* ptr) {
     printf("hello\n");
-    assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
-    assert(0);
+    // assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
+    // assert(0);
     assert(ptr->Signature_word == 0xAA55);
     assert(0);
     assert(ptr->BPB_RootEntCnt == 0);
