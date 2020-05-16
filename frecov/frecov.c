@@ -168,7 +168,7 @@ int main(int argc, char *argv[]) {
                 print("will not be compressed.\n");
             } else {
                 print("will be compressed\n");
-                assert(0);
+                // assert(0);
             }
 
             canBeUsed += 1;
