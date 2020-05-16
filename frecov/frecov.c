@@ -12,7 +12,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #define B 1
-#define __DEBUG__
+// #define __DEBUG__
 #define KB (1024 * B)
 #define MB (1024 * KB)
 #define GB (1024 * KB)
@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/home/lpr/Documents/";
+            char* prefix = "/home/lpr/Pictures/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             abspath[size] = 0;
@@ -209,11 +209,11 @@ int main(int argc, char *argv[]) {
                 read(pipefds[0], buf, 40);
                 printf("%s    %s@\n", buf, picName);
             }
-            strcat(strcat(cmd, "sha1sum "), abspath);
-            FILE* tmpSha1sumfp = popen(cmd, "r");
-            fread(buf,1, 40, tmpSha1sumfp); // Get it!   
-            pclose(tmpSha1sumfp);
-            printf("%s    %s\n", buf, picName);
+            // strcat(strcat(cmd, "sha1sum "), abspath);
+            // FILE* tmpSha1sumfp = popen(cmd, "r");
+            // fread(buf,1, 40, tmpSha1sumfp); // Get it!   
+            // pclose(tmpSha1sumfp);
+            // printf("%s    %s\n", buf, picName);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
