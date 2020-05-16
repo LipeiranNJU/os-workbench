@@ -231,6 +231,7 @@ int main(int argc, char *argv[]) {
             // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             bool tempflag = true;
+            break
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 break;
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
