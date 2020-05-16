@@ -21,6 +21,11 @@
 #else
 #define print(...) 
 #endif
+#define beNotKown 0
+#define beBMPHeader 1
+#define beNotUsed 2
+#define beBMPContent 3
+
 struct fat_header {
     uint8_t  BS_jmpBoot[3];
     uint8_t  BS_OEMName[8];
