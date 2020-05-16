@@ -226,14 +226,15 @@ int main(int argc, char *argv[]) {
             // 位图数据区写入
             int picDataSize = header->bfSize - header->bfOffBits;
             void* picData = malloc(picDataSize);
-            void* preLine = malloc(picDataSize);
-            void* nowLine = malloc(picDataSize);
+            uint8_t* preLine = malloc(picDataSize);
+            uint8_t* nowLine = malloc(picDataSize);
             printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
+                assert(preLine[3] == preLine[7]);
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
