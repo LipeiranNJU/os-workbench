@@ -170,7 +170,6 @@ int main(int argc, char *argv[]) {
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
-            break;
             // printf("%lX\n", (long) (intptr_t)pFATdir-((intptr_t)pfatheader+offset));
             print("name:%s\n",pFATdir->DIR_Name);
             assert(pFATdir->DIR_FstClusHI == 0);
@@ -193,6 +192,7 @@ int main(int argc, char *argv[]) {
             }
 
             canBeUsed += 1;
+            break;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
