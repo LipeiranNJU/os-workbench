@@ -212,7 +212,9 @@ int main(int argc, char *argv[]) {
             void* laterLine = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
-                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                memcpy(preLine,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                // memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
