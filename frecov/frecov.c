@@ -206,7 +206,11 @@ int main(int argc, char *argv[]) {
             // 位图数据区写入
             int picDataSize = header->bfSize - header->bfOffBits;
             void* picData = malloc(picDataSize);
-            fwrite((void*) ((uintptr_t)(header) + header->bfOffBits), 1, picDataSize, pfdpic);
+            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
+            for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
+                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, pBMInfoHeader->biWidth);
+            }
+            fwrite(picData, 1, picDataSize, pfdpic);
             fclose(pfdpic);
             free(picData);
             char buf[41] = {};
