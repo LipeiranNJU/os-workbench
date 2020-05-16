@@ -204,6 +204,7 @@ int main(int argc, char *argv[]) {
 		        perror("pipe");
                 assert(0);
 	        }
+            assert(0);
             int pid = fork();
             char* argv[3];
             argv[0] = "sha1sum",
