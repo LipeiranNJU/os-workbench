@@ -189,13 +189,24 @@ int main(int argc, char *argv[]) {
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
-            strcat(strcat(cmd, "sha1sum "), abspath);
-            FILE* tmpSha1sumfp = popen(cmd, "r");
-            fread(buf,1, 40, tmpSha1sumfp); // Get it!   
-            pclose(tmpSha1sumfp);
-            printf("%s    %s\n", buf, picName);
-            // free(abspath);
-            // free(picName);
+            int pipefds[2];
+            int pid = fork();
+            char* argv[3];
+            argv[0] = "sha1sum",
+            argv[1] = abspath;
+            argv[2] = NULL;
+            if (pid == 0) {
+                execvp("sha1sum", argv);
+            } else {
+                close(pipefds[1]);
+                read(pipefds[0], buf, 40);
+                printf("%s    %s\n", buf, picName);
+            }
+            // strcat(strcat(cmd, "sha1sum "), abspath);
+            // FILE* tmpSha1sumfp = popen(cmd, "r");
+            // fread(buf,1, 40, tmpSha1sumfp); // Get it!   
+            // pclose(tmpSha1sumfp);
+            // printf("%s    %s\n", buf, picName);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
