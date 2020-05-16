@@ -234,8 +234,8 @@ int main(int argc, char *argv[]) {
             int i = 0;
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 if (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0) {
-                    sleep(3);
                     printk("Bingo!\n");
+                    sleep(3);
                 }
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
