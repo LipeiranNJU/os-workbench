@@ -233,7 +233,7 @@ int main(int argc, char *argv[]) {
             uint8_t* laterLine = malloc(picDataSize);
             // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-            bool tempflag = true;
+            // bool tempflag = true;
             int i = 0;
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
@@ -243,6 +243,7 @@ int main(int argc, char *argv[]) {
                     // sleep(3);
                     ;
                     lineCmp(preLine, nowLine, laterLine, lineWidthSize);
+                    printf("\n");
                 }
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
@@ -250,8 +251,8 @@ int main(int argc, char *argv[]) {
 
                     // printk("filename:%s\tThis is wrong!\n", abspath);
                     // assert(preLine[3] == preLine[7]);
-                    tempflag = false;
-                    break;
+                    // tempflag = false;
+                    // break;
                 } 
             }
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
