@@ -207,7 +207,7 @@ int main(int argc, char *argv[]) {
             } else {
                 close(pipefds[1]);
                 read(pipefds[0], buf, 40);
-                printf("^%s$    *%s@\n", buf, picName);
+                printf("%s    %s\n", buf, picName);
             }
             // strcat(strcat(cmd, "sha1sum "), abspath);
             // FILE* tmpSha1sumfp = popen(cmd, "r");
