@@ -145,6 +145,8 @@ int main(int argc, char *argv[]) {
             struct BMPHeader* header = (struct BMPHeader*) magicNum;
             assert(header->bfReserved1 == 0);
             assert(header->bfReserved2 == 0);
+            print("Size:%d\n",header->bfSize);
+            print("Offbits:%d\n", header->bfOffBits);
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
