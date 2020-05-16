@@ -218,6 +218,7 @@ int main(int argc, char *argv[]) {
             free(picData);
             free(preLine);
             free(laterLine);
+            asssert(((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) == 0);
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
