@@ -364,6 +364,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
                     t[size] = 0;
                     memcpy(t, c, size);
                     return t;
+                }
             }
     }
     return NULL;
