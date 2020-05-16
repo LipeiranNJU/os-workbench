@@ -200,7 +200,7 @@ int main(int argc, char *argv[]) {
             argv[1] = abspath;
             argv[2] = NULL;
             if (pid == 0) {
-                fclose(pipefds[0]);
+                close(pipefds[0]);
                 dup2(pipefds[1], fileno(stderr));
                 dup2(pipefds[1], fileno(stdout));
                 execvp("sha1sum", argv);
@@ -208,7 +208,6 @@ int main(int argc, char *argv[]) {
                 close(pipefds[1]);
                 read(pipefds[0], buf, 40);
                 printf("^%s$    *%s@\n", buf, picName);
-                fclose(pipefds[0]);
             }
             // strcat(strcat(cmd, "sha1sum "), abspath);
             // FILE* tmpSha1sumfp = popen(cmd, "r");
