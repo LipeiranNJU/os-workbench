@@ -202,13 +202,14 @@ int main(int argc, char *argv[]) {
             pfdpic = fopen(abspath, "a");
             fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
             fclose(pfdpic);
+            int lineWidthSize = pBMInfoHeader->biWidth*4;
             pfdpic = fopen(abspath, "a");
             // 位图数据区写入
             int picDataSize = header->bfSize - header->bfOffBits;
             void* picData = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
-                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, pBMInfoHeader->biWidth*4);
+                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
