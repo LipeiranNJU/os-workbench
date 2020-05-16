@@ -242,7 +242,6 @@ int main(int argc, char *argv[]) {
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
                 if (preLine[3] != preLine[7]) {
 
-                    break;
                     // printk("filename:%s\tThis is wrong!\n", abspath);
                     // assert(preLine[3] == preLine[7]);
                     tempflag = false;
@@ -254,7 +253,7 @@ int main(int argc, char *argv[]) {
             } else {
                 printk("filename:%s\tThis maybe wrong!\n", abspath);
             }
-            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+            fwrite(picDataStart, 1, /*picDataSize*/(i+1)*lineWidthSize, pfdpic);
             fclose(pfdpic);
             free(picData);
             free(preLine);
