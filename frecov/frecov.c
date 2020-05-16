@@ -189,11 +189,8 @@ int main(int argc, char *argv[]) {
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
-            assert(0);
-            strcat("sha1sum ",abspath);
-            assert(0);
+            strcat(strcat(cmd, "sha1sum "), abspath);
             FILE* tmpSha1sumfp = popen(cmd, "r");
-            assert(0);
             fread(buf,1, 40, tmpSha1sumfp); // Get it!   
             pclose(tmpSha1sumfp);
             printf("%s    %s\n", buf, picName);
