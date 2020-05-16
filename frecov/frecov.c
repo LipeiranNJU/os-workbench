@@ -342,6 +342,28 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
                 t[size] = 0;
                 memcpy(t, c, size);
                 return t;
+            } else {
+                pFATld = pFATld - 1;
+                int i = 2;
+                c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
+                c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
+                c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
+                c[i * 13 + 3] = (char) pFATld->LDIR_Name1[3];
+                c[i * 13 + 4] = (char) pFATld->LDIR_Name1[4];
+                c[i * 13 + 5] = (char) pFATld->LDIR_Name2[0];
+                c[i * 13 + 6] = (char) pFATld->LDIR_Name2[1];
+                c[i * 13 + 7] = (char) pFATld->LDIR_Name2[2];
+                c[i * 13 + 8] = (char) pFATld->LDIR_Name2[3];
+                c[i * 13 + 9] = (char) pFATld->LDIR_Name2[4];
+                c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
+                c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
+                c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
+                if (pFATld->LDIR_Ord > 0x40) {
+                    int size = strlen(c);
+                    char * t = malloc(sizeof(char)*(size + 1));
+                    t[size] = 0;
+                    memcpy(t, c, size);
+                    return t;
             }
     }
     return NULL;
