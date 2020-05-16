@@ -231,8 +231,8 @@ int main(int argc, char *argv[]) {
             // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             bool tempflag = true;
-            continue;
-            for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
+            int i = 0;
+            for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 break;
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
@@ -250,7 +250,7 @@ int main(int argc, char *argv[]) {
             } else {
                 printk("filename:%s\tThis maybe wrong!\n", abspath);
             }
-            fwrite(picDataStart, 1, picDataSize, pfdpic);
+            fwrite(picDataStart, 1, /*picDataSize*/(i+1)*lineWidthSize, pfdpic);
             fclose(pfdpic);
             free(picData);
             free(preLine);
