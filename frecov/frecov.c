@@ -218,7 +218,6 @@ int main(int argc, char *argv[]) {
             // assert(0);
             fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
             fclose(pfdpic);
-            break;
             pfdpic = fopen(abspath, "a");
             fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
             fclose(pfdpic);
