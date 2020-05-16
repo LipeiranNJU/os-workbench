@@ -147,6 +147,7 @@ int main(int argc, char *argv[]) {
     print("Offset of initial clus is %d\n", offset);
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
+    bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
@@ -182,9 +183,14 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
             // assert(0);
+            skip = false;
             for (int i = 0; i < strlen(abspath); i++) {
-                if (isalnum(abspath[i]) && abspath[i] != '.')
-                    assert(0);
+                if (isalnum(abspath[i]) && abspath[i] != '.') {
+                    skip = true;
+                }
+            }
+            if (skip) {
+                continue;
             }
             FILE* pfdpic = fopen(abspath, "w+");
             // assert(0);
