@@ -203,7 +203,7 @@ int main(int argc, char *argv[]) {
             fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
             fclose(pfdpic);
             pfdpic = fopen(abspath, "a");
-            fwrite((void*) pBMInfoHeader, 1, header->bfOffBits, pfdpic);
+            fwrite((void*) pBMInfoHeader, 1, header->bfSize - header->bfOffBits, pfdpic);
             fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
