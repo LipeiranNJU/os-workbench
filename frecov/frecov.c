@@ -234,8 +234,8 @@ int main(int argc, char *argv[]) {
             int i = 0;
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 if (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0) {
-                    printk("Bingo!\n");
-                    sleep(3);
+                    // printk("Bingo!\n");
+                    // sleep(3);
                 }
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
@@ -245,6 +245,7 @@ int main(int argc, char *argv[]) {
                     // printk("filename:%s\tThis is wrong!\n", abspath);
                     // assert(preLine[3] == preLine[7]);
                     tempflag = false;
+                    break;
                 } 
             }
             if (tempflag == false) {
@@ -252,7 +253,7 @@ int main(int argc, char *argv[]) {
             } else {
                 printk("filename:%s\tThis maybe wrong!\n", abspath);
             }
-            fwrite(picDataStart, 1, /*picDataSize*/(i+1)*lineWidthSize, pfdpic);
+            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
             fclose(pfdpic);
             free(picData);
             free(preLine);
