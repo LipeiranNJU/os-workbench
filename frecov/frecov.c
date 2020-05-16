@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/home/lpr/Documents/";
+            char* prefix = "/home/lpr/Pictures/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             abspath[size] = 0;
@@ -182,10 +182,10 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
             // assert(0);
-            // FILE* pfdpic = fopen(abspath, "w+");
-            // // assert(0);
-            // // write(fileno(pfdpic),(void*) magicNum, header->bfSize);
-            // fclose(pfdpic);
+            FILE* pfdpic = fopen(abspath, "w+");
+            // assert(0);
+            // write(fileno(pfdpic),(void*) magicNum, header->bfSize);
+            fclose(pfdpic);
             // char buf[41] = {};
             // buf[40] = 0;
             // char cmd[100] = {};
