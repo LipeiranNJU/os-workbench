@@ -250,7 +250,7 @@ int main(int argc, char *argv[]) {
             } else {
                 printk("filename:%s\tThis maybe wrong!\n", abspath);
             }
-            fwrite(picDataStart, 1, /*picDataSize*/(i+1)*lineWidthSize, pfdpic);
+            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
             fclose(pfdpic);
             free(picData);
             free(preLine);
