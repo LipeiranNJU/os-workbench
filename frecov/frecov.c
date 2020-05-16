@@ -191,9 +191,9 @@ int main(int argc, char *argv[]) {
             char cmd[100] = {};
             strcat("sha1sum ",abspath);
             FILE* tmpSha1sumfp = popen(cmd, "r");
-            fread(buf,1, 40,tmpSha1sumfp); // Get it!   
+            fread(buf,1, 40, tmpSha1sumfp); // Get it!   
             pclose(tmpSha1sumfp);
-            printf("%s    %s\n", buf, picName);
+            // printf("%s    %s\n", buf, picName);
             free(abspath);
             free(picName);
         }
