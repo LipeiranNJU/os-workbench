@@ -243,7 +243,6 @@ int main(int argc, char *argv[]) {
                     // sleep(3);
                     ;
                     lineCmp(preLine, nowLine, laterLine, lineWidthSize);
-                    printf("\n");
                 }
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
@@ -440,14 +439,31 @@ void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
     int Gx_B = 0;
     int Gy_B = 0;
     int G_B = 0;
+    int Gx_G = 0;
+    int Gy_G = 0;
+    int G_G = 0;
+    int Gx_R = 0;
+    int Gy_R = 0;
+    int G_R = 0;
     for (int i = 1; i < width-1; i++){
         Gx_B = 2*nowLine[(i+1)*4+0] - 2*nowLine[(i-1)*4+0] + preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] - latterLine[(i-1)*4+0];
         Gy_B = 2*latterLine[(i)*4+0] - 2*preLine[(i)*4+0] - preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] + latterLine[(i-1)*4+0];
         G_B = sqrt(1.0*Gx_B*Gx_B+1.0*Gy_B*Gy_B);
         sum[0]+=G_B;
-        sum[1]+=0;
-        sum[2]+=0;
+        
+
+        Gx_G = 2*nowLine[(i+1)*4+1] - 2*nowLine[(i-1)*4+1] + preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] - latterLine[(i-1)*4+1];
+        Gy_G = 2*latterLine[(i)*4+1] - 2*preLine[(i)*4+1] - preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] + latterLine[(i-1)*4+1];
+        G_G = sqrt(1.0*Gx_G*Gx_G+1.0*Gy_G*Gy_G);
+        sum[1]+=G_G;
+
+        
+        Gx_R = 2*nowLine[(i+1)*4+2] - 2*nowLine[(i-1)*4+2] + preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] - latterLine[(i-1)*4+2];
+        Gy_R = 2*latterLine[(i)*4+2] - 2*preLine[(i)*4+2] - preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] + latterLine[(i-1)*4+2];
+        G_R = sqrt(1.0*Gx_R*Gx_R+1.0*Gy_R*Gy_R);
+        sum[2]+=G_R;
+        double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
+        printf("%lf ",length);
     }
-    double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
-    printf("%lf ",length);
+    printf("\n");
 }
