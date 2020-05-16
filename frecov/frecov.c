@@ -440,8 +440,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
 }
 void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
     int width = size/4;
-    int sum[3];
-    memset(sum, '0', 3);
+    int sum[3] = {0};
     int Gx_B = 0;
     int Gy_B = 0;
     int G_B = 0;
