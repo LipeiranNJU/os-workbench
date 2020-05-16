@@ -182,9 +182,9 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
       
-            // int fdpic = open(abspath, O_WRONLY|O_CREAT, 0777);
-            // write(fdpic,(void*) magicNum, header->bfSize);
-            // close(fdpic);
+            int fdpic = open(abspath, O_WRONLY|O_CREAT, 0777);
+            write(fdpic,(void*) magicNum, header->bfSize);
+            close(fdpic);
             // char buf[41] = {};
             // buf[40] = 0;
             // char cmd[100] = {};
