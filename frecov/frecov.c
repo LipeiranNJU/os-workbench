@@ -181,9 +181,9 @@ int main(int argc, char *argv[]) {
             strcat(strcat(abspath, prefix), picName);
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
-            assert(0);
+            // assert(0);
             FILE* pfdpic = fopen(abspath, "w+");
-            assert(0);
+            // assert(0);
             // write(fileno(pfdpic),(void*) magicNum, header->bfSize);
             fclose(pfdpic);
             // char buf[41] = {};
