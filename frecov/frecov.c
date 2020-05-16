@@ -174,7 +174,7 @@ int main(int argc, char *argv[]) {
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/home/lpr/Pictures/";
+            char* prefix = "/home/lpr/Document/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             abspath[size] = 0;
@@ -207,7 +207,7 @@ int main(int argc, char *argv[]) {
             // } else {
             //     close(pipefds[1]);
             //     read(pipefds[0], buf, 40);
-            //     printf("%s    %s\n", buf, picName);
+            //     printf("%s    %s@\n", buf, picName);
             // }
             // strcat(strcat(cmd, "sha1sum "), abspath);
             // FILE* tmpSha1sumfp = popen(cmd, "r");
