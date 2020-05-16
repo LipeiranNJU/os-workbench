@@ -182,32 +182,32 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
       
-            int fdpic = open(abspath, O_WRONLY|O_CREAT, 0777);
-            write(fdpic,(void*) magicNum, header->bfSize);
-            close(fdpic);
-            char buf[41] = {};
-            buf[40] = 0;
-            char cmd[100] = {};
-            int pipefds[2];
-            if(pipe(pipefds) < 0){
-		        perror("pipe");
-                assert(0);
-	        }
-            int pid = fork();
-            char* argv[3];
-            argv[0] = "sha1sum",
-            argv[1] = abspath;
-            argv[2] = NULL;
-            if (pid == 0) {
-                close(pipefds[0]);
-                dup2(pipefds[1], fileno(stderr));
-                dup2(pipefds[1], fileno(stdout));
-                execvp("sha1sum", argv);
-            } else {
-                close(pipefds[1]);
-                read(pipefds[0], buf, 40);
-                printf("%s    %s\n", buf, picName);
-            }
+            // int fdpic = open(abspath, O_WRONLY|O_CREAT, 0777);
+            // write(fdpic,(void*) magicNum, header->bfSize);
+            // close(fdpic);
+            // char buf[41] = {};
+            // buf[40] = 0;
+            // char cmd[100] = {};
+            // int pipefds[2];
+            // if(pipe(pipefds) < 0){
+		    //     perror("pipe");
+            //     assert(0);
+	        // }
+            // int pid = fork();
+            // char* argv[3];
+            // argv[0] = "sha1sum",
+            // argv[1] = abspath;
+            // argv[2] = NULL;
+            // if (pid == 0) {
+            //     close(pipefds[0]);
+            //     dup2(pipefds[1], fileno(stderr));
+            //     dup2(pipefds[1], fileno(stdout));
+            //     execvp("sha1sum", argv);
+            // } else {
+            //     close(pipefds[1]);
+            //     read(pipefds[0], buf, 40);
+            //     printf("%s    %s\n", buf, picName);
+            // }
 
         }
 
