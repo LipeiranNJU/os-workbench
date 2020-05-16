@@ -233,11 +233,15 @@ int main(int argc, char *argv[]) {
             bool tempflag = true;
             int i = 0;
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
-                break;
+                if (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0) {
+                    sleep(3);
+                    printk("Bingo!\n");
+                }
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
                 if (preLine[3] != preLine[7]) {
+
                     break;
                     // printk("filename:%s\tThis is wrong!\n", abspath);
                     // assert(preLine[3] == preLine[7]);
