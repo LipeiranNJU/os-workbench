@@ -26,7 +26,7 @@
 #define beNotUsed 2
 #define beBMPContent 3
 
-inline getClusterIndex(void* addr, void* start, int clusterSize) {
+inline int getClusterIndex(void* addr, void* start, int clusterSize) {
     return ((intptr_t)addr - (intptr_t) start) / clusterSize;
 }
 
