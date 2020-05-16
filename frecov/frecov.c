@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
             // assert(0);
             FILE* pfdpic = fopen(abspath, "w+");
             // assert(0);
-            write(fileno(pfdpic),(void*) magicNum, header->bfSize);
+            fwrite((void*) magicNum, 1, header->bfSize, pfdpic);
             fclose(pfdpic);
             // char buf[41] = {};
             // buf[40] = 0;
