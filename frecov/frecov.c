@@ -190,6 +190,10 @@ int main(int argc, char *argv[]) {
             buf[40] = 0;
             char cmd[100] = {};
             int pipefds[2];
+            if(pipe(pipefds) < 0){
+		        perror("pipe");
+                assert(0);
+	        }
             int pid = fork();
             char* argv[3];
             argv[0] = "sha1sum",
