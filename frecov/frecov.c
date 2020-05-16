@@ -209,18 +209,18 @@ int main(int argc, char *argv[]) {
             int picDataSize = header->bfSize - header->bfOffBits;
             void* picData = malloc(picDataSize);
             void* preLine = malloc(picDataSize);
-            void* laterLine = malloc(picDataSize);
+            void* nowLine = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
-                memcpy(preLine,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
-                // memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
             free(picData);
             free(preLine);
-            free(laterLine);
+            free(nowLine);
             if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
                 
             }
