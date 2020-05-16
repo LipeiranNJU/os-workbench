@@ -181,7 +181,8 @@ int main(int argc, char *argv[]) {
             strcat(strcat(abspath, prefix), picName);
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
-            int fdpic = open(abspath, O_WRONLY|O_CREAT, 0x0080);
+            close(creat(abspath, 777));
+            int fdpic = open(abspath, O_WRONLY);
             write(fdpic,(void*) magicNum, header->bfSize);
             close(fdpic);
             // sleep(1);
