@@ -111,7 +111,7 @@ struct FATLongDirectory {
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
-void readInfoFromFATLongDirectory(struct FATLongDirectory* );
+char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -251,7 +251,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     
 }
 
-void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
+char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     char c[140];
     int i = 0;
     memset(c, '\0', 140);
@@ -273,7 +273,7 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
         char * t = malloc(sizeof(char)*(size + 1));
         t[size] = 0;
         memcpy(t, c, size);
-        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",t);
+        return t;
     }
     else {
         pFATld = pFATld - 1;
@@ -296,8 +296,8 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
                 char * t = malloc(sizeof(char)*(size + 1));
                 t[size] = 0;
                 memcpy(t, c, size);
-                printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",t);
+                return t;
             }
     }
-    
+    return NULL;
 }
