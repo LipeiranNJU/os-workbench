@@ -163,7 +163,11 @@ int main(int argc, char *argv[]) {
             print("Offbits:%d\n", header->bfOffBits);
             struct BMPInfoHeader* pBMInfoHeader = (struct BMPInfoHeader*) (header + 1);
             assert(pBMInfoHeader->biSize == 40);
-
+            if (pBMInfoHeader->biCompression == 0) {
+                print("will not be compressed.\n");
+            } else {
+                print("will be compressed\n");
+            }
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
