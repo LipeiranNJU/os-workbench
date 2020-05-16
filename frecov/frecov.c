@@ -200,11 +200,11 @@ int main(int argc, char *argv[]) {
             fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
             fclose(pfdpic);
             pfdpic = fopen(abspath, "a");
-            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
+            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize-14, pfdpic);
             fclose(pfdpic);
-            pfdpic = fopen(abspath, "a");
-            fwrite((void*) pBMInfoHeader, 1, header->bfSize - header->bfOffBits, pfdpic);
-            fclose(pfdpic);
+            // pfdpic = fopen(abspath, "a");
+            // fwrite((void*) pBMInfoHeader, 1, header->bfSize - header->bfOffBits, pfdpic);
+            // fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
