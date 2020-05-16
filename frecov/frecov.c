@@ -141,7 +141,6 @@ int main(int argc, char *argv[]) {
             assert(pFATdir->DIR_FstClusHI == 0);
             char* magicNum =(char *) (offset+(uintptr_t)(pfatheader)+(pFATdir->DIR_FstClusLO)*BPB_SecPerClus*BPB_BytsPerSec);
             print("%c%c\n",magicNum[0],magicNum[1]);
-            assert(0);
             assert(magicNum[0] == 'B');
             assert(magicNum[1] == 'M');
             canBeUsed += 1;
