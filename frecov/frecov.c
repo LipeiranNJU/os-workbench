@@ -124,7 +124,7 @@ struct FATLongDirectory {
     uint16_t LDIR_Name3[2];
 }__attribute__((packed));
 
-void lineCmp(uint8_t*, uint8_t*, int);
+void lineCmp(uint8_t*, uint8_t*, uint8_t*, int);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
@@ -235,7 +235,7 @@ int main(int argc, char *argv[]) {
             int i = 0;
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
-                if (i != 0 && strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0) {
+                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0) {
                     // printk("Bingo!\n");
                     // sleep(3);
                     ;
@@ -435,7 +435,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     }
     return NULL;
 }
-void lineCmp(uint8_t* preLine, uint8_t* nowLine, int size) {
+void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
     int width = size/4;
     int sum = 0;
     for (int i = 1; i < width-1; i++){
