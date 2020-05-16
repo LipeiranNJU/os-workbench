@@ -13,6 +13,7 @@
 #include <ctype.h>
 #define B 1
 // #define __DEBUG__
+#define __DDEBUG__
 #define KB (1024 * B)
 #define MB (1024 * KB)
 #define GB (1024 * KB)
@@ -20,6 +21,12 @@
 #define print(...) printf(__VA_ARGS__)
 #else
 #define print(...) 
+#endif
+
+#ifdef __DDEBUG__
+#define printk(...) printf(__VA_ARGS__)
+#else
+#define printk(...) 
 #endif
 #define beNotKown 0
 #define beBMPHeader 1
@@ -221,7 +228,7 @@ int main(int argc, char *argv[]) {
             void* picData = malloc(picDataSize);
             void* preLine = malloc(picDataSize);
             void* nowLine = malloc(picDataSize);
-            printf("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
+            printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
