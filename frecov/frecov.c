@@ -190,8 +190,7 @@ int main(int argc, char *argv[]) {
             buf[40] = 0;
             char cmd[100];
             strcat("sha1sum ",abspath);
-            int tmpSha1sumfp = popen(cmd, "r");
-            panic_on(!tmpSha1sumfp, "popen");
+            FILE* tmpSha1sumfp = popen(cmd, "r");
             fscanf(tmpSha1sumfp, "%s", buf); // Get it!   
             pclose(tmpSha1sumfp);
             printf("%s    %s\n", buf, picName);
