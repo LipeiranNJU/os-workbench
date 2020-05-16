@@ -189,6 +189,7 @@ int main(int argc, char *argv[]) {
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
+            assert(0);
             strcat("sha1sum ",abspath);
             assert(0);
             FILE* tmpSha1sumfp = popen(cmd, "r");
