@@ -192,7 +192,6 @@ int main(int argc, char *argv[]) {
             }
 
             canBeUsed += 1;
-            break;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
@@ -219,6 +218,7 @@ int main(int argc, char *argv[]) {
             // assert(0);
             fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
             fclose(pfdpic);
+            break;
             pfdpic = fopen(abspath, "a");
             fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
             fclose(pfdpic);
