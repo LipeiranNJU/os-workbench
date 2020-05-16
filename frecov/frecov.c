@@ -228,13 +228,18 @@ int main(int argc, char *argv[]) {
             void* picData = malloc(picDataSize);
             uint8_t* preLine = malloc(picDataSize);
             uint8_t* nowLine = malloc(picDataSize);
-            printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
+            // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
-                assert(preLine[3] == preLine[7]);
+                if (preLine[3] != preLine[7]) {
+                    printk("filename:%s\tThis is wrong!\n", abspath);
+                    // assert(preLine[3] == preLine[7]);
+                } else {
+                    printk("filename:%s\tThis may be true!\n", abspath);
+                }
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
