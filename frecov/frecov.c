@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
             strcat(strcat(abspath, prefix), picName);
             free(picName);
             print("PicStoredPath:%s\n", abspath);
-            FILE* fpic = fopen("/home/lpr/Pictures/a.bmp", "w+");
+            FILE* fpic = fopen(abspath, "w+");
             fclose(fpic);
         }
 
