@@ -169,14 +169,13 @@ int main(int argc, char *argv[]) {
                 print("will be compressed\n");
                 assert(0);
             }
-            char* prefix = "/home/lpr/Pictures/";
-            fopen("/home/lpr/Pictures/", "w+");
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
             char* prefix = "/home/lpr/Pictures/";
-            fopen("/home/lpr/Pictures/", "w+");
+            FILE* fpic = fopen("/home/lpr/Pictures/", "w+");
+            fclose(fpic);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
