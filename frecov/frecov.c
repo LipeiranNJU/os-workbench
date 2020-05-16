@@ -11,6 +11,7 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <math.h>
 #define B 1
 // #define __DEBUG__
 #define __DDEBUG__
@@ -439,9 +440,19 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
 }
 void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
     int width = size/4;
-    int sum = 0;
+    int sum[3];
+    memset(sum, '0', 3);
+    int Gx_B = 0;
+    int Gy_B = 0;
+    int G_B = 0;
     for (int i = 1; i < width-1; i++){
-        ;
+        Gx_B = 2*nowLine[(i+1)*4+0] - 2*nowLine[(i-1)*4+0] + preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] - latterLine[(i-1)*4+0];
+        Gy_B = 2*latterLine[(i)*4+0] - 2*preLine[(i)*4+0] - preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] + latterLine[(i-1)*4+0];
+        G_B = sqrt(1.0*Gx_B*Gx_B+1.0*Gy_B*Gy_B);
+        sum[0]+=G_B;
+        sum[1]+=0;
+        sum[2]+=0;
     }
-
+    double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
+    printf("%lf ",length);
 }
