@@ -190,10 +190,10 @@ int main(int argc, char *argv[]) {
             buf[40] = 0;
             char cmd[100];
             strcat("sha1sum ",abspath);
-            FILE* tmpSha1sumfp = popen(cmd, "r");
-            fscanf(tmpSha1sumfp, "%s", buf); // Get it!   
-            pclose(tmpSha1sumfp);
-            printf("%s    %s\n", buf, picName);
+            // FILE* tmpSha1sumfp = popen(cmd, "r");
+            // fscanf(tmpSha1sumfp, "%s", buf); // Get it!   
+            // pclose(tmpSha1sumfp);
+            // printf("%s    %s\n", buf, picName);
             free(abspath);
             free(picName);
         }
