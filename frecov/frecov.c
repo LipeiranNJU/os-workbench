@@ -184,7 +184,7 @@ int main(int argc, char *argv[]) {
             int fdpic = open(abspath, O_WRONLY);
             write(fdpic,(void*) magicNum, header->bfSize);
             close(fdpic);
-            sleep(1);
+            // sleep(1);
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
@@ -206,7 +206,7 @@ int main(int argc, char *argv[]) {
             } else {
                 close(pipefds[1]);
                 read(pipefds[0], buf, 40);
-                printf("%s    %s@\n", buf, picName);
+                printf("%s    %s\n", buf, picName);
             }
             // strcat(strcat(cmd, "sha1sum "), abspath);
             // FILE* tmpSha1sumfp = popen(cmd, "r");
