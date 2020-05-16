@@ -177,7 +177,7 @@ int main(int argc, char *argv[]) {
             char* prefix = "/home/lpr/Documents/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
-            abspath[size] = 0;
+            memset(abspath, '\0', size + 1);
             strcat(strcat(abspath, prefix), picName);
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
