@@ -182,10 +182,10 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
             // assert(0);
-            FILE* pfdpic = fopen(abspath, "w+");
-            // assert(0);
-            // write(fileno(pfdpic),(void*) magicNum, header->bfSize);
-            fclose(pfdpic);
+            // FILE* pfdpic = fopen(abspath, "w+");
+            // // assert(0);
+            // // write(fileno(pfdpic),(void*) magicNum, header->bfSize);
+            // fclose(pfdpic);
             // char buf[41] = {};
             // buf[40] = 0;
             // char cmd[100] = {};
