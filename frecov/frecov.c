@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/home/lpr/Document/";
+            char* prefix = "/home/lpr/Documents/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             memset(abspath, '\0', size + 1);
