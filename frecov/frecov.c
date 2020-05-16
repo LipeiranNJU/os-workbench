@@ -466,5 +466,5 @@ void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
         double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
         linesum += length;
     }
-    printf("lf\n", linesum/(width-2));
+    printf("%lf\n", linesum/(width-2));
 }
