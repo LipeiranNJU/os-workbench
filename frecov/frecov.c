@@ -26,6 +26,10 @@
 #define beNotUsed 2
 #define beBMPContent 3
 
+inline getClusterIndex(void* addr, void* start, int clusterSize) {
+    return ((intptr_t)addr - (intptr_t) start) / clusterSize;
+}
+
 struct fat_header {
     uint8_t  BS_jmpBoot[3];
     uint8_t  BS_OEMName[8];
@@ -148,9 +152,11 @@ int main(int argc, char *argv[]) {
     int BPB_HiddSec =pfatheader->BPB_HiddSec;
     int BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     int BPB_NumFATs = pfatheader->BPB_NumFATs;
+    
     int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     print("Offset of initial clus is %d\n", offset);
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
+    void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
@@ -215,6 +221,7 @@ int main(int argc, char *argv[]) {
             void* picData = malloc(picDataSize);
             void* preLine = malloc(picDataSize);
             void* nowLine = malloc(picDataSize);
+            printf("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
