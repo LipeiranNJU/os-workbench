@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
             print("name:%s\n",pFATdir->DIR_Name);
             assert(pFATdir->DIR_FstClusHI == 0);
             char* magicNum =(char *) (offset+(uintptr_t)(pFATdir->DIR_FstClusLO)*BPB_SecPerClus*BPB_BytsPerSec);
-            prinf("%c%c\n",magicNum[0],magicNum[1]);
+            print("%c%c\n",magicNum[0],magicNum[1]);
             assert(magicNum[0] == 'B');
             assert(magicNum[1] == 'M');
             canBeUsed += 1;
