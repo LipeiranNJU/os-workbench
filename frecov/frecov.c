@@ -172,8 +172,15 @@ int main(int argc, char *argv[]) {
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
-            readInfoFromFATLongDirectory(pFATld);
+            char * picName = readInfoFromFATLongDirectory(pFATld);
+            assert(picName != NULL);
             char* prefix = "/home/lpr/Pictures/";
+            int size = strlen(prefix) + strlen(picName);
+            char* abspath = malloc(sizeof(char) * (size + 1));
+            abspath[size] = 0;
+            strcat(strcat(abspath, prefix), picName);
+            free(picName);
+            print("PicStoredPath:%s\n", abspath);
             FILE* fpic = fopen("/home/lpr/Pictures/a.bmp", "w+");
             fclose(fpic);
         }
