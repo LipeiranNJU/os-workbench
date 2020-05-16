@@ -194,8 +194,8 @@ int main(int argc, char *argv[]) {
             // fread(buf,1, 40, tmpSha1sumfp); // Get it!   
             // pclose(tmpSha1sumfp);
             // printf("%s    %s\n", buf, picName);
-            // free(abspath);
-            // free(picName);
+            free(abspath);
+            free(picName);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
