@@ -60,6 +60,14 @@ struct fat_header {
     uint16_t Signature_word;
 }__attribute__((packed));
 
+struct BMPHeader {
+    uint16_t bfType;
+    uint32_t bfSize;
+    uint16_t bfReserved1;
+    uint16_t bfReserved2;
+    uint32_t bfOffBits;
+}__attribute__((packed));
+
 struct FATShortDirectory {
     uint8_t DIR_Name[11];
     uint8_t DIR_Attr;
@@ -131,6 +139,10 @@ int main(int argc, char *argv[]) {
         if (isFATShortDirectory(pFATdir) == true) {
             print("name:%s\n",pFATdir->DIR_Name);
             assert(pFATdir->DIR_FstClusHI == 0);
+            uint8_t* magicNum=offset+(uintptr_t)(pFATdir->DIR_FstClusLO)*BPB_SecPerClus*BPB_BytsPerSec;
+            prinf("%c%c\n",magicNum[0],magicNum[1]);
+            assert(magicNum[0] == 'B');
+            assert(magicNum[1] == 'M');
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
