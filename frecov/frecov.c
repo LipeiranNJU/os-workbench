@@ -245,7 +245,6 @@ int main(int argc, char *argv[]) {
                     // printk("filename:%s\tThis is wrong!\n", abspath);
                     // assert(preLine[3] == preLine[7]);
                     tempflag = false;
-                    break;
                 } 
             }
             if (tempflag == false) {
