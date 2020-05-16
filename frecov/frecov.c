@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
             // assert(0);
             skip = false;
             for (int i = 0; i < strlen(abspath); i++) {
-                if (isalnum(abspath[i]) && abspath[i] != '.') {
+                if (isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
                     skip = true;
                     printf("invalid name:%s\n",abspath);
                     break;
