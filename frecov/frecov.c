@@ -204,8 +204,11 @@ int main(int argc, char *argv[]) {
             fclose(pfdpic);
             pfdpic = fopen(abspath, "a");
             // 位图数据区写入
-            fwrite((void*) ((uintptr_t)(header) + header->bfOffBits), 1, header->bfSize-header->bfOffBits, pfdpic);
+            int picDataSize = header->bfSize - header->bfOffBits;
+            void* picData = malloc(picDataSize);
+            fwrite((void*) ((uintptr_t)(header) + header->bfOffBits), 1, picDataSize, pfdpic);
             fclose(pfdpic);
+            free(picData);
             char buf[41] = {};
             buf[40] = 0;
             char cmd[100] = {};
