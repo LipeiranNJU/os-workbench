@@ -179,13 +179,24 @@ int main(int argc, char *argv[]) {
             char* abspath = malloc(sizeof(char) * (size + 1));
             abspath[size] = 0;
             strcat(strcat(abspath, prefix), picName);
-            free(picName);
+            // free(picName);
             char* content;
             print("PicStoredPath:%s\n", abspath);
             int fdpic = open(abspath, O_WRONLY);
             write(fdpic,(void*) magicNum, header->bfSize);
             close(fdpic);
+  
+            char* buf[41];
+            buf[40] = 0;
+            char* cmd[100];
+            strcat("sha1sum ",abspath);
+            int tmpSha1sumfp = popen(cmd, "r");
+            panic_on(!tmpSha1sumfp, "popen");
+            fscanf(tmpSha1sumfp, "%s", buf); // Get it!   
+            pclose(tmpSha1sumfp);
+            printf("%s    %s\n", buf, picName);
             free(abspath);
+            free(picName);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
