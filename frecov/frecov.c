@@ -238,7 +238,7 @@ int main(int argc, char *argv[]) {
             for (; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
-                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/aUqJhfhLguLzI56.bmp") == 0)) {
+                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
                     // printk("Bingo!\n");
                     // sleep(3);
                     ;
