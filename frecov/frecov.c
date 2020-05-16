@@ -236,10 +236,8 @@ int main(int argc, char *argv[]) {
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
                 if (preLine[3] != preLine[7]) {
                     printk("filename:%s\tThis is wrong!\n", abspath);
-                    // assert(preLine[3] == preLine[7]);
-                } else {
-                    printk("filename:%s\tThis may be true!\n", abspath);
-                }
+                    assert(preLine[3] == preLine[7]);
+                } 
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
