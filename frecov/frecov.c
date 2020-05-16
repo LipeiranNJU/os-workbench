@@ -445,6 +445,7 @@ void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
     int Gx_R = 0;
     int Gy_R = 0;
     int G_R = 0;
+    double linesum = 0;
     for (int i = 1; i < width-1; i++){
         Gx_B = 2*nowLine[(i+1)*4+0] - 2*nowLine[(i-1)*4+0] + preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] - latterLine[(i-1)*4+0];
         Gy_B = 2*latterLine[(i)*4+0] - 2*preLine[(i)*4+0] - preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] + latterLine[(i-1)*4+0];
@@ -463,7 +464,7 @@ void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
         G_R = sqrt(1.0*Gx_R*Gx_R+1.0*Gy_R*Gy_R);
         sum[2]+=G_R;
         double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
-        printf("%lf ",length);
+        linesum += length;
     }
-    printf("\n");
+    printf("lf\n", linesum/(width-2));
 }
