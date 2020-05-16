@@ -163,6 +163,7 @@ int main(int argc, char *argv[]) {
             print("Size:%d\n",header->bfSize);
             print("Offbits:%d\n", header->bfOffBits);
             struct BMPInfoHeader* pBMInfoHeader = (struct BMPInfoHeader*) (header + 1);
+            assert(pBMInfoHeader->biHeight>0);
             assert(pBMInfoHeader->biSize == 40);
             if (pBMInfoHeader->biCompression == 0) {
                 print("will not be compressed.\n");
