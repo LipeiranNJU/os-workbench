@@ -190,6 +190,7 @@ int main(int argc, char *argv[]) {
             buf[40] = 0;
             char cmd[100] = {};
             strcat("sha1sum ",abspath);
+            assert(0);
             FILE* tmpSha1sumfp = popen(cmd, "r");
             assert(0);
             fread(buf,1, 40, tmpSha1sumfp); // Get it!   
