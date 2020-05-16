@@ -12,7 +12,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #define B 1
-// #define __DEBUG__
+#define __DEBUG__
 #define KB (1024 * B)
 #define MB (1024 * KB)
 #define GB (1024 * KB)
