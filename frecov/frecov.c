@@ -130,6 +130,7 @@ int main(int argc, char *argv[]) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
             print("name:%s\n",pFATdir->DIR_Name);
+            assert(pFATdir->DIR_FstClusHI == 0);
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
