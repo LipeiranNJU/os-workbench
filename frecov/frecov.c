@@ -473,8 +473,9 @@ void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
         linesum += length;
     }
     qsort(list, width-1,sizeof(double),cmpfunc);
+    printf("\n");
     for (int i = 0; i < width-1;i++)
-        printf("\n%lf\n",list[i]);
-        
-    printf("%lf\n", linesum/(width-2));
+        printf("%lf ",list[i]);
+
+    printf("\n%lf\n", linesum/(width-2));
 }
