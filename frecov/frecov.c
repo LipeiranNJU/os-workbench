@@ -210,7 +210,7 @@ int main(int argc, char *argv[]) {
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
                 memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, pBMInfoHeader->biWidth);
             }
-            fwrite(picData, 1, picDataSize, pfdpic);
+            fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
             free(picData);
             char buf[41] = {};
