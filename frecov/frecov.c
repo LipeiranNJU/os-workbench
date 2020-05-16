@@ -175,7 +175,7 @@ int main(int argc, char *argv[]) {
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/tmp/";
+            char* prefix = "/home/lpr/Videos/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             memset(abspath, '\0', size + 1);
@@ -364,6 +364,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
                     t[size] = 0;
                     memcpy(t, c, size);
                     return t;
+                }
             }
     }
     return NULL;
