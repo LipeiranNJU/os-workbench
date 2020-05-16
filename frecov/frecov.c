@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir = (struct FATShortDirectory*)((intptr_t)pFATdir+4*KB)) {
+    for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
             print("name:%s\n",pFATdir->DIR_Name);
