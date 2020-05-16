@@ -186,10 +186,10 @@ int main(int argc, char *argv[]) {
             write(fdpic,(void*) magicNum, header->bfSize);
             close(fdpic);
   
-            char buf[41] = {};
-            buf[40] = 0;
-            char cmd[100] = {};
-            strcat("sha1sum ",abspath);
+            // char buf[41] = {};
+            // buf[40] = 0;
+            // char cmd[100] = {};
+            // strcat("sha1sum ",abspath);
             // FILE* tmpSha1sumfp = popen(cmd, "r");
             // fscanf(tmpSha1sumfp, "%s", buf); // Get it!   
             // pclose(tmpSha1sumfp);
