@@ -182,6 +182,10 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
             // assert(0);
+            for (int i = 0; i < strlen(abspath); i++) {
+                if (isalnum(abspath[i]) && abspath[i] != '.')
+                    assert(0);
+            }
             FILE* pfdpic = fopen(abspath, "w+");
             // assert(0);
             fwrite((void*) magicNum, 1, header->bfSize, pfdpic);
