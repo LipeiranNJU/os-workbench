@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
         if (isFATShortDirectory(pFATdir) == true) {
             print("name:%s\n",pFATdir->DIR_Name);
             assert(pFATdir->DIR_FstClusHI == 0);
-            char* magicNum =(char *) (offset+(uintptr_t)(pfatheader)+(pFATdir->DIR_FstClusLO - 2)*BPB_SecPerClus*BPB_BytsPerSec);
+            char* magicNum = (char *) (offset + (uintptr_t)(pfatheader) + (pFATdir->DIR_FstClusLO - BPB_RootClus) * BPB_SecPerClus * BPB_BytsPerSec);
             assert(magicNum[0] == 'B');
             assert(magicNum[1] == 'M');
             struct BMPHeader* header = (struct BMPHeader*) magicNum;
