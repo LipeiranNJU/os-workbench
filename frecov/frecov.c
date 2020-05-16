@@ -203,6 +203,7 @@ int main(int argc, char *argv[]) {
             fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
             fclose(pfdpic);
             pfdpic = fopen(abspath, "a");
+            // 位图数据区写入
             fwrite((void*) ((uintptr_t)(header) + header->bfOffBits), 1, header->bfSize-header->bfOffBits, pfdpic);
             fclose(pfdpic);
             char buf[41] = {};
