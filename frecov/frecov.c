@@ -208,7 +208,7 @@ int main(int argc, char *argv[]) {
             void* picData = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
-                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, pBMInfoHeader->biWidth);
+                memcpy(picData+i*pBMInfoHeader->biWidth,picDataStart+i*pBMInfoHeader->biWidth, pBMInfoHeader->biWidth*4);
             }
             fwrite(picDataStart, 1, picDataSize, pfdpic);
             fclose(pfdpic);
