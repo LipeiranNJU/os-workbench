@@ -169,10 +169,14 @@ int main(int argc, char *argv[]) {
                 print("will be compressed\n");
                 assert(0);
             }
+            char* prefix = "/home/lpr/Pictures/";
+            fopen("/home/lpr/Pictures/", "w+");
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
+            char* prefix = "/home/lpr/Pictures/";
+            fopen("/home/lpr/Pictures/", "w+");
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
@@ -265,8 +269,13 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
     c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
     c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
-    if (pFATld->LDIR_Ord > 0x40)
-        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",c);
+    if (pFATld->LDIR_Ord > 0x40){
+        int size = strlen(c);
+        char * t = malloc(sizeof(char)*(size + 1));
+        t[size] = 0;
+        memcpy(t, c, size);
+        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",t);
+    }
     else {
         pFATld = pFATld - 1;
         int i = 1;
@@ -283,8 +292,13 @@ void readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
         c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
         c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
         c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
-            if (pFATld->LDIR_Ord > 0x40)
-        printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",c);
+            if (pFATld->LDIR_Ord > 0x40) {
+                int size = strlen(c);
+                char * t = malloc(sizeof(char)*(size + 1));
+                t[size] = 0;
+                memcpy(t, c, size);
+                printf("d60e7d3d2b47d19418af5b0ba52406b86ec6ef83  %s\n",t);
+            }
     }
     
 }
