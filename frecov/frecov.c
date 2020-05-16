@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
             // assert(0);
-            FILE* pfdpic = fopen("/home/lpr/Documents/a.txt", "w+");
+            FILE* pfdpic = fopen(abspath, "w+");
             // assert(0);
             fwrite((void*) magicNum, 1, header->bfSize, pfdpic);
             fclose(pfdpic);
