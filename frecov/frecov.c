@@ -180,9 +180,12 @@ int main(int argc, char *argv[]) {
             abspath[size] = 0;
             strcat(strcat(abspath, prefix), picName);
             free(picName);
+            char* content;
             print("PicStoredPath:%s\n", abspath);
-            FILE* fpic = fopen(abspath, "w+");
-            fclose(fpic);
+            int fdpic = open(abspath, O_WRONLY);
+            write(fdpic,(void*) magicNum, header->bfSize);
+            close(fdpic);
+            free(abspath);
         }
 
         assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
