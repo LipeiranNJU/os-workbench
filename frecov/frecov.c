@@ -68,6 +68,20 @@ struct BMPHeader {
     uint32_t bfOffBits;
 }__attribute__((packed));
 
+struct BMPInfoHeader {
+    uint32_t biSize;
+    int32_t biWidth;
+    uint32_t biHeight;
+    uint16_t biPlanes;
+    uint16_t biBitCount;
+    uint32_t biCompression;
+    uint32_t biSizeImage;
+    int32_t biXPelsPerMeter;
+    int32_t biYPelsPerMeter;
+    uint32_t biClrUsed;
+    uint32_t biClrImportant;
+}__attribute__((packed));
+
 struct FATShortDirectory {
     uint8_t DIR_Name[11];
     uint8_t DIR_Attr;
@@ -147,6 +161,10 @@ int main(int argc, char *argv[]) {
             assert(header->bfReserved2 == 0);
             print("Size:%d\n",header->bfSize);
             print("Offbits:%d\n", header->bfOffBits);
+            struct BMPInfoHeader* pBMInfoHeader = (struct BMPInfoHeader*) (header + 1);
+            assert(pBMInfoHeader->biSize == 40);
+
+
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             readInfoFromFATLongDirectory(pFATld);
