@@ -232,6 +232,7 @@ int main(int argc, char *argv[]) {
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             bool tempflag = true;
             for (int i = 0; i < abs(pBMInfoHeader->biHeight); i++) {
+                break;
                 memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                 memcpy(preLine, nowLine, lineWidthSize);
                 memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
