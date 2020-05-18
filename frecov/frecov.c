@@ -13,8 +13,8 @@
 #include <ctype.h>
 #include <math.h>
 #define B 1
-// #define __DEBUG__
-#define __DDEBUG__
+//#define __DEBUG__
+//#define __DDEBUG__
 #define KB (1024 * B)
 #define MB (1024 * KB)
 #define GB (1024 * KB)
@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
-            char * picName = readInfoFromFATLongDirectory(pFATld);
+            char* picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
             char* prefix = "/home/lpr/Downloads/lprlpr/";
             int size = strlen(prefix) + strlen(picName);
@@ -204,87 +204,89 @@ int main(int argc, char *argv[]) {
             strcat(strcat(abspath, prefix), picName);
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
-            // assert(0);
-            skip = false;
-            for (int i = 0; i < strlen(abspath); i++) {
-                if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
-                    skip = true;
-                    // printf("invalid name:%s\n",abspath);
-                    break;
-                }
-            }
-            if (skip) {
-                continue;
-            }
-            FILE* pfdpic = fopen(abspath, "w+");
-            // assert(0);
-            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
-            fclose(pfdpic);
-            pfdpic = fopen(abspath, "a");
-            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
-            fclose(pfdpic);
-            int lineWidthSize = pBMInfoHeader->biWidth*4;
-            pfdpic = fopen(abspath, "a");
-            // 位图数据区写入
-            int picDataSize = header->bfSize - header->bfOffBits;
-            void* picData = malloc(picDataSize);
-            uint8_t* preLine = malloc(picDataSize);
-            uint8_t* nowLine = malloc(picDataSize);
-            uint8_t* laterLine = malloc(picDataSize);
-            // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
-            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-            // bool tempflag = true;
-            int i = 0;
-            for (; i < abs(pBMInfoHeader->biHeight); i++) {
-                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
-                memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
-                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
-                    // printk("Bingo!\n");
-                    // sleep(3);
-                    ;
-                    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
-                }
-                memcpy(preLine, nowLine, lineWidthSize);
-                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
-                if (preLine[3] != preLine[7]) {
-
-                    // printk("filename:%s\tThis is wrong!\n", abspath);
-                    // assert(preLine[3] == preLine[7]);
-                    // tempflag = false;
-                    // break;
-                } 
-            }
-            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-            fclose(pfdpic);
-            free(picData);
-            free(preLine);
-            free(nowLine);
-            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
-                
-            }
-            char buf[41] = {};
-            buf[40] = 0;
-            char cmd[100] = {};
-            int pipefds[2];
-            if(pipe(pipefds) < 0){
-		        perror("pipe");
-                assert(0);
-	        }
-            int pid = fork();
-            char* argv[3];
-            argv[0] = "sha1sum",
-            argv[1] = abspath;
-            argv[2] = NULL;
-            if (pid == 0) {
-                close(pipefds[0]);
-                dup2(pipefds[1], fileno(stderr));
-                dup2(pipefds[1], fileno(stdout));
-                execvp("sha1sum", argv);
-            } else {
-                close(pipefds[1]);
-                read(pipefds[0], buf, 40);
-                printf("%s    %s\n", buf, picName);
-            }
+            char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            printf("%s  %s\n", sha1sum, picName);
+//            // assert(0);
+//            skip = false;
+//            for (int i = 0; i < strlen(abspath); i++) {
+//                if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
+//                    skip = true;
+//                    // printf("invalid name:%s\n",abspath);
+//                    break;
+//                }
+//            }
+//            if (skip) {
+//                continue;
+//            }
+//            FILE* pfdpic = fopen(abspath, "w+");
+//            // assert(0);
+//            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
+//            fclose(pfdpic);
+//            pfdpic = fopen(abspath, "a");
+//            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
+//            fclose(pfdpic);
+//            int lineWidthSize = pBMInfoHeader->biWidth*4;
+//            pfdpic = fopen(abspath, "a");
+//            // 位图数据区写入
+//            int picDataSize = header->bfSize - header->bfOffBits;
+//            void* picData = malloc(picDataSize);
+//            uint8_t* preLine = malloc(picDataSize);
+//            uint8_t* nowLine = malloc(picDataSize);
+//            uint8_t* laterLine = malloc(picDataSize);
+//            // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
+//            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
+//            // bool tempflag = true;
+//            int i = 0;
+//            for (; i < abs(pBMInfoHeader->biHeight); i++) {
+//                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+//                memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
+//                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
+//                    // printk("Bingo!\n");
+//                    // sleep(3);
+//                    ;
+//                    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
+//                }
+//                memcpy(preLine, nowLine, lineWidthSize);
+//                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
+//                if (preLine[3] != preLine[7]) {
+//
+//                    // printk("filename:%s\tThis is wrong!\n", abspath);
+//                    // assert(preLine[3] == preLine[7]);
+//                    // tempflag = false;
+//                    // break;
+//                }
+//            }
+//            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+//            fclose(pfdpic);
+//            free(picData);
+//            free(preLine);
+//            free(nowLine);
+//            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
+//
+//            }
+//            char buf[41] = {};
+//            buf[40] = 0;
+//            char cmd[100] = {};
+//            int pipefds[2];
+//            if(pipe(pipefds) < 0){
+//		        perror("pipe");
+//                assert(0);
+//	        }
+//            int pid = fork();
+//            char* argv[3];
+//            argv[0] = "sha1sum",
+//            argv[1] = abspath;
+//            argv[2] = NULL;
+//            if (pid == 0) {
+//                close(pipefds[0]);
+//                dup2(pipefds[1], fileno(stderr));
+//                dup2(pipefds[1], fileno(stdout));
+//                execvp("sha1sum", argv);
+//            } else {
+//                close(pipefds[1]);
+//                read(pipefds[0], buf, 40);
+//                printf("%s    %s\n", buf, picName);
+//            }
 
         }
 
@@ -379,8 +381,8 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
     if (pFATld->LDIR_Ord > 0x40){
         int size = strlen(c);
-        char * t = malloc(sizeof(char)*(size + 1));
-        t[size] = 0;
+        char * t = malloc(sizeof(char)*140);
+        memset(t, '\0', 140);
         memcpy(t, c, size);
         return t;
     }
@@ -402,7 +404,8 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
         c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
             if (pFATld->LDIR_Ord > 0x40) {
                 int size = strlen(c);
-                char * t = malloc(sizeof(char)*(size + 1));
+                char * t = malloc(sizeof(char)*140);
+                memset(t, '\0', 140);
                 t[size] = 0;
                 memcpy(t, c, size);
                 return t;
@@ -424,8 +427,8 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
                 c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
                 if (pFATld->LDIR_Ord > 0x40) {
                     int size = strlen(c);
-                    char * t = malloc(sizeof(char)*(size + 1));
-                    t[size] = 0;
+                    char * t = malloc(sizeof(char)*140);
+                    memset(t, '\0', 140);
                     memcpy(t, c, size);
                     return t;
                 }
@@ -433,8 +436,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     }
     return NULL;
 }
-int cmpfunc (const void * a, const void * b)
-{
+int cmpfunc (const void * a, const void * b) {
    return ( *(double*)a - *(double*)b );
 }
 void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
