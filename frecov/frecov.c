@@ -360,7 +360,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
                     if (pFATdir->DIR_FstClusHI == 0)
                         if (pFATdir->DIR_Attr != 0) {
                             for (int i = 1; i < 11; i++) {
-                                if (pFATdir->DIR_Name[i] < 0x20)
+                                if (pFATdir->DIR_Name[i] < 0x20 || pFATdir->DIR_Name[i]==0x22 || pFATdir->DIR_Name[i]==0x2A || pFATdir->DIR_Name[i]==0x2B || pFATdir->DIR_Name[i]==0x2C || pFATdir->DIR_Name[i]==0x2E || pFATdir->DIR_Name[i]==0x2F || pFATdir->DIR_Name[i]==0x3A || pFATdir->DIR_Name[i]==0x3B || pFATdir->DIR_Name[i]==0x3C || pFATdir->DIR_Name[i]==0x3D|| pFATdir->DIR_Name[i]==0x3E|| pFATdir->DIR_Name[i]==0x3F||pFATdir->DIR_Name[i]==0x5B|| pFATdir->DIR_Name[i]== 0x5C || pFATdir->DIR_Name[i]==0x5D || pFATdir->DIR_Name[i]== 0x7C)
                                     return false;
                             }
 
