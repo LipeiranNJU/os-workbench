@@ -357,8 +357,15 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
         if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0 && isalnum(pFATdir->DIR_Name[0]))
             if (pFATdir->DIR_NTRes == 0)
                 if ((pFATdir->DIR_Attr >> 6) == 0)
-                    if (pFATdir->DIR_Attr != 0)
+                    if (pFATdir->DIR_FstClusHI == 0)
+                        if (pFATdir->DIR_Attr != 0) {
+                            for (int i = 1; i < 11; i++) {
+                                if (pFATdir->DIR_Name[i] < 0x20)
+                                    return false;
+                            }
+
                         return true;
+                    }
 
         return false;
     // }
