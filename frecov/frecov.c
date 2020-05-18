@@ -204,20 +204,20 @@ int main(int argc, char *argv[]) {
             strcat(strcat(abspath, prefix), picName);
             // free(picName);
             print("PicStoredPath:%s\n", abspath);
+//            // assert(0);
+            skip = false;
+            for (int i = 0; i < strlen(abspath); i++) {
+                if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
+                    skip = true;
+                    // printf("invalid name:%s\n",abspath);
+                    break;
+                }
+            }
+            if (skip) {
+                continue;
+            }
             char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             printf("%s  %s\n", sha1sum, picName);
-//            // assert(0);
-//            skip = false;
-//            for (int i = 0; i < strlen(abspath); i++) {
-//                if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
-//                    skip = true;
-//                    // printf("invalid name:%s\n",abspath);
-//                    break;
-//                }
-//            }
-//            if (skip) {
-//                continue;
-//            }
 //            FILE* pfdpic = fopen(abspath, "w+");
 //            // assert(0);
 //            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
@@ -439,45 +439,45 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
 int cmpfunc (const void * a, const void * b) {
    return ( *(double*)a - *(double*)b );
 }
-void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
-    int width = size/4;
-    int sum[3] = {0};
-    int Gx_B = 0;
-    int Gy_B = 0;
-    int G_B = 0;
-    int Gx_G = 0;
-    int Gy_G = 0;
-    int G_G = 0;
-    int Gx_R = 0;
-    int Gy_R = 0;
-    int G_R = 0;
-    double* list = malloc(sizeof(double)*(width-1));
-    double linesum = 0;
-    for (int i = 1; i < width-1; i++){
-        Gx_B = 2*nowLine[(i+1)*4+0] - 2*nowLine[(i-1)*4+0] + preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] - latterLine[(i-1)*4+0];
-        Gy_B = 2*latterLine[(i)*4+0] - 2*preLine[(i)*4+0] - preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] + latterLine[(i-1)*4+0];
-        G_B = sqrt(1.0*Gx_B*Gx_B+1.0*Gy_B*Gy_B);
-        sum[0]+=G_B;
-        
-
-        Gx_G = 2*nowLine[(i+1)*4+1] - 2*nowLine[(i-1)*4+1] + preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] - latterLine[(i-1)*4+1];
-        Gy_G = 2*latterLine[(i)*4+1] - 2*preLine[(i)*4+1] - preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] + latterLine[(i-1)*4+1];
-        G_G = sqrt(1.0*Gx_G*Gx_G+1.0*Gy_G*Gy_G);
-        sum[1]+=G_G;
-
-        
-        Gx_R = 2*nowLine[(i+1)*4+2] - 2*nowLine[(i-1)*4+2] + preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] - latterLine[(i-1)*4+2];
-        Gy_R = 2*latterLine[(i)*4+2] - 2*preLine[(i)*4+2] - preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] + latterLine[(i-1)*4+2];
-        G_R = sqrt(1.0*Gx_R*Gx_R+1.0*Gy_R*Gy_R);
-        sum[2]+=G_R;
-        list[i-1] = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
-        double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
-        linesum += length;
-    }
-    qsort(list, width-1,sizeof(double),cmpfunc);
-    printf("\n");
-    for (int i = 0; i < width-1;i++)
-        printf("%lf ",list[i]);
-
-    printf("\n%lf\n", linesum/(width-2));
-}
+//void lineCmp(uint8_t* preLine, uint8_t* nowLine,uint8_t* latterLine, int size) {
+//    int width = size/4;
+//    int sum[3] = {0};
+//    int Gx_B = 0;
+//    int Gy_B = 0;
+//    int G_B = 0;
+//    int Gx_G = 0;
+//    int Gy_G = 0;
+//    int G_G = 0;
+//    int Gx_R = 0;
+//    int Gy_R = 0;
+//    int G_R = 0;
+//    double* list = malloc(sizeof(double)*(width-1));
+//    double linesum = 0;
+//    for (int i = 1; i < width-1; i++){
+//        Gx_B = 2*nowLine[(i+1)*4+0] - 2*nowLine[(i-1)*4+0] + preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] - latterLine[(i-1)*4+0];
+//        Gy_B = 2*latterLine[(i)*4+0] - 2*preLine[(i)*4+0] - preLine[(i+1)*4+0] - preLine[(i-1)*4+0] + latterLine[(i+1)*4+0] + latterLine[(i-1)*4+0];
+//        G_B = sqrt(1.0*Gx_B*Gx_B+1.0*Gy_B*Gy_B);
+//        sum[0]+=G_B;
+//
+//
+//        Gx_G = 2*nowLine[(i+1)*4+1] - 2*nowLine[(i-1)*4+1] + preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] - latterLine[(i-1)*4+1];
+//        Gy_G = 2*latterLine[(i)*4+1] - 2*preLine[(i)*4+1] - preLine[(i+1)*4+1] - preLine[(i-1)*4+1] + latterLine[(i+1)*4+1] + latterLine[(i-1)*4+1];
+//        G_G = sqrt(1.0*Gx_G*Gx_G+1.0*Gy_G*Gy_G);
+//        sum[1]+=G_G;
+//
+//
+//        Gx_R = 2*nowLine[(i+1)*4+2] - 2*nowLine[(i-1)*4+2] + preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] - latterLine[(i-1)*4+2];
+//        Gy_R = 2*latterLine[(i)*4+2] - 2*preLine[(i)*4+2] - preLine[(i+1)*4+2] - preLine[(i-1)*4+2] + latterLine[(i+1)*4+2] + latterLine[(i-1)*4+2];
+//        G_R = sqrt(1.0*Gx_R*Gx_R+1.0*Gy_R*Gy_R);
+//        sum[2]+=G_R;
+//        list[i-1] = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
+//        double length = sqrt(1.0*sum[0]*sum[0]+1.0*sum[1]*sum[1]+1.0*sum[2]*sum[2]);
+//        linesum += length;
+//    }
+//    qsort(list, width-1,sizeof(double),cmpfunc);
+//    printf("\n");
+//    for (int i = 0; i < width-1;i++)
+//        printf("%lf ",list[i]);
+//
+//    printf("\n%lf\n", linesum/(width-2));
+//}
