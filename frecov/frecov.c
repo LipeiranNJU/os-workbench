@@ -364,13 +364,12 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
                                     return false;
                             }
 
-                        return true;
-                    }
+                            return true;
+                        }
 
         return false;
-    // }
-    
 }
+
 
 char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
     char c[140];
