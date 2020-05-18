@@ -8,6 +8,7 @@ test: libco all
 	@echo "==== TEST 32 bit ===="
 	@LD_LIBRARY_PATH=.. ./libco-test-32
 
+
 libco-test-64: main.c
 
 libco:

@@ -1,5 +1,5 @@
-#include <klib.h>
 #include <amdev.h>
+#include <klib.h>
 
 uint32_t uptime() {
   _DEV_TIMER_UPTIME_t uptime;
