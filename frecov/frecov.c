@@ -194,6 +194,7 @@ int main(int argc, char *argv[]) {
                 printf("name:%s\n",pFATdir->DIR_Name);
                 printf("test\n");
             }
+            assert(0);
         }
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
