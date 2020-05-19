@@ -401,7 +401,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
 
 
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
-    struct FATSLongDirectory* pFATld = pFATsd;
+    struct FATSLongDirectory* pFATld =(struct FATSLongDirectory*)(pFATsd-1);
     char c[140];
     int i = 0;
     memset(c, '\0', 140);
