@@ -526,7 +526,7 @@ int cmpfunc (const void * a, const void * b) {
 //}
 bool isValidFileName(char* name) {
     for (int i = 0; i < strlen(name); i++) {
-        if (!isalnum(name[i]) && name[i] != '.') {
+        if (!isalnum(name[i]) && name[i] != '.' && name[i] != '\') {
             return false;
         }
     }
