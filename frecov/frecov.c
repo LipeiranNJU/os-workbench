@@ -193,7 +193,9 @@ int main(int argc, char *argv[]) {
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
-                printf("name:%s\n",readCompleteInfoFromFATShortDirectory(shortDir));
+                char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+                char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                printf("%s  %s\n", sha1sum, picName);
             }
         }
     }
@@ -245,8 +247,8 @@ int main(int argc, char *argv[]) {
             if (skip) {
                 continue;
             }
-            char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            printf("%s  %s\n", sha1sum, picName);
+            // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            // printf("%s  %s\n", sha1sum, picName);
 //            FILE* pfdpic = fopen(abspath, "w+");
 //            // assert(0);
 //            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
