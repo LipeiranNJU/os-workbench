@@ -530,5 +530,9 @@ bool isValidFileName(char* name) {
             return false;
         }
     }
-    return true;
+    if (name[strlen(name)-1] == 'p' && name[strlen(name)-2] == 'm' &&name[strlen(name)-3] == 'b'&&name[strlen(name)-4] == '.')
+        return true;
+    else
+        return false;
+    
 }
