@@ -188,6 +188,11 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
+    for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, BPB_SecPerClus*BPB_BytsPerSec); cluster=nextClus(cluster)){
+        for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, sizeof(struct FATShortDirectory)); shortDir=nextShortDirectory(shortDir)) {
+            ;
+        }
+    }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
