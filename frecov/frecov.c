@@ -201,7 +201,7 @@ int main(int argc, char *argv[]) {
         printf("%d\n", tmp);
         printf("%lX\n",(long) ((intptr_t)(cluster)));
         printf("%lX\n",(long) ((intptr_t)(fatContentStart)));
-        printf("%lX\n", BPB_SecPerClus*BPB_BytsPerSec);
+        printf("%lX\n",(long) BPB_SecPerClus*BPB_BytsPerSec);
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
