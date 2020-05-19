@@ -250,19 +250,7 @@ int main(int argc, char *argv[]) {
            uint8_t* nowLine = malloc(picDataSize);
            uint8_t* laterLine = malloc(picDataSize);
            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-           int i = 0;
-           for (; i < abs(pBMInfoHeader->biHeight); i++) {
-               memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
-               memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
-               if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
-                   ;
-               }
-               memcpy(preLine, nowLine, lineWidthSize);
-               memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
-           }
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-           printf("%d\n", picDataSize);
-           printf("%d\n", lineWidthSize*pBMInfoHeader->biHeight);
            assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
            fclose(pfdpic);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
