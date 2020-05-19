@@ -147,7 +147,7 @@ char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
 }
-static inline struct FATShortDirectory* nextLongDirectory(struct FATShortDirectory* shortDirectory){
+static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirectory* shortDirectory){
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
 int main(int argc, char *argv[]) {
