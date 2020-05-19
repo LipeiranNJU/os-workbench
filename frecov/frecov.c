@@ -190,8 +190,9 @@ int main(int argc, char *argv[]) {
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, BPB_SecPerClus*BPB_BytsPerSec); cluster=nextClus(cluster)){
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, sizeof(struct FATShortDirectory)); shortDir=nextShortDirectory(shortDir)) {
-            if (isFATShortDirectory(pFATdir) == true) {
+            if (isFATShortDirectory(pFATdir)) {
                 printf("name:%s\n",pFATdir->DIR_Name);
+                printf("test\n");
             }
         }
     }
