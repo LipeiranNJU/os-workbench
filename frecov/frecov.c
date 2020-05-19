@@ -269,8 +269,6 @@ int main(int argc, char *argv[]) {
             if (skip) {
                 continue;
             }
-            char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            printf("%s  %s\n", sha1sum, picName);
            FILE* pfdpic = fopen(abspath, "w+");
            // assert(0);
            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
