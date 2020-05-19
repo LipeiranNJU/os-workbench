@@ -251,7 +251,7 @@ int main(int argc, char *argv[]) {
            uint8_t* laterLine = malloc(picDataSize);
            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-           assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
+        //    assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
            fclose(pfdpic);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
 
