@@ -191,6 +191,7 @@ int main(int argc, char *argv[]) {
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, BPB_SecPerClus*BPB_BytsPerSec); cluster=nextClus(cluster)){
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, sizeof(struct FATShortDirectory)); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
+                assert(0);
                 printf("name:%s\n",pFATdir->DIR_Name);
                 printf("test\n");
             }
