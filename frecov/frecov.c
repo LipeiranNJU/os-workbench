@@ -199,6 +199,7 @@ int main(int argc, char *argv[]) {
         }
         tmp++;
         printf("%d\n", tmp);
+        printf("%lX\n",(long) ((intptr_t)(cluster)));
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
