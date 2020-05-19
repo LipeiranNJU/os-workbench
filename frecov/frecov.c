@@ -193,7 +193,7 @@ int main(int argc, char *argv[]) {
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
-                printf("name:%s\n",pFATdir->DIR_Name);
+                printf("name:%s\n",readInfoFromFATLongDirectory(shortDir));
             }
         }
         // tmp++;
