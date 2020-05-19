@@ -194,7 +194,6 @@ int main(int argc, char *argv[]) {
             char* abspath = malloc(sizeof(char) * (size + 1));
             memset(abspath, '\0', size + 1);
             strcat(strcat(abspath, prefix), picName);
-            print("PicStoredPath:%s\n", abspath);
             skip = false;
             for (int i = 0; i < strlen(abspath); i++) {
                 if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
@@ -221,6 +220,7 @@ int main(int argc, char *argv[]) {
             uint8_t* laterLine = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+            assert(picDataSize == pBMInfoHeader->biSizeImage);
             fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
@@ -247,9 +247,6 @@ int main(int argc, char *argv[]) {
             }
 
         }
-
-        assert((intptr_t) (pFATdir + 1) - (intptr_t)pFATdir == sizeof(struct FATShortDirectory));
-        assert(pFATdir != NULL);
         fflush(stdout);
     }
     close(fd);
