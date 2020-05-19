@@ -43,7 +43,7 @@ int BPB_RsvdSecCnt;
 int BPB_NumFATs;
 int offset;
 inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
-    printf("nowaddr:%lx ,start:%lx,size:%d", (long) nowAddr, (long)nowAddr, fileSize);
+    // printf("nowaddr:%lx ,start:%lx,size:%d", (long) nowAddr, (long)nowAddr, fileSize);
     return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
 }
 inline int getClusterIndex(void* addr, void* start, int clusterSize) {
@@ -193,9 +193,7 @@ int main(int argc, char *argv[]) {
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
-                assert(0);
                 printf("name:%s\n",pFATdir->DIR_Name);
-                printf("test\n");
             }
         }
         tmp++;
