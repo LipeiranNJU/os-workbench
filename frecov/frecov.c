@@ -144,7 +144,12 @@ void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
 char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
-
+static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
+    return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
+}
+static inline struct FATShortDirectory* nextLongDirectory(struct FATShortDirectory* shortDirectory){
+    return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
+}
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
