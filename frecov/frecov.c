@@ -30,7 +30,7 @@
 #define printk(...) 
 #endif
 #define beNotKown 0
-#define beBMPHeader 1
+#define isBMPDir 1
 #define beNotUsed 2
 #define beBMPContent 3
 
@@ -182,7 +182,9 @@ int main(int argc, char *argv[]) {
     BPB_HiddSec =pfatheader->BPB_HiddSec;
     BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     BPB_NumFATs = pfatheader->BPB_NumFATs;
-    
+    int totalClus = (size-offset)/(BPB_SecPerClus*BPB_BytsPerSec);
+    int* clusStatus = malloc(totalClus);
+    memset(clusStatus, 0, totalClus);
     offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     print("Offset of initial clus is %d\n", offset);
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
@@ -190,16 +192,26 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    // int tmp = 0;
+    int tmp = 0;
+    int index = -1;
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
+        tmp = 0;
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
-                char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
-                char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                // if (isValidFileName(picName))
-                    printf("%s  %s\n", sha1sum, picName);
+                // char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+                // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                if (isValidFileName(picName))
+                    tmp++;
+            }
+            if (tmp > 5) {
+                index = getClusterIndex(cluster, fatContentStart, BPB_SecPerClus*BPB_BytsPerSec);
+                clusStatus[index] = isBMPDir;
             }
         }
+    }
+    for (int i = 0; i < totalClus; i++) {
+        if (clusStatus[i] == isBMPDir)
+            printf("i th clus is bmpdir\n");
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
