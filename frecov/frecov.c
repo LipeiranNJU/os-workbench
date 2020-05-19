@@ -252,7 +252,7 @@ int main(int argc, char *argv[]) {
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
         //    assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
-            assert(header->bfOffBits == 54);
+            // assert(header->bfOffBits == 54);
             fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
