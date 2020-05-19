@@ -196,11 +196,6 @@ int main(int argc, char *argv[]) {
                 printf("name:%s\n",shortDir->DIR_Name);
             }
         }
-        // tmp++;
-        // printf("%d\n", tmp);
-        // printf("%lX\n",(long) ((intptr_t)(cluster)));
-        // printf("%lX\n",(long) ((intptr_t)(fatContentStart)));
-        // printf("%lX\n",(long) BPB_SecPerClus*BPB_BytsPerSec);
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
@@ -228,7 +223,8 @@ int main(int argc, char *argv[]) {
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
-            char* picName = readInfoFromFATLongDirectory(pFATld);
+            // char* picName = readInfoFromFATLongDirectory(pFATld);
+            char* picName = "asd";
             assert(picName != NULL);
             char* prefix = "/tmp/";
             int size = strlen(prefix) + strlen(picName);
@@ -404,7 +400,8 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
 }
 
 
-char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
+char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
+    struct FATSLongDirectory* pFATld = pFATsd;
     char c[140];
     int i = 0;
     memset(c, '\0', 140);
