@@ -43,7 +43,6 @@ int BPB_RsvdSecCnt;
 int BPB_NumFATs;
 int offset;
 inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
-    // printf("nowaddr:%lx ,start:%lx,size:%d", (long) nowAddr, (long)nowAddr, fileSize);
     return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
 }
 inline int getClusterIndex(void* addr, void* start, int clusterSize) {
@@ -192,36 +191,6 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    // int tmp = 0;
-    // int index = -1;
-    // for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
-    //     tmp = 0;
-    //     for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
-    //         if (isFATShortDirectory(shortDir)) {
-    //             char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
-    //             // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    //             if (isValidFileName(picName))
-    //                 tmp++;
-    //         }
-    //         if (tmp > 5) {
-    //             index = getClusterIndex(cluster, fatContentStart, BPB_SecPerClus*BPB_BytsPerSec);
-    //             clusStatus[index] = isBMPDir;
-    //         }
-    //     }
-    // }
-    // for (int i = 0; i < totalClus; i++) {
-    //     if (clusStatus[i] == isBMPDir) {
-    //         void* cluster =(void*) ((intptr_t) fatContentStart + i*BPB_BytsPerSec*BPB_SecPerClus);
-    //         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
-    //             if (isFATShortDirectory(shortDir)) {
-    //                 char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
-    //                 char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    //                 printf("%s  %s\n", sha1sum, picName);
-    //             }
-
-    //         }
-    //     }
-    // }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
