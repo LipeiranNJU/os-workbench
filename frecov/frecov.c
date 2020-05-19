@@ -261,6 +261,7 @@ int main(int argc, char *argv[]) {
                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
            }
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+           assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
            fclose(pfdpic);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
 
@@ -330,31 +331,6 @@ bool isLegalInShort(char c) {
 }
 
 bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
-    // if (pFATdir->DIR_CrtTime % 2 == 1)
-    //     return false;
-    // else if (pFATdir->DIR_CrtTimeTenth > 199 || pFATdir->DIR_CrtTimeTenth < 0)
-    //     return false;
-    // else if (pFATdir->DIR_NTRes != 0)
-    //     return false;
-    // else if (pFATdir->DIR_FileSize > 2 * MB)
-    //     return false;
-    // else if (pFATdir->DIR_CrtDate > pFATdir->DIR_LstAccDate || pFATdir->DIR_CrtDate > pFATdir->DIR_WrtDate || pFATdir->DIR_LstAccDate > pFATdir->DIR_WrtDate)
-    //     return false;
-    // else {
-        // int year = ((pFATdir->DIR_CrtDate & 0xfd00) >> 9);
-        // int month = ((pFATdir->DIR_CrtDate & 0xf0) >> 4); 
-        // int day = (pFATdir->DIR_CrtDate & 0xf);
-        // if (year < 5 || year > 40)
-        //     return false;
-        // if (month < 1 || month > 12)
-        //     return false;
-        // if (day == 0)
-        //     return false;
-        
-        // for (int i = 0; i < 11; i++) {
-        //     if ((i != 0 && pFATdir->DIR_Name[i] < 0x20) || (i == 0 && pFATdir->DIR_Name[i] ==0x05) || (!isLegalInShort(pFATdir->DIR_Name[i])))
-        //         return false;
-        // }
         if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0 && isalnum(pFATdir->DIR_Name[0]))
             if (pFATdir->DIR_NTRes == 0)
                 if ((pFATdir->DIR_Attr >> 6) == 0)
