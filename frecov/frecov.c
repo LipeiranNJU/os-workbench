@@ -189,18 +189,18 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    int tmp = 0;
+    // int tmp = 0;
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
                 printf("name:%s\n",pFATdir->DIR_Name);
             }
         }
-        tmp++;
-        printf("%d\n", tmp);
-        printf("%lX\n",(long) ((intptr_t)(cluster)));
-        printf("%lX\n",(long) ((intptr_t)(fatContentStart)));
-        printf("%lX\n",(long) BPB_SecPerClus*BPB_BytsPerSec);
+        // tmp++;
+        // printf("%d\n", tmp);
+        // printf("%lX\n",(long) ((intptr_t)(cluster)));
+        // printf("%lX\n",(long) ((intptr_t)(fatContentStart)));
+        // printf("%lX\n",(long) BPB_SecPerClus*BPB_BytsPerSec);
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
