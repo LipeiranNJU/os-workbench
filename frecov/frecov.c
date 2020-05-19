@@ -198,7 +198,7 @@ int main(int argc, char *argv[]) {
         tmp = 0;
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
-                // char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+                char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
                 // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
                 if (isValidFileName(picName))
                     tmp++;
