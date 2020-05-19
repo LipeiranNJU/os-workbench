@@ -210,8 +210,16 @@ int main(int argc, char *argv[]) {
         }
     }
     for (int i = 0; i < totalClus; i++) {
-        if (clusStatus[i] == isBMPDir)
-            printf("%d th clus is bmpdir\n", i);
+        if (clusStatus[i] == isBMPDir) {
+            void* cluster = (intptr_t) fatContentStart + i*BPB_BytsPerSec*BPB_SecPerClus;
+            for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
+                if (isFATShortDirectory(shortDir)) {
+                    char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+                    char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+                    printf("%s  %s\n", sha1sum, picName);
+            }
+
+        }
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
