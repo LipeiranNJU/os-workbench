@@ -43,7 +43,7 @@ int BPB_RsvdSecCnt;
 int BPB_NumFATs;
 int offset;
 inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
-    printf("%lx\n", (long) (((intptr_t)(nowAddr) - (intptr_t)(fileStart))))
+    printf("%lx\n", (long) (((intptr_t)(nowAddr) - (intptr_t)(fileStart))));
     return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
 }
 inline int getClusterIndex(void* addr, void* start, int clusterSize) {
