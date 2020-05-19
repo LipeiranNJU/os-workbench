@@ -149,25 +149,12 @@ static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirect
 }
 bool isValidFileName(char* name);
 int main(int argc, char *argv[]) {
-    assert(argc == 2);
-    assert(sizeof(struct fat_header) == 512);
-    assert(sizeof(struct FATShortDirectory) == 32);
-    assert(sizeof(struct FATLongDirectory) == 32);
     char* fileName = argv[1];
-    print("Filename is %s\n", fileName);
-
-
     struct stat statbuf;
     stat(fileName,&statbuf);
     int size = statbuf.st_size;
-    print("img file size is %d\n", size);
-
     int fd = open(fileName, O_RDONLY, 0);
-    assert(fd > 0);
-    print("fd is %d\n", fd);
     struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size, PROT_READ, MAP_SHARED , fd, 0);
-    print("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    assert(pfatheader != NULL);
 
     BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
@@ -180,29 +167,18 @@ int main(int argc, char *argv[]) {
     int* clusStatus = malloc(totalClus);
     memset(clusStatus, 0, totalClus);
     offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
-    print("Offset of initial clus is %d\n", offset);
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
     int canBeUsed = 0;
     bool skip = false;
-    print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
-            // printf("%lX\n", (long) (intptr_t)pFATdir-((intptr_t)pfatheader+offset));
-            print("name:%s\n",pFATdir->DIR_Name);
-            assert(pFATdir->DIR_FstClusHI == 0);
             char* magicNum = (char *) (offset + (uintptr_t)(pfatheader) + (pFATdir->DIR_FstClusLO - BPB_RootClus) * BPB_SecPerClus * BPB_BytsPerSec);
-            assert(magicNum[0] == 'B');
-            assert(magicNum[1] == 'M');
             struct BMPHeader* header = (struct BMPHeader*) magicNum;
-            assert(header->bfReserved1 == 0);
-            assert(header->bfReserved2 == 0);
             print("Size:%d\n",header->bfSize);
             print("Offbits:%d\n", header->bfOffBits);
             struct BMPInfoHeader* pBMInfoHeader = (struct BMPInfoHeader*) (header + 1);
-            assert(pBMInfoHeader->biHeight>0);
-            assert(pBMInfoHeader->biSize == 40);
             if (pBMInfoHeader->biCompression == 0) {
                 print("will not be compressed.\n");
             } else {
@@ -213,7 +189,6 @@ int main(int argc, char *argv[]) {
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char* picName = readCompleteInfoFromFATShortDirectory(pFATdir);
-            assert(picName != NULL);
             char* prefix = "/tmp/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
@@ -277,7 +252,6 @@ int main(int argc, char *argv[]) {
         assert(pFATdir != NULL);
         fflush(stdout);
     }
-    print("%d can be short name directory.\n",canBeUsed);
     close(fd);
     return 0;    
 }
