@@ -139,9 +139,6 @@ struct FATLongDirectory {
     uint16_t LDIR_Name3[2];
 }__attribute__((packed));
 
-void lineCmp(uint8_t*, uint8_t*, uint8_t*, int);
-void verifyFAT32Head(struct fat_header*);
-void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd);
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
