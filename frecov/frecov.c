@@ -217,8 +217,9 @@ int main(int argc, char *argv[]) {
                     char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
                     char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
                     printf("%s  %s\n", sha1sum, picName);
-            }
+                }
 
+            }
         }
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
