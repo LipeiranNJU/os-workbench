@@ -144,7 +144,7 @@ void lineCmp(uint8_t*, uint8_t*, uint8_t*, int);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
-char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
+char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd);
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
 }
