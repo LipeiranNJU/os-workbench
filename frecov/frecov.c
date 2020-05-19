@@ -192,36 +192,36 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    int tmp = 0;
-    int index = -1;
-    for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
-        tmp = 0;
-        for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
-            if (isFATShortDirectory(shortDir)) {
-                char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
-                // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                if (isValidFileName(picName))
-                    tmp++;
-            }
-            if (tmp > 5) {
-                index = getClusterIndex(cluster, fatContentStart, BPB_SecPerClus*BPB_BytsPerSec);
-                clusStatus[index] = isBMPDir;
-            }
-        }
-    }
-    for (int i = 0; i < totalClus; i++) {
-        if (clusStatus[i] == isBMPDir) {
-            void* cluster =(void*) ((intptr_t) fatContentStart + i*BPB_BytsPerSec*BPB_SecPerClus);
-            for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
-                if (isFATShortDirectory(shortDir)) {
-                    char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
-                    char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                    printf("%s  %s\n", sha1sum, picName);
-                }
+    // int tmp = 0;
+    // int index = -1;
+    // for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, size-offset); cluster=nextClus(cluster)) {
+    //     tmp = 0;
+    //     for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
+    //         if (isFATShortDirectory(shortDir)) {
+    //             char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+    //             // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    //             if (isValidFileName(picName))
+    //                 tmp++;
+    //         }
+    //         if (tmp > 5) {
+    //             index = getClusterIndex(cluster, fatContentStart, BPB_SecPerClus*BPB_BytsPerSec);
+    //             clusStatus[index] = isBMPDir;
+    //         }
+    //     }
+    // }
+    // for (int i = 0; i < totalClus; i++) {
+    //     if (clusStatus[i] == isBMPDir) {
+    //         void* cluster =(void*) ((intptr_t) fatContentStart + i*BPB_BytsPerSec*BPB_SecPerClus);
+    //         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, BPB_SecPerClus*BPB_BytsPerSec); shortDir=nextShortDirectory(shortDir)) {
+    //             if (isFATShortDirectory(shortDir)) {
+    //                 char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
+    //                 char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    //                 printf("%s  %s\n", sha1sum, picName);
+    //             }
 
-            }
-        }
-    }
+    //         }
+    //     }
+    // }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
@@ -270,77 +270,77 @@ int main(int argc, char *argv[]) {
             if (skip) {
                 continue;
             }
-            // char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            // printf("%s  %s\n", sha1sum, picName);
-//            FILE* pfdpic = fopen(abspath, "w+");
-//            // assert(0);
-//            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
-//            fclose(pfdpic);
-//            pfdpic = fopen(abspath, "a");
-//            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
-//            fclose(pfdpic);
-//            int lineWidthSize = pBMInfoHeader->biWidth*4;
-//            pfdpic = fopen(abspath, "a");
-//            // 位图数据区写入
-//            int picDataSize = header->bfSize - header->bfOffBits;
-//            void* picData = malloc(picDataSize);
-//            uint8_t* preLine = malloc(picDataSize);
-//            uint8_t* nowLine = malloc(picDataSize);
-//            uint8_t* laterLine = malloc(picDataSize);
-//            // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
-//            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-//            // bool tempflag = true;
-//            int i = 0;
-//            for (; i < abs(pBMInfoHeader->biHeight); i++) {
-//                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
-//                memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
-//                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
-//                    // printk("Bingo!\n");
-//                    // sleep(3);
-//                    ;
-//                    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
-//                }
-//                memcpy(preLine, nowLine, lineWidthSize);
-//                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
-//                if (preLine[3] != preLine[7]) {
-//
-//                    // printk("filename:%s\tThis is wrong!\n", abspath);
-//                    // assert(preLine[3] == preLine[7]);
-//                    // tempflag = false;
-//                    // break;
-//                }
-//            }
-//            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-//            fclose(pfdpic);
-//            free(picData);
-//            free(preLine);
-//            free(nowLine);
-//            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
-//
-//            }
-//            char buf[41] = {};
-//            buf[40] = 0;
-//            char cmd[100] = {};
-//            int pipefds[2];
-//            if(pipe(pipefds) < 0){
-//		        perror("pipe");
-//                assert(0);
-//	        }
-//            int pid = fork();
-//            char* argv[3];
-//            argv[0] = "sha1sum",
-//            argv[1] = abspath;
-//            argv[2] = NULL;
-//            if (pid == 0) {
-//                close(pipefds[0]);
-//                dup2(pipefds[1], fileno(stderr));
-//                dup2(pipefds[1], fileno(stdout));
-//                execvp("sha1sum", argv);
-//            } else {
-//                close(pipefds[1]);
-//                read(pipefds[0], buf, 40);
-//                printf("%s    %s\n", buf, picName);
-//            }
+            char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            printf("%s  %s\n", sha1sum, picName);
+           FILE* pfdpic = fopen(abspath, "w+");
+           // assert(0);
+           fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
+           fclose(pfdpic);
+           pfdpic = fopen(abspath, "a");
+           fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
+           fclose(pfdpic);
+           int lineWidthSize = pBMInfoHeader->biWidth*4;
+           pfdpic = fopen(abspath, "a");
+           // 位图数据区写入
+           int picDataSize = header->bfSize - header->bfOffBits;
+           void* picData = malloc(picDataSize);
+           uint8_t* preLine = malloc(picDataSize);
+           uint8_t* nowLine = malloc(picDataSize);
+           uint8_t* laterLine = malloc(picDataSize);
+           // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
+           void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
+           // bool tempflag = true;
+           int i = 0;
+           for (; i < abs(pBMInfoHeader->biHeight); i++) {
+               memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+               memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
+               if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
+                   // printk("Bingo!\n");
+                   // sleep(3);
+                   ;
+                   lineCmp(preLine, nowLine, laterLine, lineWidthSize);
+               }
+               memcpy(preLine, nowLine, lineWidthSize);
+               memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
+               if (preLine[3] != preLine[7]) {
+
+                   // printk("filename:%s\tThis is wrong!\n", abspath);
+                   // assert(preLine[3] == preLine[7]);
+                   // tempflag = false;
+                   // break;
+               }
+           }
+           fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+           fclose(pfdpic);
+           free(picData);
+           free(preLine);
+           free(nowLine);
+           if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
+
+           }
+           char buf[41] = {};
+           buf[40] = 0;
+           char cmd[100] = {};
+           int pipefds[2];
+           if(pipe(pipefds) < 0){
+		        perror("pipe");
+               assert(0);
+	        }
+           int pid = fork();
+           char* argv[3];
+           argv[0] = "sha1sum",
+           argv[1] = abspath;
+           argv[2] = NULL;
+           if (pid == 0) {
+               close(pipefds[0]);
+               dup2(pipefds[1], fileno(stderr));
+               dup2(pipefds[1], fileno(stdout));
+               execvp("sha1sum", argv);
+           } else {
+               close(pipefds[1]);
+               read(pipefds[0], buf, 40);
+               printf("%s    %s\n", buf, picName);
+           }
 
         }
 
