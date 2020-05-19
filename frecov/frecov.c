@@ -235,50 +235,48 @@ int main(int argc, char *argv[]) {
             if (skip) {
                 continue;
             }
-           FILE* pfdpic = fopen(abspath, "w+");
-           fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
-           fclose(pfdpic);
-           pfdpic = fopen(abspath, "a");
-           fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
-           fclose(pfdpic);
-           int lineWidthSize = pBMInfoHeader->biWidth*4;
-           pfdpic = fopen(abspath, "a");
-           // 位图数据区写入
-           int picDataSize = header->bfSize - header->bfOffBits;
-           void* picData = malloc(picDataSize);
-           uint8_t* preLine = malloc(picDataSize);
-           uint8_t* nowLine = malloc(picDataSize);
-           uint8_t* laterLine = malloc(picDataSize);
-           void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-           fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+            FILE* pfdpic = fopen(abspath, "w+");
+            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
+            fclose(pfdpic);
+            pfdpic = fopen(abspath, "a");
+            fwrite((void*) pBMInfoHeader, 1, pBMInfoHeader->biSize, pfdpic);
+            fclose(pfdpic);
+            int lineWidthSize = pBMInfoHeader->biWidth*4;
+            pfdpic = fopen(abspath, "a");
+            // 位图数据区写入
+            int picDataSize = header->bfSize - header->bfOffBits;
+            void* picData = malloc(picDataSize);
+            uint8_t* preLine = malloc(picDataSize);
+            uint8_t* nowLine = malloc(picDataSize);
+            uint8_t* laterLine = malloc(picDataSize);
+            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
+            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
         //    assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
-           fclose(pfdpic);
-           if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
-
-           }
-           char buf[41] = {};
-           buf[40] = 0;
-           char cmd[100] = {};
-           int pipefds[2];
-           if(pipe(pipefds) < 0){
-		        perror("pipe");
-               assert(0);
-	        }
-           int pid = fork();
-           char* argv[3];
-           argv[0] = "sha1sum",
-           argv[1] = abspath;
-           argv[2] = NULL;
-           if (pid == 0) {
-               close(pipefds[0]);
-               dup2(pipefds[1], fileno(stderr));
-               dup2(pipefds[1], fileno(stdout));
-               execvp("sha1sum", argv);
-           } else {
-               close(pipefds[1]);
-               read(pipefds[0], buf, 40);
-               printf("%s    %s\n", buf, picName);
-           }
+            assert(header->bfOffBits == 54);
+            fclose(pfdpic);
+            char buf[41] = {};
+            buf[40] = 0;
+            char cmd[100] = {};
+            int pipefds[2];
+            if(pipe(pipefds) < 0){
+		         perror("pipe");
+                assert(0);
+	         }
+            int pid = fork();
+            char* argv[3];
+            argv[0] = "sha1sum",
+            argv[1] = abspath;
+            argv[2] = NULL;
+            if (pid == 0) {
+                close(pipefds[0]);
+                dup2(pipefds[1], fileno(stderr));
+                dup2(pipefds[1], fileno(stdout));
+                execvp("sha1sum", argv);
+            } else {
+                close(pipefds[1]);
+                read(pipefds[0], buf, 40);
+                printf("%s    %s\n", buf, picName);
+            }
 
         }
 
