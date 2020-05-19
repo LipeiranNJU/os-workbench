@@ -170,9 +170,7 @@ int main(int argc, char *argv[]) {
     print("fd is %d\n", fd);
     struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size, PROT_READ, MAP_SHARED , fd, 0);
     print("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    verifyFAT32Head(pfatheader);
     assert(pfatheader != NULL);
-    showFAT32HeadInfo(pfatheader);
 
     BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
@@ -251,8 +249,6 @@ int main(int argc, char *argv[]) {
             uint8_t* laterLine = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-        //    assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
-            // assert(header->bfOffBits == 54);
             fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
@@ -289,26 +285,7 @@ int main(int argc, char *argv[]) {
     return 0;    
 }
 
-void verifyFAT32Head(struct fat_header* ptr) {
-    print("hello\n");
-    assert((memcmp(&ptr->BS_FilSysType0, "FAT32", 5) == 0));
-    assert(ptr->Signature_word == 0xAA55);
-    assert(ptr->BPB_RootEntCnt == 0);
-    assert(ptr->BPB_TotSec16 == 0);
-    assert(ptr->BPB_NumFATs == 2 || ptr->BPB_NumFATs == 1);
-}
 
-void showFAT32HeadInfo(struct fat_header* pfatheader) {
-    print("SizoOf FATheader is %d\n",(int) sizeof(struct fat_header));
-    print("jmpBoot[0] is %X\t", pfatheader->BS_jmpBoot[0]);
-    print("jmpBoot[2] is %X\n", pfatheader->BS_jmpBoot[2]);
-    print("BPB_BytsPerSec is %d\tBPB_SecPerClus is %d\n", pfatheader->BPB_BytsPerSec, pfatheader->BPB_SecPerClus); 
-    print("BPB_RootClus is %d\n", pfatheader->BPB_RootClus);
-    print("BPB_FATSz32 is %d\n", pfatheader->BPB_FATSz32);
-    print("BPB_HiddSec is %d\n", pfatheader->BPB_HiddSec);
-    print("BPB_RsvdSecCnt is %d\n", pfatheader->BPB_RsvdSecCnt);
-    print("BPB_NumFATs is %d\n", pfatheader->BPB_NumFATs);
-}
 
 bool isLegalInShort(char c) {
     if (c == 0x22 || c==0x2A || c==0x2B||c==0x2C ||c== 0x2E||c==0x2F ||c== 0x3A||c== 0x3B||c==0x3C ||c== 0x3D||c==0x3E ||c ==0x3F||c==0x5B||c==0x5C||c==0x5D||c==0x7C)
