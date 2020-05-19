@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
             if (isFATShortDirectory(shortDir)) {
                 char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
                 char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                if (isValidFileName(picName))
+                // if (isValidFileName(picName))
                     printf("%s  %s\n", sha1sum, picName);
             }
         }
