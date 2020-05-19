@@ -151,6 +151,7 @@ static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory
 static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirectory* shortDirectory){
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
+bool isValidFileName(char* name);
 int main(int argc, char *argv[]) {
     assert(argc == 2);
     assert(sizeof(struct fat_header) == 512);
@@ -195,7 +196,8 @@ int main(int argc, char *argv[]) {
             if (isFATShortDirectory(shortDir)) {
                 char* picName = readCompleteInfoFromFATShortDirectory(shortDir);
                 char* sha1sum = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-                printf("%s  %s\n", sha1sum, picName);
+                if (isValidFileName(picName))
+                    printf("%s  %s\n", sha1sum, picName);
             }
         }
     }
@@ -522,3 +524,11 @@ int cmpfunc (const void * a, const void * b) {
 //
 //    printf("\n%lf\n", linesum/(width-2));
 //}
+bool isValidFileName(char* name) {
+    for (int i = 0; i < strlen(name); i++) {
+        if (!isalnum(name[i]) && name[i] != '.') {
+            return false;
+        }
+    }
+    return true;
+}
