@@ -261,6 +261,8 @@ int main(int argc, char *argv[]) {
                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
            }
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
+           printf("%d\n", picDataSize);
+           printf("%d\n", lineWidthSize*pBMInfoHeader->biHeight);
            assert(picDataSize == lineWidthSize*pBMInfoHeader->biHeight);
            fclose(pfdpic);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
