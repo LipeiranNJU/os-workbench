@@ -188,7 +188,7 @@ int main(int argc, char *argv[]) {
     int canBeUsed = 0;
     bool skip = false;
     print("Total Sec is %d\n", (int) pfatheader->BPB_TotSec32);
-    int tmp;
+    int tmp = 0;
     for (void* cluster = fatContentStart; inFile(cluster,fatContentStart, BPB_SecPerClus*BPB_BytsPerSec); cluster=nextClus(cluster)) {
         for (struct FATShortDirectory* shortDir = (struct FATShortDirectory*)cluster; inFile(shortDir, cluster, sizeof(struct FATShortDirectory)); shortDir=nextShortDirectory(shortDir)) {
             if (isFATShortDirectory(shortDir)) {
