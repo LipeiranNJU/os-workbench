@@ -248,7 +248,7 @@ int main(int argc, char *argv[]) {
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
-            char* picName = readCompleteInfoFromFATLongDirectory(pFATdir);
+            char* picName = readCompleteInfoFromFATShortDirectory(pFATdir);
             assert(picName != NULL);
             char* prefix = "/tmp/";
             int size = strlen(prefix) + strlen(picName);
