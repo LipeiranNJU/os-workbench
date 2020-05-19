@@ -309,9 +309,9 @@ int main(int argc, char *argv[]) {
            }
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
            fclose(pfdpic);
-           free(picData);
-           free(preLine);
-           free(nowLine);
+        //    free(picData);
+        //    free(preLine);
+        //    free(nowLine);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
 
            }
