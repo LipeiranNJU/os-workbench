@@ -211,7 +211,7 @@ int main(int argc, char *argv[]) {
     }
     for (int i = 0; i < totalClus; i++) {
         if (clusStatus[i] == isBMPDir)
-            printf("i th clus is bmpdir\n");
+            printf("%d th clus is bmpdir\n", i);
     }
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
