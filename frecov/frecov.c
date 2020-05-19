@@ -41,9 +41,15 @@ int BPB_FATSz32;
 int BPB_HiddSec;
 int BPB_RsvdSecCnt;
 int BPB_NumFATs;
-
+int offset;
+inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
+    return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
+}
 inline int getClusterIndex(void* addr, void* start, int clusterSize) {
     return ((intptr_t)addr - (intptr_t) start) / clusterSize;
+}
+inline void* nextClus(void* Clus) {
+    return (void*)((intptr_t)(Clus) + BPB_BytsPerSec * BPB_SecPerClus);
 }
 
 struct fat_header {
@@ -170,7 +176,7 @@ int main(int argc, char *argv[]) {
     BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     BPB_NumFATs = pfatheader->BPB_NumFATs;
     
-    int offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
+    offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     print("Offset of initial clus is %d\n", offset);
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
