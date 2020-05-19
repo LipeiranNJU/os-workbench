@@ -224,14 +224,11 @@ int main(int argc, char *argv[]) {
             char* abspath = malloc(sizeof(char) * (size + 1));
             memset(abspath, '\0', size + 1);
             strcat(strcat(abspath, prefix), picName);
-            // free(picName);
             print("PicStoredPath:%s\n", abspath);
-//            // assert(0);
             skip = false;
             for (int i = 0; i < strlen(abspath); i++) {
                 if (!isalnum(abspath[i]) && abspath[i] != '.' && abspath[i] != '/') {
                     skip = true;
-                    // printf("invalid name:%s\n",abspath);
                     break;
                 }
             }
@@ -239,7 +236,6 @@ int main(int argc, char *argv[]) {
                 continue;
             }
            FILE* pfdpic = fopen(abspath, "w+");
-           // assert(0);
            fwrite((void*) magicNum, 1, sizeof(*header), pfdpic);
            fclose(pfdpic);
            pfdpic = fopen(abspath, "a");
@@ -253,34 +249,19 @@ int main(int argc, char *argv[]) {
            uint8_t* preLine = malloc(picDataSize);
            uint8_t* nowLine = malloc(picDataSize);
            uint8_t* laterLine = malloc(picDataSize);
-           // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
            void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
-           // bool tempflag = true;
            int i = 0;
            for (; i < abs(pBMInfoHeader->biHeight); i++) {
                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
                memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
-                   // printk("Bingo!\n");
-                   // sleep(3);
                    ;
-                //    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
                }
                memcpy(preLine, nowLine, lineWidthSize);
                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
-               if (preLine[3] != preLine[7]) {
-
-                   // printk("filename:%s\tThis is wrong!\n", abspath);
-                   // assert(preLine[3] == preLine[7]);
-                   // tempflag = false;
-                   // break;
-               }
            }
            fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
            fclose(pfdpic);
-        //    free(picData);
-        //    free(preLine);
-        //    free(nowLine);
            if (((intptr_t) pFATdir - (intptr_t)pfatheader -offset) % (4*KB) != 0) {
 
            }
