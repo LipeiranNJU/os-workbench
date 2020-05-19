@@ -298,7 +298,7 @@ int main(int argc, char *argv[]) {
                    // printk("Bingo!\n");
                    // sleep(3);
                    ;
-                   lineCmp(preLine, nowLine, laterLine, lineWidthSize);
+                //    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
                }
                memcpy(preLine, nowLine, lineWidthSize);
                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
