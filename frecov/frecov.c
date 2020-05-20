@@ -195,15 +195,15 @@ int main(int argc, char *argv[]) {
         void* cluster = getClusterFromIndex(i, fatContentStart);
         int tmp = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-            if (isFATShortDirectory(pFATdir)) {
+            // if (isFATShortDirectory(pFATdir)) {
                 tmp++;
-            }
+            // }
+            printf("tmp:%d\n", tmp);
         } 
         if (tmp>5) {
             dirClusAdd(i);
             printf("%d ", i);        
         }
-        printf("i:%d\n", i);
     }
     for (int i = 0; dirClus[i]>=0; i++) {
         printf("%d ", dirClus[i]);
