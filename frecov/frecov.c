@@ -201,8 +201,7 @@ int main(int argc, char *argv[]) {
             printf("tmp:%d\n", tmp);
         } 
         if (tmp>5) {
-            dirClusAdd(i);
-            printf("%d ", i);        
+            dirClusAdd(i);     
         }
     }
     for (int i = 0; dirClus[i]>=0; i++) {
