@@ -195,9 +195,9 @@ int main(int argc, char *argv[]) {
         void* cluster = getClusterFromIndex(i, fatContentStart);
         int tmp = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-            // if (isFATShortDirectory(pFATdir)) {
+            if (isFATShortDirectory(ptmpshd)) {
                 tmp++;
-            // }
+            }
             printf("tmp:%d\n", tmp);
         } 
         if (tmp>5) {
