@@ -192,8 +192,8 @@ int main(int argc, char *argv[]) {
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
     for (int i = 0; i < totalClus; i++){
-        void* cluster = getClusterFromIndex(i);
-        
+        void* cluster = getClusterFromIndex(i, fatContentStart);
+
     }
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
