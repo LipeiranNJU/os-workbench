@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
         }
     }
     for (int i = 0; dirClus[i]>=0; i++) {
-        printf("%d ", dirClus[i]);
+        printf("%x ", dirClus[i]);
         printf("\n");
     }
     bool skip = false;
