@@ -173,24 +173,13 @@ int main(int argc, char *argv[]) {
     offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
-    int canBeUsed = 0;
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
         if (isFATShortDirectory(pFATdir) == true) {
             char* magicNum = (char *) (offset + (uintptr_t)(pfatheader) + (pFATdir->DIR_FstClusLO - BPB_RootClus) * BPB_SecPerClus * BPB_BytsPerSec);
             struct BMPHeader* header = (struct BMPHeader*) magicNum;
-            print("Size:%d\n",header->bfSize);
-            print("Offbits:%d\n", header->bfOffBits);
             struct BMPInfoHeader* pBMInfoHeader = (struct BMPInfoHeader*) (header + 1);
-            if (pBMInfoHeader->biCompression == 0) {
-                print("will not be compressed.\n");
-            } else {
-                print("will be compressed\n");
-                assert(0);
-            }
-
-            canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
             char* picName = readCompleteInfoFromFATShortDirectory(pFATdir);
             char* prefix = "/tmp/";
