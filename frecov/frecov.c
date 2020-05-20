@@ -193,9 +193,19 @@ int main(int argc, char *argv[]) {
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
     for (int i = 0; i < totalClus; i++) {
         void* cluster = getClusterFromIndex(i, fatContentStart);
+        int tmp = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-
+            if (isFATShortDirectory(pFATdir)) {
+                tmp++;
+            }
         } 
+        if (tmp>10) {
+            dirClusAdd(i);
+        }
+    }
+    for (int i = 0; dirClus[i]>=0; i++) {
+        printf("%d ", dirClus[i]);
+        printf("\n");
     }
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
@@ -218,7 +228,7 @@ int main(int argc, char *argv[]) {
                     break;
                 }
             }
-            printf("%lx\n",(long)(((intptr_t)(pFATdir)-(intptr_t)fatContentStart)/clusSize));
+            // printf("%lx\n",(long)(((intptr_t)(pFATdir)-(intptr_t)fatContentStart)/clusSize));
             if (skip) {
                 continue;
             }
