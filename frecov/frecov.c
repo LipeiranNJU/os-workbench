@@ -193,8 +193,8 @@ int main(int argc, char *argv[]) {
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
     for (int i = 0; i < totalClus; i++) {
         void* cluster = getClusterFromIndex(i, fatContentStart);
-        for (struct FATShortDirectory ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-            
+        for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
+
         } 
     }
     bool skip = false;
