@@ -149,7 +149,7 @@ static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirect
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
 bool isValidFileName(char* name);
-int dirClus[100] = {-1};
+int dirClus[100];
 
 void* getClusterFromIndex(int index_from_zero, void* initialClusterAddr) {
     return initialClusterAddr+index_from_zero*clusSize;
@@ -165,6 +165,7 @@ void initAttr(struct fat_header* pfatheader) {
     clusSize = BPB_SecPerClus * BPB_BytsPerSec;
 }
 int main(int argc, char *argv[]) {
+    memset(dirClus, -1, sizeof(dirClus[0]));
     for (int i = 0; i < 100; i++){
         assert(dirClus[i] == -1);
     }
