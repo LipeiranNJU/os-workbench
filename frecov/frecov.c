@@ -42,6 +42,7 @@ int BPB_HiddSec;
 int BPB_RsvdSecCnt;
 int BPB_NumFATs;
 int offset;
+int clusSize;
 inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
     return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
 }
@@ -148,14 +149,7 @@ static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirect
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
 bool isValidFileName(char* name);
-int main(int argc, char *argv[]) {
-    char* fileName = argv[1];
-    struct stat statbuf;
-    stat(fileName,&statbuf);
-    int size = statbuf.st_size;
-    int fd = open(fileName, O_RDONLY, 0);
-    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size, PROT_READ, MAP_SHARED , fd, 0);
-
+void initAttr(struct fat_header* pfatheader) {
     BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
     BPB_RootClus = pfatheader->BPB_RootClus;
@@ -163,6 +157,16 @@ int main(int argc, char *argv[]) {
     BPB_HiddSec =pfatheader->BPB_HiddSec;
     BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     BPB_NumFATs = pfatheader->BPB_NumFATs;
+    clusSize = BPB_SecPerClus * BPB_BytsPerSec;
+}
+int main(int argc, char *argv[]) {
+    char* fileName = argv[1];
+    struct stat statbuf;
+    stat(fileName,&statbuf);
+    int size = statbuf.st_size;
+    int fd = open(fileName, O_RDONLY, 0);
+    struct fat_header* pfatheader =(struct fat_header*) mmap(NULL, size, PROT_READ, MAP_SHARED , fd, 0);
+    initAttr(pfatheader);
     int totalClus = (size-offset)/(BPB_SecPerClus*BPB_BytsPerSec);
     int* clusStatus = malloc(totalClus);
     memset(clusStatus, 0, totalClus);
@@ -220,7 +224,6 @@ int main(int argc, char *argv[]) {
             uint8_t* laterLine = malloc(picDataSize);
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
-            assert(picDataSize == pBMInfoHeader->biSizeImage);
             fclose(pfdpic);
             char buf[41] = {};
             buf[40] = 0;
