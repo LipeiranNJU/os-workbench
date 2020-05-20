@@ -198,7 +198,6 @@ int main(int argc, char *argv[]) {
             if (isFATShortDirectory(ptmpshd)) {
                 tmp++;
             }
-            printf("tmp:%d\n", tmp);
         } 
         if (tmp>5) {
             dirClusAdd(i);     
