@@ -194,6 +194,7 @@ int main(int argc, char *argv[]) {
                     break;
                 }
             }
+            printf("clusSize:%d\n",clusSize);
             printf("%ld\n",(long)(((intptr_t)(pFATdir)-offset)/clusSize));
             if (skip) {
                 continue;
