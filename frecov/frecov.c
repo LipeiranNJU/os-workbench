@@ -149,6 +149,9 @@ static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirect
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
 bool isValidFileName(char* name);
+void* getClusterFromIndex(int index_from_zero, void* initialClusterAddr) {
+    return initialClusterAddr+index_from_zero*clusSize;
+}
 void initAttr(struct fat_header* pfatheader) {
     BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
