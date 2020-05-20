@@ -149,6 +149,8 @@ static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirect
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
 bool isValidFileName(char* name);
+int dirClus[100] = {-1};
+
 void* getClusterFromIndex(int index_from_zero, void* initialClusterAddr) {
     return initialClusterAddr+index_from_zero*clusSize;
 }
