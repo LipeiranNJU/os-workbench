@@ -165,9 +165,8 @@ void initAttr(struct fat_header* pfatheader) {
     clusSize = BPB_SecPerClus * BPB_BytsPerSec;
 }
 int main(int argc, char *argv[]) {
-    for (int i = 0; i < 100; i++){
+    for (int i = 0; i < 100; i++) {
         dirClus[i] = -1;
-        assert(dirClus[i] == -1);
     }
     char* fileName = argv[1];
     struct stat statbuf;
