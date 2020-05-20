@@ -191,6 +191,10 @@ int main(int argc, char *argv[]) {
     offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
+    for (int i = 0; i < totalClus; i++){
+        void* cluster = getClusterFromIndex(i);
+        
+    }
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
