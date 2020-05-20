@@ -164,6 +164,16 @@ void initAttr(struct fat_header* pfatheader) {
     BPB_NumFATs = pfatheader->BPB_NumFATs;
     clusSize = BPB_SecPerClus * BPB_BytsPerSec;
 }
+void dirClusAdd(int index) {
+    assert(index >= 0);
+    for (int i = 0; i < 100; i++) {
+        if (dirClus[i] == -1) {
+            dirClus[i] = index;
+            return;
+        }
+    }
+    assert(0);
+}
 int main(int argc, char *argv[]) {
     for (int i = 0; i < 100; i++) {
         dirClus[i] = -1;
