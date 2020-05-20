@@ -194,6 +194,7 @@ int main(int argc, char *argv[]) {
                     break;
                 }
             }
+            printf("%ld\n",(long)((intptr_t)(pFATdir))/clusSize);
             if (skip) {
                 continue;
             }
@@ -219,9 +220,9 @@ int main(int argc, char *argv[]) {
             char cmd[100] = {};
             int pipefds[2];
             if(pipe(pipefds) < 0){
-		         perror("pipe");
+		        perror("pipe");
                 assert(0);
-	         }
+	        }
             int pid = fork();
             char* argv[3];
             argv[0] = "sha1sum",
