@@ -199,7 +199,7 @@ int main(int argc, char *argv[]) {
                 tmp++;
             }
         } 
-        if (tmp>10) {
+        if (tmp>5) {
             dirClusAdd(i);
             printf("%d ", i);        }
     }
