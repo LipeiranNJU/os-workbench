@@ -197,10 +197,8 @@ int main(int argc, char *argv[]) {
         int tmpl = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
-                if (i == 1) {
-                    printf("%lx\n",(long)( (intptr_t)ptmpshd ));
-                }
-                tmp++;
+                if (i == 1)
+                    tmp++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
                     tmpl++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
@@ -226,6 +224,7 @@ int main(int argc, char *argv[]) {
                 for (int i = 0; i < 40; i++){
                     printf("a");
                 }
+                assert((intptr_t)fatshd != 0x7fd761e5c080);
                 printf("   %s\n", Name);
             }
         }
