@@ -228,23 +228,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
-     tmp = 0;
-     tmpl = 0;
-        for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-            if (isFATShortDirectory(ptmpshd)) {
-                tmp++;
-                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
-                    tmpl++;
-                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
-                    tmpl++;
-            }
-        } 
-        if (tmp>5 && tmpl>5) {
-            // printf("tmp:%d\n", tmp);
-            // printf("tmpl:%d\n", tmpl);
-            dirClusAdd(i);     
-        }
-    }
+    
     // assert(0);
     exit(0);
     bool skip = false;
