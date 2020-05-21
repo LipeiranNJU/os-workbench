@@ -201,7 +201,8 @@ int main(int argc, char *argv[]) {
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
                     tmpl++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
-                    tmpl++;
+                    assert(0);
+                    // tmpl++;
             }
         } 
         if (tmp>5 && tmpl>5) {
