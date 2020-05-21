@@ -206,7 +206,6 @@ int main(int argc, char *argv[]) {
             }
         } 
         if (tmp>5 && tmpl>5) {
-            printf("%lx\n", (long)cluster);
             // printf("tmp:%d\n", tmp);
             // printf("tmpl:%d\n", tmpl);
             dirClusAdd(i);     
