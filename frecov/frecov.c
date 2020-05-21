@@ -191,44 +191,7 @@ int main(int argc, char *argv[]) {
     offset = (BPB_RsvdSecCnt + BPB_NumFATs * BPB_FATSz32 + (BPB_RootClus - 2) * BPB_SecPerClus + BPB_HiddSec) * BPB_BytsPerSec;
     struct FATShortDirectory* pFATdir = (struct FATShortDirectory*)((intptr_t)pfatheader+offset);
     void* fatContentStart = (void*)((intptr_t)pfatheader+offset);
-    for (int i = 0; i < totalClus; i++) {
-        void* cluster = getClusterFromIndex(i, fatContentStart);
-        int tmp = 0;
-        int tmpl = 0;
-        for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
-            if (isFATShortDirectory(ptmpshd)) {
-                tmp++;
-                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
-                    tmpl++;
-                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
-                    tmpl++;
-            }
-        } 
-        if (tmp>5 && tmpl>5) {
-            // printf("tmp:%d\n", tmp);
-            // printf("tmpl:%d\n", tmpl);
-            printf("%lx\n", (long)cluster);
-            dirClusAdd(i);     
-        }
-    }
-    for (int i = 0; dirClus[i] >= 0; i++)
-        printf("%x ", dirClus[i]);
-    printf("\n");
-    for (int i = 0; dirClus[i] >=0;i++){
-        void* cluster = getClusterFromIndex(i, fatContentStart);
-        printf("i:%d  dirClus[%x]\n", i, dirClus[i]);
-        for (struct FATShortDirectory* fatshd = cluster; inFile(fatshd, cluster, clusSize);fatshd++){
-            if (isFATShortDirectory(fatshd)/* && isFATLongDirectory((struct FATLongDirectory*) (fatshd-1))*/){
-                char* Name = readCompleteInfoFromFATShortDirectory(fatshd);
-                for (int i = 0; i < 40; i++){
-                    printf("a");
-                }
-                printf("   %s\n", Name);
-            }
-        }
-    }
     // assert(0);
-    exit(0);
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
