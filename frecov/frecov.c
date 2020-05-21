@@ -197,6 +197,7 @@ int main(int argc, char *argv[]) {
         int tmpl = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
+                printf("%lx\n", (long)cluster);
                 if (i == 1)
                     tmp++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
@@ -218,6 +219,7 @@ int main(int argc, char *argv[]) {
     for (int i = 0; dirClus[i] >=0;i++){
         void* cluster = getClusterFromIndex(i, fatContentStart);
         printf("i:%d  dirClus[%x]\n", i, dirClus[i]);
+        printf("%lx\n", (long)cluster);
         for (struct FATShortDirectory* fatshd = cluster; inFile(fatshd, cluster, clusSize);fatshd++){
             if (isFATShortDirectory(fatshd)/* && isFATLongDirectory((struct FATLongDirectory*) (fatshd-1))*/){
                 char* Name = readCompleteInfoFromFATShortDirectory(fatshd);
