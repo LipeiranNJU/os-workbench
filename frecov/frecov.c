@@ -204,7 +204,9 @@ int main(int argc, char *argv[]) {
                     tmpl++;
             }
         } 
-        if (tmp>5 && tmpl>1.5*tmp) {
+        if (tmp>5 && tmpl>5) {
+            printf("tmp:%d\n", tmp);
+            printf("tmpl:%d\n", tmpl);
             dirClusAdd(i);     
         }
     }
