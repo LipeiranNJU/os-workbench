@@ -202,7 +202,7 @@ int main(int argc, char *argv[]) {
                     tmpl++;
             }
         } 
-        if (tmp>5 && tmpl>7) {
+        if (tmp>5 && tmpl>(int)1.5*tmp) {
             dirClusAdd(i);     
         }
     }
