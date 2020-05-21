@@ -43,13 +43,13 @@ int BPB_RsvdSecCnt;
 int BPB_NumFATs;
 int offset;
 int clusSize;
-inline bool inFile(void* nowAddr, void* fileStart, int fileSize) {
+inline bool inFile(const void* nowAddr, const void* fileStart, int fileSize) {
     return ((intptr_t)(nowAddr) - (intptr_t)(fileStart)) < fileSize ? true : false;
 }
-inline int getClusterIndex(void* addr, void* start, int clusterSize) {
+inline int getClusterIndex(const void* addr, const void* start, int clusterSize) {
     return ((intptr_t)addr - (intptr_t) start) / clusterSize;
 }
-inline void* nextClus(void* Clus) {
+inline void* nextClus(const void* Clus) {
     return (void*)((intptr_t)(Clus) + BPB_BytsPerSec * BPB_SecPerClus);
 }
 
