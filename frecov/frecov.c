@@ -197,7 +197,6 @@ int main(int argc, char *argv[]) {
         int tmpl = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
-                printf("%lx\n", (long)cluster);
                 if (i == 1)
                     tmp++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
@@ -207,6 +206,7 @@ int main(int argc, char *argv[]) {
             }
         } 
         if (tmp>5 && tmpl>5) {
+            printf("%lx\n", (long)cluster);
             // printf("tmp:%d\n", tmp);
             // printf("tmpl:%d\n", tmpl);
             dirClusAdd(i);     
