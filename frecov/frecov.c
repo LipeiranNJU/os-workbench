@@ -206,6 +206,8 @@ int main(int argc, char *argv[]) {
     }
     for (int i = 0; dirClus[i] >= 0; i++)
         printf("%d ", dirClus[i]);
+    printf("\n");
+    assert(0);
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
