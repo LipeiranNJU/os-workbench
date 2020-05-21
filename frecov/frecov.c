@@ -139,7 +139,7 @@ struct FATLongDirectory {
     uint16_t LDIR_FstClusLO;
     uint16_t LDIR_Name3[2];
 }__attribute__((packed));
-
+bool isFATLongDirectory(struct FATLongDirectory* pFATldir);
 bool isFATShortDirectory(struct FATShortDirectory*);
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd);
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
