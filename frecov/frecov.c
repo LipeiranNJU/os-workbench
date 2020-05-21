@@ -224,7 +224,7 @@ int main(int argc, char *argv[]) {
                 }
                 printf("   %s\n", Name);
             }
-            fatshd=(struct FATShortDirectory*)(fatshd+1);
+            fatshd=(struct FATShortDirectory*)((intptr_t)fatshd+1);
         }
     }
     // assert(0);
