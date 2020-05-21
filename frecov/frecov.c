@@ -139,8 +139,8 @@ struct FATLongDirectory {
     uint16_t LDIR_FstClusLO;
     uint16_t LDIR_Name3[2];
 }__attribute__((packed));
-bool isFATLongDirectory(struct FATLongDirectory* pFATldir);
-bool isFATShortDirectory(struct FATShortDirectory*);
+bool isFATLongDirectory(const struct FATLongDirectory* pFATldir);
+bool isFATShortDirectory(const struct FATShortDirectory*);
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd);
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
@@ -311,7 +311,7 @@ bool isLegalInShort(char c) {
     
 }
 
-bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
+bool isFATShortDirectory(const struct FATShortDirectory* pFATdir) {
         if (strncmp((char *)&pFATdir->DIR_Name[8], "BMP", 3) == 0 && isalnum(pFATdir->DIR_Name[0]))
             if (pFATdir->DIR_NTRes == 0)
                 if ((pFATdir->DIR_Attr >> 6) == 0)
@@ -327,7 +327,7 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
 
         return false;
 }
-bool isFATLongDirectory(struct FATLongDirectory* pFATldir) {
+bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
     if (pFATldir->LDIR_FstClusLO != 0) 
         return false;
     if (pFATldir->LDIR_Type != 0)
