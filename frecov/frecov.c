@@ -222,7 +222,9 @@ int main(int argc, char *argv[]) {
                     printf("a");
                 }
                 printf("   %s\n", Name);
+                printf("i:%d\n", i);
             }
+
         }
     }
     // assert(0);
