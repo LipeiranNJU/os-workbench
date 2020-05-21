@@ -330,8 +330,13 @@ bool isFATLongDirectory(struct FATLongDirectory* pFATldir) {
     if ((pFATldir->LDIR_Ord | 0x40) != pFATldir->LDIR_Ord)
         if ((pFATldir->LDIR_Ord != ((pFATldir-1)->LDIR_Ord &0x0f)-1 ))
             return false;
-    if ((pFATldir->LDIR_Ord | 0x40) == pFATldir->LDIR_Ord) 
-        assert(0);
+    if ((pFATldir->LDIR_Ord | 0x40) == pFATldir->LDIR_Ord) {
+        if ((pFATldir->LDIR_Ord & 0x0f)==1)
+            return true;
+        if ((pFATldir->LDIR_Ord & 0x0f) == ((pFATldir+1)->LDIR_Ord & 0x0f))
+            return true;
+    }
+        
     return true;
 }
 
