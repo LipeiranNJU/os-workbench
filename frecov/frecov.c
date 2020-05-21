@@ -200,8 +200,10 @@ int main(int argc, char *argv[]) {
                 tmp++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
                     tmpl++;
-                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
+                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) )) {
                     tmpl++;
+                    printf("%s\n", readCompleteInfoFromFATShortDirectory(ptmpshd));
+                }
             }
         } 
         if (tmp>5 && tmpl>5) {
