@@ -201,8 +201,7 @@ int main(int argc, char *argv[]) {
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
                     tmpl++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
-                    assert(0);
-                    // tmpl++;
+                    tmpl++;
             }
         } 
         if (tmp>5 && tmpl>5) {
@@ -331,7 +330,8 @@ bool isFATLongDirectory(struct FATLongDirectory* pFATldir) {
     if ((pFATldir->LDIR_Ord | 0x40) != pFATldir->LDIR_Ord)
         if ((pFATldir->LDIR_Ord != ((pFATldir-1)->LDIR_Ord &0x0f)-1 ))
             return false;
-
+    if ((pFATldir->LDIR_Ord | 0x40) == pFATldir->LDIR_Ord) 
+        assert(0);
     return true;
 }
 
