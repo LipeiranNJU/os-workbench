@@ -210,9 +210,9 @@ int main(int argc, char *argv[]) {
             dirClusAdd(i);     
         }
     }
-    for (int i = 0; dirClus[i] >= 0; i++)
-        printf("%x ", dirClus[i]);
-    printf("\n");
+    // for (int i = 0; dirClus[i] >= 0; i++)
+    //     printf("%x ", dirClus[i]);
+    // printf("\n");
     for (int i = 0; dirClus[i] >=0;i++){
         void* cluster = getClusterFromIndex(i, fatContentStart);
         for (struct FATShortDirectory* fatshd = cluster; inFile(fatshd, cluster, clusSize); fatshd++){
@@ -222,7 +222,8 @@ int main(int argc, char *argv[]) {
             }
         }
     }
-    assert(0);
+    // assert(0);
+    exit(0);
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
         assert((intptr_t)pFATdir-(intptr_t)pfatheader < pfatheader->BPB_TotSec32*pfatheader->BPB_BytsPerSec);
