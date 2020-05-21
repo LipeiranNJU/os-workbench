@@ -196,16 +196,13 @@ int main(int argc, char *argv[]) {
         int tmp = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
-                tmp++;
+                if (isFATLongDirectory((FATLongDirectory*)ptmpshd-1))
+                    tmp++;
             }
         } 
         if (tmp>5) {
             dirClusAdd(i);     
         }
-    }
-    for (int i = 0; dirClus[i]>=0; i++) {
-        printf("%x ", dirClus[i]);
-        printf("\n");
     }
     bool skip = false;
     for (; (intptr_t)(pFATdir) < (intptr_t)(pfatheader)+size;pFATdir++) {
@@ -306,7 +303,26 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
 
         return false;
 }
+bool isFATLongDirectory(struct FATLongDirectory* pFATldir) {
+    if (pFATldir->LDIR_FstClusLO != 0) 
+        return false;
+    if (pFATldir->LDIR_Type != 0)
+        return false;
+    for (int i = 0; i < 5; i++) 
+        if ((pFATldir->LDIR_Name1[i]>>8) != 0)
+            return false;
+    for (int i = 0; i< 6;i++)
+        if ((pFATldir->LDIR_Name2[i]>>8) != 0)
+            return false;
+    for (int i = 0; i< 2; i++)
+        if ((pFATldir->LDIR_Name3[i]>>8) != 0) 
+            return false;
+    if ((pFATldir->LDIR_Ord | 0x40) != pFATldir->LDIR_Ord)
+        if ((pFATldir->LDIR_Ord != ((pFATldir-1)->LDIR_Ord &0x0f)-1 ))
+            return false;
 
+    return true;
+}
 
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     struct FATLongDirectory* pFATld =(struct FATLongDirectory*)(pFATsd-1);
