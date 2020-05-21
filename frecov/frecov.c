@@ -196,7 +196,7 @@ int main(int argc, char *argv[]) {
         int tmp = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
-                if (isFATLongDirectory((FATLongDirectory*)(ptmpshd-1) ))
+                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
                     tmp++;
             }
         } 
