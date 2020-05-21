@@ -194,13 +194,15 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < totalClus; i++) {
         void* cluster = getClusterFromIndex(i, fatContentStart);
         int tmp = 0;
+        int tmpl = 0;
         for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
             if (isFATShortDirectory(ptmpshd)) {
+                tmp++;
                 if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
-                    tmp++;
+                    tmpl++;
             }
         } 
-        if (tmp>5) {
+        if (tmp>5 && tmpl>1.8*tmp) {
             dirClusAdd(i);     
         }
     }
