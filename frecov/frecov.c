@@ -159,7 +159,7 @@ void initAttr(struct fat_header* pfatheader) {
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
     BPB_RootClus = pfatheader->BPB_RootClus;
     BPB_FATSz32 = pfatheader->BPB_FATSz32;
-    BPB_HiddSec =pfatheader->BPB_HiddSec;
+    BPB_HiddSec = pfatheader->BPB_HiddSec;
     BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     BPB_NumFATs = pfatheader->BPB_NumFATs;
     clusSize = BPB_SecPerClus * BPB_BytsPerSec;
@@ -212,6 +212,7 @@ int main(int argc, char *argv[]) {
     }
     for (int i = 0; dirClus[i] >= 0; i++)
         printf("%x ", dirClus[i]);
+
     printf("\n");
     for (int i = 0; dirClus[i] >=0;i++){
         void* cluster = getClusterFromIndex(i, fatContentStart);
@@ -224,6 +225,24 @@ int main(int argc, char *argv[]) {
                 }
                 printf("   %s\n", Name);
             }
+        }
+    }
+
+     tmp = 0;
+     tmpl = 0;
+        for (struct FATShortDirectory* ptmpshd = cluster; inFile(ptmpshd, cluster, clusSize); ptmpshd++) {
+            if (isFATShortDirectory(ptmpshd)) {
+                tmp++;
+                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-1) ))
+                    tmpl++;
+                if (isFATLongDirectory((struct FATLongDirectory*)(ptmpshd-2) ))
+                    tmpl++;
+            }
+        } 
+        if (tmp>5 && tmpl>5) {
+            // printf("tmp:%d\n", tmp);
+            // printf("tmpl:%d\n", tmpl);
+            dirClusAdd(i);     
         }
     }
     // assert(0);
