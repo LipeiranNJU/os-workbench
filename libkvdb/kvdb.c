@@ -1,8 +1,15 @@
 #include <stdio.h>
 #include <assert.h>
-
+#include <stdio.h>
+#include <fcntl.h>
+struct data {
+  void* dataSec;
+  struct data* next;
+};
 struct kvdb {
   // your definition here
+  FILE* fp;
+  struct flock lock;
 };
 
 struct kvdb *kvdb_open(const char *filename) {
