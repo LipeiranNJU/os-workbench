@@ -215,7 +215,7 @@ int main (int argc, char* argv[]) {
                     countl++;
             }
         }
-        if (countsh > 2 && countl >= countsh) {
+        if (countsh > 6 && countl >= countsh) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
             // printf("%p\n", cluster);
             cluses[index] = DirEntry;
