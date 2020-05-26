@@ -154,12 +154,12 @@ int dirClus[100];
 void* getClusterFromIndex(int index_from_zero, void* initialClusterAddr) {
     return initialClusterAddr+index_from_zero*clusSize;
 }
-void initAttr(struct fat_header* pfatheader) {
+void initAttr(struct FATHeader* pfatheader) {
     BPB_BytsPerSec = pfatheader->BPB_BytsPerSec;
     BPB_SecPerClus = pfatheader->BPB_SecPerClus;
     BPB_RootClus = pfatheader->BPB_RootClus;
     BPB_FATSz32 = pfatheader->BPB_FATSz32;
-    BPB_HiddSec =pfatheader->BPB_HiddSec;
+    BPB_HiddSec = pfatheader->BPB_HiddSec;
     BPB_RsvdSecCnt = pfatheader->BPB_RsvdSecCnt;
     BPB_NumFATs = pfatheader->BPB_NumFATs;
     clusSize = BPB_SecPerClus * BPB_BytsPerSec;
