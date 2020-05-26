@@ -221,7 +221,7 @@ int main (int argc, char* argv[]) {
     for (int i = 0; i < clusNum; i++) {
         if (cluses[i] > 0) {
             printf("index:%d\n", i);
-            void* cluster = getClusterFromIndex(i+1, imgDataStart);
+            void* cluster = getClusterFromIndex(i, imgDataStart);
             printf("%p\n", cluster);
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
                 if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
