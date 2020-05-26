@@ -229,6 +229,7 @@ int main (int argc, char* argv[]) {
                         char nameTmp[12];
                         memcpy(nameTmp, ptmp->DIR_Name, 11);
                         nameTmp[11] = '\0';
+                        printf("%s\n", nameTmp);
                     }
                 }
             }
