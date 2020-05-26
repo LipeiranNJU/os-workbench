@@ -193,7 +193,8 @@ int main (int argc, char* argv[]) {
     int imgOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
     struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
-    for (struct FATShortDirectory* ptmp = pFATshdir, inFile(ptmp, pFATshdir, imgDataSize),ptmp++ ) {
+    for (struct FATShortDirectory* ptmp = pFATshdir; inFile(ptmp, pFATshdir, imgDataSize); ptmp++) {
+        ;
 
     }
     return 0;
