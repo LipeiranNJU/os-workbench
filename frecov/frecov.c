@@ -183,7 +183,7 @@ int main (int argc, char* argv[]) {
     struct FATHeader* pFATHeader = (struct FATHeader *) mmap(NULL, imgSize, PROT_READ, MAP_SHARED, imgFd, 0);
 
     BPB_BytsPerSec = 512;
-    BPB_SecPerClus = 4;
+    BPB_SecPerClus = 8;
     BPB_RootClus = pFATHeader->BPB_RootClus;
     BPB_FATSz32 = pFATHeader->BPB_FATSz32;
     BPB_HiddSec = pFATHeader->BPB_HiddSec;
