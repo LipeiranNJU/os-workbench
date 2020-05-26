@@ -29,10 +29,10 @@
 #else
 #define printk(...) 
 #endif
-#define beNotKown 0
-#define isBMPDir 1
+#define Unknown (-1)
+#define DirEntry 1
 #define beNotUsed 2
-#define beBMPContent 3
+#define BMPContent 3
 
 int BPB_BytsPerSec;
 int BPB_SecPerClus;
@@ -192,19 +192,26 @@ int main (int argc, char* argv[]) {
 
     int imgOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
     struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
+    void* imgDataStart = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
-    for (struct FATShortDirectory* ptmp = pFATshdir; inFile(ptmp, pFATshdir, imgDataSize); ptmp++) {
-        if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
-            if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
-                char nameTmp[12];
-                memcpy(nameTmp, ptmp->DIR_Name, 11);
-                nameTmp[11] = '\0';
-                tmpi++;
-                printf("%s\t%d\n", nameTmp, tmpi);
+    int clusNum = imgDataSize / clusSize;
+    int* cluses = malloc(sizeof(int)*clusNum);
+    for (int i = 0; i < clusNum; i++) 
+        cluses[i] = Unknown;
+    for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
+        for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
+            if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
+                if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
+                    char nameTmp[12];
+                    memcpy(nameTmp, ptmp->DIR_Name, 11);
+                    nameTmp[11] = '\0';
+                    tmpi++;
+                    printf("%s\t%d\n", nameTmp, tmpi);
+                }
             }
         }
-
     }
+
     return 0;
 }
