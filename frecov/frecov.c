@@ -199,7 +199,8 @@ int main (int argc, char* argv[]) {
     int* cluses = malloc(sizeof(int)*clusNum);
     for (int i = 0; i < clusNum; i++) 
         cluses[i] = Unknown;
-    for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
+    for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)) {
+        int count = 0;
         for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
             if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
                 if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
@@ -207,11 +208,20 @@ int main (int argc, char* argv[]) {
                     memcpy(nameTmp, ptmp->DIR_Name, 11);
                     nameTmp[11] = '\0';
                     tmpi++;
+                    count++;
                     printf("%s\t%d\n", nameTmp, tmpi);
                 }
             }
         }
+        if (count != 0) {
+            int index = getClusterIndex(cluster, imgDataStart, clusSize);
+            cluses[index] = DirEntry;
+        }
     }
-
+    for (int i = 0; i < clusNum; i++) {
+        if (cluses[i] > 0) {
+            printf("index:%d\n", i);
+        }
+    }
     return 0;
 }
