@@ -53,7 +53,7 @@ inline void* nextClus(const void* Clus) {
     return (void*)((intptr_t)(Clus) + BPB_BytsPerSec * BPB_SecPerClus);
 }
 
-struct fat_header {
+struct FATHeader {
     uint8_t  BS_jmpBoot[3];
     uint8_t  BS_OEMName[8];
     uint16_t BPB_BytsPerSec;
@@ -174,6 +174,22 @@ void dirClusAdd(int index) {
     }
     assert(0);
 }
-int main () {
+int main (int argc, char* argv[]) {
+    char* imgName = argv[1];
+    struct stat statbuf;
+    int imgSize = statbuf.st_size;
+    int imgFd = open(imgName, O_RDONLY, 0);
+    struct FATHeader* pFATHeader = (struct FATHeader *) mmap(NULL, imgSize, PROT_READ, MAP_SHARED, imgFd, 0);
+
+    BPB_BytsPerSec = pFATHeader->BPB_BytsPerSec;
+    BPB_SecPerClus = pFATHeader->BPB_SecPerClus;
+    BPB_RootClus = pFATHeader->BPB_RootClus;
+    BPB_FATSz32 = pFATHeader->BPB_FATSz32;
+    BPB_HiddSec = pFATHeader->BPB_HiddSec;
+    BPB_RsvdSecCnt = pFATHeader->BPB_RsvdSecCnt;
+    BPB_NumFATs = pFATHeader->BPB_NumFATs;
+
+    int fileOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
+    struct FATShortDirectory* pFATshdir = (void* )pFATHeader + fileOffset;
     return 0;
 }
