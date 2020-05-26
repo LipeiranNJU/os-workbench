@@ -197,8 +197,8 @@ int main (int argc, char* argv[]) {
     int tmpi = 0;
     int clusNum = imgDataSize / clusSize;
     int* cluses = malloc(sizeof(int)*clusNum);
-    for (int i = 0; i < clusNum; i++) 
-        cluses[i] = -1;
+    // for (int i = 0; i < clusNum; i++) 
+    //     cluses[i] = -1;
 
     assert(0);
     // for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
