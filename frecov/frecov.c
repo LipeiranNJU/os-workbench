@@ -195,8 +195,8 @@ int main (int argc, char* argv[]) {
     void* imgDataStart = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
-    int clusNum = imgDataSize / clusSize;
-    printf("clusNum=%d\n", clusNum);
+    long long clusNum = imgDataSize / clusSize;
+    printf("clusNum=%lld\n", clusNum);
     assert(0);
     int* cluses = malloc(sizeof(int)*clusNum);
     for (int i = 0; i < clusNum; i++) 
