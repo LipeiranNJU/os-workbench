@@ -234,12 +234,12 @@ int main (int argc, char* argv[]) {
                     nameTmp[11] = '\0';
                     // printf("%s\t%d\n", nameTmp, ++j);
                     char* picName = readCompleteInfoFromFATShortDirectory(ptmp);
-                    // if (picName != NULL) {
+                    if (picName != NULL) {
                         for (int i = 0; i < 40; i++)
                             printf("a");
                         printf("   ");
                         printf("%s\n", picName);
-                    // }
+                    }
                 }
             }
         }
