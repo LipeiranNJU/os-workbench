@@ -194,7 +194,7 @@ int main (int argc, char* argv[]) {
     struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     for (struct FATShortDirectory* ptmp = pFATshdir; inFile(ptmp, pFATshdir, imgDataSize); ptmp++) {
-        if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0) {
+        if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
             if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
                 char nameTmp[12];
                 memcpy(nameTmp, ptmp->DIR_Name, 11);
