@@ -196,6 +196,7 @@ int main (int argc, char* argv[]) {
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
     printf("imgDataSize:%d\n", imgDataSize);
+    printf("clusSize:%d\n", clusSize);
     long long clusNum = imgDataSize / clusSize;
     printf("clusNum=%lld\n", clusNum);
     assert(0);
