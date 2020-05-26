@@ -224,13 +224,11 @@ int main (int argc, char* argv[]) {
             void* cluster = getClusterFromIndex(i, imgDataStart);
             printf("%p\n", cluster);
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
-                if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
-                    if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
-                        char nameTmp[12];
-                        memcpy(nameTmp, ptmp->DIR_Name, 11);
-                        nameTmp[11] = '\0';
-                        printf("%s\n", nameTmp);
-                    }
+                if (isFATShortDirectory(ptmp)) {
+                    char nameTmp[12];
+                    memcpy(nameTmp, ptmp->DIR_Name, 11);
+                    nameTmp[11] = '\0';
+                    printf("%s\n", nameTmp);
                 }
             }
         }
