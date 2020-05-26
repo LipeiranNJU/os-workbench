@@ -210,9 +210,9 @@ int main (int argc, char* argv[]) {
                 tmpi++;
                 countsh++;
                 if (isFATLongDirectory((void*)(ptmp-1)))
-                    assert(0);
+                    countl++;
                 if (isFATLongDirectory((void*)(ptmp-2)))
-                    assert(0);
+                    countl++;
             }
         }
         if (countsh > 8) {
@@ -249,8 +249,13 @@ bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
 }
 
 bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
-    if ((pFATldir->LDIR_Ord & 0x0f) > 3)
-        return false;
+    if ((pFATldir->LDIR_Ord & 0xf0) != 0) {
+        if ((pFATldir->LDIR_Ord & 0x0f) != 1) {
+            if (pFATldir->LDIR_Ord != (pFATldir+1)->LDIR_Ord +1) {
+                return true;
+            }
+        }
+    }
     
     if (pFATldir->LDIR_FstClusLO != 0 || pFATldir->LDIR_Type != 0)
         return false;
