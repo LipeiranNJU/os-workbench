@@ -256,11 +256,12 @@ bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
         if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
             return false;
     }
-    assert(0);
+    
     for (int i = 0; i < 6; i++) {
         if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
             return false;
     }
+    assert(0);
     for (int i = 0; i < 2; i++) {
         if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
             return false;
