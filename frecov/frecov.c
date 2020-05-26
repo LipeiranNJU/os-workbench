@@ -189,27 +189,40 @@ int main (int argc, char* argv[]) {
     BPB_HiddSec = pFATHeader->BPB_HiddSec;
     BPB_RsvdSecCnt = pFATHeader->BPB_RsvdSecCnt;
     BPB_NumFATs = pFATHeader->BPB_NumFATs;
-
+    clusSize = BPB_BytsPerSec * BPB_SecPerClus;
     int imgOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
     struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
     void* imgDataStart = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
-    printf("imgDataSize:%d\n", imgDataSize);
-    printf("clusSize:%d\n", clusSize);
-    long long clusNum = imgDataSize / clusSize;
-    printf("clusNum=%lld\n", clusNum);
-    assert(0);
+    int clusNum = imgDataSize / clusSize;
     int* cluses = malloc(sizeof(int)*clusNum);
     for (int i = 0; i < clusNum; i++) 
-        cluses[i] = -1;
+        cluses[i] = Unknown;
+    for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
+        for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
+            if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
+                if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
+                    char nameTmp[12];
+                    memcpy(nameTmp, ptmp->DIR_Name, 11);
+                    nameTmp[11] = '\0';
+                    tmpi++;
+                    printf("%s\t%d\n", nameTmp, tmpi);
+                }
+            }
+        }
+    }
+    for (struct FATShortDirectory* ptmp = imgDataStart; inFile(ptmp, imgDataStart, imgDataSize); ptmp++) {
+        if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
+            if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
+                char nameTmp[12];
+                memcpy(nameTmp, ptmp->DIR_Name, 11);
+                nameTmp[11] = '\0';
+                tmpi++;
+                printf("%s\t%d\n", nameTmp, tmpi);
+            }
+        }
 
-    assert(0);
-    // for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
-    //     // for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
-    //     //     ;
-    //     // }
-    //     ;
-    // }
+    }
     return 0;
 }
