@@ -209,7 +209,6 @@ int main (int argc, char* argv[]) {
                     nameTmp[11] = '\0';
                     tmpi++;
                     count++;
-                    printf("%s\t%d\n", nameTmp, tmpi);
                 }
             }
         }
