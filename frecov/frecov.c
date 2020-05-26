@@ -129,7 +129,7 @@ void lineCmp(uint8_t*, uint8_t*, uint8_t*, int);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
-char* readInfoFromFATShortDirectory(struct FATLongDirectory* );
+char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
@@ -195,9 +195,9 @@ int main(int argc, char *argv[]) {
 
             canBeUsed += 1;
             struct FATLongDirectory* pFATld = (struct FATLongDirectory*)(pFATdir - 1);
-            char * picName = readInfoFromFATShortDirectory(pFATdir);
+            char * picName = readInfoFromFATLongDirectory(pFATld);
             assert(picName != NULL);
-            char* prefix = "/tmp/";
+            char* prefix = "/home/lpr/Downloads/lprlpr/";
             int size = strlen(prefix) + strlen(picName);
             char* abspath = malloc(sizeof(char) * (size + 1));
             memset(abspath, '\0', size + 1);
@@ -234,6 +234,26 @@ int main(int argc, char *argv[]) {
             // printk("cluster index is%d\n", getClusterIndex(pFATdir, fatContentStart, 4*KB));
             void* picDataStart = (void*) ((uintptr_t)(header) + header->bfOffBits);
             // bool tempflag = true;
+            int i = 0;
+            for (; i < abs(pBMInfoHeader->biHeight); i++) {
+                memcpy(nowLine, picDataStart+i*pBMInfoHeader->biWidth, lineWidthSize);
+                memcpy(laterLine, picDataStart+(i+1)*pBMInfoHeader->biWidth, lineWidthSize);
+                if (i != 0 && i != abs(pBMInfoHeader->biHeight) - 1&& (strcmp(abspath, "/home/lpr/Downloads/lprlpr/0M15CwG1yP32UPCp.bmp") == 0||strcmp(abspath, "/home/lpr/Downloads/lprlpr/1yh0sw8n6.bmp") == 0)) {
+                    // printk("Bingo!\n");
+                    // sleep(3);
+                    ;
+                    lineCmp(preLine, nowLine, laterLine, lineWidthSize);
+                }
+                memcpy(preLine, nowLine, lineWidthSize);
+                memcpy(picData+i*pBMInfoHeader->biWidth,preLine, lineWidthSize);
+                if (preLine[3] != preLine[7]) {
+
+                    // printk("filename:%s\tThis is wrong!\n", abspath);
+                    // assert(preLine[3] == preLine[7]);
+                    // tempflag = false;
+                    // break;
+                } 
+            }
             fwrite(picDataStart, 1, picDataSize/*(i+1)*lineWidthSize*/, pfdpic);
             fclose(pfdpic);
             free(picData);
@@ -340,48 +360,78 @@ bool isFATShortDirectory(struct FATShortDirectory* pFATdir) {
     
 }
 
-char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
-    
-    char* name = malloc(sizeof(char) * 100);
-    memset(name, '\0', 100);
-    struct FATLongDirectory* pFATld = (struct FATLongDirectory*) (pFATsd-1);
-    int i = -1;
-    while((pFATld->LDIR_Ord >> 4)==0) {
-        i += 1;
-        name[i*13+0] = (char) pFATld->LDIR_Name1[0];
-        name[i*13+1] = (char) pFATld->LDIR_Name1[1];
-        name[i*13+2] = (char) pFATld->LDIR_Name1[2];
-        name[i*13+3] = (char) pFATld->LDIR_Name1[3];
-        name[i*13+4] = (char) pFATld->LDIR_Name1[4];
-        name[i*13+5] = (char) pFATld->LDIR_Name2[0];
-        name[i*13+6] = (char) pFATld->LDIR_Name2[1];
-        name[i*13+7] = (char) pFATld->LDIR_Name2[2];
-        name[i*13+8] = (char) pFATld->LDIR_Name2[3];
-        name[i*13+9] = (char) pFATld->LDIR_Name2[4];
-        name[i*13+10] = (char) pFATld->LDIR_Name2[5];
-        name[i*13+11] = (char) pFATld->LDIR_Name3[0];
-        name[i*13+12] = (char) pFATld->LDIR_Name3[1];
-        pFATld = pFATld-1;
+char* readInfoFromFATLongDirectory(struct FATLongDirectory* pFATld) {
+    char c[140];
+    int i = 0;
+    memset(c, '\0', 140);
+    c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
+    c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
+    c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
+    c[i * 13 + 3] = (char) pFATld->LDIR_Name1[3];
+    c[i * 13 + 4] = (char) pFATld->LDIR_Name1[4];
+    c[i * 13 + 5] = (char) pFATld->LDIR_Name2[0];
+    c[i * 13 + 6] = (char) pFATld->LDIR_Name2[1];
+    c[i * 13 + 7] = (char) pFATld->LDIR_Name2[2];
+    c[i * 13 + 8] = (char) pFATld->LDIR_Name2[3];
+    c[i * 13 + 9] = (char) pFATld->LDIR_Name2[4];
+    c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
+    c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
+    c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
+    if (pFATld->LDIR_Ord > 0x40){
+        int size = strlen(c);
+        char * t = malloc(sizeof(char)*(size + 1));
+        t[size] = 0;
+        memcpy(t, c, size);
+        return t;
     }
-    i += 1;
-    name[i*13+0] = (char) pFATld->LDIR_Name1[0];
-    name[i*13+1] = (char) pFATld->LDIR_Name1[1];
-    name[i*13+2] = (char) pFATld->LDIR_Name1[2];
-    name[i*13+3] = (char) pFATld->LDIR_Name1[3];
-    name[i*13+4] = (char) pFATld->LDIR_Name1[4];
-    name[i*13+5] = (char) pFATld->LDIR_Name2[0];
-    name[i*13+6] = (char) pFATld->LDIR_Name2[1];
-    name[i*13+7] = (char) pFATld->LDIR_Name2[2];
-    name[i*13+8] = (char) pFATld->LDIR_Name2[3];
-    name[i*13+9] = (char) pFATld->LDIR_Name2[4];
-    name[i*13+10] = (char) pFATld->LDIR_Name2[5];
-    name[i*13+11] = (char) pFATld->LDIR_Name3[0];
-    name[i*13+12] = (char) pFATld->LDIR_Name3[1];
-    for (int i = 0; i < strlen(name); i++) {
-        if (!isprint(name[i]))
-            return NULL;
+    else {
+        pFATld = pFATld - 1;
+        int i = 1;
+        c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
+        c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
+        c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
+        c[i * 13 + 3] = (char) pFATld->LDIR_Name1[3];
+        c[i * 13 + 4] = (char) pFATld->LDIR_Name1[4];
+        c[i * 13 + 5] = (char) pFATld->LDIR_Name2[0];
+        c[i * 13 + 6] = (char) pFATld->LDIR_Name2[1];
+        c[i * 13 + 7] = (char) pFATld->LDIR_Name2[2];
+        c[i * 13 + 8] = (char) pFATld->LDIR_Name2[3];
+        c[i * 13 + 9] = (char) pFATld->LDIR_Name2[4];
+        c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
+        c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
+        c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
+            if (pFATld->LDIR_Ord > 0x40) {
+                int size = strlen(c);
+                char * t = malloc(sizeof(char)*(size + 1));
+                t[size] = 0;
+                memcpy(t, c, size);
+                return t;
+            } else {
+                pFATld = pFATld - 1;
+                int i = 2;
+                c[i * 13 + 0] = (char) pFATld->LDIR_Name1[0];
+                c[i * 13 + 1] = (char) pFATld->LDIR_Name1[1];
+                c[i * 13 + 2] = (char) pFATld->LDIR_Name1[2];
+                c[i * 13 + 3] = (char) pFATld->LDIR_Name1[3];
+                c[i * 13 + 4] = (char) pFATld->LDIR_Name1[4];
+                c[i * 13 + 5] = (char) pFATld->LDIR_Name2[0];
+                c[i * 13 + 6] = (char) pFATld->LDIR_Name2[1];
+                c[i * 13 + 7] = (char) pFATld->LDIR_Name2[2];
+                c[i * 13 + 8] = (char) pFATld->LDIR_Name2[3];
+                c[i * 13 + 9] = (char) pFATld->LDIR_Name2[4];
+                c[i * 13 + 10] = (char) pFATld->LDIR_Name2[5];
+                c[i * 13 + 11] = (char) pFATld->LDIR_Name3[0];
+                c[i * 13 + 12] = (char) pFATld->LDIR_Name3[1];
+                if (pFATld->LDIR_Ord > 0x40) {
+                    int size = strlen(c);
+                    char * t = malloc(sizeof(char)*(size + 1));
+                    t[size] = 0;
+                    memcpy(t, c, size);
+                    return t;
+                }
+            }
     }
-    return name;
+    return NULL;
 }
 int cmpfunc (const void * a, const void * b)
 {
