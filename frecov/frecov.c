@@ -215,7 +215,7 @@ int main (int argc, char* argv[]) {
                     countl++;
             }
         }
-        if (countsh > 2 && countl > 1.5*countsh) {
+        if (countsh > 2 && countl >= countsh) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
             // printf("%p\n", cluster);
             cluses[index] = DirEntry;
@@ -242,9 +242,9 @@ int main (int argc, char* argv[]) {
 }
 
 bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
-        if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
-            return true;
-        }
+    if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
+        return true;
+    }
     return false;
 }
 
