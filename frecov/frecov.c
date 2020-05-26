@@ -195,11 +195,11 @@ int main (int argc, char* argv[]) {
     int imgDataSize = imgSize - imgOffset;
     for (struct FATShortDirectory* ptmp = pFATshdir; inFile(ptmp, pFATshdir, imgDataSize); ptmp++) {
         if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0) {
-            for (int i = 0; i < 11; i++) {
-                if (isprint(ptmp->DIR_Name[i]) || (i!=0 && ptmp->DIR_Name[i] == '\0'))
-                    printf("%c", ptmp->DIR_Name[i]);
-                if (i == 10)
-                    printf("\n");
+            if (strncmp(&ptmp->DIR_Name[8], "BMP", 3) == 0) {
+                char nameTmp[12];
+                strncpy(nameTmp, ptmp->DIR_Name, 11);
+                nameTmp[11] = '\0';
+                printf("%s\n", nameTmp);
             }
         }
 
