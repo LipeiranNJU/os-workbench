@@ -291,6 +291,20 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
         name[i*13+12] = (char) pFATld->LDIR_Name3[1];
         pFATld = pFATld-1;
     }
+    i += 1;
+    name[i*13+0] = (char) pFATld->LDIR_Name1[0];
+    name[i*13+1] = (char) pFATld->LDIR_Name1[1];
+    name[i*13+2] = (char) pFATld->LDIR_Name1[2];
+    name[i*13+3] = (char) pFATld->LDIR_Name1[3];
+    name[i*13+4] = (char) pFATld->LDIR_Name1[4];
+    name[i*13+5] = (char) pFATld->LDIR_Name2[0];
+    name[i*13+6] = (char) pFATld->LDIR_Name2[1];
+    name[i*13+7] = (char) pFATld->LDIR_Name2[2];
+    name[i*13+8] = (char) pFATld->LDIR_Name2[3];
+    name[i*13+9] = (char) pFATld->LDIR_Name2[4];
+    name[i*13+10] = (char) pFATld->LDIR_Name2[5];
+    name[i*13+11] = (char) pFATld->LDIR_Name3[0];
+    name[i*13+12] = (char) pFATld->LDIR_Name3[1];
     printf("%s\n", name);
     return NULL;
 }
