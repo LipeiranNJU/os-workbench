@@ -219,7 +219,7 @@ int main (int argc, char* argv[]) {
         }
     }
     for (int i = 0; i < clusNum; i++) {
-        if (cluses[i] > 0) {
+        if (cluses[i] > 3) {
             printf("index:%d\n", i);
         }
     }
