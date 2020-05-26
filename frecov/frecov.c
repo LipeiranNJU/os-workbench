@@ -177,6 +177,7 @@ void dirClusAdd(int index) {
 int main (int argc, char* argv[]) {
     char* imgName = argv[1];
     struct stat statbuf;
+    stat(imgName, &statbuf);
     int imgSize = statbuf.st_size;
     int imgFd = open(imgName, O_RDONLY, 0);
     struct FATHeader* pFATHeader = (struct FATHeader *) mmap(NULL, imgSize, PROT_READ, MAP_SHARED, imgFd, 0);
