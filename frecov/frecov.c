@@ -129,7 +129,7 @@ void lineCmp(uint8_t*, uint8_t*, uint8_t*, int);
 void verifyFAT32Head(struct fat_header*);
 void showFAT32HeadInfo(struct fat_header*);
 bool isFATShortDirectory(struct FATShortDirectory*);
-char* readInfoFromFATLongDirectory(struct FATLongDirectory* );
+char* readInfoFromFATShortDirectory(struct FATLongDirectory* );
 
 int main(int argc, char *argv[]) {
     assert(argc == 2);
