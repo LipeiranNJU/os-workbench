@@ -223,9 +223,9 @@ int main (int argc, char* argv[]) {
     }
     for (int i = 0; i < clusNum; i++) {
         if (cluses[i] == DirEntry) {
-            printf("index:%d\n", i);
+            // printf("index:%d\n", i);
             void* cluster = getClusterFromIndex(i, imgDataStart);
-            printf("%p\n", cluster);
+            // printf("%p\n", cluster);
             int j = 0;
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
                 if (isFATShortDirectory(ptmp) && isFATLongDirectory((void*)(ptmp-1))) {
