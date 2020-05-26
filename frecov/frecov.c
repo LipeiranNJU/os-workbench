@@ -213,7 +213,7 @@ int main (int argc, char* argv[]) {
                 }
             }
         }
-        if (count > 5) {
+        if (count > 8) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
             cluses[index] = DirEntry;
         }
