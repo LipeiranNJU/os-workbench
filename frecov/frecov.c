@@ -271,7 +271,7 @@ bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     char* name = malloc(sizeof(char) * 100);
     memset(name, '\0', 100);
-    struct FATLongDirectory* pFATld = (struct FATShortDirectory*) (pFATsd-1);
+    struct FATLongDirectory* pFATld = (struct FATLongDirectory*) (pFATsd-1);
     int i = -1;
     while((pFATld->LDIR_Ord >> 4)==0) {
         i += 1;
