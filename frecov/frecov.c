@@ -190,7 +190,11 @@ int main (int argc, char* argv[]) {
     BPB_RsvdSecCnt = pFATHeader->BPB_RsvdSecCnt;
     BPB_NumFATs = pFATHeader->BPB_NumFATs;
 
-    int fileOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
-    struct FATShortDirectory* pFATshdir = (void* )pFATHeader + fileOffset;
+    int imgOffset = (BPB_RsvdSecCnt+BPB_NumFATs*BPB_FATSz32+(BPB_RootClus-2)*BPB_SecPerClus+BPB_HiddSec)*BPB_BytsPerSec;
+    struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
+    int imgDataSize = imgSize - imgOffset;
+    for (struct FATShortDirectory* ptmp = pFATHeader, inFile((void*)ptmp, (void*) pFATHeader, imgDataSize),ptmp++ ) {
+        
+    }
     return 0;
 }
