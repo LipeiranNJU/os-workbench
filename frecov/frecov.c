@@ -194,7 +194,12 @@ int main (int argc, char* argv[]) {
     struct FATShortDirectory* pFATshdir = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     for (struct FATShortDirectory* ptmp = pFATshdir; inFile(ptmp, pFATshdir, imgDataSize); ptmp++) {
-        ;
+        if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0) {
+            for (int i = 0; i < 11; i++)
+                if (isprint(ptmp->DIR_Name[i]) || ptmp->DIR_Name[i] == '\0')
+                    printf("%c");
+            printf("\n");
+        }
 
     }
     return 0;
