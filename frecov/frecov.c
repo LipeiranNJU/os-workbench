@@ -200,19 +200,22 @@ int main (int argc, char* argv[]) {
     for (int i = 0; i < clusNum; i++) 
         cluses[i] = Unknown;
     for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)) {
-        int count = 0;
+        int countsh = 0;
+        int countl = 0;
         for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
-            if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0 && ptmp->DIR_FstClusHI == 0) {
-                if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
-                    char nameTmp[12];
-                    memcpy(nameTmp, ptmp->DIR_Name, 11);
-                    nameTmp[11] = '\0';
-                    tmpi++;
-                    count++;
-                }
+            if (isFATShortDirectory(ptmp)) {
+                char nameTmp[12];
+                memcpy(nameTmp, ptmp->DIR_Name, 11);
+                nameTmp[11] = '\0';
+                tmpi++;
+                countsh++;
+                if (isFATLongDirectory((void*)(ptmp-1)))
+                    countl++;
+                if (isFATLongDirectory((void*)(ptmp-2)))
+                    countl++;
             }
         }
-        if (count > 8) {
+        if (countsh > 8 && countl > 10) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
             printf("%p\n", cluster);
             cluses[index] = DirEntry;
@@ -243,4 +246,26 @@ bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
         }
     }
     return false;
+}
+
+bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
+    if (pFATldir->LDIR_Ord & 0x0f > 3)
+        return false;
+    for (int i = 0; i < 5; i++) {
+        if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
+            return false;
+    }
+    for (int i = 0; i < 6; i++) {
+        if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
+            return false;
+    }
+    for (int i = 0; i < 2; i++) {
+        if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
+            return false;
+    }
+    if (pFATldir->LDIR_FstClusLO != 0 || pFATldir->LDIR_Type != 0)
+        return false;
+    
+
+    return true;
 }
