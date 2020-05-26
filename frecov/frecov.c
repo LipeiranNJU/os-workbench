@@ -263,6 +263,7 @@ bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
         if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
             return false;
     }
+    assert(0);
     if (pFATldir->LDIR_FstClusLO != 0 || pFATldir->LDIR_Type != 0)
         return false;
     
