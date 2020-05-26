@@ -214,6 +214,7 @@ int main (int argc, char* argv[]) {
         }
         if (count > 8) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
+            printf("%p\n", cluster);
             cluses[index] = DirEntry;
         }
     }
