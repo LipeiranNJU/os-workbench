@@ -196,10 +196,11 @@ int main (int argc, char* argv[]) {
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
     int clusNum = imgDataSize / clusSize;
-    assert(0);
     int* cluses = malloc(sizeof(int)*clusNum);
     for (int i = 0; i < clusNum; i++) 
         cluses[i] = Unknown;
+        
+    assert(0);
     // for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
     //     // for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
     //     //     ;
