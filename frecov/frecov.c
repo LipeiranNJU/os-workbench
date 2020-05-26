@@ -197,6 +197,7 @@ int main (int argc, char* argv[]) {
     int tmpi = 0;
     int clusNum = imgDataSize / clusSize;
     printf("clusNum=%d\n", clusNum);
+    assert(0);
     int* cluses = malloc(sizeof(int)*clusNum);
     for (int i = 0; i < clusNum; i++) 
         cluses[i] = -1;
