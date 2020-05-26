@@ -305,6 +305,10 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+10] = (char) pFATld->LDIR_Name2[5];
     name[i*13+11] = (char) pFATld->LDIR_Name3[0];
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
+    for (int i = 0; i < strlen(name); i++) {
+        if (!isprint(name[i]))
+            return NULL;
+    }
     for (int i = 0; i < 40; i++)
         printf("a");
     printf("   ");
