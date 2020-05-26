@@ -195,6 +195,7 @@ int main (int argc, char* argv[]) {
     void* imgDataStart = (void* )pFATHeader + imgOffset;
     int imgDataSize = imgSize - imgOffset;
     int tmpi = 0;
+    printf("imgDataSize:%d\n", imgDataSize);
     long long clusNum = imgDataSize / clusSize;
     printf("clusNum=%lld\n", clusNum);
     assert(0);
