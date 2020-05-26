@@ -197,7 +197,7 @@ int main (int argc, char* argv[]) {
         if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0) {
             for (int i = 0; i < 11; i++)
                 if (isprint(ptmp->DIR_Name[i]) || ptmp->DIR_Name[i] == '\0')
-                    printf("%c");
+                    printf("%c", ptmp->DIR_Name[i]);
             printf("\n");
         }
 
