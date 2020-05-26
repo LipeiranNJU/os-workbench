@@ -219,7 +219,7 @@ int main (int argc, char* argv[]) {
         }
     }
     for (int i = 0; i < clusNum; i++) {
-        if (cluses[i] > 0) {
+        if (cluses[i] == DirEntry) {
             printf("index:%d\n", i);
             void* cluster = getClusterFromIndex(i, imgDataStart);
             printf("%p\n", cluster);
