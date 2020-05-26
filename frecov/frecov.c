@@ -228,7 +228,7 @@ int main (int argc, char* argv[]) {
             printf("%p\n", cluster);
             int j = 0;
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
-                if (isFATShortDirectory(ptmp) && isFATLongDirectory((void*)(ptmp-1))) {
+                if (isFATShortDirectory(ptmp)) {
                     char nameTmp[12];
                     memcpy(nameTmp, ptmp->DIR_Name, 11);
                     nameTmp[11] = '\0';
