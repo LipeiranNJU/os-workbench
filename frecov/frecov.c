@@ -197,7 +197,7 @@ int main (int argc, char* argv[]) {
         if (ptmp->DIR_NTRes == 0 && (ptmp->DIR_Attr >> 6) == 0) {
             if (strncmp(&ptmp->DIR_Name[8], "BMP", 3) == 0) {
                 char nameTmp[12];
-                strncpy(nameTmp, ptmp->DIR_Name, 11);
+                memncpy(nameTmp, ptmp->DIR_Name, 11);
                 nameTmp[11] = '\0';
                 printf("%s\n", nameTmp);
             }
