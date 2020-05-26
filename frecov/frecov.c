@@ -244,4 +244,5 @@ bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
             return true;
         }
     }
+    return false;
 }
