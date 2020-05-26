@@ -210,12 +210,12 @@ int main (int argc, char* argv[]) {
                 tmpi++;
                 countsh++;
                 if (isFATLongDirectory((void*)(ptmp-1)))
-                    countl++;
+                    assert(0);
                 if (isFATLongDirectory((void*)(ptmp-2)))
-                    countl++;
+                    assert(0);
             }
         }
-        if (countsh > 8 && countl) {
+        if (countsh > 8) {
             int index = getClusterIndex(cluster, imgDataStart, clusSize);
             printf("%p\n", cluster);
             cluses[index] = DirEntry;
