@@ -200,9 +200,10 @@ int main (int argc, char* argv[]) {
     for (int i = 0; i < clusNum; i++) 
         cluses[i] = Unknown;
     for (void* cluster = imgDataStart; inFile(cluster, imgDataStart, imgDataSize); cluster = nextClus(cluster)){
-        for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
-            ;
-        }
+        // for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
+        //     ;
+        // }
+        ;
     }
     return 0;
 }
