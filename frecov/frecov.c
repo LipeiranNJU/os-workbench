@@ -251,6 +251,7 @@ bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
 bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
     if ((pFATldir->LDIR_Ord & 0x0f) > 3)
         return false;
+    assert(0);
     for (int i = 0; i < 5; i++) {
         if ((pFATldir->LDIR_Name1[i] >> 8) != 0)
             return false;
