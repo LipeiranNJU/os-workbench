@@ -251,21 +251,11 @@ bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
 }
 
 bool isFATLongDirectory(const struct FATLongDirectory* pFATldir) {
-    if ((pFATldir->LDIR_Ord & 0xf0) != 0) {
-        if ((pFATldir->LDIR_Ord & 0x0f) != 1) {
-            if (pFATldir->LDIR_Ord != (pFATldir+1)->LDIR_Ord +1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-    
+
     if (pFATldir->LDIR_FstClusLO != 0 || pFATldir->LDIR_Type != 0)
         return false;
-    
-
-    return true;
+    else    
+        return true;
 }
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     char* name = malloc(sizeof(char) * 100);
