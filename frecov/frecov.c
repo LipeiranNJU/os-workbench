@@ -246,6 +246,7 @@ int main (int argc, char* argv[]) {
     }
     return 0;
 }
+}
 
 bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
     if (strncmp((char*)&ptmp->DIR_Name[8], "BMP", 3) == 0) {
