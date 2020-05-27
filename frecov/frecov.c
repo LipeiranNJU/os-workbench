@@ -289,11 +289,10 @@ int main (int argc, char* argv[]) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
                                                 }
-                                            // assert(*tmpd >= *g);
+                                            assert(*tmpd >= *g);
                                             }
-                                            assert(0);
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            // source = newCluster - i*realWidthSize;
+                                            source = newCluster - i*realWidthSize;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         }
