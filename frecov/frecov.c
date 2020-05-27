@@ -300,11 +300,11 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
     for (int j = 12; j > -1; j--) {
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j] == '.' ) {
+            assert(0);
             name[i*13+j+1]='\0';
             break;
         }
     }
-    assert(0);
     for (int i = 0; i < strlen(name); i++) {
         if (!isprint(name[i]))
             return NULL;
