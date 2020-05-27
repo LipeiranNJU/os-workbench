@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "aMm0Fgjgwdde.bmp") == 0) {
+                                if (strcmp(name, "C6bsubODgR3P.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*g>200) {
