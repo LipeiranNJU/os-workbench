@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>116) {
+                                        if (*g>115) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
@@ -292,7 +292,7 @@ int main (int argc, char* argv[]) {
                                                     countUpper++;
                                                 }
                                                 // assert(*tmpd >= *g);
-                                                assert(countUpper < 5);
+                                                // assert(countUpper < 5);
                                             }
                                             if (countUpper > 5) {
                                                 printf("CountUpper%d\n", countUpper);
