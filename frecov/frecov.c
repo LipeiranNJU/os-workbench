@@ -235,11 +235,11 @@ int main (int argc, char* argv[]) {
                     // printf("%s\t%d\n", nameTmp, ++j);
                     char* name = readCompleteInfoFromFATShortDirectory(ptmp);
                     if (name != NULL) {
-                        for (int j = 0; j < 40; j++) 
+                        for (int i = 0; i < 40; i++)
                             printf("a");
-                        
-                        printf("   %s\n", name);
-                    }
+                        printf("   ");
+                        fflush(stdout);
+                        printf("%s\n", name);
                 }
             }
         }
