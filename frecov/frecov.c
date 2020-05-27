@@ -309,8 +309,6 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j-3] == '.' ) {
             // printf("%d\n", name[i*13+j+1]);
             name[i*13+j+1]= 0;
-            name[i*13+j+2]= 0;
-            name[i*13+j+3]='\0';
             break;
         }
     }
