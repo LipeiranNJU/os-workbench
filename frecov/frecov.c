@@ -272,7 +272,7 @@ int main (int argc, char* argv[]) {
                         source = picData;
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
-                            if (i != picHeight-1 && i!= 0) {
+                            if (i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
                                 if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
