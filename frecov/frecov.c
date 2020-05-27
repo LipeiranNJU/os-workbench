@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>400) {
+                                        if (*g>200) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
@@ -308,10 +308,6 @@ int main (int argc, char* argv[]) {
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
-                                        if (g[0]>190)
-                                            blank = false;
-                                        else
-                                            blank = false;
                                     }
                                 }
                             }
