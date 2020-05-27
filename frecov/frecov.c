@@ -232,7 +232,7 @@ int main (int argc, char* argv[]) {
                     char nameTmp[12];
                     memcpy(nameTmp, ptmp->DIR_Name, 11);
                     nameTmp[11] = '\0';
-                    printf("%s\t%d\n", nameTmp, ++j);
+                    // printf("%s\t%d\n", nameTmp, ++j);
                     char* name = readCompleteInfoFromFATShortDirectory(ptmp);
                     if (name != NULL) {
                         for (int i = 0; i < 40; i++) 
