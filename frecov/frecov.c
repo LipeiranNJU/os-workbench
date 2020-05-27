@@ -284,7 +284,8 @@ int main (int argc, char* argv[]) {
                                 }
                             }
                             if (blank) {
-                                memset(nowline, 0xff, realWidthSize);
+                                memset(picture+i*realWidthSize, 0xff, realWidthSize-i*realWidthSize);
+                                break;
                             }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
