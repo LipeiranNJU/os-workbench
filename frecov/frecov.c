@@ -144,7 +144,9 @@ bool isFATShortDirectory(const struct FATShortDirectory*);
 char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd);
 static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory* longDirectory){
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
+    
 }
+double sobleY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels);
 static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirectory* shortDirectory){
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
@@ -266,6 +268,10 @@ int main (int argc, char* argv[]) {
                         
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
+                            if (i != picHeight-1 && i!= 0) {
+                                memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
+                                sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                            }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
                         }
@@ -383,3 +389,14 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     return name;
 }
 
+double sobleY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
+    double r, g, b, sum;
+    sum = r = g = b = 0;
+    for (int i = 1; i < pixels - 1; i++) {
+        r = higherline[(i-1)*3+0]+2*higherline[i*3+0]+higherline[(i+1)*3+0]-lowerline[(i-1)*3+0]-2*lowerline[i*3+0]-lowerline[(i+1)*3+0];
+        g = higherline[(i-1)*3+1]+2*higherline[i*3+1]+higherline[(i+1)*3+1]-lowerline[(i-1)*3+1]-2*lowerline[i*3+1]-lowerline[(i+1)*3+1];
+        b = higherline[(i-1)*3+2]+2*higherline[i*3+2]+higherline[(i+1)*3+2]-lowerline[(i-1)*3+2]-2*lowerline[i*3+2]-lowerline[(i+1)*3+2];
+        sum += sqrt(pow(r,2)+pow(g,2)+pow(b,2));
+    }
+    return sum;
+}
