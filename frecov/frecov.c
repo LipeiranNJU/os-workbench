@@ -304,32 +304,6 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+10] = (char) pFATld->LDIR_Name2[5];
     name[i*13+11] = (char) pFATld->LDIR_Name3[0];
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
-    if (strncmp(name, "3rK3hKlaVrtob", 13) == 0) {
-        printf("name:%s\n", name);
-        char b = (char) (pFATld-1)->LDIR_Name1[0];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name1[1];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name1[2];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name1[3];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name1[4];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[0];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[1];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[2];
-        printf("%d\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[3];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[4];
-        printf("%c\n", b);
-        b = (char) (pFATld-1)->LDIR_Name2[5];
-        printf("%c\n", b);
-        assert(0);
-    }
     for (int j = 12; j > -1; j--) {
   
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j-3] == '.' ) {
