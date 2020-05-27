@@ -265,7 +265,7 @@ int main (int argc, char* argv[]) {
                         uint8_t* lowerline = malloc(realWidthSize);
                         uint8_t* nowline = malloc(realWidthSize);
                         uint8_t* higherline = malloc(realWidthSize);
-                        uint8_t tmpline = malloc(realWidthSize);
+                        uint8_t* tmpline = malloc(realWidthSize);
                         bool blank = false;
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
