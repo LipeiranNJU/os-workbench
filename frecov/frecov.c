@@ -265,12 +265,13 @@ int main (int argc, char* argv[]) {
                         uint8_t* lowerline = malloc(realWidthSize);
                         uint8_t* nowline = malloc(realWidthSize);
                         uint8_t* higherline = malloc(realWidthSize);
+                        uint8_t tmpline = malloc(realWidthSize);
                         bool blank = false;
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
+                                if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
@@ -417,7 +418,9 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
         sum += sqrt(pow(r,2)+pow(g,2)+pow(b,2));
         sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
-    printf("mean:%lf\n", sum/(pixels-2));
+    double* mean = malloc(sizeof(double));
+    *mean = sum/(pixels-2);
+    printf("mean:%lf\n", *mean);
     qsort(sobel, pixels-2, sizeof(double), comp);
-    return sobel;
+    return mean;
 }
