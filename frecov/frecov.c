@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                         //     printf("%lf\t", g[i]);
                                         // printf("\n");
                                         if (g[realWidthSize/ByteperPixel-2]>500)
-                                            continue;
+                                            memset(nowline, 0xff, realWidthSize);
                                     }
                                 }
                             }
