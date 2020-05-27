@@ -395,7 +395,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     }
     return name;
 }
-bool comp(const void* a, const void* b) {
+int comp(const void* a, const void* b) {
     return *(double*)a-*(double*)b;
 }
 double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
