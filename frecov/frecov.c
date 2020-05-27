@@ -281,7 +281,7 @@ int main (int argc, char* argv[]) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
-                                            for (int i = 0; i < clusNum; i++) {
+                                            for (int i = 0; i < clusNum && cluses[i] == Unknown; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
                                                 memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
@@ -301,6 +301,8 @@ int main (int argc, char* argv[]) {
                                                 memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             }
                                             
+                                        } else {
+                                            cluses[i] = BMPContent;
                                         }
                                         printf("mean:%lf\n", *g);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
