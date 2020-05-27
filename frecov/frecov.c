@@ -289,12 +289,13 @@ int main (int argc, char* argv[]) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
                                                 }
-                                            assert(*tmpd >= *g);
+                                            // assert(*tmpd >= *g);
                                             assert(tmpLowIndex > -10);
                                             }
+
                                             
                                         }
-                                        printf("mean:%lf\n", *g);
+                                        // printf("mean:%lf\n", *g);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
