@@ -146,7 +146,7 @@ static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
     
 }
-double sobleY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels);
+double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels);
 static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirectory* shortDirectory){
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
@@ -272,8 +272,10 @@ int main (int argc, char* argv[]) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
-                                        double g = sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        printf("%lf\t", g);
+                                        double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        for (int i = 0; i < realWidthSize/ByteperPixel-2; i++)
+                                            printf("%lx", g[i]);
+                                        printf("\n");
                                     }
                                 }
                             }
@@ -393,15 +395,20 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     }
     return name;
 }
-
-double sobleY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
+bool comp(const void* a, const void* b) {
+    return *(double*)a-*(double*)b;
+}
+double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
     double r, g, b, sum;
     sum = r = g = b = 0;
+    double* sobel = malloc(sizeof(double)*(pixels-2));
     for (int i = 1; i < pixels - 1; i++) {
         r = higherline[(i-1)*3+0]+2*higherline[i*3+0]+higherline[(i+1)*3+0]-lowerline[(i-1)*3+0]-2*lowerline[i*3+0]-lowerline[(i+1)*3+0];
         g = higherline[(i-1)*3+1]+2*higherline[i*3+1]+higherline[(i+1)*3+1]-lowerline[(i-1)*3+1]-2*lowerline[i*3+1]-lowerline[(i+1)*3+1];
         b = higherline[(i-1)*3+2]+2*higherline[i*3+2]+higherline[(i+1)*3+2]-lowerline[(i-1)*3+2]-2*lowerline[i*3+2]-lowerline[(i+1)*3+2];
         sum += sqrt(pow(r,2)+pow(g,2)+pow(b,2));
+        sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
-    return sum;
+    qsort(sobel, pixels-2, sizeof(double), comp);
+    return sobel;
 }
