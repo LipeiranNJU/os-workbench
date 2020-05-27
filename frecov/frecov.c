@@ -240,6 +240,8 @@ int main (int argc, char* argv[]) {
                         printf("   ");
                         fflush(stdout);
                         printf("%s\n", name);
+                        free(name);
+                        name = NULL;
                     }
                 }
             }
@@ -305,7 +307,6 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
             name[i*13+j+1]= 0;
             name[i*13+j+2]= 0;
             name[i*13+j+3]='\0';
-            // assert(0);
             break;
         }
     }
@@ -313,11 +314,5 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
         if (!isprint(name[i]))
             return NULL;
     }
-
-    // for (int i = 0; i < 40; i++)
-    //     printf("a");
-    // printf("   ");
-    // fflush(stdout);
-    // printf("%s\n", name);
     return name;
 }
