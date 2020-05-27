@@ -292,7 +292,7 @@ int main (int argc, char* argv[]) {
                                                     countUpper++;
                                                 }
                                                 // assert(*tmpd >= *g);
-                                                // assert(countUpper < 5);
+                                                assert(countUpper < 5);
                                             }
                                             if (countUpper > 5) {
                                                 printf("CountUpper%d\n", countUpper);
