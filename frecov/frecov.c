@@ -293,6 +293,9 @@ int main (int argc, char* argv[]) {
                                                 }
                                                 // assert(*tmpd >= *g);
                                             }
+                                            if (tmpLowIndex != -1) {
+                                                printf("minMean:%d\n", tmpLow);
+                                            }
                                             if (countUpper > 0) {
                                                 printf("CountUpper%d\n", countUpper);
                                                 void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
