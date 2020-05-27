@@ -316,7 +316,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
         b = (char) (pFATld-1)->LDIR_Name2[1];
         printf("%c\n", b);
         b = (char) (pFATld-1)->LDIR_Name2[2];
-        printf("%c\n", b);
+        printf("%d\n", b);
         b = (char) (pFATld-1)->LDIR_Name2[3];
         printf("%c\n", b);
         b = (char) (pFATld-1)->LDIR_Name2[4];
