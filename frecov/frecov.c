@@ -328,7 +328,7 @@ int main (int argc, char* argv[]) {
                         // free(lowerline);
                         // free(nowline);
                         // free(higherline);
-                        picture = lowerline = nowline = higherline = NULL;
+                        // picture = lowerline = nowline = higherline = NULL;
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
