@@ -233,12 +233,12 @@ int main (int argc, char* argv[]) {
                     memcpy(nameTmp, ptmp->DIR_Name, 11);
                     nameTmp[11] = '\0';
                     // printf("%s\t%d\n", nameTmp, ++j);
-                    char* name = readCompleteInfoFromFATShortDirectory(ptmp);
-                    if (name != NULL) {
-                        for (int i = 0; i < 40; i++) 
-                            printf("a");
+                    // char* name = readCompleteInfoFromFATShortDirectory(ptmp);
+                    // if (name != NULL) {
+                    //     for (int i = 0; i < 40; i++) 
+                    //         printf("a");
                         
-                        printf("   %s\n", name);
+                    //     printf("   %s\n", name);
                     }
                 }
             }
@@ -308,10 +308,10 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
         if (!isprint(name[i]))
             return NULL;
     }
-    // for (int i = 0; i < 40; i++)
-    //     printf("a");
-    // printf("   ");
-    // fflush(stdout);
-    // printf("%s\n", name);
+    for (int i = 0; i < 40; i++)
+        printf("a");
+    printf("   ");
+    fflush(stdout);
+    printf("%s\n", name);
     return name;
 }
