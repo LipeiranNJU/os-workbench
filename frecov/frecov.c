@@ -248,6 +248,7 @@ int main (int argc, char* argv[]) {
                         pfdpic = fopen(abspath, "a+");
                         struct BMPInfoHeader* picInfo = (struct BMPInfoHeader*)(picStart+1);
                         fwrite(picInfo, 1, picStart->bfSize-sizeof(*picStart), pfdpic);
+                        assert(picStart->bfOffBits%4 == 0);
                         assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
                         fclose(pfdpic);
                         char buf[41];
