@@ -288,7 +288,7 @@ int main (int argc, char* argv[]) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
                                                 }
-                                                assert(tmpLowIndex > 0);
+                                                assert(tmpLowIndex > -2);
                                             // assert(*tmpd >= *g);
                                             }
 
