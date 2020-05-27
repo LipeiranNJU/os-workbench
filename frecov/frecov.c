@@ -440,8 +440,8 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
     double r, g, b, sum;
     sum = r = g = b = 0;
     double* sobel = malloc(sizeof(double)*(pixels-2));
-    for (int i = 1; i < pixels - 1; i++) {
-        r = higherline[(i-1)*3+0]+2*higherline[i*3+0]+higherline[(i+1)*3+0]-lowerline[(i-1)*3+0]-2*lowerline[i*3+0]-lowerline[(i+1)*3+0];
+    for (int i = 0; i < pixels; i++) {
+        r = higherline[i*3+0]+higherline[(i+1)*3+0]-lowerline[(i-1)*3+0]-2*lowerline[i*3+0]-lowerline[(i+1)*3+0];
         g = higherline[(i-1)*3+1]+2*higherline[i*3+1]+higherline[(i+1)*3+1]-lowerline[(i-1)*3+1]-2*lowerline[i*3+1]-lowerline[(i+1)*3+1];
         b = higherline[(i-1)*3+2]+2*higherline[i*3+2]+higherline[(i+1)*3+2]-lowerline[(i-1)*3+2]-2*lowerline[i*3+2]-lowerline[(i+1)*3+2];
         sum += sqrt(pow(r,2)+pow(g,2)+pow(b,2));
