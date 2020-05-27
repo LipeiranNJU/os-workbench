@@ -286,7 +286,7 @@ int main (int argc, char* argv[]) {
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
                                                 memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                                if (*tmpd < tmpLow || *tmpd > 1) {
+                                                if (*tmpd < tmpLow && *tmpd > 1) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
                                                     countUpper++;
