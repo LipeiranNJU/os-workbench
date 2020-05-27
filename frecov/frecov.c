@@ -301,8 +301,8 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     for (int j = 12; j > -1; j--) {
   
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j-3] == '.' ) {
-            name[i*13+j+1]='h';
-            name[i*13+j+2]='a';
+            name[i*13+j+1]='\0';
+            name[i*13+j+2]='\0';
             name[i*13+j+3]='\0';
             // assert(0);
             break;
