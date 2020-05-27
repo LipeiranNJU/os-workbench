@@ -417,6 +417,7 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
         sum += sqrt(pow(r,2)+pow(g,2)+pow(b,2));
         sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
+    printf("mean:%lf\n", sum/(pixels-2));
     qsort(sobel, pixels-2, sizeof(double), comp);
     return sobel;
 }
