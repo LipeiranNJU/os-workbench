@@ -281,25 +281,25 @@ int main (int argc, char* argv[]) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
-                                            // for (int i = 0; i < clusNum; i++) {
-                                            //     void* tmpcluster = getClusterFromIndex(i, imgDataStart);
-                                            //     memcpy(tmpnowline, tmpcluster, realWidthSize);
-                                            //     memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
-                                            //     double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                            //     if (*tmpd < tmpLow && *tmpd > 1) {
-                                            //         tmpLow = *tmpd;
-                                            //         tmpLowIndex = i;
-                                            //         countUpper++;
-                                            //     }
-                                            //     // assert(*tmpd >= *g);
-                                            // }
-                                            // if (countUpper > 5) {
-                                            //     printf("CountUpper%d\n", countUpper);
-                                            //     void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            //     source = newCluster - i*realWidthSize;
-                                            //     *g = tmpLow;
-                                            //     memcpy(nowline, source+i*realWidthSize, realWidthSize);
-                                            // }
+                                            for (int i = 0; i < clusNum; i++) {
+                                                void* tmpcluster = getClusterFromIndex(i, imgDataStart);
+                                                memcpy(tmpnowline, tmpcluster, realWidthSize);
+                                                memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
+                                                double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                                if (*tmpd < tmpLow && *tmpd > 1) {
+                                                    tmpLow = *tmpd;
+                                                    tmpLowIndex = i;
+                                                    countUpper++;
+                                                }
+                                                // assert(*tmpd >= *g);
+                                            }
+                                            if (countUpper > 5) {
+                                                printf("CountUpper%d\n", countUpper);
+                                                void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
+                                                source = newCluster - i*realWidthSize;
+                                                *g = tmpLow;
+                                                memcpy(nowline, source+i*realWidthSize, realWidthSize);
+                                            }
                                             
                                         }
                                         printf("mean:%lf\n", *g);
