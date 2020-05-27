@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                             printf("%lf\t", g[j]);
                                         printf("\n");
                                         if (g[0]>190)
-                                            blank = true;
+                                            blank = false;
                                         else
                                             blank = false;
                                     }
