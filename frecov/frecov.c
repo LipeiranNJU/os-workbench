@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "B8siuWRm7u7gQDr.bmp") == 0) {
+                                if (strcmp(name, "aUqJhfhLguLzI56.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*g>200) {
@@ -291,7 +291,7 @@ int main (int argc, char* argv[]) {
                                                     tmpLowIndex = i;
                                                     countUpper++;
                                                 }
-                                                // assert(*tmpd >= *g);
+                                                assert(*tmpd >= *g);
                                             }
                                             if (countUpper > 5) {
                                                 printf("CountUpper%d\n", countUpper);
