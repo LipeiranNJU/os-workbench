@@ -300,6 +300,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+11] = (char) pFATld->LDIR_Name3[0];
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
     if (strncmp(name, "3rK3hKlaVrtob", 13) == 0) {
+        printf("name:%s\n", name);
         assert(0);
     }
     for (int j = 12; j > -1; j--) {
