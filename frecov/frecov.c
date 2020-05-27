@@ -438,17 +438,17 @@ int comp(const void* a, const void* b) {
 double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
     double r, g, b, sum;
     sum = r = g = b = 0;
-    double* sobel = malloc(sizeof(double)*(pixels-2));
+    // double* sobel = malloc(sizeof(double)*(pixels-2));
     for (int i = 0; i < pixels; i++) {
         r = nowline[i*3+0]-lowerline[i*3+0];
         g = nowline[i*3+1]-lowerline[i*3+1];
         b = nowline[i*3+2]-lowerline[i*3+2];
         sum += pow(r,2)+pow(g,2)+pow(b,2);
-        sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
+        // sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
     double* mean = malloc(sizeof(double));
     *mean = sqrt(sum)/pixels;
-    free(sobel);
+    // free(sobel);
     // qsort(sobel, pixels-2, sizeof(double), comp);
     return mean;
 }
