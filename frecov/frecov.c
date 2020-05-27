@@ -240,12 +240,12 @@ int main (int argc, char* argv[]) {
                         printf("   ");
                         fflush(stdout);
                         printf("%s\n", name);
+                    }
                 }
             }
         }
     }
     return 0;
-}
 }
 
 bool isFATShortDirectory(const struct FATShortDirectory* ptmp) {
