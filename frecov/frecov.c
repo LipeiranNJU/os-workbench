@@ -305,7 +305,6 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
             name[i*13+j+1]= 0;
             name[i*13+j+2]= 0;
             name[i*13+j+3]='\0';
-            // assert(0);
             break;
         }
     }
