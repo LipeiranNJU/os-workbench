@@ -270,7 +270,10 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
-                                sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0) {
+                                    double g = sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                    printf("%lx\t", g);
+                                }
                             }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
