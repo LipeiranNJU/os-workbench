@@ -257,7 +257,6 @@ int main (int argc, char* argv[]) {
                         fwrite(picData, 1, picStart->bfSize-picStart->bfOffBits, pfdpic);
                         int ByteperPixel = picInfo->biBitCount/8;
                         int picHeight = abs(picInfo->biHeight);
-                        printf("Height:%d\n", picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
 
                         fclose(pfdpic);
