@@ -293,7 +293,7 @@ int main (int argc, char* argv[]) {
                                                 }
                                                 assert(*tmpd >= *g);
                                             }
-                                            if (countUpper > 5) {
+                                            if (countUpper > 0) {
                                                 printf("CountUpper%d\n", countUpper);
                                                 void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                                 source = newCluster - i*realWidthSize;
