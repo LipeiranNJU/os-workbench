@@ -260,8 +260,16 @@ int main (int argc, char* argv[]) {
                         int picHeight = abs(picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
                         uint8_t* picture = malloc(picDataSize);
-                        fwrite(picData, 1, picDataSize, pfdpic);
-
+                        uint8_t* lowerline = malloc(realWidthSize);
+                        uint8_t* nowline = malloc(realWidthSize);
+                        uint8_t* higherline = malloc(realWidthSize);
+                        
+                        fwrite(picture, 1, picDataSize, pfdpic);
+                        free(picture);
+                        free(lowerline);
+                        free(nowline);
+                        free(higherline);
+                        picture = lowerline = nowline = higherline = NULL;
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
