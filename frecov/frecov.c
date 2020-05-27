@@ -235,7 +235,7 @@ int main (int argc, char* argv[]) {
                     // printf("%s\t%d\n", nameTmp, ++j);
                     char* name = readCompleteInfoFromFATShortDirectory(ptmp);
                     if (name != NULL) {
-                        for (int i = 0; i < 40; i++) 
+                        for (int j = 0; j < 40; j++) 
                             printf("a");
                         
                         printf("   %s\n", name);
