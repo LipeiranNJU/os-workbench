@@ -271,8 +271,10 @@ int main (int argc, char* argv[]) {
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0) {
-                                    double g = sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                    printf("%lf\t", g);
+                                    if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
+                                        double g = sobleY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        printf("%lf\t", g);
+                                    }
                                 }
                             }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
