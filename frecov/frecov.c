@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>100) {
+                                        if (*g>200) {
                                             double tmpLow = 100000;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
