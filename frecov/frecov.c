@@ -247,7 +247,7 @@ int main (int argc, char* argv[]) {
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
-                        char cmd[100] = 0;
+                        char cmd[100];
                         memset(cmd, 0, 100);
                         int pipefds[2];
                         if (pipe(pipefds) < 0) {
