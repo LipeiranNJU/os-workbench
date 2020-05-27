@@ -258,9 +258,9 @@ int main (int argc, char* argv[]) {
                         int ByteperPixel = picInfo->biBitCount/8;
                         int naiveWidthSize = ByteperPixel*picInfo->biWidth;
                         int polishedWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
-                        printf("datasize:%d\n", picStart->bfSize-picStart->bfOffBits);
-                        printf("naivesize:%d\n", naiveWidthSize*picInfo->biHeight);
-                        printf("polishedSize:%d\n", polishedWidthSize*picInfo->biHeight);
+                        // printf("datasize:%d\n", picStart->bfSize-picStart->bfOffBits);
+                        // printf("polishedSize:%d\n", polishedWidthSize*picInfo->biHeight);
+                        assert(polishedWidthSize*picInfo->biHeight == picStart->bfSize-picStart->bfOffBits);
                         // assert(picStart->bfOffBits%4 == 0);
                         // assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
                         fclose(pfdpic);
