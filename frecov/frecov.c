@@ -278,6 +278,7 @@ int main (int argc, char* argv[]) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*g>115) {
+                                            int countUpper = 0;
                                             double tmpLow = 100000;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
@@ -288,8 +289,10 @@ int main (int argc, char* argv[]) {
                                                 if (*tmpd < tmpLow || *tmpd > 1) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
+                                                    countUpper++;
                                                 }
                                             assert(*tmpd >= *g);
+                                            assert(countUpper < 5);
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize;
