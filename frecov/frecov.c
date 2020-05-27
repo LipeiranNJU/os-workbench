@@ -294,6 +294,9 @@ int main (int argc, char* argv[]) {
                                                 // assert(*tmpd >= *g);
                                                 // assert(countUpper < 5);
                                             }
+                                            if (countUpper > 5) {
+                                                printf("CountUpper%d\n", countUpper);
+                                            }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             // source = newCluster - i*realWidthSize;
                                             *g = tmpLow;
