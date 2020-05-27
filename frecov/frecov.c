@@ -279,7 +279,7 @@ int main (int argc, char* argv[]) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*g>115) {
                                             int countUpper = 0;
-                                            double tmpLow = 100000;
+                                            double tmpLow = *g;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
