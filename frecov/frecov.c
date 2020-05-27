@@ -257,6 +257,7 @@ int main (int argc, char* argv[]) {
                         fwrite(picData, 1, picStart->bfSize-picStart->bfOffBits, pfdpic);
                         int ByteperPixel = picInfo->biBitCount/8;
                         printf("datasize:%d\n", picStart->bfSize-picStart->bfOffBits);
+                        printf("naivesize:%d\n", ByteperPixel*picInfo->biHeight*picInfo->biWidth);
                         // assert(picStart->bfOffBits%4 == 0);
                         // assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
                         fclose(pfdpic);
