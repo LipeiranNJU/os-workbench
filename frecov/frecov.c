@@ -265,7 +265,8 @@ int main (int argc, char* argv[]) {
                         uint8_t* lowerline = malloc(realWidthSize);
                         uint8_t* nowline = malloc(realWidthSize);
                         uint8_t* higherline = malloc(realWidthSize);
-                        uint8_t* tmpline = malloc(realWidthSize);
+                        uint8_t* tmpnowline = malloc(realWidthSize);
+                        uint8_t* tmphigherline = malloc(realWidthSize);
                         bool blank = false;
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
@@ -274,6 +275,13 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        for (int i = 0; i < clusNum; i++) {
+                                            void* tmpcluster = getClusterFromIndex(i, imgDataStart);
+                                            memcpy(tmpnowline, tmpcluster, realWidthSize);
+                                            memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
+                                            double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                            assert(*tmpd > *g);
+                                        }
                                         for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                             printf("%lf\t", g[j]);
                                         printf("\n");
