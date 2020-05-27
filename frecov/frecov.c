@@ -291,7 +291,7 @@ int main (int argc, char* argv[]) {
                                                     tmpLowIndex = i;
                                                     countUpper++;
                                                 }
-                                                assert(*tmpd >= *g);
+                                                // assert(*tmpd >= *g);
                                             }
                                             if (countUpper > 0) {
                                                 printf("CountUpper%d\n", countUpper);
