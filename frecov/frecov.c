@@ -295,11 +295,11 @@ int main (int argc, char* argv[]) {
                                             }
                                             if (countUpper > 5) {
                                                 printf("CountUpper%d\n", countUpper);
+                                                void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
+                                                source = newCluster - i*realWidthSize;
+                                                *g = tmpLow;
+                                                memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             }
-                                            void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize;
-                                            *g = tmpLow;
-                                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         }
                                         printf("mean:%lf\n", *g);
