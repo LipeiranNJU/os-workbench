@@ -273,9 +273,9 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
-                                        //     printf("%lf\t", g[j]);
-                                        // printf("\n");
+                                        for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
+                                            printf("%lf\t", g[j]);
+                                        printf("\n");
                                         if (g[0]>50)
                                             blank = true;
                                         else
