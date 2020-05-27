@@ -281,7 +281,7 @@ int main (int argc, char* argv[]) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
-                                            for (int i = 0; i < clusNum && cluses[i] == Unknown; i++) {
+                                            for (int i = 0; i < clusNum ; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
                                                 memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
