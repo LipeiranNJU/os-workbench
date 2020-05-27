@@ -275,15 +275,16 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        // if (*g>300) {
-                                        //     for (int i = 0; i < clusNum; i++) {
-                                        //         void* tmpcluster = getClusterFromIndex(i, imgDataStart);
-                                        //         memcpy(tmpnowline, tmpcluster, realWidthSize);
-                                        //         memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
-                                        //         double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                        //     assert(*tmpd >= *g);
-                                        //     }
-                                        // }
+                                        if (*g>300) {
+                                            for (int i = 0; i < clusNum; i++) {
+                                                void* tmpcluster = getClusterFromIndex(i, imgDataStart);
+                                                memcpy(tmpnowline, tmpcluster, realWidthSize);
+                                                memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
+                                                double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                            assert(*tmpd >= *g);
+                                            }
+                                        }
+                                        printf("mean:%lf\n", *g);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
@@ -430,7 +431,6 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
     }
     double* mean = malloc(sizeof(double));
     *mean = sum/(pixels-2);
-    printf("mean:%lf\n", *mean);
     qsort(sobel, pixels-2, sizeof(double), comp);
     return mean;
 }
