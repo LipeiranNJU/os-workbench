@@ -93,7 +93,7 @@ struct FATHeader {
 }__attribute__((packed));
 
 struct BMPHeader {
-    uint16_t bfType;
+    uint8_t bfType[2];
     uint32_t bfSize;
     uint16_t bfReserved1;
     uint16_t bfReserved2;
@@ -244,7 +244,8 @@ int main (int argc, char* argv[]) {
                         struct BMPHeader* picStart = (void*) (imgOffset+(uintptr_t)pFATHeader+(ptmp->DIR_FstClusLO-BPB_RootClus)*clusSize);
                         FILE* pfdpic = fopen(abspath, "w+");
                         fwrite(picStart, 1, picStart->bfType, pfdpic);
-                        printf("%d KB\n",picStart->bfType / KB);
+                        printf("%d KB\n", picStart->bfType / KB);
+                        printf("%c\n",picStart->bfType[0]);
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
