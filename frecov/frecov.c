@@ -256,13 +256,10 @@ int main (int argc, char* argv[]) {
                         void* picData = (struct BMPInfoHeader*)(picInfo+1);
                         fwrite(picData, 1, picStart->bfSize-picStart->bfOffBits, pfdpic);
                         int ByteperPixel = picInfo->biBitCount/8;
-                        int naiveWidthSize = ByteperPixel*picInfo->biWidth;
-                        int polishedWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
-                        // printf("datasize:%d\n", picStart->bfSize-picStart->bfOffBits);
-                        // printf("polishedSize:%d\n", polishedWidthSize*picInfo->biHeight);
-                        assert(polishedWidthSize*picInfo->biHeight == picStart->bfSize-picStart->bfOffBits);
-                        // assert(picStart->bfOffBits%4 == 0);
-                        // assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
+                        int picHeight = abs(picInfo->biHeight);
+                        printf("Height:%d\n", picInfo->biHeight);
+                        int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
+
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
