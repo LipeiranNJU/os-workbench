@@ -447,7 +447,7 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
         // sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
     double* mean = malloc(sizeof(double));
-    *mean = sqrt(sum)/pixels;
+    *mean = sqrt(sum);
     // free(sobel);
     // qsort(sobel, pixels-2, sizeof(double), comp);
     return mean;
