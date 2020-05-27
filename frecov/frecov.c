@@ -293,10 +293,11 @@ int main (int argc, char* argv[]) {
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize;
+                                            *g = tmpLow;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         }
-                                        // printf("mean:%lf\n", *g);
+                                        printf("mean:%lf\n", *g);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
