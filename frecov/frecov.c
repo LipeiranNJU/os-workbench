@@ -291,8 +291,8 @@ int main (int argc, char* argv[]) {
                                                     tmpLowIndex = i;
                                                     countUpper++;
                                                 }
-                                                assert(*tmpd >= *g);
-                                                // assert(countUpper < 5);
+                                                // assert(*tmpd >= *g);
+                                                assert(countUpper < 5);
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize;
