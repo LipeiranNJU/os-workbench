@@ -254,10 +254,13 @@ int main (int argc, char* argv[]) {
 
                         pfdpic = fopen(abspath, "a+");
                         void* picData = (struct BMPInfoHeader*)(picInfo+1);
-                        fwrite(picData, 1, picStart->bfSize-picStart->bfOffBits, pfdpic);
+                        int picDataSize = picStart->bfSize-picStart->bfOffBits;
+                        
                         int ByteperPixel = picInfo->biBitCount/8;
                         int picHeight = abs(picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
+                        uint8_t* picture = malloc(picDataSize);
+                        fwrite(picData, 1, picDataSize, pfdpic);
 
                         fclose(pfdpic);
                         char buf[41];
@@ -365,3 +368,4 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     }
     return name;
 }
+
