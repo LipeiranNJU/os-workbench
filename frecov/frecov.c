@@ -268,11 +268,11 @@ int main (int argc, char* argv[]) {
                         uint8_t* tmpnowline = malloc(realWidthSize);
                         uint8_t* tmphigherline = malloc(realWidthSize);
                         bool blank = false;
-                        void* source = picData;
+                        // void* source = picData;
                         for (int i = 0; i < picHeight; i++) {
-                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
+                            memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
-                                memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
+                                memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
                                 // if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0|| strcmp(name, "rgwfuyGZAfPrLw6n.bmp") == 0) {
                                 //     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                 //         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
@@ -306,10 +306,10 @@ int main (int argc, char* argv[]) {
                                 // }
                             }
                             if (blank) {
-                                memset(source+i*realWidthSize, 0xff, picDataSize-i*realWidthSize);
+                                memset(picData+i*realWidthSize, 0xff, picDataSize-i*realWidthSize);
                                 break;
                             }
-                            memcpy(source+i*realWidthSize, nowline, realWidthSize);
+                            memcpy(picData+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
                         }
 
