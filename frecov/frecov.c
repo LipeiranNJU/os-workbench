@@ -243,8 +243,8 @@ int main (int argc, char* argv[]) {
 
                         struct BMPHeader* picStart = (void*) (imgOffset+(uintptr_t)pFATHeader+(ptmp->DIR_FstClusLO-BPB_RootClus)*clusSize);
                         FILE* pfdpic = fopen(abspath, "w+");
-                        fwrite(picStart, 1, picStart->bfType, pfdpic);
-                        printf("%d KB\n", picStart->bfType / KB);
+                        fwrite(picStart, 1, picStart->bfSize, pfdpic);
+                        printf("%d KB\n", picStart->bfSize / KB);
                         printf("%c\n",picStart->bfType[0]);
                         fclose(pfdpic);
                         char buf[41];
