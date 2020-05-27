@@ -245,7 +245,7 @@ int main (int argc, char* argv[]) {
                         FILE* pfdpic = fopen(abspath, "w+");
                         fwrite(picStart, 1, sizeof(*picStart), pfdpic);
                         fclose(pfdpic);
-                        FILE* pfdpic = fopen(abspath, "a+");
+                        pfdpic = fopen(abspath, "a+");
                         struct BMPInfoHeader* picInfo = (struct BMPInfoHeader*)(picStart+1);
                         fwrite(picStart, 1, picStart->bfSize-sizeof(*picStart), pfdpic);
                         fclose(pfdpic);
