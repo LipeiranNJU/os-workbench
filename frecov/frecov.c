@@ -241,7 +241,6 @@ int main (int argc, char* argv[]) {
                         fflush(stdout);
                         printf("%s\n", name);
                         free(name);
-                        name = NULL;
                     }
                 }
             }
