@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                             printf("%lf\t", g[i]);
                                         printf("\n");
                                         if (g[realWidthSize/ByteperPixel-10]>400)
-                                            blank = true;
+                                            blank = false;
                                         else
                                             blank = false;
                                     }
