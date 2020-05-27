@@ -267,6 +267,7 @@ int main (int argc, char* argv[]) {
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
+                            memcpy(lowerline, nowline, realWidthSize);
                         }
 
                         fwrite(picture, 1, picDataSize, pfdpic);
