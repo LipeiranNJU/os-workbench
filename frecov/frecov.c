@@ -270,7 +270,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0) {
+                                if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "335qZ0PhcpRTxMb.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
