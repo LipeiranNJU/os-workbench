@@ -290,9 +290,10 @@ int main (int argc, char* argv[]) {
                                                     tmpLowIndex = i;
                                                 }
                                             // assert(*tmpd >= *g);
-                                            assert(tmpLowIndex > -10);
                                             }
-
+                                            void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
+                                            source = newCluster - i*realWidthSize;
+                                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         }
                                         // printf("mean:%lf\n", *g);
