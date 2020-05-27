@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "2pxHTrpI.bmp") == 0) {
+                                if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*g>200) {
@@ -293,11 +293,11 @@ int main (int argc, char* argv[]) {
                                                 }
                                                 // assert(*tmpd >= *g);
                                             }
-                                            if (tmpLowIndex != -1) {
-                                                printf("minMean:%lf\n", tmpLow);
-                                            }
+                                            // if (tmpLowIndex != -1) {
+                                            //     printf("minMean:%lf\n", tmpLow);
+                                            // }
                                             if (countUpper > 0) {
-                                                printf("CountUpper%d\n", countUpper);
+                                                // printf("CountUpper%d\n", countUpper);
                                                 void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                                 source = newCluster - i*realWidthSize;
                                                 *g = tmpLow;
