@@ -235,11 +235,45 @@ int main (int argc, char* argv[]) {
                     // printf("%s\t%d\n", nameTmp, ++j);
                     char* name = readCompleteInfoFromFATShortDirectory(ptmp);
                     if (name != NULL) {
-                        for (int i = 0; i < 40; i++)
-                            printf("a");
-                        printf("   ");
-                        fflush(stdout);
-                        printf("%s\n", name);
+                        char* prefix = "/tmp/";
+                        int picNameSize = strlen(prefix)+strlen(name)+1;
+                        char* abspath = malloc(sizeof(char) * picNameSize);
+                        memset(abspath, '\0', picNameSize);
+                        strcat(strcat(abspath, prefix), name);
+
+                        struct BMPHeader* picStart = (void*) (imgOffset+(uintptr_t)pFATHeader+(ptmp->DIR_FstClusLO-BPB_RootClus)*clusSize);
+                        FILE* pfdpic = fopen(abspath, "w+");
+                        fwrite(picStart, 1, picStart->bfType, pfdpic);
+                        fclose(pfdpic);
+                        char buf[41];
+                        buf[40] = 0;
+                        char cmd[100] = 0;
+                        memset(cmd, 0, 100);
+                        int pipefds[2];
+                        if (pipe(pipefds) < 0) {
+                            assert(0);
+                        }
+                        int pid = fork();
+                        char* argv[3];
+                        argv[0] = "sha1sum";
+                        argv[1] = abspath;
+                        argv[2] = NULL;
+                        if (pid == 0) {
+                            close(pipefds[0]);
+                            dup2(pipefds[1], fileno(stderr));
+                            dup2(pipefds[1], fileno(stdout));
+                            execvp("sha1sum", argv);
+                        } else {
+                            close(pipefds[1]);
+                            read(pipefds[0], buf, 40);
+                            printf("%s   %s\n", buf, name);
+                        }
+                        
+                        // for (int j = 0; j < 40; j++)
+                        //     printf("a");
+                        // printf("   ");
+                        // fflush(stdout);
+                        // printf("%s\n", name);
                     }
                 }
             }
@@ -305,9 +339,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+11] = (char) pFATld->LDIR_Name3[0];
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
     for (int j = 12; j > -1; j--) {
-  
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j-3] == '.' ) {
-            // printf("%d\n", name[i*13+j+1]);
             name[i*13+j+1]= 0;
             break;
         }
