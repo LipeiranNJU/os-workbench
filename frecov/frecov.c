@@ -280,19 +280,19 @@ int main (int argc, char* argv[]) {
                                         if (*g>200) {
                                             double tmpLow = 100000;
                                             int tmpLowIndex = -1;
-                                            for (int i = 0; i < clusNum; i++) {
-                                                void* tmpcluster = getClusterFromIndex(i, imgDataStart);
-                                                memcpy(tmpnowline, tmpcluster, realWidthSize);
-                                                memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
-                                                double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                                if (*tmpd < tmpLow) {
-                                                    tmpLow = *tmpd;
-                                                    tmpLowIndex = i;
-                                                }
-                                            // assert(*tmpd >= *g);
-                                            }
+                                            // for (int i = 0; i < clusNum; i++) {
+                                            //     void* tmpcluster = getClusterFromIndex(i, imgDataStart);
+                                            //     memcpy(tmpnowline, tmpcluster, realWidthSize);
+                                            //     memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
+                                            //     double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                            //     if (*tmpd < tmpLow) {
+                                            //         tmpLow = *tmpd;
+                                            //         tmpLowIndex = i;
+                                            //     }
+                                            // // assert(*tmpd >= *g);
+                                            // }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize;
+                                            // source = newCluster - i*realWidthSize;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         }
