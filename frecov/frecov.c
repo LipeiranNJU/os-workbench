@@ -269,31 +269,29 @@ int main (int argc, char* argv[]) {
                         uint8_t* tmphigherline = malloc(realWidthSize);
                         bool blank = false;
                         for (int i = 0; i < picHeight; i++) {
-                            void* source = picData;
-                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
+                            memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
                                 memcpy(higherline, picData+(i+1)*realWidthSize, realWidthSize);
                                 if (strcmp(name, "0M15CwG1yP32UPCp.bmp") == 0 || strcmp(name, "WDESkd1ohYoeScb0.bmp") == 0|| strcmp(name, "rgwfuyGZAfPrLw6n.bmp") == 0) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>300) {
-                                            double tmpLow = 100000;
+                                        if (*g>200) {
+                                            double* tmpLow = 100000;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
                                                 memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                                if (*tmpd < tmpLow) {
-                                                    tmpLow = *tmpd;
+                                                if (*tmpd < *tmpLow) {
+                                                    *tmpLow = *tmpd;
                                                     tmpLowIndex = i;
                                                 }
-                                                assert(tmpLowIndex > -2);
-                                            // assert(*tmpd >= *g);
+                                            assert(*tmpd >= *g);
                                             }
-
+                                            
                                         }
-                                        // printf("mean:%lf\n", *g);
+                                        printf("mean:%lf\n", *g);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
