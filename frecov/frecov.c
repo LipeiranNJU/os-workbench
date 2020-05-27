@@ -256,7 +256,7 @@ int main (int argc, char* argv[]) {
                         void* picData = (struct BMPInfoHeader*)(picInfo+1);
                         fwrite(picData, 1, picStart->bfSize-picStart->bfOffBits, pfdpic);
                         int ByteperPixel = picInfo->biBitCount/8;
-                        printf("%d\n", ByteperPixel);
+                        printf("datasize:%d\n", picStart->bfSize-picStart->bfOffBits);
                         // assert(picStart->bfOffBits%4 == 0);
                         // assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
                         fclose(pfdpic);
