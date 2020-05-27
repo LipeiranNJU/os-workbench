@@ -304,6 +304,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
             break;
         }
     }
+    assert(0);
     for (int i = 0; i < strlen(name); i++) {
         if (!isprint(name[i]))
             return NULL;
