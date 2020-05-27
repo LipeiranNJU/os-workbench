@@ -270,6 +270,9 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     memset(name, '\0', 200);
     struct FATLongDirectory* pFATld = (struct FATLongDirectory*) (pFATsd-1);
     int i = -1;
+    if ((pFATld->LDIR_Ord >> 4) != 0x4 && (pFATld->LDIR_Ord >> 4) != 0) {
+        return NULL;
+    }
     while((pFATld->LDIR_Ord >> 4)==0) {
         i += 1;
         name[i*13+0] = (char) pFATld->LDIR_Name1[0];
