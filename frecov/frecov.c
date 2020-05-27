@@ -243,7 +243,11 @@ int main (int argc, char* argv[]) {
 
                         struct BMPHeader* picStart = (void*) (imgOffset+(uintptr_t)pFATHeader+(ptmp->DIR_FstClusLO-BPB_RootClus)*clusSize);
                         FILE* pfdpic = fopen(abspath, "w+");
-                        fwrite(picStart, 1, picStart->bfSize, pfdpic);
+                        fwrite(picStart, 1, sizeof(*picStart), pfdpic);
+                        fclose(pfdpic);
+                        FILE* pfdpic = fopen(abspath, "a+");
+                        struct BMPInfoHeader* picInfo = (struct BMPInfoHeader*)(picStart+1);
+                        fwrite(picStart, 1, picStart->bfSize-sizeof(*picStart), pfdpic);
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
