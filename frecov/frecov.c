@@ -265,7 +265,7 @@ int main (int argc, char* argv[]) {
                         uint8_t* lowerline = malloc(realWidthSize);
                         uint8_t* nowline = malloc(realWidthSize);
                         uint8_t* higherline = malloc(realWidthSize);
-                        
+                        bool blank = false;
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, picData+i*realWidthSize, realWidthSize);
                             if (i != picHeight-1 && i!= 0) {
@@ -277,9 +277,14 @@ int main (int argc, char* argv[]) {
                                         //     printf("%lf\t", g[i]);
                                         // printf("\n");
                                         if (g[realWidthSize/ByteperPixel-2]>500)
-                                            memset(nowline, 0xff, realWidthSize);
+                                            blank = true;
+                                        else
+                                            blank = false;
                                     }
                                 }
+                            }
+                            if (blank) {
+                                memset(nowline, 0xff, realWidthSize);
                             }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
