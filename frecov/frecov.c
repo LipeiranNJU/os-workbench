@@ -295,7 +295,7 @@ int main (int argc, char* argv[]) {
                                                 assert(countUpper < 5);
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize;
+                                            // source = newCluster - i*realWidthSize;
                                             *g = tmpLow;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
