@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                                     if (getClusterIndex(picData+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(picData+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         for (int i = 0; i < realWidthSize/ByteperPixel-2; i++)
-                                            printf("%lf", g[i]);
+                                            printf("%lf\t", g[i]);
                                         printf("\n");
                                     }
                                 }
