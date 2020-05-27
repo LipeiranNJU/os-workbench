@@ -301,9 +301,6 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
     name[i*13+10] = (char) pFATld->LDIR_Name2[5];
     name[i*13+11] = (char) pFATld->LDIR_Name3[0];
     name[i*13+12] = (char) pFATld->LDIR_Name3[1];
-    if (strncmp(name, "3rK3hKlaVrtob", 13) == 0) {
-        printf("ord:%x\n", pFATld->LDIR_Ord);
-    }
     for (int j = 12; j > -1; j--) {
   
         if (name[i*13+j] == 'p' && name[i*13+j-1] == 'm' && name[i*13+j-2] == 'b' && name[i*13+j-3] == '.' ) {
