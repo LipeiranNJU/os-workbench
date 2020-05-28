@@ -288,7 +288,7 @@ int main (int argc, char* argv[]) {
                                         if (mean>13000) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
-                                            for (int j = 0; j < clusNum ; j++) {
+                                            for (int j = 0; j < clusNum && cluses[i] < 1; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
                                                 memcpy(tmpnowline, nowline, realWidthSize);
                                                 memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
@@ -304,7 +304,7 @@ int main (int argc, char* argv[]) {
                                             memcpy(nowline+nowLength, newCluster, requiredLength);
                                             
                                         } else {
-                                            cluses[i] = BMPContent;
+                                            cluses[i]++;
                                             
                                         }
                                     }
@@ -428,11 +428,8 @@ double sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pix
         g = nowline[i*3+1]-lowerline[i*3+1];
         b = nowline[i*3+2]-lowerline[i*3+2];
         sum += pow(r,2)+pow(g,2)+pow(b,2);
-        // sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
     double mean;
     mean = sum/pixels;
-    // free(sobel);
-    // qsort(sobel, pixels-2, sizeof(double), comp);
     return mean;
 }
