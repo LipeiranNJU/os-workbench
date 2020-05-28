@@ -286,7 +286,7 @@ int main (int argc, char* argv[]) {
                                         int requiredLength = realWidthSize - nowLength;
                                         // printf("requiredLength:%d\n", requiredLength);
                                         double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (mean>100000000) {
+                                        if (mean>10000) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
@@ -344,6 +344,7 @@ int main (int argc, char* argv[]) {
                             close(pipefds[1]);
                             read(pipefds[0], buf, 40);
                             printf("%s   %s\n", buf, name);
+                            fflush(stdout);
                         }
                         
                     }
