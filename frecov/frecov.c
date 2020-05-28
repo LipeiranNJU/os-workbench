@@ -257,9 +257,9 @@ int main (int argc, char* argv[]) {
                         void* picData = (struct BMPInfoHeader*)(picInfo+1);
                         int picDataSize = picStart->bfSize-picStart->bfOffBits;
                         
-                        int ByteperPixel = picInfo->biBitCount/8;
+                        int ByteperPixel = picInfo->biBitCount / 8;
                         int picHeight = abs(picInfo->biHeight);
-                        int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
+                        int realWidthSize = (picInfo->biWidth * picInfo->biBitCount + 31) / 32 * 4;
                         void* source = NULL;
                         source = picData;
                         for (int i = 0; i < picHeight; i++) {
@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
-                                                memcpy(tmpnowline, nowline, realWidthSize);
+                                                memcpy(tmpnowline, nowline, nowLength);
                                                 memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
                                                 double tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
                                                 if (tmpd < tmpLow) {
