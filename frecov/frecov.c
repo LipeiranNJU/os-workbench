@@ -255,8 +255,6 @@ int main (int argc, char* argv[]) {
                         pfdpic = fopen(abspath, "a+");
                         struct BMPInfoHeader* picInfo = (struct BMPInfoHeader*)(picStart+1);
                         fwrite(picInfo, 1, picStart->bfOffBits-sizeof(*picStart), pfdpic);
-                        // assert(picStart->bfOffBits%4 == 0);
-                        // assert(picInfo->biSize+sizeof(*picStart) == picStart->bfSize - picStart->bfOffBits);
                         fclose(pfdpic);
 
                         pfdpic = fopen(abspath, "a+");
@@ -276,16 +274,11 @@ int main (int argc, char* argv[]) {
                                 if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
-                                        // printf("now:%p\t", source+i*realWidthSize);
-                                        // printf("linewidth%d\t", realWidthSize);
-                                        // printf("next:%p\n", getClusterFromIndex(nowIndex+1, imgDataStart));
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
-                                        // printf("nowLength:%d\t", nowLength);
                                         
                                         int requiredLength = realWidthSize - nowLength;
-                                        // printf("requiredLength:%d\n", requiredLength);
                                         double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (mean>13000) {
+                                        if (mean > 12500) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
