@@ -307,7 +307,7 @@ int main (int argc, char* argv[]) {
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize;
                                             *mean = tmpLow;
-                                            memcpy(nowline+nowLength, newCluster, realWidthSize);
+                                            memcpy(nowline+nowLength, newCluster, requiredLength);
                                             
                                         } else {
                                             cluses[i] = BMPContent;
