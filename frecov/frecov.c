@@ -289,7 +289,7 @@ int main (int argc, char* argv[]) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = j;
                                                 }
-                                                assert(*tmpd >= *g);
+                                                assert(*tmpd >= *mean);
                                                 assert(0);
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
