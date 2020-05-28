@@ -280,7 +280,7 @@ int main (int argc, char* argv[]) {
                                         printf("now:%p\t", source+i*realWidthSize);
                                         printf("linewidth%d\t", realWidthSize);
                                         printf("next:%p\n", getClusterFromIndex(nowIndex+1, imgDataStart));
-                                        int nowLength = (intptr_t)(getClusterFromIndex(nowIndex, imgDataStart))-(intptr_t)(source+i*realWidthSize);
+                                        int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
                                         printf("nowLength:%d\t", nowLength);
                                         
                                         int requiredLength = realWidthSize - nowLength;
