@@ -236,10 +236,6 @@ int main (int argc, char* argv[]) {
             int j = 0;
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
                 if (isFATShortDirectory(ptmp) && isFATLongDirectory((void*)(ptmp-1))) {
-                    char nameTmp[12];
-                    memcpy(nameTmp, ptmp->DIR_Name, 11);
-                    nameTmp[11] = '\0';
-                    // printf("%s\t%d\n", nameTmp, ++j);
                     char* name = readCompleteInfoFromFATShortDirectory(ptmp);
                     if (name != NULL) {
                         char* prefix = "/tmp/";
@@ -264,8 +260,6 @@ int main (int argc, char* argv[]) {
                         int ByteperPixel = picInfo->biBitCount/8;
                         int picHeight = abs(picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
-
-                        bool blank = false;
                         void* source = NULL;
                         source = picData;
                         for (int i = 0; i < picHeight; i++) {
@@ -278,7 +272,7 @@ int main (int argc, char* argv[]) {
                                         
                                         int requiredLength = realWidthSize - nowLength;
                                         double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (mean > 12700) {
+                                        if (mean > 12500) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
@@ -292,7 +286,7 @@ int main (int argc, char* argv[]) {
                                                 }
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize + requiredLength - realWidthSize;
+                                            source = newCluster - i * realWidthSize + requiredLength - realWidthSize;
                                             mean = tmpLow;
                                             memcpy(nowline+nowLength, newCluster, requiredLength);
                                             
