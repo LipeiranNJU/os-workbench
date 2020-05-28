@@ -286,7 +286,7 @@ int main (int argc, char* argv[]) {
                                         int requiredLength = realWidthSize - nowLength;
                                         // printf("requiredLength:%d\n", requiredLength);
                                         double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (mean>10000) {
+                                        if (mean>100000000) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
@@ -313,11 +313,6 @@ int main (int argc, char* argv[]) {
                                             cluses[i] = BMPContent;
                                             
                                         }
-                                        // printf("mean:%lf\n", *mean);
-                                        
-                                        // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
-                                        //     printf("%lf\t", g[j]);
-                                        // printf("\n");
                                     }
                                 }
                             }
@@ -433,7 +428,6 @@ int comp(const void* a, const void* b) {
 double sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
     double r, g, b, sum;
     sum = r = g = b = 0;
-    // double* sobel = malloc(sizeof(double)*(pixels-2));
     for (int i = 0; i < pixels; i++) {
         r = nowline[i*3+0]-lowerline[i*3+0];
         g = nowline[i*3+1]-lowerline[i*3+1];
