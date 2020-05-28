@@ -277,14 +277,14 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "35OZL3hvJnEf.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
-                                        printf("now:%p\t", source+i*realWidthSize);
-                                        printf("linewidth%d\t", realWidthSize);
-                                        printf("next:%p\n", getClusterFromIndex(nowIndex+1, imgDataStart));
+                                        // printf("now:%p\t", source+i*realWidthSize);
+                                        // printf("linewidth%d\t", realWidthSize);
+                                        // printf("next:%p\n", getClusterFromIndex(nowIndex+1, imgDataStart));
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
-                                        printf("nowLength:%d\t", nowLength);
+                                        // printf("nowLength:%d\t", nowLength);
                                         
                                         int requiredLength = realWidthSize - nowLength;
-                                        printf("requiredLength:%d\n", requiredLength);
+                                        // printf("requiredLength:%d\n", requiredLength);
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*mean>10000) {
                                             double tmpLow = *mean;
