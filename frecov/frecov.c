@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*mean>7000) {
+                                        if (*mean>6000) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum && cluses[j] == Unknown; j++) {
