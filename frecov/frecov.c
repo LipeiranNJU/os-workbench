@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "B8siuWRm7u7gQDr.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*mean>1.3) {
+                                        if (*mean>2) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
