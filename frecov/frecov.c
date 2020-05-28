@@ -185,10 +185,10 @@ int main (int argc, char* argv[]) {
     struct FATHeader* pFATHeader = (struct FATHeader *) mmap(NULL, imgSize, PROT_READ, MAP_SHARED, imgFd, 0);
     uint8_t picture[4*MB];
     uint8_t lowerline[128*KB];
-    uint8_t* nowline[128*KB];
-    uint8_t* higherline[128*KB];
-    uint8_t* tmpnowline[128*KB];
-    uint8_t* tmphigherline[128*KB];
+    uint8_t nowline[128*KB];
+    uint8_t higherline[128*KB];
+    uint8_t tmpnowline[128*KB];
+    uint8_t tmphigherline[128*KB];
     BPB_BytsPerSec = 512;
     BPB_SecPerClus = 8;
     BPB_RootClus = pFATHeader->BPB_RootClus;
