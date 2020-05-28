@@ -275,6 +275,7 @@ int main (int argc, char* argv[]) {
                             if (i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
                                 if (strcmp(name, "B8siuWRm7u7gQDr.bmp") == 0) {
+                                    printf("Height:%d\n", picHeight);
                                    
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
