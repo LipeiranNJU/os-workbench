@@ -317,11 +317,11 @@ int main (int argc, char* argv[]) {
                         }
 
                         fwrite(picture, 1, picDataSize, pfdpic);
-                        // free(picture);
-                        // free(lowerline);
-                        // free(nowline);
-                        // free(higherline);
-                        // picture = lowerline = nowline = higherline = NULL;
+                        free(picture);
+                        free(lowerline);
+                        free(nowline);
+                        free(higherline);
+                        picture = lowerline = nowline = higherline = NULL;
                         fclose(pfdpic);
                         char buf[41];
                         buf[40] = 0;
