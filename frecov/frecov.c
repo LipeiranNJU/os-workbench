@@ -183,7 +183,12 @@ int main (int argc, char* argv[]) {
     int imgSize = statbuf.st_size;
     int imgFd = open(imgName, O_RDONLY, 0);
     struct FATHeader* pFATHeader = (struct FATHeader *) mmap(NULL, imgSize, PROT_READ, MAP_SHARED, imgFd, 0);
-
+    uint8_t picture[4*MB];
+    uint8_t lowerline[128*KB];
+    uint8_t* nowline[128*KB];
+    uint8_t* higherline[128*KB];
+    uint8_t* tmpnowline[128*KB];
+    uint8_t* tmphigherline[128*KB];
     BPB_BytsPerSec = 512;
     BPB_SecPerClus = 8;
     BPB_RootClus = pFATHeader->BPB_RootClus;
@@ -261,12 +266,7 @@ int main (int argc, char* argv[]) {
                         int ByteperPixel = picInfo->biBitCount/8;
                         int picHeight = abs(picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
-                        uint8_t* picture = malloc(picDataSize);
-                        uint8_t* lowerline = malloc(realWidthSize);
-                        uint8_t* nowline = malloc(realWidthSize);
-                        uint8_t* higherline = malloc(realWidthSize);
-                        uint8_t* tmpnowline = malloc(realWidthSize);
-                        uint8_t* tmphigherline = malloc(realWidthSize);
+
                         bool blank = false;
                         void* source = NULL;
                         source = picData;
