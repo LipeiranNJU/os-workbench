@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "emvzYdDWfu9i28IGJ.bmp") == 0) {
+                                if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         // printf("now:%p\t", source+i*realWidthSize);
