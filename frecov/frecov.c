@@ -271,7 +271,8 @@ int main (int argc, char* argv[]) {
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
                                         
                                         int requiredLength = realWidthSize - nowLength;
-                                        double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        int pixels = realWidthSize / ByteperPixel;
+                                        double mean = sobelY(lowerline, nowline, higherline, pixels);
                                         if (mean > 8200) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
@@ -279,7 +280,7 @@ int main (int argc, char* argv[]) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
                                                 memcpy(tmpnowline, nowline, nowLength);
                                                 memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
-                                                double tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                                double tmpd = sobelY(lowerline,tmpnowline, tmphigherline, pixels);
                                                 if (tmpd < tmpLow) {
                                                     tmpLow = tmpd;
                                                     tmpLowIndex = j;
