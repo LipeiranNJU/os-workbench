@@ -312,7 +312,7 @@ int main (int argc, char* argv[]) {
                                             cluses[i] = BMPContent;
                                             
                                         }
-                                        printf("mean:%lf\n", *mean);
+                                        // printf("mean:%lf\n", *mean);
                                         
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
