@@ -309,6 +309,7 @@ int main (int argc, char* argv[]) {
                                             
                                         }
                                         printf("mean:%lf\n", *g);
+                                        assert(0);
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
                                         // printf("\n");
