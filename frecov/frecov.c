@@ -279,7 +279,7 @@ int main (int argc, char* argv[]) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*mean>100) {
-                                            double tmpLow = *g;
+                                            double tmpLow = *mean;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
@@ -301,7 +301,7 @@ int main (int argc, char* argv[]) {
                                             cluses[i] = BMPContent;
                                             
                                         }
-                                        printf("mean:%lf\n", *g);
+                                        printf("mean:%lf\n", *mean);
                                         
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
