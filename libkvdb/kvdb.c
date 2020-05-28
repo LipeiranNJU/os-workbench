@@ -5,11 +5,17 @@
 struct data {
   void* dataSec;
   struct data* next;
+  void* key;
+};
+struct dataList {
+  struct data* dataHead;
+  struct dataList* next;
 };
 struct kvdb {
   // your definition here
   FILE* fp;
   struct flock lock;
+  struct dataList dataHeah;
 };
 
 struct kvdb *kvdb_open(const char *filename) {
