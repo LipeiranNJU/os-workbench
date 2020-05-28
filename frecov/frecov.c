@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <math.h>
+#include <time.h>
 #define B 1
 //#define __DEBUG__
 //#define __DDEBUG__
@@ -177,6 +178,7 @@ void dirClusAdd(int index) {
     assert(0);
 }
 int main (int argc, char* argv[]) {
+    srand(time(NULL));
     char* imgName = argv[1];
     struct stat statbuf;
     stat(imgName, &statbuf);
@@ -262,10 +264,11 @@ int main (int argc, char* argv[]) {
                         int realWidthSize = (picInfo->biWidth * picInfo->biBitCount + 31) / 32 * 4;
                         void* source = NULL;
                         source = picData;
+                        int r = rand();
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != 0) {
-                                if (true) {
+                                if (r%10>3) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
