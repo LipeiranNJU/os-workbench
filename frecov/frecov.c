@@ -146,7 +146,7 @@ static inline struct FATLongDirectory* nextLongDirectory(struct FATLongDirectory
     return (struct FATLongDirectory*)((intptr_t)(longDirectory) + sizeof(struct FATLongDirectory));
     
 }
-double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels);
+double sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels);
 static inline struct FATShortDirectory* nextShortDirectory(struct FATShortDirectory* shortDirectory){
     return (struct FATShortDirectory*)((intptr_t)(shortDirectory) + sizeof(struct FATShortDirectory));
 }
@@ -285,9 +285,9 @@ int main (int argc, char* argv[]) {
                                         
                                         int requiredLength = realWidthSize - nowLength;
                                         // printf("requiredLength:%d\n", requiredLength);
-                                        double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*mean>10000) {
-                                            double tmpLow = *mean;
+                                        double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        if (mean>10000) {
+                                            double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
@@ -295,9 +295,9 @@ int main (int argc, char* argv[]) {
                                                 
                                                 memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
                                                 // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
-                                                double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
-                                                if (*tmpd < tmpLow) {
-                                                    tmpLow = *tmpd;
+                                                double tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
+                                                if (tmpd < tmpLow) {
+                                                    tmpLow = tmpd;
                                                     tmpLowIndex = j;
                                                 }
                                                 // assert(*tmpd >= *mean);
@@ -306,7 +306,7 @@ int main (int argc, char* argv[]) {
                                             // printf("min cmp value:%lf\n", tmpLow);
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize + requiredLength - realWidthSize;
-                                            *mean = tmpLow;
+                                            mean = tmpLow;
                                             memcpy(nowline+nowLength, newCluster, requiredLength);
                                             
                                         } else {
@@ -430,7 +430,7 @@ char* readCompleteInfoFromFATShortDirectory(struct FATShortDirectory* pFATsd) {
 int comp(const void* a, const void* b) {
     return *(double*)a-*(double*)b;
 }
-double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
+double sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pixels) {
     double r, g, b, sum;
     sum = r = g = b = 0;
     // double* sobel = malloc(sizeof(double)*(pixels-2));
@@ -441,8 +441,8 @@ double* sobelY(uint8_t* lowerline, uint8_t* nowline, uint8_t* higherline, int pi
         sum += pow(r,2)+pow(g,2)+pow(b,2);
         // sobel[i-1] = sqrt(pow(r,2)+pow(g,2)+pow(b,2));
     }
-    double* mean = malloc(sizeof(double));
-    *mean = sum/pixels;
+    double mean;
+    mean = sum/pixels;
     // free(sobel);
     // qsort(sobel, pixels-2, sizeof(double), comp);
     return mean;
