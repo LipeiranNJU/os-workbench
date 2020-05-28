@@ -272,7 +272,7 @@ int main (int argc, char* argv[]) {
                                         
                                         int requiredLength = realWidthSize - nowLength;
                                         double mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (mean > 8500) {
+                                        if (mean > 8200) {
                                             double tmpLow = mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum; j++) {
