@@ -277,9 +277,8 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "B8siuWRm7u7gQDr.bmp") == 0) {
                                    
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
-                                        double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>100) {
-                                            int countUpper = 0;
+                                        double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
+                                        if (*mean>100) {
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
                                             for (int i = 0; i < clusNum; i++) {
@@ -290,20 +289,13 @@ int main (int argc, char* argv[]) {
                                                 if (*tmpd < tmpLow) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = i;
-                                                    countUpper++;
                                                 }
                                                 // assert(*tmpd >= *g);
                                             }
-                                            // if (tmpLowIndex != -1) {
-                                            //     printf("minMean:%lf\n", tmpLow);
-                                            // }
-                                            if (countUpper > 0) {
-                                                // printf("CountUpper%d\n", countUpper);
-                                                void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                                source = newCluster - i*realWidthSize;
-                                                *g = tmpLow;
-                                                memcpy(nowline, source+i*realWidthSize, realWidthSize);
-                                            }
+                                            void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
+                                            source = newCluster - i*realWidthSize;
+                                            *mean = tmpLow;
+                                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
                                         } else {
                                             cluses[i] = BMPContent;
