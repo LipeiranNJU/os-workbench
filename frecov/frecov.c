@@ -274,7 +274,7 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (true) {
+                                if (strcmp(name, "35OZL3hvJnEf.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         // printf("now:%p\t", source+i*realWidthSize);
@@ -313,7 +313,7 @@ int main (int argc, char* argv[]) {
                                             cluses[i] = BMPContent;
                                             
                                         }
-                                        // printf("mean:%lf\n", *mean);
+                                        printf("mean:%lf\n", *mean);
                                         
                                         // for (int j = 0; j < realWidthSize/ByteperPixel-2; j++)
                                         //     printf("%lf\t", g[j]);
