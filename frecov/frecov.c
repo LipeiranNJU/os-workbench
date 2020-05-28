@@ -284,10 +284,10 @@ int main (int argc, char* argv[]) {
                                         if (*mean>10000) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
-                                            for (int j = 0; j < clusNum && cluses[j] == Unknown; j++) {
+                                            for (int j = 0; j < clusNum; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
                                                 memcpy(tmpnowline, nowline, realWidthSize);
-                                                // memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
+                                                memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
                                                 // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
                                                 if (*tmpd < tmpLow) {
