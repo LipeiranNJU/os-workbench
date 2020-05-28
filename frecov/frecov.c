@@ -258,12 +258,12 @@ int main (int argc, char* argv[]) {
                         int picDataSize = picStart->bfSize-picStart->bfOffBits;
                         
                         int ByteperPixel = picInfo->biBitCount / 8;
-                        int picHeight = -picInfo->biHeight;
+                        int picHeight = picInfo->biHeight;
                         int realWidthSize = (picInfo->biWidth * picInfo->biBitCount + 31) / 32 * 4;
                         void* source = NULL;
                         source = picData;
                         for (int i = 0; i < picHeight; i++) {
-                            memcpy(nowline, source + i * realWidthSize, realWidthSize);
+                            memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != 0) {
                                 if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
