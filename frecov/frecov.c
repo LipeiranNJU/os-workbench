@@ -274,10 +274,10 @@ int main (int argc, char* argv[]) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i!= 0) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
-                                if (strcmp(name, "4QDw0lcDAIhO.bmp") == 0) {
+                                if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* g = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*g>0.8) {
+                                        if (*g>1) {
                                             int countUpper = 0;
                                             double tmpLow = *g;
                                             int tmpLowIndex = -1;
