@@ -276,14 +276,17 @@ int main (int argc, char* argv[]) {
                                 memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
                                 if (strcmp(name, "35OZL3hvJnEf.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
-
+                                        int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
+                                        int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
+                                        int requiredLength = realWidthSize - nowLength;
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*mean>10000) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum && cluses[j] == Unknown; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
-                                                memcpy(tmpnowline, tmpcluster, realWidthSize);
+                                                memcpy(tmpnowline, nowline, realWidthSize);
+                                                memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
                                                 // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
                                                 if (*tmpd < tmpLow) {
@@ -296,7 +299,7 @@ int main (int argc, char* argv[]) {
                                             printf("min cmp value:%lf\n", tmpLow);
                                             continue;
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize;
+                                            source = newCluster - i*realWidthSize - requiredLength;
                                             *mean = tmpLow;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
