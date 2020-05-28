@@ -278,6 +278,7 @@ int main (int argc, char* argv[]) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         printf("now:%p\t", source+i*realWidthSize);
+                                        printf("linewidth%d\t", realWidthSize);
                                         printf("next:%p\n", getClusterFromIndex(nowIndex+1, imgDataStart));
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
                                         printf("nowLength:%d\t", nowLength);
