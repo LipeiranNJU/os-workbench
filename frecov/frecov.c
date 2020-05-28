@@ -280,7 +280,7 @@ int main (int argc, char* argv[]) {
                                         if (*mean>10000) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
-                                            for (int j = 0; j < clusNum; j++) {
+                                            for (int j = 0; j < clusNum && cluses[j] == Unknown; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
                                                 // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
