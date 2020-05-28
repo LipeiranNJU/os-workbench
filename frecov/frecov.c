@@ -283,7 +283,7 @@ int main (int argc, char* argv[]) {
                                             for (int i = 0; i < clusNum; i++) {
                                                 void* tmpcluster = getClusterFromIndex(i, imgDataStart);
                                                 memcpy(tmpnowline, tmpcluster, realWidthSize);
-                                                memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
+                                                // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double* tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
                                                 if (*tmpd < tmpLow) {
                                                     tmpLow = *tmpd;
