@@ -273,7 +273,6 @@ int main (int argc, char* argv[]) {
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i!= 0) {
-                                memcpy(higherline, source+(i+1)*realWidthSize, realWidthSize);
                                 if (true) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
@@ -292,18 +291,13 @@ int main (int argc, char* argv[]) {
                                             for (int j = 0; j < clusNum ; j++) {
                                                 void* tmpcluster = getClusterFromIndex(j, imgDataStart);
                                                 memcpy(tmpnowline, nowline, realWidthSize);
-                                                
                                                 memcpy(tmpnowline+nowLength, tmpcluster, requiredLength);
-                                                // memcpy(tmphigherline, tmpcluster+realWidthSize, realWidthSize);
                                                 double tmpd = sobelY(lowerline,tmpnowline, tmphigherline, realWidthSize/ByteperPixel);
                                                 if (tmpd < tmpLow) {
                                                     tmpLow = tmpd;
                                                     tmpLowIndex = j;
                                                 }
-                                                // assert(*tmpd >= *mean);
-                                                // assert(0);
                                             }
-                                            // printf("min cmp value:%lf\n", tmpLow);
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize + requiredLength - realWidthSize;
                                             mean = tmpLow;
