@@ -326,10 +326,6 @@ int main (int argc, char* argv[]) {
                         }
 
                         fwrite(picture, 1, picDataSize, pfdpic);
-                        // free(picture);
-                        // free(lowerline);
-                        // free(nowline);
-                        // free(higherline);
                         picture = lowerline = nowline = higherline = NULL;
                         fclose(pfdpic);
                         char buf[41];
@@ -356,11 +352,6 @@ int main (int argc, char* argv[]) {
                             printf("%s   %s\n", buf, name);
                         }
                         
-                        // for (int j = 0; j < 40; j++)
-                        //     printf("a");
-                        // printf("   ");
-                        // fflush(stdout);
-                        // printf("%s\n", name);
                     }
                 }
             }
