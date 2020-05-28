@@ -325,10 +325,10 @@ int main (int argc, char* argv[]) {
                         }
 
                         fwrite(picture, 1, picDataSize, pfdpic);
-                        free(picture);
-                        free(lowerline);
-                        free(nowline);
-                        free(higherline);
+                        // free(picture);
+                        // free(lowerline);
+                        // free(nowline);
+                        // free(higherline);
                         picture = lowerline = nowline = higherline = NULL;
                         fclose(pfdpic);
                         char buf[41];
