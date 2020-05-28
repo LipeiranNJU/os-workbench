@@ -279,7 +279,9 @@ int main (int argc, char* argv[]) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
                                         printf("nowLength:%d\n", nowLength);
+                                        
                                         int requiredLength = realWidthSize - nowLength;
+                                        printf("requiredLength:%d\n", requiredLength);
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
                                         if (*mean>10000) {
                                             double tmpLow = *mean;
