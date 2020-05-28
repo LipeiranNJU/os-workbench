@@ -277,7 +277,7 @@ int main (int argc, char* argv[]) {
                                 if (strcmp(name, "35OZL3hvJnEf.bmp") == 0) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i-1)*realWidthSize, imgDataStart, clusSize)) {
                                         double* mean = sobelY(lowerline, nowline, higherline, realWidthSize/ByteperPixel);
-                                        if (*mean>9000) {
+                                        if (*mean>10000) {
                                             double tmpLow = *mean;
                                             int tmpLowIndex = -1;
                                             for (int j = 0; j < clusNum && cluses[j] == Unknown; j++) {
@@ -289,7 +289,8 @@ int main (int argc, char* argv[]) {
                                                     tmpLow = *tmpd;
                                                     tmpLowIndex = j;
                                                 }
-                                                // assert(*tmpd >= *g);
+                                                assert(*tmpd >= *g);
+                                                assert(0);
                                             }
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize;
