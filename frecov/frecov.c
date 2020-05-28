@@ -268,7 +268,7 @@ int main (int argc, char* argv[]) {
                         for (int i = 0; i < picHeight; i++) {
                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                             if (i != 0) {
-                                if (r%10>3) {
+                                if (r%10>1) {
                                     if (getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize) != getClusterIndex(source+(i+1)*realWidthSize, imgDataStart, clusSize)) {
                                         int nowIndex = getClusterIndex(source+i*realWidthSize, imgDataStart, clusSize);
                                         int nowLength = (intptr_t)(getClusterFromIndex(nowIndex+1, imgDataStart))-(intptr_t)(source+i*realWidthSize);
