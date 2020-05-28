@@ -304,7 +304,7 @@ int main (int argc, char* argv[]) {
                                             }
                                             // printf("min cmp value:%lf\n", tmpLow);
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
-                                            source = newCluster - i*realWidthSize - requiredLength;
+                                            source = newCluster - i*realWidthSize;
                                             *mean = tmpLow;
                                             memcpy(nowline, source+i*realWidthSize, realWidthSize);
                                             
