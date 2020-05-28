@@ -229,12 +229,6 @@ int main (int argc, char* argv[]) {
             void* cluster = getClusterFromIndex(i, imgDataStart);
             // printf("%p\n", cluster);
             int j = 0;
-            uint8_t* picture = malloc(1*MB);
-            uint8_t* lowerline = malloc(16*KB);
-            uint8_t* nowline = malloc(16*KB);
-            uint8_t* higherline = malloc(16*KB);
-            uint8_t* tmpnowline = malloc(16*KB);
-            uint8_t* tmphigherline = malloc(16*KB);
             for (struct FATShortDirectory* ptmp = cluster; inFile(ptmp, cluster, clusSize); ptmp++) {
                 if (isFATShortDirectory(ptmp) && isFATLongDirectory((void*)(ptmp-1))) {
                     char nameTmp[12];
@@ -267,6 +261,12 @@ int main (int argc, char* argv[]) {
                         int ByteperPixel = picInfo->biBitCount/8;
                         int picHeight = abs(picInfo->biHeight);
                         int realWidthSize = (picInfo->biWidth*picInfo->biBitCount+31)/32*4;
+                        uint8_t* picture = malloc(picDataSize);
+                        uint8_t* lowerline = malloc(realWidthSize);
+                        uint8_t* nowline = malloc(realWidthSize);
+                        uint8_t* higherline = malloc(realWidthSize);
+                        uint8_t* tmpnowline = malloc(realWidthSize);
+                        uint8_t* tmphigherline = malloc(realWidthSize);
                         bool blank = false;
                         void* source = NULL;
                         source = picData;
@@ -320,10 +320,6 @@ int main (int argc, char* argv[]) {
                                         // printf("\n");
                                     }
                                 }
-                            }
-                            if (blank) {
-                                memset(picture+i*realWidthSize, 0xff, picDataSize-i*realWidthSize);
-                                break;
                             }
                             memcpy(picture+i*realWidthSize, nowline, realWidthSize);
                             memcpy(lowerline, nowline, realWidthSize);
