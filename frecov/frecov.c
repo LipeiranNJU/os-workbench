@@ -303,7 +303,6 @@ int main (int argc, char* argv[]) {
                                                 // assert(0);
                                             }
                                             // printf("min cmp value:%lf\n", tmpLow);
-                                            continue;
                                             void* newCluster = getClusterFromIndex(tmpLowIndex, imgDataStart);
                                             source = newCluster - i*realWidthSize - requiredLength;
                                             *mean = tmpLow;
