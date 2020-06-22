@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <fcntl.h>
 struct data {
   void* dataSec;
@@ -15,7 +16,7 @@ struct dataList {
 };
 struct kvdb {
   // your definition here
-  FILE* fp;
+  int fd;
   struct flock lock;
   struct dataList dataHeah;
 };
@@ -23,10 +24,14 @@ struct kvdb {
 struct kvdb *kvdb_open(const char *filename) {
     char workpath[1000];
     strcpy(workpath, "./");
-    FILE* fp = fopen(strcat(workpath, filename), "a+");
+    int fd = open(strcat(strcat(workpath, filename), ".db"), O_RDWR | O_CREAT);
     printf("Now is opening database:%s\n", workpath);
-    fclose(fp);
-    return NULL;
+    close(fd);
+    struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
+    if (pkvdb != NULL) {
+        pkvdb->fd = fd;
+    }
+    return pkvdb;
 }
 
 int kvdb_close(struct kvdb *db) {
