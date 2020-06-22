@@ -59,6 +59,7 @@ void print(struct Node* node, bool show_pid) {
             for (int i = 0; i < node->layer; i++) {
                 printf("\t");
             }
+            
             printf("%s", node->item.name);
             print(node->brother, show_pid);
             return;

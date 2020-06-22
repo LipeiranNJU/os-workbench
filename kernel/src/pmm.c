@@ -1,7 +1,11 @@
 #include <common.h>
 void* tmp;
 static void *kalloc(size_t size) {
-  tmp = tmp+size;
+  int i = 0;
+  while ((1<<i) < size)
+    i++;
+  
+  tmp = tmp+(1<<i);
   return tmp;
 }
 
