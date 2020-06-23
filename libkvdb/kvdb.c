@@ -44,9 +44,7 @@ struct kvdb *kvdb_open(const char *filename) {
     struct stat statbuf;  
     stat(workpath, &statbuf);  
     int fileSize = statbuf.st_size;  
-    printf("filesize:%d\n", fileSize);
 
-    printf("Now is opening database:%s\n", workpath);
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
     pkvdb->recordListHead = malloc(sizeof(struct record));
     pkvdb->recordListHead->next = NULL;
@@ -76,7 +74,9 @@ struct kvdb *kvdb_open(const char *filename) {
             read(pkvdb->fd, sizeString, 8);
             offset += 8;
             long keySize = strtol(sizeString, tmp, 16);
-            printf("keySize:%lx\n", keySize);
+
+
+
             tmprecord->key = malloc(sizeof(keySize)+1);
             tmprecord->key[keySize] = '\0';
             read(pkvdb->fd, tmprecord->key, keySize);
@@ -86,7 +86,6 @@ struct kvdb *kvdb_open(const char *filename) {
             read(pkvdb->fd, sizeString, 8);
             offset += 8;
             long valueSize = strtol(sizeString, tmp, 16);
-            printf("valueSize:%lx\n", valueSize);
             tmprecord->value = malloc(sizeof(valueSize)+1);
             tmprecord->value[valueSize] = '\0';
             read(pkvdb->fd, tmprecord->value, valueSize);
@@ -140,7 +139,6 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         for (tmptail = db->recordListHead; tmptail->next != NULL; tmptail = tmptail->next);
         struct record* tmprecord = malloc(sizeof(struct record));
         tmprecord->lineindex = tmptail->lineindex+1;
-        printf("INSERT in line%ld\n", tmprecord->lineindex);
         tmprecord->next = NULL;
         tmptail->next = tmprecord;
         tmptail = tmptail->next;
@@ -150,10 +148,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         strcpy(tmprecord->value, value);
     }
 
-    // struct stat statbuf;  
-    // stat(workpath, &statbuf); 
-    // int fileSize = statbuf.st_size;  
-    // printf("filesize:%d\n", fileSize);
+
     if (status == INSERT) {
         lseek(db->fd, 0, SEEK_END);
     } else {
