@@ -7,8 +7,9 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-#define USUALLINEWIDTH 4241
+#define USUALLINEWIDTH 4242
 #define B 1
 #define KB (1024 * B)
 #define MB (1024 * KB)
@@ -16,27 +17,22 @@
 #define USUALVALUESIZE (4 * KB)
 #define MAXVALUESIZE (16 * MB)
 enum {UPDATE, INSERT};
-// struct data {
-//   void* dataSec;
-//   struct data* next;
-//   void* key;
-// };
+
 struct record {
   char* key;
   char* value;
   struct record *next;
   int64_t lineindex;
+  bool valid;
 };
-// struct dataList {
-//   struct data* dataHead;
-//   struct dataList* next;
-// };
+
 struct kvdb {
   // your definition here
   int fd;
   struct record *recordListHead;
 };
 char workpath[1000];
+enum {U, M};
 struct kvdb *kvdb_open(const char *filename) {
     strcpy(workpath, "/tmp/");
     int fd = open(strcat(strcat(workpath, filename), ".db"), O_RDWR | O_CREAT, 0777);
@@ -62,6 +58,7 @@ struct kvdb *kvdb_open(const char *filename) {
         for (tmptail = pkvdb->recordListHead; tmptail->next != NULL; tmptail = tmptail->next) ;
         while (offset < fileSize) {
             struct record* tmprecord = malloc(sizeof(struct record));
+            tmprecord->valid = true;
             tmprecord->next = NULL;
             tmprecord->lineindex = tmptail->lineindex+1;
             tmptail->next = tmprecord;
@@ -70,27 +67,46 @@ struct kvdb *kvdb_open(const char *filename) {
             char **tmp = NULL;
             memset(sizeString, '\0', 9);
 
-
+            char ch;
+            int linemode;
+            read(pkvdb->fd, &ch, 1);
+            if (ch == 'U') {
+                linemode = U;
+            } else if (ch == 'M') {
+                linemode = M;
+            } else {
+                assert(0);
+            }
+            
             read(pkvdb->fd, sizeString, 8);
             offset += 8;
             long keySize = strtol(sizeString, tmp, 16);
-
-
-
             tmprecord->key = malloc(sizeof(keySize)+1);
             tmprecord->key[keySize] = '\0';
             read(pkvdb->fd, tmprecord->key, keySize);
             lseek(pkvdb->fd, KEYSIZE-keySize, SEEK_CUR);
             offset += KEYSIZE;
-
-            read(pkvdb->fd, sizeString, 8);
-            offset += 8;
-            long valueSize = strtol(sizeString, tmp, 16);
-            tmprecord->value = malloc(sizeof(valueSize)+1);
-            tmprecord->value[valueSize] = '\0';
-            read(pkvdb->fd, tmprecord->value, valueSize);
-            lseek(pkvdb->fd, USUALVALUESIZE-valueSize+1, SEEK_CUR);
-            offset += USUALVALUESIZE + 1;
+            if (linemode == U) {
+                read(pkvdb->fd, sizeString, 8);
+                offset += 8;
+                long valueSize = strtol(sizeString, tmp, 16);
+                tmprecord->value = malloc(sizeof(valueSize)+1);
+                tmprecord->value[valueSize] = '\0';
+                read(pkvdb->fd, tmprecord->value, valueSize);
+                lseek(pkvdb->fd, USUALVALUESIZE-valueSize+1, SEEK_CUR);
+                offset += USUALVALUESIZE + 1;
+            } else if (linemode == M) {
+                read(pkvdb->fd, sizeString, 8);
+                offset += 8;
+                long valueSize = strtol(sizeString, tmp, 16);
+                tmprecord->value = malloc(sizeof(valueSize)+1);
+                tmprecord->value[valueSize] = '\0';
+                read(pkvdb->fd, tmprecord->value, valueSize);
+                lseek(pkvdb->fd, MAXVALUESIZE-valueSize+1, SEEK_CUR);
+                offset += MAXVALUESIZE + 1;
+            } else {
+                assert(0);
+            }
 
         }
 
@@ -98,9 +114,7 @@ struct kvdb *kvdb_open(const char *filename) {
         ;
     }
     
-    // assert(0);
     lseek(fd, 0, SEEK_END);
-    // assert(0);
     return pkvdb;
 }
 
@@ -122,7 +136,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
     // update db in memory
     struct record *tmp;
     int status = INSERT;
-    // int64_t lineindex = -1;
+    int64_t lineindex = -1;
     for (tmp = db->recordListHead; tmp != NULL; tmp = tmp->next) {
         if (tmp->key == NULL) 
             continue;
@@ -130,7 +144,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             free(tmp->value);
             status = UPDATE;
             tmp->value = malloc(sizeof(char) * (strlen(value) + 1));
-            // lineindex = tmp->lineindex;
+            lineindex = tmp->lineindex;
             strcpy(tmp->value, value);
         }
     }
@@ -148,11 +162,23 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         strcpy(tmprecord->value, value);
     }
 
-
     if (status == INSERT) {
         lseek(db->fd, 0, SEEK_END);
     } else {
-        lseek(db->fd, 0, SEEK_SET);
+        lseek(db->fd, lineindex*USUALLINEWIDTH, SEEK_SET);
+    }
+    int linemode;
+    if (strlen(value) <= USUALVALUESIZE) {
+        linemode = U;
+    } else {
+        linemode = M;
+    }
+    if (linemode == U) {
+        write(db->fd, "U", 1);
+    } else if (linemode == M) {
+        write(db->fd, "M", 1);
+    } else {
+        assert(0);
     }
     int keysizeused = strlen(key);
     int valuesizeused = strlen(value);
