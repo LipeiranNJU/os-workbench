@@ -38,7 +38,7 @@ struct kvdb {
 };
 char workpath[1000];
 struct kvdb *kvdb_open(const char *filename) {
-    strcpy(workpath, "/home/lpr/os-workbench/libkvdb/");
+    strcpy(workpath, "/tmp/");
     int fd = open(strcat(strcat(workpath, filename), ".db"), O_RDWR | O_CREAT, 0777);
     long offset = 0;
     struct stat statbuf;  
