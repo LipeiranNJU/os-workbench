@@ -5,51 +5,68 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <fcntl.h>
-struct data {
-  void* dataSec;
-  struct data* next;
+
+char* keyIdentifier = "@lprylkey";
+char* valueIdentifier = "^lprylvalue";
+char* endIdentifier = "$lprylend";
+
+// struct data {
+//   void* dataSec;
+//   struct data* next;
+//   void* key;
+// };
+struct record {
   void* key;
+  void* value;
 };
-struct dataList {
-  struct data* dataHead;
-  struct dataList* next;
-};
+// struct dataList {
+//   struct data* dataHead;
+//   struct dataList* next;
+// };
 struct kvdb {
   // your definition here
   int fd;
-  char* name;
-  struct flock lock;
-  struct dataList dataHeah;
+//   struct flock lock;
+  struct record* recordHead;
 };
 
 struct kvdb *kvdb_open(const char *filename) {
     char workpath[1000];
     strcpy(workpath, "./");
-    int fd = open(strcat(strcat(workpath, filename), ".db"), O_RDWR | O_CREAT);
+    int fd = open(strcat(strcat(workpath, filename), ".db"), O_RDWR | O_CREAT, 0777);
     lseek(fd, 0, SEEK_END);
+    
     printf("Now is opening database:%s\n", workpath);
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
-    pkvdb->name = malloc(sizeof(char) * (strlen(workpath) + 1));
-    strcpy(pkvdb->name, workpath);
     if (pkvdb != NULL) {
         pkvdb->fd = fd;
     }
+    lseek(fd, 0, SEEK_SET);
+    char ch;
+    
+    do {
+        ch = read(pkvdb->fd, &ch, 1);
+    } while(ch != EOF);
+    
+    assert(0);
+    lseek(fd, 0, SEEK_END);
+    assert(0);
     return pkvdb;
 }
 
 int kvdb_close(struct kvdb *db) {
-    free(db->name);
-    db->name =  NULL;
     return close(db->fd);
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
-    char* keyIdentifier = "@lprylkey";
-    char* valueIdentifier = "^lprylvalue";
-    char* endIdentifier = "$lprylend";
     write(db->fd, keyIdentifier, strlen(keyIdentifier));
     write(db->fd, key, strlen(key));
+    int keysize = strlen(key);
+    char keysizestring[9];
+    memset(keysizestring, '\0', 9);
+    sprintf(keysizestring, "%0x", keysize);
     write(db->fd, valueIdentifier, strlen(valueIdentifier));
+    write(db->fd, keysizestring, 8);
     write(db->fd, value, strlen(value));
     write(db->fd, endIdentifier, strlen(endIdentifier));
     fsync(db->fd);
