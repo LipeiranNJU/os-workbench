@@ -231,48 +231,48 @@
 //     return NULL;
 // }
 
-enum {QUIT, PUT, OPEN, CLOSE, QUERY};
+// enum {QUIT, PUT, OPEN, CLOSE, QUERY};
 
-int main() {
-    struct kvdb *db = NULL;
-    int instruction = -1;
-    while (instruction != QUIT) {
-        printf("Please tell me what you want:\n");
-        printf("[%d] QUIT\n", QUIT);
-        printf("[%d] PUT\n", PUT);
-        printf("[%d] OPEN\n", OPEN);
-        printf("[%d] CLOSE\n", CLOSE);
-        printf("[%d] QUERY\n", QUERY);
-        scanf("%d", &instruction);
-        if (instruction == OPEN) {
-            printf("Please ENTER NAME:\n");
-            char name[100];
-            scanf("%s", name);
-            printf("NAME:%s\n", name);
-            db = kvdb_open(name);
-            assert(db != NULL);
-        } else if (instruction == CLOSE) {
-            int closeStatus = kvdb_close(db);
-            assert(closeStatus == 0);
-            break;
-        } else if (instruction == PUT) {
-            char key[100];
-            char value[100];
-            printf("Please ENTER KEY:\n");
-            scanf("%s", key);
-            printf("Please ENTER value:\n");
-            scanf("%s", value);
-            kvdb_put(db, key, value);
-        } else if (instruction == QUERY) {
-            char key[100];
-            printf("Please ENTER KEY:\n");
-            scanf("%s", key);
-            char* v = kvdb_get(db, key);
-            printf("value of this key is %s\n", v);
-        }
+// int main() {
+//     struct kvdb *db = NULL;
+//     int instruction = -1;
+//     while (instruction != QUIT) {
+//         printf("Please tell me what you want:\n");
+//         printf("[%d] QUIT\n", QUIT);
+//         printf("[%d] PUT\n", PUT);
+//         printf("[%d] OPEN\n", OPEN);
+//         printf("[%d] CLOSE\n", CLOSE);
+//         printf("[%d] QUERY\n", QUERY);
+//         scanf("%d", &instruction);
+//         if (instruction == OPEN) {
+//             printf("Please ENTER NAME:\n");
+//             char name[100];
+//             scanf("%s", name);
+//             printf("NAME:%s\n", name);
+//             db = kvdb_open(name);
+//             assert(db != NULL);
+//         } else if (instruction == CLOSE) {
+//             int closeStatus = kvdb_close(db);
+//             assert(closeStatus == 0);
+//             break;
+//         } else if (instruction == PUT) {
+//             char key[100];
+//             char value[100];
+//             printf("Please ENTER KEY:\n");
+//             scanf("%s", key);
+//             printf("Please ENTER value:\n");
+//             scanf("%s", value);
+//             kvdb_put(db, key, value);
+//         } else if (instruction == QUERY) {
+//             char key[100];
+//             printf("Please ENTER KEY:\n");
+//             scanf("%s", key);
+//             char* v = kvdb_get(db, key);
+//             printf("value of this key is %s\n", v);
+//         }
         
-    }
+//     }
 
-    // system("rm -f *.db");
-    return 0;
-}
+//     // system("rm -f *.db");
+//     return 0;
+// }
