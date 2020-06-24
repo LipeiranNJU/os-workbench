@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <stdint.h>
 #include <stdbool.h>
-
+#include "kvdb.h"
 #define USUALLINEWIDTH 4242
 #define B 1
 #define KB (1024 * B)
