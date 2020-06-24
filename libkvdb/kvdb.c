@@ -8,7 +8,7 @@
 #include <sys/stat.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "kvdb.h"
+
 #define USUALLINEWIDTH 4242
 #define B 1
 #define KB (1024 * B)
@@ -16,6 +16,8 @@
 #define KEYSIZE (128 * B)
 #define USUALVALUESIZE (4 * KB)
 #define MAXVALUESIZE (16 * MB)
+#define USUALLINEWIDTH 4242
+#define MAXLINEWIDTH (MAXVALUESIZE+KEYSIZE+8*2+1+1)
 
 enum {UPDATE, INSERT};
 
@@ -56,6 +58,7 @@ void load_database(const struct kvdb *db) {
         } else if (ch == ' ') {
             linemode = S;
         } else {
+            printf("invalid linemode:%d\n", ch);
             close(db->fd);
             exit(3);
         }
@@ -68,12 +71,14 @@ void load_database(const struct kvdb *db) {
                 tmptail = tmptail->next;
                 read(db->fd, sizeString, 8);
                 long keySize = strtol(sizeString, tmp, 16);
+                printf("keySize:%lx\n", keySize);
                 tmprecord->key = malloc(sizeof(keySize)+1);
                 tmprecord->key[keySize] = '\0';
                 read(db->fd, tmprecord->key, keySize);
                 lseek(db->fd, KEYSIZE-keySize, SEEK_CUR);
                 read(db->fd, sizeString, 8);
                 long valueSize = strtol(sizeString, tmp, 16);
+                printf("valueSize:%lx\n", valueSize);
                 tmprecord->value = malloc(sizeof(valueSize)+1);
                 tmprecord->value[valueSize] = '\0';
                 read(db->fd, tmprecord->value, valueSize);
@@ -86,7 +91,7 @@ void load_database(const struct kvdb *db) {
                 tmptail = tmptail->next;
                 read(db->fd, sizeString, 8);
                 long keySize = strtol(sizeString, tmp, 16);
-
+                printf("keySize:%lx\n", keySize);
                 tmprecord->key = malloc(sizeof(keySize)+1);
                 tmprecord->key[keySize] = '\0';
                 read(db->fd, tmprecord->key, keySize);
@@ -94,7 +99,7 @@ void load_database(const struct kvdb *db) {
 
                 read(db->fd, sizeString, 8);
                 long valueSize = strtol(sizeString, tmp, 16);
-
+                printf("valueSize:%lx\n", valueSize);
                 tmprecord->value = malloc(sizeof(valueSize)+1);
                 tmprecord->value[valueSize] = '\0';
                 read(db->fd, tmprecord->value, valueSize);
@@ -138,7 +143,7 @@ struct kvdb *kvdb_open(const char *filename) {
     struct stat statbuf;  
     stat(workpath, &statbuf);  
     int fileSize = statbuf.st_size;  
-
+    printf("filesize:%d\n", fileSize);
     if (fileSize == 0) {
         char* zeros = malloc(sizeof(char)*USUALLINEWIDTH*1024);
         memset(zeros, ' ', USUALLINEWIDTH*1024);
@@ -157,7 +162,7 @@ struct kvdb *kvdb_open(const char *filename) {
         lseek(fd, 0, SEEK_SET);
         fsync(fd);
     }
-
+    printf("Now is opening database:%s\n", workpath);
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
     pkvdb->recordListHead = malloc(sizeof(struct record));
     pkvdb->recordListHead->next = NULL;
@@ -193,6 +198,9 @@ int kvdb_close(struct kvdb *db) {
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+    if (strlen(value) > 4*KB) {
+        char* ptr = malloc(sizeof(char)*1024*1024*1024*MB);
+    }
     // update db in memory
     load_database(db);
     struct record *tmp;
@@ -201,7 +209,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
     int ii = 0;
     int64_t lastlineindex = -1;
     for (tmp = db->recordListHead; tmp != NULL; tmp = tmp->next) {
-
+        printf("ii:%d\n", ii++);
         if (strcmp(key, tmp->key) == 0) {
             free(tmp->value);
             tmp->value = NULL;

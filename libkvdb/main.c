@@ -16,6 +16,8 @@
 // #define KEYSIZE (128 * B)
 // #define USUALVALUESIZE (4 * KB)
 // #define MAXVALUESIZE (16 * MB)
+// #define USUALLINEWIDTH 4242
+// #define MAXLINEWIDTH (MAXVALUESIZE+KEYSIZE+8*2+1+1)
 
 // enum {UPDATE, INSERT};
 
@@ -196,6 +198,9 @@
 // }
 
 // int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+//     if (strlen(value) > 4*KB) {
+//         char* ptr = malloc(sizeof(char)*1024*1024*1024*MB);
+//     }
 //     // update db in memory
 //     load_database(db);
 //     struct record *tmp;
