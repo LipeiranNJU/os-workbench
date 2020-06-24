@@ -198,6 +198,7 @@ int kvdb_close(struct kvdb *db) {
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+    assert(0);
     if (strlen(value) > 4*KB) {
         char* ptr = malloc(sizeof(char)*1024*1024*1024*MB);
     }
