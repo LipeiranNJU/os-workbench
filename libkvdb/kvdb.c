@@ -154,7 +154,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         } else {
             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
             memcpy(valuebuffer, value, valuelength);
-            write(db->fd, valuebuffer, 16 * KB);
+            write(db->fd, valuebuffer, 16 * MB);
             fsync(db->fd);
             free(valuebuffer);
             valuebuffer = NULL;
@@ -166,7 +166,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             lseek(db->fd, 0, SEEK_END);
             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
             memcpy(valuebuffer, value, valuelength);
-            write(db->fd, valuebuffer, 16 * KB);
+            write(db->fd, valuebuffer, 16 * MB);
             fsync(db->fd);
             free(valuebuffer);
             valuebuffer = NULL;
