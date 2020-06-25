@@ -13,7 +13,7 @@
 #define KB (1024 * B)
 #define MB (1024 * KB)
 #define JOURNALSIZE 10
-#define KEYSIZE (1 + 128 * B + 8 + 8 + 8)
+#define KEYSIZE (1 + 128 * B + 9 + 9 + 9)
 #define KEYITEMS (50)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
@@ -23,9 +23,9 @@ enum {UPDATE, INSERT};
 struct record {
     char valid;
     char KEY[128];
-    char keysize[8];
-    char valuesize[8];
-    char clusnum[8];
+    char keysize[9];
+    char valuesize[9];
+    char clusnum[9];
 };
 
 struct kvdb {
@@ -60,15 +60,15 @@ void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, co
     int valueSizeNum = strlen(valuename);
     char keysize[8];
     char valuesize[8];
-    sprintf(keysize, "%08x", keySizeNum);
-    sprintf(valuesize, "%08x", valueSizeNum);
+    sprintf(keysize, "%09x", keySizeNum);
+    sprintf(valuesize, "%09x", valueSizeNum);
     int end = lseek(db->fd, 0, SEEK_END);
     int clusnum = (end-JOURNALSIZE-KEYAREASIZE)/(4*KB);
     printf("offset:%d\n",(end-JOURNALSIZE-KEYSIZE));
     printf("clusnum:%d\n", clusnum);
     lseek(db->fd, JOURNALSIZE+keyindex_i*KEYSIZE, SEEK_SET);
     struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
-    sprintf(keybuffer->clusnum, "%08x", clusnum);
+    sprintf(keybuffer->clusnum, "%09x", clusnum);
     keybuffer->valid = '1';
     memcpy(keybuffer->keysize, keysize, 8);
     memcpy(keybuffer->valuesize, valuesize, 8);
@@ -172,8 +172,8 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             int valueSizeNum = strlen(value);
             char keysize[8];
             char valuesize[8];
-            sprintf(keysize, "%08x", keySizeNum);
-            sprintf(valuesize, "%08x", valueSizeNum);
+            sprintf(keysize, "%09x", keySizeNum);
+            sprintf(valuesize, "%09x", valueSizeNum);
             lseek(db->fd, JOURNALSIZE+i*KEYSIZE, SEEK_SET);
             struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
             keybuffer->valid = '1';
