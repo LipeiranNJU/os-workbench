@@ -8,6 +8,8 @@
 #include <sys/stat.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <sys/file.h>
+
 
 #define B 1
 #define KB (1024 * B)
@@ -89,6 +91,7 @@ struct kvdb *kvdb_open(const char *filename) {
     strcpy(workpath, "/tmp/");
     strcat(strcat(workpath, filename), ".db");
     int fd = open(workpath, O_RDWR | O_CREAT, 0777);
+    flock(fd, LOCK_EX);
     // long offset = 0;
     struct stat statbuf;  
     stat(workpath, &statbuf);  
@@ -116,18 +119,22 @@ struct kvdb *kvdb_open(const char *filename) {
 
 
     memset(workpath, '\0', 1000);
+    flock(fd, LOCK_UN);
     return pkvdb;
 }
 
 int kvdb_close(struct kvdb *db) {
-
+    flock(db->fd, LOCK_EX);
     close(db->fd);
+    int fd = db->fd;
     free(db);
     db = NULL;
+    flock(fd, LOCK_UN);
     return 0;
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+    flock(db->fd, LOCK_EX);
     load_database(db);
     int i;
     int valuelength = strlen(value);
@@ -197,10 +204,12 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         }
     }
     unload_database(db);
+    flock(db->fd, LOCK_UN);
     return 0;
 }
 
 char *kvdb_get(struct kvdb *db, const char *key) {
+    flock(db->fd, LOCK_EX);
     load_database(db);
     int clusNum = -1;
     int valueSize = -1;
@@ -223,5 +232,6 @@ char *kvdb_get(struct kvdb *db, const char *key) {
 
     }
     unload_database(db);
+    flock(db->fd, LOCK_UN);
     return returned;
 }
