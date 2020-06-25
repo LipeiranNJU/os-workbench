@@ -9,131 +9,82 @@
 // #include <stdint.h>
 // #include <stdbool.h>
 
-// #define USUALLINEWIDTH 4242
 // #define B 1
 // #define KB (1024 * B)
 // #define MB (1024 * KB)
-// #define KEYSIZE (128 * B)
-// #define USUALVALUESIZE (4 * KB)
-// #define MAXVALUESIZE (16 * MB)
-// #define USUALLINEWIDTH 4242
-// #define MAXLINEWIDTH (MAXVALUESIZE+KEYSIZE+8*2+1+1)
+// #define JOURNALSIZE 10
+// #define KEYSIZE (1 + 128 * B + 8 + 8 + 8)
+// #define KEYITEMS (50)
+// #define KEYAREASIZE (KEYSIZE * KEYITEMS)
+
 
 // enum {UPDATE, INSERT};
 
 // struct record {
-//   char* key;
-//   char* value;
-//   struct record *next;
-//   int64_t lineindex;
-//   bool valid;
+//     char valid;
+//     char KEY[128];
+//     char keysize[8];
+//     char valuesize[8];
+//     char clusnum[8];
 // };
 
 // struct kvdb {
 //   // your definition here
 //   int fd;
-//   struct record *recordListHead;
+//   struct record *database;
 // };
 // char workpath[1000];
 // enum {U, M, H, S};
 
-// void load_database(const struct kvdb *db) {
+// void goto_journal(const struct kvdb *db) {
 //     lseek(db->fd, 0, SEEK_SET);
-//     struct record* tmptail;
-//     for (tmptail = db->recordListHead; tmptail->next != NULL; tmptail = tmptail->next);
-//     while (true) {
-//         struct record* tmprecord = malloc(sizeof(struct record));
-//         char sizeString[9];
-//         char **tmp = NULL;
-//         memset(sizeString, '\0', 9);
-//         char ch;
-//         int linemode;
-//         read(db->fd, &ch, 1);
-//         if (ch == 'U') {
-//             linemode = U;
-//         } else if (ch == 'M') {
-//             linemode = M;
-//         } else if (ch == 'H') {
-//             linemode = H;
-//         } else if (ch == ' ') {
-//             linemode = S;
-//         } else {
-//             printf("invalid linemode:%d\n", ch);
-//             close(db->fd);
-//             exit(3);
-//         }
+// }
 
-//         if (linemode == U) {
-//                 tmprecord->valid = true;
-//                 tmprecord->next = NULL;
-//                 tmprecord->lineindex = tmptail->lineindex+1;
-//                 tmptail->next = tmprecord;
-//                 tmptail = tmptail->next;
-//                 read(db->fd, sizeString, 8);
-//                 long keySize = strtol(sizeString, tmp, 16);
-//                 printf("keySize:%lx\n", keySize);
-//                 tmprecord->key = malloc(sizeof(keySize)+1);
-//                 tmprecord->key[keySize] = '\0';
-//                 read(db->fd, tmprecord->key, keySize);
-//                 lseek(db->fd, KEYSIZE-keySize, SEEK_CUR);
-//                 read(db->fd, sizeString, 8);
-//                 long valueSize = strtol(sizeString, tmp, 16);
-//                 printf("valueSize:%lx\n", valueSize);
-//                 tmprecord->value = malloc(sizeof(valueSize)+1);
-//                 tmprecord->value[valueSize] = '\0';
-//                 read(db->fd, tmprecord->value, valueSize);
-//                 lseek(db->fd, USUALVALUESIZE-valueSize+1, SEEK_CUR);
-//             } else if (linemode == M) {
-//                 tmprecord->valid = true;
-//                 tmprecord->next = NULL;
-//                 tmprecord->lineindex = tmptail->lineindex+1;
-//                 tmptail->next = tmprecord;
-//                 tmptail = tmptail->next;
-//                 read(db->fd, sizeString, 8);
-//                 long keySize = strtol(sizeString, tmp, 16);
-//                 printf("keySize:%lx\n", keySize);
-//                 tmprecord->key = malloc(sizeof(keySize)+1);
-//                 tmprecord->key[keySize] = '\0';
-//                 read(db->fd, tmprecord->key, keySize);
-//                 lseek(db->fd, KEYSIZE-keySize, SEEK_CUR);
+// void goto_keyarea(const struct kvdb *db) {
+//     lseek(db->fd, JOURNALSIZE, SEEK_SET);
+// }
 
-//                 read(db->fd, sizeString, 8);
-//                 long valueSize = strtol(sizeString, tmp, 16);
-//                 printf("valueSize:%lx\n", valueSize);
-//                 tmprecord->value = malloc(sizeof(valueSize)+1);
-//                 tmprecord->value[valueSize] = '\0';
-//                 read(db->fd, tmprecord->value, valueSize);
-//                 lseek(db->fd, MAXVALUESIZE-valueSize+1, SEEK_CUR);
-//             } else if (linemode == H) {
-//                 free(tmprecord);
-//                 tmprecord = NULL;
-//                 lseek(db->fd, USUALLINEWIDTH-1, SEEK_CUR);
-//             } else if (linemode == S) {
-//                 free(tmprecord);
-//                 tmprecord = NULL;
-//                 break;
-//             } else {
-//                 assert(0);
-//             }
+// void goto_clusters(const struct kvdb *db) {
+//     lseek(db->fd, (JOURNALSIZE+KEYAREASIZE), SEEK_SET);
+// }
 
-        
-//     }
-    
-
+// void load_database(struct kvdb* db) {
+//     db->database= malloc(sizeof(char)*KEYAREASIZE);
+//     lseek(db->fd, JOURNALSIZE, SEEK_SET);
+//     read(db->fd, db->database, KEYAREASIZE);
 //     return ;
 // }
-// void unload_database(const struct kvdb *db) {
-//     struct record* firstrecord = db->recordListHead->next;
-//     if (firstrecord != NULL) {
-//         db->recordListHead->next = NULL;
-//         for (struct record* tmprecord = firstrecord; tmprecord != NULL;) {
-//             tmprecord = tmprecord->next;
-//             free(firstrecord);
-//             firstrecord = NULL;
-//             firstrecord = tmprecord;
-//         }
-//     }
 
+// void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, const int keyindex_i) {
+//     int keySizeNum = strlen(keyname);
+//     int valueSizeNum = strlen(valuename);
+//     char keysize[8];
+//     char valuesize[8];
+//     sprintf(keysize, "%07x", keySizeNum);
+//     sprintf(valuesize, "%07x", valueSizeNum);
+//     int end = lseek(db->fd, 0, SEEK_END);
+//     int clusnum = (end-JOURNALSIZE-KEYAREASIZE)/(4*KB);
+//     printf("offset:%d\n",(end-JOURNALSIZE-KEYSIZE));
+//     printf("clusnum:%d\n", clusnum);
+//     lseek(db->fd, JOURNALSIZE+keyindex_i*KEYSIZE, SEEK_SET);
+//     struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
+//     sprintf(keybuffer->clusnum, "%07x", clusnum);
+//     keybuffer->valid = '1';
+//     memcpy(keybuffer->keysize, keysize, 8);
+//     memcpy(keybuffer->valuesize, valuesize, 8);
+//     memcpy(keybuffer->KEY, keyname, keySizeNum);
+//     printf("keysize:%s\n", keysize);
+//     write(db->fd, keybuffer, KEYSIZE);
+//     fsync(db->fd);
+//     free(keybuffer);
+//     keybuffer = NULL;
+// }
+
+
+// void unload_database(struct kvdb *db) {
+//     free(db->database);
+//     db->database = NULL;
+//     return ;
 // }
 // struct kvdb *kvdb_open(const char *filename) {
 //     strcpy(workpath, "/home/lpr/os-workbench/libkvdb/");
@@ -142,55 +93,33 @@
 //     // long offset = 0;
 //     struct stat statbuf;  
 //     stat(workpath, &statbuf);  
+//     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
+//     pkvdb->fd = fd;
 //     int fileSize = statbuf.st_size;  
 //     printf("filesize:%d\n", fileSize);
 //     if (fileSize == 0) {
-//         char* zeros = malloc(sizeof(char)*USUALLINEWIDTH*1024);
-//         memset(zeros, ' ', USUALLINEWIDTH*1024);
-//         for (int i = 1; i <= 1024; i++) {
-//             zeros[i*USUALLINEWIDTH-1] = '\n';
-//         }
-//         write(fd, zeros, USUALLINEWIDTH*1024);
-//         lseek(fd, 0, SEEK_SET);
-//         fsync(fd);
+//         char* zeros = malloc(sizeof(char)*(16*MB+1*KB));
+//         memset(zeros, '0', JOURNALSIZE);
+//         write(pkvdb->fd, zeros, JOURNALSIZE);
+//         fsync(pkvdb->fd);
+//         free(zeros);
+//         zeros = NULL;
 
-//         char* tmpstring = malloc(sizeof(char)*USUALLINEWIDTH);
-//         memset(tmpstring, ' ', USUALLINEWIDTH);
-//         write(fd, "H", 1);
-//         write(fd, tmpstring, USUALLINEWIDTH-2);
-//         write(fd, "\n", 1);
-//         lseek(fd, 0, SEEK_SET);
-//         fsync(fd);
+//         goto_keyarea(pkvdb);
+//         zeros = malloc(sizeof(char)*KEYAREASIZE);
+//         memset(zeros, '0', KEYAREASIZE);
+//         write(pkvdb->fd, zeros, KEYAREASIZE);
+//         fsync(pkvdb->fd);
+//         free(zeros);
+//         zeros = NULL;
 //     }
 //     printf("Now is opening database:%s\n", workpath);
-//     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
-//     pkvdb->recordListHead = malloc(sizeof(struct record));
-//     pkvdb->recordListHead->next = NULL;
-//     pkvdb->recordListHead->key = malloc(sizeof(char));
-//     pkvdb->recordListHead->value = malloc(sizeof(char));
-//     pkvdb->recordListHead->key[0] = '\0';
-//     pkvdb->recordListHead->value[0] = '\0';
-//     pkvdb->recordListHead->lineindex = 0;
-//     pkvdb->fd = fd;
-//     system("pwd");
-//     lseek(fd, 0, SEEK_SET);
-
-//     load_database(pkvdb);
-    
-//     lseek(fd, 0, SEEK_END);
 //     memset(workpath, '\0', 1000);
 //     return pkvdb;
 // }
 
 // int kvdb_close(struct kvdb *db) {
-//     struct record *tmp = db->recordListHead;
-//     while (tmp != NULL) {
-//         if (tmp->key != NULL) {
-//             free(tmp->key);
-//             tmp->key = NULL;
-//         }
-//         tmp = tmp->next;
-//     } 
+
 //     close(db->fd);
 //     free(db);
 //     db = NULL;
@@ -198,96 +127,94 @@
 // }
 
 // int kvdb_put(struct kvdb *db, const char *key, const char *value) {
-//     if (strlen(value) > 4*KB) {
-//         char* ptr = malloc(sizeof(char)*1024*1024*1024*MB);
-//     }
-//     // update db in memory
 //     load_database(db);
-//     struct record *tmp;
-//     int status = INSERT;
-//     int64_t lineindex = -1;
-//     int ii = 0;
-//     int64_t lastlineindex = -1;
-//     for (tmp = db->recordListHead; tmp != NULL; tmp = tmp->next) {
-//         printf("ii:%d\n", ii++);
-//         if (strcmp(key, tmp->key) == 0) {
-//             free(tmp->value);
-//             tmp->value = NULL;
-//             status = UPDATE;
-//             // tmp->value = malloc(sizeof(char) * (strlen(value) + 1));
-//             lineindex = tmp->lineindex;
-//             // strcpy(tmp->value, value);
-//         } else if (strcmp("", tmp->key) != 0) {
-//             free(tmp->value);
-//             tmp->value = NULL;
+//     int i;
+//     int valuelength = strlen(value);
+//     for (i = 0; db->database[i].valid != '0'; i++) {
+//         printf("NAME:%s\n", db->database[i].KEY);
+//         if (strcmp(db->database[i].KEY, key) == 0) {
+//             break;
 //         }
-//         if (tmp->next == NULL) {
-//             lastlineindex = tmp->lineindex;
+//     }
+//     printf("key:%s\ti:%d\n", key, i);
+
+//     if (db->database[i].valid == '0') {
+//         setkeyondisk(db, key, value, i);
+//         lseek(db->fd, 0, SEEK_END);
+//         if (valuelength <= 4*KB) {
+//             char* valuebuffer = malloc(sizeof(char) * 4 * KB);
+//             memcpy(valuebuffer, value, valuelength);
+//             write(db->fd, valuebuffer, 4*KB);
+//             fsync(db->fd);
+//             free(valuebuffer);
+//             valuebuffer = NULL;
+//         } else {
+//             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
+//             memcpy(valuebuffer, value, valuelength);
+//             write(db->fd, valuebuffer, 16 * KB);
+//             fsync(db->fd);
+//             free(valuebuffer);
+//             valuebuffer = NULL;
 //         }
-
-//     }
-
-//     if (status == INSERT) {
-//         lseek(db->fd, (lastlineindex+1)*USUALLINEWIDTH, SEEK_SET);
 //     } else {
-//         lseek(db->fd, lineindex*USUALLINEWIDTH, SEEK_SET);
+//         int rawsize = strtol(db->database[i].keysize, NULL, 16);
+//         if (rawsize < 4*KB && valuelength >=4*KB) {
+//             setkeyondisk(db, key, value, i);
+//             lseek(db->fd, 0, SEEK_END);
+//             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
+//             memcpy(valuebuffer, value, valuelength);
+//             write(db->fd, valuebuffer, 16 * KB);
+//             fsync(db->fd);
+//             free(valuebuffer);
+//             valuebuffer = NULL;
+//         } else {
+//             int keySizeNum = strlen(key);
+//             int valueSizeNum = strlen(value);
+//             char keysize[8];
+//             char valuesize[8];
+//             sprintf(keysize, "%07x", keySizeNum);
+//             sprintf(valuesize, "%07x", valueSizeNum);
+//             lseek(db->fd, JOURNALSIZE+i*KEYSIZE, SEEK_SET);
+//             struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
+//             keybuffer->valid = '1';
+//             memcpy(keybuffer->keysize, keysize, 8);
+//             memcpy(keybuffer->valuesize, valuesize, 8);
+//             memcpy(keybuffer->KEY, key, keySizeNum);
+//             memcpy(keybuffer->clusnum, db->database[i].clusnum, 8);
+//             printf("keysize:%s\n", keysize);
+//             write(db->fd, keybuffer, KEYSIZE);
+//             fsync(db->fd);
+//             free(keybuffer);
+//             keybuffer = NULL;
+//             int clusindex = strtol(db->database[i].clusnum, NULL, 16);
+//             lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusindex*4*KB, SEEK_SET);
+//             write(db->fd, value, valuelength);
+//         }
 //     }
-//     int linemode;
-//     if (strlen(value) <= USUALVALUESIZE) {
-//         linemode = U;
-//     } else {
-//         linemode = M;
-//     }
-//     if (linemode == U) {
-//         write(db->fd, "U", 1);
-//     } else if (linemode == M) {
-//         write(db->fd, "M", 1);
-//     } else {
-//         assert(0);
-//     }
-//     int keysizeused = strlen(key);
-//     int valuesizeused = strlen(value);
-//     assert(valuesizeused < USUALVALUESIZE);
-//     char keysizestring[9];
-//     char valuesizestring[9];
-//     memset(keysizestring, '\0', 9);
-//     memset(valuesizestring, '\0', 9);
-//     sprintf(keysizestring, "%08x", keysizeused);
-//     sprintf(valuesizestring, "%08x", valuesizeused);
-
-//     write(db->fd, keysizestring, 8);
-//     int compensate = KEYSIZE - strlen(key);
-//     char* spaces = malloc(sizeof(char) * compensate);
-//     memset(spaces, ' ', compensate);
-//     write(db->fd, key, strlen(key));
-//     write(db->fd, spaces, compensate);
-//     free(spaces);
-//     spaces = NULL;
-
-//     compensate = USUALVALUESIZE - strlen(value);
-//     spaces = malloc(sizeof(char) * compensate);
-//     memset(spaces, ' ', compensate);
-//     write(db->fd, valuesizestring, 8);
-//     write(db->fd, value, strlen(value));
-//     write(db->fd, spaces, compensate);
-//     write(db->fd, "\n", 1);
-//     fsync(db->fd);
 //     unload_database(db);
 //     return 0;
 // }
 
 // char *kvdb_get(struct kvdb *db, const char *key) {
 //     load_database(db);
-//     struct record *tmp;
-//     char* valuereturned = NULL;
-//     for (tmp = db->recordListHead; tmp != NULL; tmp = tmp->next) {
-//         if (strcmp(key, tmp->key) == 0) {
-//             valuereturned = malloc(sizeof(char)*(strlen(tmp->value)+1));
-//             strcpy(valuereturned, tmp->value);
+//     int clusNum = -1;
+//     int valueSize = -1;
+//     char* returned = NULL;
+//     for (int i = 0; db->database[i].valid != '0'; i++) {
+//         if (strncmp(db->database[i].KEY, key, strtol(db->database[i].keysize, NULL, 16)) == 0) {
+//             clusNum = strtol(db->database[i].clusnum, NULL, 16);
+//             valueSize = strtol(db->database[i].valuesize, NULL, 16);
+//             break;
 //         }
 //     }
+//     if (clusNum > 0 && valueSize >0) {
+//         returned = malloc(sizeof(char)*(valueSize+1));
+//         returned[valueSize] = '\0';
+//         lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
+//         read(db->fd, returned, valueSize);
+//     }
 //     unload_database(db);
-//     return valuereturned;
+//     return returned;
 // }
 
 // enum {QUIT, PUT, OPEN, CLOSE, QUERY};
@@ -295,6 +222,27 @@
 // int main() {
 //     struct kvdb *db = NULL;
 //     int instruction = -1;
+//     // int ttt = 0;
+//     char* key1 = "lpr";
+//     // char* value1 = "wzl";
+//     char* key2 = "wzl";
+//     char* value2 = "lpr";
+//     char* key3 = "yl";
+//     char* value3 = "lpr";
+//     char* key4 = "unknown";
+//     char* value4 = malloc(8192);
+//     memset(value4, 'b', 8192);
+
+//     db = kvdb_open("lpr");
+//     kvdb_put(db, key1, key3);
+//     // kvdb_put(db, key1, value1);
+//     kvdb_put(db, key2, value2);
+//     kvdb_put(db, key3, key4);
+//     kvdb_put(db, key4, value3);
+//     // kvdb_put(db, key4, value4);
+//     // kvdb_put(db, key3, value3);
+//     kvdb_close(db);
+//     return 0;
 //     while (instruction != QUIT) {
 //         printf("Please tell me what you want:\n");
 //         printf("[%d] QUIT\n", QUIT);
