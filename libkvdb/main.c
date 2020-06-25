@@ -13,7 +13,7 @@
 // #define KB (1024 * B)
 // #define MB (1024 * KB)
 // #define JOURNALSIZE 10
-// #define KEYSIZE (1 + 128 * B + 8 + 8 + 8)
+// #define KEYSIZE (1 + 128 * B + 9 + 9 + 9)
 // #define KEYITEMS (50)
 // #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
@@ -23,9 +23,9 @@
 // struct record {
 //     char valid;
 //     char KEY[128];
-//     char keysize[8];
-//     char valuesize[8];
-//     char clusnum[8];
+//     char keysize[9];
+//     char valuesize[9];
+//     char clusnum[9];
 // };
 
 // struct kvdb {
@@ -58,8 +58,8 @@
 // void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, const int keyindex_i) {
 //     int keySizeNum = strlen(keyname);
 //     int valueSizeNum = strlen(valuename);
-//     char keysize[8];
-//     char valuesize[8];
+//     char keysize[9];
+//     char valuesize[9];
 //     sprintf(keysize, "%07x", keySizeNum);
 //     sprintf(valuesize, "%07x", valueSizeNum);
 //     int end = lseek(db->fd, 0, SEEK_END);
@@ -70,8 +70,8 @@
 //     struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
 //     sprintf(keybuffer->clusnum, "%07x", clusnum);
 //     keybuffer->valid = '1';
-//     memcpy(keybuffer->keysize, keysize, 8);
-//     memcpy(keybuffer->valuesize, valuesize, 8);
+//     memcpy(keybuffer->keysize, keysize, 9);
+//     memcpy(keybuffer->valuesize, valuesize, 9);
 //     memcpy(keybuffer->KEY, keyname, keySizeNum);
 //     printf("keysize:%s\n", keysize);
 //     write(db->fd, keybuffer, KEYSIZE);
@@ -170,17 +170,17 @@
 //         } else {
 //             int keySizeNum = strlen(key);
 //             int valueSizeNum = strlen(value);
-//             char keysize[8];
-//             char valuesize[8];
+//             char keysize[9];
+//             char valuesize[9];
 //             sprintf(keysize, "%07x", keySizeNum);
 //             sprintf(valuesize, "%07x", valueSizeNum);
 //             lseek(db->fd, JOURNALSIZE+i*KEYSIZE, SEEK_SET);
 //             struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
 //             keybuffer->valid = '1';
-//             memcpy(keybuffer->keysize, keysize, 8);
-//             memcpy(keybuffer->valuesize, valuesize, 8);
+//             memcpy(keybuffer->keysize, keysize, 9);
+//             memcpy(keybuffer->valuesize, valuesize, 9);
 //             memcpy(keybuffer->KEY, key, keySizeNum);
-//             memcpy(keybuffer->clusnum, db->database[i].clusnum, 8);
+//             memcpy(keybuffer->clusnum, db->database[i].clusnum, 9);
 //             printf("keysize:%s\n", keysize);
 //             write(db->fd, keybuffer, KEYSIZE);
 //             fsync(db->fd);
@@ -207,11 +207,15 @@
 //             break;
 //         }
 //     }
-//     if (clusNum > 0 && valueSize >0) {
+//     if (strcmp(key, "lpr") == 0) {
+//         printf("CLUSNUM:%d\tVALUESIZE:%d\n", clusNum, valueSize);
+//     }
+//     if (clusNum >= 0 && valueSize >=0) {
 //         returned = malloc(sizeof(char)*(valueSize+1));
 //         returned[valueSize] = '\0';
 //         lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
 //         read(db->fd, returned, valueSize);
+//         printf("$$$%s\n", returned);
 //     }
 //     unload_database(db);
 //     return returned;
@@ -224,7 +228,7 @@
 //     int instruction = -1;
 //     // int ttt = 0;
 //     char* key1 = "lpr";
-//     // char* value1 = "wzl";
+//     char* value1 = "wzl";
 //     char* key2 = "wzl";
 //     char* value2 = "lpr";
 //     char* key3 = "yl";
@@ -235,12 +239,16 @@
 
 //     db = kvdb_open("lpr");
 //     kvdb_put(db, key1, key3);
-//     // kvdb_put(db, key1, value1);
+//     kvdb_put(db, key1, value1);
 //     kvdb_put(db, key2, value2);
 //     kvdb_put(db, key3, key4);
 //     kvdb_put(db, key4, value3);
-//     // kvdb_put(db, key4, value4);
-//     // kvdb_put(db, key3, value3);
+//     kvdb_put(db, key4, value4);
+//     kvdb_put(db, key3, value3);
+//     printf("value:%s\n", kvdb_get(db, key1));
+//     printf("value:%s\n", kvdb_get(db, key2));
+//     printf("value:%s\n", kvdb_get(db, key3));
+//     printf("value:%s\n", kvdb_get(db, key4));
 //     kvdb_close(db);
 //     return 0;
 //     while (instruction != QUIT) {
