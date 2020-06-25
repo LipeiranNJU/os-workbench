@@ -8,12 +8,12 @@
 // #include <sys/stat.h>
 // #include <stdint.h>
 // #include <stdbool.h>
-
+// #include <time.h>
 // #define B 1
 // #define KB (1024 * B)
 // #define MB (1024 * KB)
 // #define JOURNALSIZE 10
-// #define KEYSIZE (1 + 128 * B + 9 + 9 + 9)
+// #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
 // #define KEYITEMS (50)
 // #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
@@ -26,6 +26,7 @@
 //     char keysize[9];
 //     char valuesize[9];
 //     char clusnum[9];
+//     char isLong;
 // };
 
 // struct kvdb {
@@ -74,6 +75,9 @@
 //     memcpy(keybuffer->valuesize, valuesize, 9);
 //     memcpy(keybuffer->KEY, keyname, keySizeNum);
 //     printf("keysize:%s\n", keysize);
+//     if (valueSizeNum > 4*KB) {
+//         keybuffer->isLong = '1';
+//     }
 //     write(db->fd, keybuffer, KEYSIZE);
 //     fsync(db->fd);
 //     free(keybuffer);
@@ -96,7 +100,7 @@
 //     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
 //     pkvdb->fd = fd;
 //     int fileSize = statbuf.st_size;  
-//     printf("filesize:%d\n", fileSize);
+//     // printf("filesize:%d\n", fileSize);
 //     if (fileSize == 0) {
 //         char* zeros = malloc(sizeof(char)*(16*MB+1*KB));
 //         memset(zeros, '0', JOURNALSIZE);
@@ -113,7 +117,7 @@
 //         free(zeros);
 //         zeros = NULL;
 //     }
-//     printf("Now is opening database:%s\n", workpath);
+//     // printf("Now is opening database:%s\n", workpath);
 //     memset(workpath, '\0', 1000);
 //     return pkvdb;
 // }
@@ -131,12 +135,12 @@
 //     int i;
 //     int valuelength = strlen(value);
 //     for (i = 0; db->database[i].valid != '0'; i++) {
-//         printf("NAME:%s\n", db->database[i].KEY);
+//         // printf("NAME:%s\n", db->database[i].KEY);
 //         if (strcmp(db->database[i].KEY, key) == 0) {
 //             break;
 //         }
 //     }
-//     printf("key:%s\ti:%d\n", key, i);
+//     // printf("key:%s\ti:%d\n", key, i);
 
 //     if (db->database[i].valid == '0') {
 //         setkeyondisk(db, key, value, i);
@@ -151,19 +155,19 @@
 //         } else {
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
 //             memcpy(valuebuffer, value, valuelength);
-//             write(db->fd, valuebuffer, 16 * KB);
+//             write(db->fd, valuebuffer, 16 * MB);
 //             fsync(db->fd);
 //             free(valuebuffer);
 //             valuebuffer = NULL;
 //         }
 //     } else {
 //         int rawsize = strtol(db->database[i].keysize, NULL, 16);
-//         if (rawsize < 4*KB && valuelength >=4*KB) {
+//         if (db->database[i].isLong != '1' && valuelength >=4*KB) {
 //             setkeyondisk(db, key, value, i);
 //             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
 //             memcpy(valuebuffer, value, valuelength);
-//             write(db->fd, valuebuffer, 16 * KB);
+//             write(db->fd, valuebuffer, 16 * MB);
 //             fsync(db->fd);
 //             free(valuebuffer);
 //             valuebuffer = NULL;
@@ -181,7 +185,7 @@
 //             memcpy(keybuffer->valuesize, valuesize, 9);
 //             memcpy(keybuffer->KEY, key, keySizeNum);
 //             memcpy(keybuffer->clusnum, db->database[i].clusnum, 9);
-//             printf("keysize:%s\n", keysize);
+//             // printf("keysize:%s\n", keysize);
 //             write(db->fd, keybuffer, KEYSIZE);
 //             fsync(db->fd);
 //             free(keybuffer);
@@ -216,7 +220,6 @@
 //         returned[valueSize] = '\0';
 //         lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
 //         read(db->fd, returned, valueSize);
-//         printf("$$$%s\n", returned);
 //     }
 //     unload_database(db);
 //     return returned;
@@ -225,32 +228,69 @@
 // enum {QUIT, PUT, OPEN, CLOSE, QUERY};
 
 // int main() {
+
 //     struct kvdb *db = NULL;
 //     int instruction = -1;
 //     // int ttt = 0;
-//     char* key1 = "lpr";
-//     char* value1 = "wzl";
-//     char* key2 = "wzl";
-//     char* value2 = "lpr";
-//     char* key3 = "yl";
-//     char* value3 = "lpr";
-//     char* key4 = "unknown";
-//     char* value4 = malloc(8192);
-//     memset(value4, 'b', 8192);
-
+//     char* lpr = "lpr";
+//     char* wzl = "wzl";
+//     char* yl = "yl";
+//     char* skyxmt = "skyxmt";
+//     char* xmyhj = "xmyhj";
+//     char* csjgsqzhx = "csjgsqzhx";
+//     char* lnxe = "lnxe";
+//     char* longtext = malloc(8193);
+//     memset(longtext, 'b', 8192);
+//     longtext[8192] = '\0';
+//     srand(time(NULL));
+//     char* keys[] = {"abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
+//     char* values[] = {longtext, "abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     db = kvdb_open("lpr");
-//     kvdb_put(db, key1, key3);
-//     kvdb_put(db, key1, value1);
-//     kvdb_put(db, key2, value2);
-//     kvdb_put(db, key3, key4);
-//     kvdb_put(db, key4, value3);
-//     kvdb_put(db, key4, value4);
-//     kvdb_put(db, key3, value3);
-//     printf("value:%s\n", kvdb_get(db, key1));
-//     printf("value:%s\n", kvdb_get(db, key2));
-//     printf("value:%s\n", kvdb_get(db, key3));
-//     printf("value:%s\n", kvdb_get(db, key4));
+//     kvdb_put(db, lpr, skyxmt);
+//     kvdb_put(db, lpr, yl);
+//     kvdb_put(db, lnxe, lpr);
+//     kvdb_put(db, lnxe, xmyhj);
+//     kvdb_put(db, lnxe, yl);
+//     kvdb_put(db, xmyhj, csjgsqzhx);
+//     kvdb_put(db, csjgsqzhx, longtext);
+//     kvdb_put(db, csjgsqzhx, wzl);
+//     kvdb_put(db, csjgsqzhx, skyxmt);
+//     // printf("test:value:%s\n", kvdb_get(db, lpr));
+//     // printf("test:value:%s\n", kvdb_get(db, lnxe));
+//     // printf("test:value:%s\n", kvdb_get(db, xmyhj));
+//     // printf("test:value:%s\n", kvdb_get(db, csjgsqzhx));
+//     int maps[8];
+//     for (int i = 0; i < 8; i++)
+//         maps[i] = -1;
+//     while (true) {
+//         int instru = rand()%2;
+//         if (instru == 0) {
+//             int keyindex = rand() % 8;
+//             int valueindex = rand() % 9;
+//             kvdb_put(db, keys[keyindex], values[valueindex]);
+//             printf("put key:%s\tvalue%s\n",keys[keyindex], values[valueindex]);
+//             maps[keyindex] = valueindex;
+//         } else {
+//             int keyindex = rand() % 8;
+//             printf("get key:%s\t%s\n",keys[keyindex], values[maps[keyindex]]);
+//             if (maps[keyindex] == -1) {
+//                 if (kvdb_get(db, keys[keyindex]) != NULL) {
+//                     printf("%s\n", kvdb_get(db, keys[keyindex]));
+//                 } 
+//                 assert(kvdb_get(db, keys[keyindex]) == NULL); 
+//             } else {
+//                 char* returned = kvdb_get(db, keys[keyindex]);
+//                 if (strcmp(returned, values[maps[keyindex]]) != 0) {
+//                     printf("real value should be %s\n", values[maps[keyindex]]);
+//                 }
+//                 assert(strcmp(returned, values[maps[keyindex]]) == 0);
+//                 free(returned);
+//                 returned = NULL;
+//             }
+//         }
+//     }
 //     kvdb_close(db);
+//     free(longtext);
 //     return 0;
 //     while (instruction != QUIT) {
 //         printf("Please tell me what you want:\n");
