@@ -77,7 +77,10 @@
 //     printf("keysize:%s\n", keysize);
 //     if (valueSizeNum > 4*KB) {
 //         keybuffer->isLong = '1';
+//     } else {
+//         keybuffer->isLong = '0';
 //     }
+    
 //     write(db->fd, keybuffer, KEYSIZE);
 //     fsync(db->fd);
 //     free(keybuffer);
@@ -146,6 +149,7 @@
 //         setkeyondisk(db, key, value, i);
 //         lseek(db->fd, 0, SEEK_END);
 //         if (valuelength <= 4*KB) {
+//             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 4 * KB);
 //             memcpy(valuebuffer, value, valuelength);
 //             write(db->fd, valuebuffer, 4*KB);
@@ -153,6 +157,7 @@
 //             free(valuebuffer);
 //             valuebuffer = NULL;
 //         } else {
+//             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
 //             memcpy(valuebuffer, value, valuelength);
 //             write(db->fd, valuebuffer, 16 * MB);
@@ -161,8 +166,8 @@
 //             valuebuffer = NULL;
 //         }
 //     } else {
-//         int rawsize = strtol(db->database[i].keysize, NULL, 16);
-//         if (db->database[i].isLong != '1' && valuelength >=4*KB) {
+//         if (db->database[i].isLong != '1' && valuelength >= 4*KB) {
+//             assert(db->database[i].isLong == '0');
 //             setkeyondisk(db, key, value, i);
 //             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
@@ -191,8 +196,30 @@
 //             free(keybuffer);
 //             keybuffer = NULL;
 //             int clusindex = strtol(db->database[i].clusnum, NULL, 16);
+//             int isLong;
+//             char* valuebuff;
+//             if (db->database[i].isLong == '0') {
+//                 isLong = 0;
+//                 valuebuff = malloc(4*KB);
+//                 memset(valuebuff, 'R', 4*KB);
+//             } else if (db->database[i].isLong == '1') {
+//                 isLong = 1;
+//                 valuebuff = malloc(16*MB);
+//                 memset(valuebuff, 'Y', 16*MB);
+//             } else{
+//                 assert(0);
+//             }
+//             memcpy(valuebuff, value, valuelength);
+            
+            
 //             lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusindex*4*KB, SEEK_SET);
-//             write(db->fd, value, valuelength);
+//             if (isLong == 1)
+//                 write(db->fd, valuebuff, 16*MB);
+//             else {
+//                 write(db->fd, valuebuff, 4*KB);
+//             }
+//             free(valuebuff);
+//             valuebuff = NULL;
 //             fsync(db->fd);
 //         }
 //     }
@@ -239,7 +266,7 @@
 //     char* xmyhj = "xmyhj";
 //     char* csjgsqzhx = "csjgsqzhx";
 //     char* lnxe = "lnxe";
-//     char* longtext = malloc(8193);
+//     char* longtext = malloc(8192);
 //     memset(longtext, 'b', 8192);
 //     longtext[8192] = '\0';
 //     srand(time(NULL));
@@ -268,11 +295,11 @@
 //             int keyindex = rand() % 8;
 //             int valueindex = rand() % 9;
 //             kvdb_put(db, keys[keyindex], values[valueindex]);
-//             printf("put key:%s\tvalue%s\n",keys[keyindex], values[valueindex]);
+//             printf("put key:%s\tvalue:%s\n",keys[keyindex], values[valueindex]);
 //             maps[keyindex] = valueindex;
 //         } else {
 //             int keyindex = rand() % 8;
-//             printf("get key:%s\t%s\n",keys[keyindex], values[maps[keyindex]]);
+//             printf("get key:%s\n",keys[keyindex]);
 //             if (maps[keyindex] == -1) {
 //                 if (kvdb_get(db, keys[keyindex]) != NULL) {
 //                     printf("%s\n", kvdb_get(db, keys[keyindex]));
@@ -280,10 +307,15 @@
 //                 assert(kvdb_get(db, keys[keyindex]) == NULL); 
 //             } else {
 //                 char* returned = kvdb_get(db, keys[keyindex]);
-//                 if (strcmp(returned, values[maps[keyindex]]) != 0) {
+//                 char* shouldbe = values[maps[keyindex]];
+//                 if (strcmp(returned, shouldbe) != 0) {
+//                     printf("len of the queried is%d\n", strlen(returned));
+//                     printf("len of the real is%d\n", strlen(values[maps[keyindex]]));
+//                     printf("queried value is %s\n", returned);
 //                     printf("real value should be %s\n", values[maps[keyindex]]);
 //                 }
-//                 assert(strcmp(returned, values[maps[keyindex]]) == 0);
+//                 fflush(stdout);
+//                 assert((strcmp(returned, shouldbe) == 0));
 //                 free(returned);
 //                 returned = NULL;
 //             }
