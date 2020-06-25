@@ -193,6 +193,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             int clusindex = strtol(db->database[i].clusnum, NULL, 16);
             lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusindex*4*KB, SEEK_SET);
             write(db->fd, value, valuelength);
+            fsync(db->fd);
         }
     }
     unload_database(db);
