@@ -14,7 +14,7 @@
 #define MB (1024 * KB)
 #define JOURNALSIZE 10
 #define KEYSIZE (1 + 128 * B + 9 + 9 + 9)
-#define KEYITEMS (50)
+#define KEYITEMS (4096)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
 
