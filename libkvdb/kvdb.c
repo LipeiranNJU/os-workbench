@@ -58,8 +58,8 @@ void load_database(struct kvdb* db) {
 void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, const int keyindex_i) {
     int keySizeNum = strlen(keyname);
     int valueSizeNum = strlen(valuename);
-    char keysize[8];
-    char valuesize[8];
+    char keysize[9];
+    char valuesize[9];
     sprintf(keysize, "%08x", keySizeNum);
     sprintf(valuesize, "%08x", valueSizeNum);
     int end = lseek(db->fd, 0, SEEK_END);
