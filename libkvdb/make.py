@@ -1,2 +1,2 @@
 from os import system
-system("gcc main.c -o main -Wall -Werror -O3 -lpthread")
+system("gcc main.c -L. -lkvdb-64 -o test")
