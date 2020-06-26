@@ -14,7 +14,7 @@
 #define MB (1024 * KB)
 #define JOURNALSIZE 10
 #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
-#define KEYITEMS (1024)
+#define KEYITEMS (300)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
 
@@ -70,8 +70,8 @@ void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, co
     sprintf(valuesize, "%07x", valueSizeNum);
     int end = lseek(db->fd, 0, SEEK_END);
     int clusnum = (end-JOURNALSIZE-KEYAREASIZE)/(4*KB);
-
-
+    // printf("offset:%d\n",(end-JOURNALSIZE-KEYAREASIZE));
+    // printf("clusnum:%d\n", clusnum);
     struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
     sprintf(keybuffer->clusnum, "%07x", clusnum);
     sprintf(db->database[keyindex_i].clusnum, "%07x", clusnum);
@@ -79,8 +79,7 @@ void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, co
     memcpy(keybuffer->keysize, keysize, 9);
     memcpy(keybuffer->valuesize, valuesize, 9);
     memcpy(keybuffer->KEY, keyname, keySizeNum);
-
-
+    // printf("keysize:%s\n", keysize);
     if (valueSizeNum > 4*KB) {
         keybuffer->isLong = '1';
     } else {
@@ -111,8 +110,7 @@ struct kvdb *kvdb_open(const char *filename) {
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
     pkvdb->fd = fd;
     int fileSize = statbuf.st_size;  
-
-
+    // printf("filesize:%d\n", fileSize);
     if (fileSize == 0) {
         char* zeros = malloc(JOURNALSIZE);
         memset(zeros, '0', JOURNALSIZE);
@@ -129,8 +127,7 @@ struct kvdb *kvdb_open(const char *filename) {
         free(zeros);
         zeros = NULL;
     }
-
-
+    // printf("Now is opening database:%s\n", workpath);
     memset(workpath, '\0', 1000);
     return pkvdb;
 }
@@ -148,14 +145,12 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
     int i;
     int valuelength = strlen(value);
     for (i = 0; db->database[i].valid != '0'; i++) {
-
-
+        // printf("NAME:%s\n", db->database[i].KEY);
         if (strcmp(db->database[i].KEY, key) == 0) {
             break;
         }
     }
-
-
+    // printf("key:%s\ti:%d\n", key, i);
 
     if (db->database[i].valid == '0') {
         setkeyondisk(db, key, value, i);
@@ -208,8 +203,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             memcpy(keybuffer->valuesize, valuesize, 9);
             memcpy(keybuffer->KEY, key, keySizeNum);
             memcpy(keybuffer->clusnum, db->database[i].clusnum, 9);
-        
-        
+            // printf("keysize:%s\n", keysize);
             int clusindex = strtol(db->database[i].clusnum, NULL, 16);
             int isLong;
             char* valuebuff;
@@ -224,8 +218,12 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
                 valuebuff = malloc(16*MB);
                 memset(valuebuff, 'Y', 16*MB);
             } else{
-
-
+                printf("i is %d\n", i);
+                printf("name:%s\n", db->database[i].KEY);
+                printf("clusnum:%s\n", db->database[i].clusnum);
+                printf("islong:%c\n", db->database[i].isLong);
+                printf("islong:%d\n", db->database[i].isLong);
+                printf("valuesize%s\n", db->database[i].valuesize);
                 assert(0);
             }
             write(db->fd, keybuffer, KEYSIZE);
