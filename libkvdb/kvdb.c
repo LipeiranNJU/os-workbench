@@ -57,7 +57,7 @@ void load_database(struct kvdb* db) {
     db->database= malloc(sizeof(char)*KEYAREASIZE);
     lseek(db->fd, 0, SEEK_SET);
     read(db->fd, db->dataarea, db->filesize);
-    memcpy(db->database, &db->dataarea[JOURNALSIZE], KEYAREASIZE);
+    db->database = (struct record* )&db->dataarea[JOURNALSIZE];
     return ;
 }
 
