@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#include <sys/file.h>
 #include <stdint.h>
 #include <stdbool.h>
 #include <time.h>
@@ -96,6 +97,7 @@ struct kvdb *kvdb_open(const char *filename) {
     strcat(strcat(workpath, filename), ".db");
     int fd = open(workpath, O_RDWR | O_CREAT, 0777);
     // long offset = 0;
+    flock(fd, LOCK_EX);
     struct stat statbuf;  
     stat(workpath, &statbuf);  
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
@@ -120,18 +122,23 @@ struct kvdb *kvdb_open(const char *filename) {
     }
     // printf("Now is opening database:%s\n", workpath);
     memset(workpath, '\0', 1000);
+    flock(fd, LOCK_UN);
     return pkvdb;
 }
 
 int kvdb_close(struct kvdb *db) {
+    int fd = db->fd;
+    flock(fd, LOCK_EX);
 
     close(db->fd);
     free(db);
     db = NULL;
+    flock(fd, LOCK_UN);
     return 0;
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+    flock(db->fd, LOCK_EX);
     load_database(db);
     int i;
     int valuelength = strlen(value);
@@ -233,10 +240,12 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         }
     }
     unload_database(db);
+    flock(db->fd, LOCK_UN);
     return 0;
 }
 
 char *kvdb_get(struct kvdb *db, const char *key) {
+    flock(db->fd, LOCK_EX);
     load_database(db);
     int clusNum = -1;
     int valueSize = -1;
@@ -256,5 +265,6 @@ char *kvdb_get(struct kvdb *db, const char *key) {
         read(db->fd, returned, valueSize);
     }
     unload_database(db);
+    flock(db->fd, LOCK_UN);
     return returned;
 }
