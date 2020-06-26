@@ -141,13 +141,13 @@ int kvdb_close(struct kvdb *db) {
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
-    printf("Now is putting\n");
+    printf("Now is putting key:%s\tvalue:%s\n", key, value);
     load_database(db);
     int i;
     int valuelength = strlen(value);
     for (i = 0; db->database[i].valid != '0'; i++) {
         // printf("NAME:%s\n", db->database[i].KEY);
-        if (strcmp(db->database[i].KEY, key) == 0) {
+        if (strncmp(db->database[i].KEY, key, strlen(key)) == 0) {
             break;
         }
     }
