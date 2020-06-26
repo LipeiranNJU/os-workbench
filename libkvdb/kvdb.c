@@ -143,7 +143,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         if (valuelength <= 4*KB) {
             lseek(db->fd, 0, SEEK_END);
             write(db->fd, value, valuelength);
-            lseek(db->fd, 4*KB-valuelength-1, SEEK_CUR);
+            lseek(db->fd, 4*  KB-valuelength-1, SEEK_CUR);
             write(db->fd, "0", 1);
 
         } else {
