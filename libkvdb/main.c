@@ -18,7 +18,7 @@
 // #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
 
-// enum {UPDATE, INSERT};
+
 
 // struct record {
 //     char valid;
@@ -35,7 +35,6 @@
 //   struct record *database;
 // };
 // char workpath[1000];
-// enum {U, M, H, S};
 
 // void goto_journal(const struct kvdb *db) {
 //     lseek(db->fd, 0, SEEK_SET);
@@ -65,11 +64,11 @@
 //     sprintf(valuesize, "%07x", valueSizeNum);
 //     int end = lseek(db->fd, 0, SEEK_END);
 //     int clusnum = (end-JOURNALSIZE-KEYAREASIZE)/(4*KB);
-//     printf("offset:%d\n",(end-JOURNALSIZE-KEYSIZE));
+//     printf("offset:%d\n",(end-JOURNALSIZE-KEYAREASIZE));
 //     printf("clusnum:%d\n", clusnum);
-//     lseek(db->fd, JOURNALSIZE+keyindex_i*KEYSIZE, SEEK_SET);
 //     struct record* keybuffer = malloc(sizeof(char)*KEYSIZE);
 //     sprintf(keybuffer->clusnum, "%07x", clusnum);
+//     sprintf(db->database[keyindex_i].clusnum, "%07x", clusnum);
 //     keybuffer->valid = '1';
 //     memcpy(keybuffer->keysize, keysize, 9);
 //     memcpy(keybuffer->valuesize, valuesize, 9);
@@ -80,7 +79,7 @@
 //     } else {
 //         keybuffer->isLong = '0';
 //     }
-    
+//     lseek(db->fd, JOURNALSIZE+keyindex_i*KEYSIZE, SEEK_SET);
 //     write(db->fd, keybuffer, KEYSIZE);
 //     fsync(db->fd);
 //     free(keybuffer);
@@ -105,7 +104,7 @@
 //     int fileSize = statbuf.st_size;  
 //     // printf("filesize:%d\n", fileSize);
 //     if (fileSize == 0) {
-//         char* zeros = malloc(sizeof(char)*(16*MB+1*KB));
+//         char* zeros = malloc(JOURNALSIZE);
 //         memset(zeros, '0', JOURNALSIZE);
 //         write(pkvdb->fd, zeros, JOURNALSIZE);
 //         fsync(pkvdb->fd);
@@ -151,6 +150,7 @@
 //         if (valuelength <= 4*KB) {
 //             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 4 * KB);
+//             memset(valuebuffer, 'T', 4 * KB);
 //             memcpy(valuebuffer, value, valuelength);
 //             write(db->fd, valuebuffer, 4*KB);
 //             fsync(db->fd);
@@ -159,6 +159,7 @@
 //         } else {
 //             lseek(db->fd, 0, SEEK_END);
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
+//             memset(valuebuffer, 'u', 16 * MB);
 //             memcpy(valuebuffer, value, valuelength);
 //             write(db->fd, valuebuffer, 16 * MB);
 //             fsync(db->fd);
@@ -166,11 +167,15 @@
 //             valuebuffer = NULL;
 //         }
 //     } else {
-//         if (db->database[i].isLong != '1' && valuelength >= 4*KB) {
+//         if (db->database[i].isLong == '0' && valuelength >= 4*KB) {
 //             assert(db->database[i].isLong == '0');
+//             assert(db->database[i].valid == '1');
 //             setkeyondisk(db, key, value, i);
-//             lseek(db->fd, 0, SEEK_END);
+//             int end = lseek(db->fd, 0, SEEK_END);
+//             int clus = strtol(db->database[i].clusnum, NULL, 16);
+//             assert(end == clus*4*KB+JOURNALSIZE+KEYAREASIZE);
 //             char* valuebuffer = malloc(sizeof(char) * 16 * MB);
+//             memset(valuebuffer, 'Z', 16 * MB);
 //             memcpy(valuebuffer, value, valuelength);
 //             write(db->fd, valuebuffer, 16 * MB);
 //             fsync(db->fd);
@@ -191,24 +196,32 @@
 //             memcpy(keybuffer->KEY, key, keySizeNum);
 //             memcpy(keybuffer->clusnum, db->database[i].clusnum, 9);
 //             // printf("keysize:%s\n", keysize);
-//             write(db->fd, keybuffer, KEYSIZE);
-//             fsync(db->fd);
-//             free(keybuffer);
-//             keybuffer = NULL;
 //             int clusindex = strtol(db->database[i].clusnum, NULL, 16);
 //             int isLong;
 //             char* valuebuff;
 //             if (db->database[i].isLong == '0') {
 //                 isLong = 0;
+//                 keybuffer->isLong = '0';
 //                 valuebuff = malloc(4*KB);
 //                 memset(valuebuff, 'R', 4*KB);
 //             } else if (db->database[i].isLong == '1') {
 //                 isLong = 1;
+//                 keybuffer->isLong = '1';
 //                 valuebuff = malloc(16*MB);
 //                 memset(valuebuff, 'Y', 16*MB);
 //             } else{
+//                 printf("i is %d\n", i);
+//                 printf("name:%s\n", db->database[i].KEY);
+//                 printf("clusnum:%s\n", db->database[i].clusnum);
+//                 printf("islong:%c\n", db->database[i].isLong);
+//                 printf("islong:%d\n", db->database[i].isLong);
+//                 printf("valuesize%s\n", db->database[i].valuesize);
 //                 assert(0);
 //             }
+//             write(db->fd, keybuffer, KEYSIZE);
+//             fsync(db->fd);
+//             free(keybuffer);
+//             keybuffer = NULL;
 //             memcpy(valuebuff, value, valuelength);
             
             
@@ -239,11 +252,9 @@
 //             break;
 //         }
 //     }
-//     if (strcmp(key, "lpr") == 0) {
-//         printf("CLUSNUM:%d\tVALUESIZE:%d\n", clusNum, valueSize);
-//     }
+
 //     if (clusNum >= 0 && valueSize >=0) {
-//         returned = malloc(sizeof(char)*(valueSize+1));
+//         returned = malloc((valueSize+1));
 //         returned[valueSize] = '\0';
 //         lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
 //         read(db->fd, returned, valueSize);
@@ -273,15 +284,35 @@
 //     char* keys[] = {"abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     char* values[] = {longtext, "abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     db = kvdb_open("lpr");
-//     kvdb_put(db, lpr, skyxmt);
-//     kvdb_put(db, lpr, yl);
-//     kvdb_put(db, lnxe, lpr);
-//     kvdb_put(db, lnxe, xmyhj);
-//     kvdb_put(db, lnxe, yl);
-//     kvdb_put(db, xmyhj, csjgsqzhx);
-//     kvdb_put(db, csjgsqzhx, longtext);
-//     kvdb_put(db, csjgsqzhx, wzl);
-//     kvdb_put(db, csjgsqzhx, skyxmt);
+//     // kvdb_put(db, "abc", "dfs");
+//     // kvdb_put(db, "qwcvgsrgtre", "qwcvgsrgtre");
+//     // kvdb_put(db, "dfwreh", "qwrvffzcbvce");
+//     // kvdb_put(db, "yrtbvfcthtxbvvcb", "dfwreh");
+//     // kvdb_put(db, "dfs", longtext);
+//     // kvdb_put(db, "dfwreh", "dfs");
+//     // kvdb_put(db, "dfs", "abc");
+//     // kvdb_put(db, "dfs", "scvxdf");
+//     // kvdb_put(db, "qwrvffzcbvce", "qwrvffzcbvce");
+//     // kvdb_put(db, "scvxdf", "dfs");
+//     // kvdb_put(db, "scvxdf", "dfwreh");
+//     // kvdb_put(db, "abc", "qwrvffzcbvce");
+//     // kvdb_put(db, "qwcvgsrgtre", "yrtbvfcthtxbvvcb");
+//     // kvdb_put(db, "dfwreh", longtext);
+//     // char* tmplpr = kvdb_get(db, "dfs");
+//     // // if (strcmp(tmplpr, "dfwreh") != 0) {
+//     // printf("querry return value:%s\n", tmplpr);
+//     // // }
+//     // // assert(strcmp(tmplpr, "dfwreh") == 0);
+//     // return 0;
+//     // kvdb_put(db, lpr, skyxmt);
+//     // kvdb_put(db, lpr, yl);
+//     // kvdb_put(db, lnxe, lpr);
+//     // kvdb_put(db, lnxe, xmyhj);
+//     // kvdb_put(db, lnxe, yl);
+//     // kvdb_put(db, xmyhj, csjgsqzhx);
+//     // kvdb_put(db, csjgsqzhx, longtext);
+//     // kvdb_put(db, csjgsqzhx, wzl);
+//     // kvdb_put(db, csjgsqzhx, skyxmt);
 //     // printf("test:value:%s\n", kvdb_get(db, lpr));
 //     // printf("test:value:%s\n", kvdb_get(db, lnxe));
 //     // printf("test:value:%s\n", kvdb_get(db, xmyhj));
