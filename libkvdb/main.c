@@ -270,13 +270,6 @@
 //     struct kvdb *db = NULL;
 //     int instruction = -1;
 //     // int ttt = 0;
-//     char* lpr = "lpr";
-//     char* wzl = "wzl";
-//     char* yl = "yl";
-//     char* skyxmt = "skyxmt";
-//     char* xmyhj = "xmyhj";
-//     char* csjgsqzhx = "csjgsqzhx";
-//     char* lnxe = "lnxe";
 //     char* longtext = malloc(8192);
 //     char* longtext2 = malloc(16384);
 //     memset(longtext, 'b', 8192);
