@@ -88,7 +88,6 @@ void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, co
     }
     lseek(db->fd, JOURNALSIZE+keyindex_i*KEYSIZE, SEEK_SET);
     write(db->fd, keybuffer, KEYSIZE);
-    fsync(db->fd);
     free(keybuffer);
     keybuffer = NULL;
 }
@@ -116,7 +115,6 @@ struct kvdb *kvdb_open(const char *filename) {
         char* zeros = malloc(JOURNALSIZE);
         memset(zeros, '0', JOURNALSIZE);
         write(pkvdb->fd, zeros, JOURNALSIZE);
-        fsync(pkvdb->fd);
         free(zeros);
         zeros = NULL;
 
@@ -166,7 +164,6 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             memset(valuebuffer, 'T', 4 * KB);
             memcpy(valuebuffer, value, valuelength);
             write(db->fd, valuebuffer, 4*KB);
-            fsync(db->fd);
             free(valuebuffer);
             valuebuffer = NULL;
         } else {
@@ -175,7 +172,6 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             memset(valuebuffer, 'u', 16 * MB);
             memcpy(valuebuffer, value, valuelength);
             write(db->fd, valuebuffer, 16 * MB);
-            fsync(db->fd);
             free(valuebuffer);
             valuebuffer = NULL;
         }
@@ -191,7 +187,6 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             memset(valuebuffer, 'Z', 16 * MB);
             memcpy(valuebuffer, value, valuelength);
             write(db->fd, valuebuffer, 16 * MB);
-            fsync(db->fd);
             free(valuebuffer);
             valuebuffer = NULL;
         } else {
@@ -230,23 +225,25 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
                 assert(0);
             }
             write(db->fd, keybuffer, KEYSIZE);
-            fsync(db->fd);
             free(keybuffer);
             keybuffer = NULL;
             memcpy(valuebuff, value, valuelength);
             
             
             lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusindex*4*KB, SEEK_SET);
-            if (isLong == 1)
-                write(db->fd, valuebuff, 16*MB);
+            if (isLong == 1) {
+                write(db->fd, valuebuff, valuelength);
+                lseek(db->fd, 16*MB-valuelength, SEEK_CUR);
+            }
             else {
-                write(db->fd, valuebuff, 4*KB);
+                write(db->fd, valuebuff, valuelength);
+                lseek(db->fd, 4*KB-valuelength, SEEK_CUR);
             }
             free(valuebuff);
             valuebuff = NULL;
-            fsync(db->fd);
         }
     }
+    fsync(db->fd);
     unload_database(db);
     return 0;
 }
