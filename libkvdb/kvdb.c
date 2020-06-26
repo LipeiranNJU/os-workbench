@@ -95,7 +95,6 @@ void setkeyondisk(struct kvdb* db,const char* keyname, const char* valuename, co
 
 
 void unload_database(struct kvdb *db) {
-    free(db->database);
     free(db->dataarea);
     db->database = NULL;
     db->dataarea = NULL;
