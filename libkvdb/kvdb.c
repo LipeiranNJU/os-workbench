@@ -92,7 +92,7 @@ void unload_database(struct kvdb *db) {
     return ;
 }
 struct kvdb *kvdb_open(const char *filename) {
-    strcpy(workpath, "/home/lpr/os-workbench/libkvdb/");
+    strcpy(workpath, "/tmp/");
     strcat(strcat(workpath, filename), ".db");
     int fd = open(workpath, O_RDWR | O_CREAT, 0777);
     // long offset = 0;

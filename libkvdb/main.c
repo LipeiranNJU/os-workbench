@@ -318,9 +318,15 @@
 //     // printf("test:value:%s\n", kvdb_get(db, xmyhj));
 //     // printf("test:value:%s\n", kvdb_get(db, csjgsqzhx));
 //     int maps[8];
+//     int itre = 0;
 //     for (int i = 0; i < 8; i++)
 //         maps[i] = -1;
 //     while (true) {
+//         itre++;
+//         if (itre >100000) {
+//             printf("PASS\n");
+//             return 0;
+//         }
 //         int instru = rand()%2;
 //         if (instru == 0) {
 //             int keyindex = rand() % 8;
