@@ -250,7 +250,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
 }
 
 char *kvdb_get(struct kvdb *db, const char *key) {
-    printf("Now is getting%s\n", key);
+    printf("Now is getting: %s\n", key);
     load_database(db);
     int clusNum = -1;
     int valueSize = -1;
