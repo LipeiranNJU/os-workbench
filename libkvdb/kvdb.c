@@ -14,7 +14,7 @@
 #define MB (1024 * KB)
 #define JOURNALSIZE 10
 #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
-#define KEYITEMS (512)
+#define KEYITEMS (1024)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
 
@@ -35,6 +35,7 @@ struct kvdb {
   struct record *database;
   int filesize;
 };
+char workpath[1000];
 
 void goto_journal(const struct kvdb *db) {
     lseek(db->fd, 0, SEEK_SET);
@@ -120,6 +121,7 @@ struct kvdb *kvdb_open(const char *filename) {
     }
 
 
+    memset(workpath, '\0', 1000);
     return pkvdb;
 }
 
@@ -255,8 +257,6 @@ char *kvdb_get(struct kvdb *db, const char *key) {
     if (clusNum >= 0 && valueSize >=0) {
         returned = malloc((valueSize+1));
         returned[valueSize] = '\0';
-        // lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
-        // read(db->fd, returned, valueSize);
         lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB, SEEK_SET);
         read(db->fd, returned, valueSize);
     }

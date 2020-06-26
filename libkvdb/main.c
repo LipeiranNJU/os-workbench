@@ -14,7 +14,7 @@
 // #define MB (1024 * KB)
 // #define JOURNALSIZE 10
 // #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
-// #define KEYITEMS (512)
+// #define KEYITEMS (1024)
 // #define KEYAREASIZE (KEYSIZE * KEYITEMS)
 
 
@@ -306,10 +306,12 @@
 //         } else {
 //             int keyindex = rand() % 8;
 //             char* returned = kvdb_get(db, keys[keyindex]);
+//             if (maps[keyindex] != -1) {
+//                 printf("key:%s\tgetvalue:%s\tshoulebe:%s\n", keys[keyindex], returned, values[maps[keyindex]]);
+//             }
 
-
-//             if (returned == NULL || maps[keyindex] == -1) {
-
+//             if (maps[keyindex] == -1) {
+//                 // assert(returned == NULL);
 
 //                 assert(maps[keyindex] = -1); 
 //             } else {
