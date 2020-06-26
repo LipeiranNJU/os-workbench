@@ -131,7 +131,10 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
     int valuelength = strlen(value);
     for (i = 0; db->database[i].valid != 0; i++) {
         int len = strtol(db->database[i].keysize, NULL, 16);
-        if (strncmp(db->database[i].KEY, key, len) == 0) {
+        char* keystored = malloc(len+1);
+        keystored[len] = '\0';
+        memcpy(keystored, db->database[i].KEY, len);
+        if (strcmp(keystored, key) == 0) {
             break;
         }
     }
@@ -143,14 +146,18 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
         if (valuelength <= 4*KB) {
             lseek(db->fd, 0, SEEK_END);
             write(db->fd, value, valuelength);
-            lseek(db->fd, 4*  KB-valuelength-1, SEEK_CUR);
-            write(db->fd, "0", 1);
+            if (4*KB-valuelength-1 > 0) {
+                lseek(db->fd, 4*KB-valuelength-1, SEEK_CUR);
+                write(db->fd, "0", 1);
+            }
 
         } else {
             lseek(db->fd, 0, SEEK_END);
             write(db->fd, value, valuelength);
-            lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
-            write(db->fd, "0", 1);
+            if (16*MB-valuelength-1 > 0) {
+                lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
+                write(db->fd, "0", 1);
+            }
         }
     } else {
         if (db->database[i].isLong == 0 && valuelength >= 4*KB) {
@@ -161,8 +168,10 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             // write(db->fd, valuebuffer, 16 * MB);
             lseek(db->fd, 0, SEEK_END);
             write(db->fd, value, valuelength);
-            lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
-            write(db->fd, "0", 1);
+            if (16*MB-valuelength-1 > 0) {
+                lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
+                write(db->fd, "0", 1);
+            }
         } else {
             int keySizeNum = strlen(key);
             int valueSizeNum = strlen(value);
@@ -196,13 +205,17 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
             lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusindex*4*KB, SEEK_SET);
             if (isLong == 1) {
                 write(db->fd, value, valuelength);
-                lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
-                write(db->fd, "0", 1);
+                if (16*MB-valuelength-1 > 0) {
+                    lseek(db->fd, 16*MB-valuelength-1, SEEK_CUR);
+                    write(db->fd, "0", 1);
+                }
             }
             else {
                 write(db->fd, value, valuelength);
-                lseek(db->fd, 4*KB-valuelength-1, SEEK_CUR);
-                write(db->fd, "0", 1);
+                if (4*KB-valuelength-1 > 0) {
+                    lseek(db->fd, 4*KB-valuelength-1, SEEK_CUR);
+                    write(db->fd, "0", 1);
+                }
             }
         }
     }
@@ -219,7 +232,11 @@ char *kvdb_get(struct kvdb *db, const char *key) {
     int valueSize = -1;
     char* returned = NULL;
     for (int i = 0; db->database[i].valid != 0; i++) {
-        if (strncmp(db->database[i].KEY, key, strtol(db->database[i].keysize, NULL, 16)) == 0) {
+        int len = strtol(db->database[i].keysize, NULL, 16);
+        char* keystored = malloc(len+1);
+        keystored[len] = '\0';
+        memcpy(keystored, db->database[i].KEY, len);
+        if (strcmp(keystored, key) == 0) {
             clusNum = strtol(db->database[i].clusnum, NULL, 16);
             valueSize = strtol(db->database[i].valuesize, NULL, 16);
             break;
@@ -237,3 +254,4 @@ char *kvdb_get(struct kvdb *db, const char *key) {
     unload_database(db);
     return returned;
 }
+
