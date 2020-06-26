@@ -50,11 +50,11 @@
 //         } else {
 //             int keyindex = rand() % 8;
 //             // printf("get key:%s\n",keys[keyindex]);
-//             if (maps[keyindex] == -1) {
+//             if (kvdb_get(db, keys[keyindex]) == NULL) {
 //                 if (kvdb_get(db, keys[keyindex]) != NULL) {
 //                     printf("%s\n", kvdb_get(db, keys[keyindex]));
 //                 } 
-//                 assert(kvdb_get(db, keys[keyindex]) == NULL); 
+//                 assert(maps[keyindex] = -1); 
 //             } else {
 //                 char* returned = kvdb_get(db, keys[keyindex]);
 //                 char* shouldbe = values[maps[keyindex]];

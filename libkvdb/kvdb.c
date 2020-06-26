@@ -127,7 +127,7 @@ struct kvdb *kvdb_open(const char *filename) {
         free(zeros);
         zeros = NULL;
     }
-    // printf("Now is opening database:%s\n", workpath);
+    printf("Now is opening database:%s\n", workpath);
     memset(workpath, '\0', 1000);
     return pkvdb;
 }
