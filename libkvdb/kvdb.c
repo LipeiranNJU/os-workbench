@@ -52,7 +52,7 @@ void goto_clusters(const struct kvdb *db) {
 void load_database(struct kvdb* db) {
     db->filesize = lseek(db->fd, 0, SEEK_END);
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
-    db->database= malloc(KEYAREASIZE);
+    db->database= malloc(sizeof(char)*KEYAREASIZE);
     lseek(db->fd, JOURNALSIZE, SEEK_SET);
     read(db->fd, db->database, KEYAREASIZE);
     return ;
@@ -96,12 +96,10 @@ void unload_database(struct kvdb *db) {
     return ;
 }
 struct kvdb *kvdb_open(const char *filename) {
-    strcpy(workpath, "/tmp/");
-    strcat(strcat(workpath, filename), ".db");
-    int fd = open(workpath, O_RDWR | O_CREAT, 0777);
+    int fd = open(filename, O_RDWR | O_CREAT, 0777);
     // long offset = 0;
     struct stat statbuf;  
-    stat(workpath, &statbuf);  
+    stat(filename, &statbuf);  
     struct kvdb* pkvdb = malloc(sizeof(struct kvdb));
     pkvdb->fd = fd;
     int fileSize = statbuf.st_size;  
