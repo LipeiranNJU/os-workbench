@@ -9,7 +9,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <time.h>
-#include "../kvdb.h"
+#include "kvdb.h"
 
 int main() {
 
