@@ -16,6 +16,8 @@
 #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
 #define KEYITEMS (1024)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
+#define LONGVALUE (16*MB)
+#define SHORTVALUE (4*KB)
 
 
 
@@ -36,18 +38,6 @@ struct kvdb {
   int filesize;
 };
 char workpath[1000];
-
-void goto_journal(const struct kvdb *db) {
-    lseek(db->fd, 0, SEEK_SET);
-}
-
-void goto_keyarea(const struct kvdb *db) {
-    lseek(db->fd, JOURNALSIZE, SEEK_SET);
-}
-
-void goto_clusters(const struct kvdb *db) {
-    lseek(db->fd, (JOURNALSIZE+KEYAREASIZE), SEEK_SET);
-}
 
 void load_database(struct kvdb* db) {
     db->filesize = lseek(db->fd, 0, SEEK_END);
@@ -140,7 +130,8 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
     int i;
     int valuelength = strlen(value);
     for (i = 0; db->database[i].valid != 0; i++) {
-        if (strncmp(db->database[i].KEY, key, strlen(key)) == 0) {
+        int len = strtol(db->database[i].keysize, NULL, 16);
+        if (strncmp(db->database[i].KEY, key, len) == 0) {
             break;
         }
     }
@@ -235,8 +226,8 @@ char *kvdb_get(struct kvdb *db, const char *key) {
         }
     }
 
-    if (clusNum >= 0 && valueSize >=0) {
-        returned = malloc((valueSize+1));
+    if (clusNum >= 0 && valueSize >= 0) {
+        returned = malloc(valueSize+1);
         returned[valueSize] = '\0';
         // lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
         // read(db->fd, returned, valueSize);

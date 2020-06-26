@@ -16,6 +16,8 @@
 // #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
 // #define KEYITEMS (1024)
 // #define KEYAREASIZE (KEYSIZE * KEYITEMS)
+// #define LONGVALUE (16*MB)
+// #define SHORTVALUE (4*KB)
 
 
 
@@ -36,18 +38,6 @@
 //   int filesize;
 // };
 // char workpath[1000];
-
-// void goto_journal(const struct kvdb *db) {
-//     lseek(db->fd, 0, SEEK_SET);
-// }
-
-// void goto_keyarea(const struct kvdb *db) {
-//     lseek(db->fd, JOURNALSIZE, SEEK_SET);
-// }
-
-// void goto_clusters(const struct kvdb *db) {
-//     lseek(db->fd, (JOURNALSIZE+KEYAREASIZE), SEEK_SET);
-// }
 
 // void load_database(struct kvdb* db) {
 //     db->filesize = lseek(db->fd, 0, SEEK_END);
@@ -140,7 +130,8 @@
 //     int i;
 //     int valuelength = strlen(value);
 //     for (i = 0; db->database[i].valid != 0; i++) {
-//         if (strncmp(db->database[i].KEY, key, strlen(key)) == 0) {
+//         int len = strtol(db->database[i].keysize, NULL, 16);
+//         if (strncmp(db->database[i].KEY, key, len) == 0) {
 //             break;
 //         }
 //     }
@@ -235,8 +226,8 @@
 //         }
 //     }
 
-//     if (clusNum >= 0 && valueSize >=0) {
-//         returned = malloc((valueSize+1));
+//     if (clusNum >= 0 && valueSize >= 0) {
+//         returned = malloc(valueSize+1);
 //         returned[valueSize] = '\0';
 //         // lseek(db->fd, JOURNALSIZE+KEYAREASIZE+clusNum*4*KB,SEEK_SET);
 //         // read(db->fd, returned, valueSize);
@@ -259,12 +250,12 @@
 //     longtext[8192] = '\0';
 //     longtext2[16384] = '\0';
 //     srand(time(NULL));
-//     char* keys[] = {"abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
+//     char* keys[] = {"abc", "abcd","dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     char* values[] = {longtext,longtext2, "abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     db = kvdb_open("lpr");
-//     int maps[8];
+//     int maps[9];
 //     int itre = 0;
-//     for (int i = 0; i < 8; i++)
+//     for (int i = 0; i < 9; i++)
 //         maps[i] = -1;
 //     while (true) {
 //         itre++;
@@ -278,16 +269,17 @@
 //         }
 //         int instru = rand()%2;
 //         if (instru == 0) {
-//             int keyindex = rand() % 8;
+//             int keyindex = rand() % 9;
 //             int valueindex = rand() % 10;
 //             kvdb_put(db, keys[keyindex], values[valueindex]);
 
 
 //             maps[keyindex] = valueindex;
 //         } else {
-//             int keyindex = rand() % 8;
+//             int keyindex = rand() % 9;
 //             char* returned = kvdb_get(db, keys[keyindex]);
 //             if (maps[keyindex] != -1) {
+                
 //                 printf("key:%s\tgetvalue:%s\tshoulebe:%s\n", keys[keyindex], returned, values[maps[keyindex]]);
 //             }
 
