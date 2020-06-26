@@ -278,11 +278,14 @@
 //     char* csjgsqzhx = "csjgsqzhx";
 //     char* lnxe = "lnxe";
 //     char* longtext = malloc(8192);
+//     char* longtext2 = malloc(16384);
 //     memset(longtext, 'b', 8192);
+//     memset(longtext2, 't', 16384);
 //     longtext[8192] = '\0';
+//     longtext2[16384] = '\0';
 //     srand(time(NULL));
 //     char* keys[] = {"abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
-//     char* values[] = {longtext, "abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
+//     char* values[] = {longtext,longtext2, "abc", "dfs", "werd", "scvxdf", "dfwreh", "qwcvgsrgtre", "qwrvffzcbvce", "yrtbvfcthtxbvvcb"};
 //     db = kvdb_open("lpr");
 //     // kvdb_put(db, "abc", "dfs");
 //     // kvdb_put(db, "qwcvgsrgtre", "qwcvgsrgtre");
@@ -334,7 +337,7 @@
 //         int instru = rand()%2;
 //         if (instru == 0) {
 //             int keyindex = rand() % 8;
-//             int valueindex = rand() % 9;
+//             int valueindex = rand() % 10;
 //             kvdb_put(db, keys[keyindex], values[valueindex]);
 //             // printf("put key:%s\tvalue:%s\n",keys[keyindex], values[valueindex]);
 //             maps[keyindex] = valueindex;

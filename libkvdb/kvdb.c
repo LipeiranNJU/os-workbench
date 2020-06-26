@@ -12,7 +12,7 @@
 #define B 1
 #define KB (1024 * B)
 #define MB (1024 * KB)
-#define JOURNALSIZE 10
+#define JOURNALSIZE (10)
 #define KEYSIZE (1 + 128 * B + 9 + 9 + 9 + 1)
 #define KEYITEMS (512)
 #define KEYAREASIZE (KEYSIZE * KEYITEMS)
