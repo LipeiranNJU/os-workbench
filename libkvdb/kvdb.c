@@ -141,6 +141,7 @@ int kvdb_close(struct kvdb *db) {
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
+    printf("Now is putting\n");
     load_database(db);
     int i;
     int valuelength = strlen(value);
@@ -249,6 +250,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
 }
 
 char *kvdb_get(struct kvdb *db, const char *key) {
+    printf("Now is getting\n");
     load_database(db);
     int clusNum = -1;
     int valueSize = -1;
