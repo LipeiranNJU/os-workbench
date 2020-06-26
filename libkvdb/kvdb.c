@@ -35,7 +35,6 @@ struct kvdb {
   struct record *database;
   int filesize;
 };
-char workpath[1000];
 
 void goto_journal(const struct kvdb *db) {
     lseek(db->fd, 0, SEEK_SET);
@@ -121,7 +120,6 @@ struct kvdb *kvdb_open(const char *filename) {
     }
 
 
-    memset(workpath, '\0', 1000);
     return pkvdb;
 }
 
