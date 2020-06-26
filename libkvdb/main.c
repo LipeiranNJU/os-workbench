@@ -66,7 +66,8 @@
 //                 }
 //                 fflush(stdout);
 //                 assert((strcmp(returned, shouldbe) == 0));
-//                 free(returned);
+//                 if (returned != NULL)
+//                     free(returned);
 //                 returned = NULL;
 //             }
 //         }
