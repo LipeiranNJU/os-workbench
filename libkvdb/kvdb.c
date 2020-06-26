@@ -127,7 +127,7 @@ struct kvdb *kvdb_open(const char *filename) {
         free(zeros);
         zeros = NULL;
     }
-    printf("Now is opening database:%s\n", workpath);
+    // printf("Now is opening database:%s\n", workpath);
     memset(workpath, '\0', 1000);
     return pkvdb;
 }
@@ -141,7 +141,7 @@ int kvdb_close(struct kvdb *db) {
 }
 
 int kvdb_put(struct kvdb *db, const char *key, const char *value) {
-    printf("Now is putting key:%s\tvalue:%s\n", key, value);
+    // printf("Now is putting key:%s\tvalue:%s\n", key, value);
     load_database(db);
     int i;
     int valuelength = strlen(value);
@@ -219,12 +219,12 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
                 valuebuff = malloc(16*MB);
                 memset(valuebuff, 'Y', 16*MB);
             } else{
-                printf("i is %d\n", i);
-                printf("name:%s\n", db->database[i].KEY);
-                printf("clusnum:%s\n", db->database[i].clusnum);
-                printf("islong:%c\n", db->database[i].isLong);
-                printf("islong:%d\n", db->database[i].isLong);
-                printf("valuesize%s\n", db->database[i].valuesize);
+                // printf("i is %d\n", i);
+                // printf("name:%s\n", db->database[i].KEY);
+                // printf("clusnum:%s\n", db->database[i].clusnum);
+                // printf("islong:%c\n", db->database[i].isLong);
+                // printf("islong:%d\n", db->database[i].isLong);
+                // printf("valuesize%s\n", db->database[i].valuesize);
                 assert(0);
             }
             write(db->fd, keybuffer, KEYSIZE);
@@ -250,7 +250,7 @@ int kvdb_put(struct kvdb *db, const char *key, const char *value) {
 }
 
 char *kvdb_get(struct kvdb *db, const char *key) {
-    printf("Now is getting: %s\n", key);
+    // printf("Now is getting: %s\n", key);
     load_database(db);
     int clusNum = -1;
     int valueSize = -1;
